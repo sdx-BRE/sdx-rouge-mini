@@ -1,0 +1,23 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# ignore everything first
+*
+
+# exclude git and editor configs
+!.gitignore
+!.gitattributes
+!.editorconfig
+
+# exclude godot project file and all .gd scripts
+!project.godot
+
+# allow directories to traverse
+!*/
+
+# allow all .gd files anywhere
+!*.gd
+
+
+
