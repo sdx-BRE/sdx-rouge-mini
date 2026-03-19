@@ -29,6 +29,7 @@ class_name SkeletonMinion extends CharacterBody3D
 @onready var pivot: Node3D = $Pivot
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui: EnemyUI = $EnemyViewport
+@onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
 var state_machine: SkeletonMinionStateMachine
 var anim: Animator
@@ -60,8 +61,13 @@ func _ready() -> void:
 		stats.health_changed.connect(ui.update_health)
 	stats.hp_reached_zero.connect(on_die)
 
+func is_alive() -> bool:
+	return stats.is_alive()
+
 func take_dmg(value: float) -> void:
 	stats.take_dmg(value)
+	if not is_alive():
+		return
 	
 	if value >= threshold_hit_strong:
 		anim.oneshot_hit_strong()
@@ -69,7 +75,21 @@ func take_dmg(value: float) -> void:
 		anim.oneshot_hit_weak()
 
 func on_die() -> void:
-	print("oh nein ich muss sterben!")
+	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
+		anim_tree.animation_finished.connect(on_death_anim_finished)
+	
+	var death_anim_name = "%s_A" % state_full_body_death
+	anim.play_full_body(death_anim_name)
+
+func on_death_anim_finished(anim_name: StringName) -> void:
+	var death_anim_name = "%s_A" % state_full_body_death
+	if anim_name == death_anim_name:
+		anim_tree.animation_finished.disconnect(on_death_anim_finished)
+		await get_tree().create_timer(1.0).timeout
+		queue_free()
+
+func on_death_anim_finished_b(anim_name: StringName) -> void:
+	print("anim finished yooo aber BBB, name: ", anim_name)
 
 func _physics_process(delta: float) -> void:
 	processor.velicoty.process(delta)

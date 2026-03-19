@@ -1,9 +1,9 @@
 class_name SkeletonMinionStateMachine extends RefCounted
 
-var _state: SkeletonState
+var _handler: StateHandler
 
-func _init(state: SkeletonState) -> void:
-	_state = state
+func _init(handler: StateHandler) -> void:
+	_handler = handler
 
 static func start_walking(
 	minion: SkeletonMinion,
@@ -13,80 +13,170 @@ static func start_walking(
 	var controller = PatrolController.new(minion)
 	controller.init_patrol_point()
 	
-	var data =  StateData.new(minion, walking_speed, wait_time, controller)
-	var state = WalkingState.new(data)
+	var data =  States.Data.new(minion, walking_speed, wait_time, controller)
 	
-	return SkeletonMinionStateMachine.new(state)
+	var walking_state = States.Alive.Walking.new(data)
+	var waiting_state = States.Alive.Waiting.new(data)
+	
+	var alive_state = States.Alive.new(walking_state)
+	var alive_handler = StateHandler.Alive.new(alive_state)
+	
+	var dead_state = States.Dead.new(data)
+	var dead_handler = StateHandler.Dead.new(alive_handler, minion, dead_state)
+	
+	var registry = States.Registry.new(walking_state, waiting_state)
+	var handler = StateHandler.new(dead_handler, registry)
+	
+	return SkeletonMinionStateMachine.new(handler)
 
 func process(delta: float) -> void:
-	var new_state = _state.process(delta)
-	if new_state != null:
-		_state = new_state
+	_handler.handle(delta)
 
 class SkeletonState:
 	func process(_delta: float) -> SkeletonState:
 		return null
 
-class WalkingState extends SkeletonState:
-	var _data: StateData
+class States:
+	class Data:
+		var wait_time: float
+		var minion: SkeletonMinion
+		var walking_speed: float
+		var controller: PatrolController
+		
+		func _init(
+			p_minion: SkeletonMinion,
+			p_walking_speed: float,
+			p_wait_time: float,
+			p_controller: PatrolController,
+		) -> void:
+			minion = p_minion
+			walking_speed = p_walking_speed
+			wait_time = p_wait_time
+			controller = p_controller
 	
-	func _init(data: StateData) -> void:
-		_data = data
+	class Registry:
+		var walking: Alive.Walking
+		var wating: Alive.Waiting
+		
+		func _init(
+			p_walking: Alive.Walking,
+			p_wating: Alive.Waiting,
+		) -> void:
+			walking = p_walking
+			wating = p_wating
 	
-	func process(delta: float) -> SkeletonState:
-		if _data.minion.agent.is_navigation_finished():
-			_data.minion.velocity.x = move_toward(_data.minion.velocity.x, 0, _data.walking_speed)
-			_data.minion.velocity.z = move_toward(_data.minion.velocity.z, 0, _data.walking_speed)
+	class Base:
+		func process(_delta: float, _registry: Registry) -> Base: return null
+		func enter() -> void: pass
+	
+	class Alive:
+		var _state: Base
+		
+		func _init(state: Base) -> void:
+			_state = state
+		
+		func process(delta: float, registry: Registry) -> void:
+			var new_state = _state.process(delta, registry)
+			if new_state != null:
+				_state = new_state
+				_state.enter()
+		
+		class Walking extends Base:
+			var _data: Data
 			
-			if abs(_data.minion.velocity.x) < 0.01 and abs(_data.minion.velocity.z) < 0.01:
-				return WaitingState.new(_data)
-			else:
+			func _init(data: Data) -> void:
+				_data = data
+			
+			func process(delta: float, registry: Registry) -> Base:
+				if _data.minion.agent.is_navigation_finished():
+					_data.minion.velocity.x = move_toward(_data.minion.velocity.x, 0, _data.walking_speed)
+					_data.minion.velocity.z = move_toward(_data.minion.velocity.z, 0, _data.walking_speed)
+					
+					if abs(_data.minion.velocity.x) < 0.01 and abs(_data.minion.velocity.z) < 0.01:
+						return registry.wating
+					else:
+						return null
+				
+				var next_pos = _data.minion.agent.get_next_path_position()
+				var dir = (next_pos - _data.minion.global_position).normalized()
+				dir.y = 0
+				_data.minion.velocity = dir * _data.walking_speed
+				
+				_look_at(dir, delta)
+				
 				return null
+				
+			func _look_at(direction: Vector3, delta: float) -> void:
+				var target_rotation = atan2(direction.x, direction.z)
+				_data.minion.pivot.rotation.y = lerp_angle(_data.minion.pivot.rotation.y, target_rotation, delta * 10.5)
 		
-		var next_pos = _data.minion.agent.get_next_path_position()
-		var dir = (next_pos - _data.minion.global_position).normalized()
-		dir.y = 0
-		_data.minion.velocity = dir * _data.walking_speed
+		class Waiting extends Base:
+			var _data: Data
+			var _wait_time: float
+			
+			func _init(data: Data) -> void:
+				_data = data
+				_wait_time = data.wait_time
+			
+			func enter() -> void:
+				_wait_time = _data.wait_time
+			
+			func process(delta: float, registry: Registry) -> Walking:
+				_wait_time -= delta
+				if _wait_time <= 0:
+					_data.controller.next_patrol_point()
+					return registry.walking
+				return null
+	
+	class Dead extends Base:
+		var _data: Data
 		
-		_look_at(dir, delta)
+		func _init(data: Data) -> void:
+			_data = data
 		
-		return null
-		
-	func _look_at(direction: Vector3, delta: float) -> void:
-		var target_rotation = atan2(direction.x, direction.z)
-		_data.minion.pivot.rotation.y = lerp_angle(_data.minion.pivot.rotation.y, target_rotation, delta * 10.5)
+		func process(_delta: float, _registry: Registry) -> Base:
+			if _data.minion.velocity.length() > 0:
+				_data.minion.velocity = Vector3.ZERO
+			return null
 
-class WaitingState extends SkeletonState:
-	var _data: StateData
-	var _wait_time: float
+class StateHandler:
+	var _root: BaseHandler
+	var _registry: States.Registry
 	
-	func _init(data: StateData) -> void:
-		_data = data
-		_wait_time = data.wait_time
+	func _init(root: BaseHandler, registry: States.Registry) -> void:
+		_root = root
+		_registry = registry
 	
-	func process(delta: float) -> WalkingState:
-		_wait_time -= delta
-		if _wait_time <= 0:
-			_data.controller.next_patrol_point()
-			return WalkingState.new(_data)
-		return null
-
-class StateData:
-	var wait_time: float
-	var minion: SkeletonMinion
-	var walking_speed: float
-	var controller: PatrolController
+	func handle(delta: float) -> void:
+		_root.handle(delta, _registry)
 	
-	func _init(
-		p_minion: SkeletonMinion,
-		p_walking_speed: float,
-		p_wait_time: float,
-		p_controller: PatrolController,
-	) -> void:
-		minion = p_minion
-		walking_speed = p_walking_speed
-		wait_time = p_wait_time
-		controller = p_controller
+	class BaseHandler:
+		func handle(_delta: float, _registry: States.Registry) -> void: push_error("[SkeletonMinionStateMachine::StateHandler::BaseHandler.handle()] - must be overriden!")
+	
+	class Alive extends BaseHandler:
+		var _state: States.Alive
+		
+		func _init(state: States.Alive) -> void:
+			_state = state
+		
+		func handle(delta: float, registry: States.Registry) -> void:
+			_state.process(delta, registry)
+	
+	class Dead extends BaseHandler:
+		var _next: Alive
+		var _minion: SkeletonMinion
+		var _state: States.Dead
+		
+		func _init(next: Alive, minion: SkeletonMinion, state: States.Dead) -> void:
+			_next = next
+			_minion = minion
+			_state = state
+		
+		func handle(delta: float, registry: States.Registry):
+			if _minion.is_alive():
+				_next.handle(delta, registry)
+				return
+			_state.process(delta, registry)
 
 class PatrolController:
 	var _minion: SkeletonMinion

@@ -20,6 +20,9 @@ func take_dmg(value: float) -> void:
 func heal(value: float) -> void:
 	_apply_health_modifier(value)
 
+func is_alive() -> bool:
+	return _current_health > 0
+
 func _apply_health_modifier(delta: float) -> void:
 	var old = _current_health
 	_current_health = clamp(_current_health + delta, 0, _max_health)
