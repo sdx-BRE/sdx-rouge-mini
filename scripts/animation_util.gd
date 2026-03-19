@@ -12,6 +12,10 @@ static func try_get_call_method_track_time(
 ):
 	var animation = player.get_animation(anim_name)
 	
+	if animation == null:
+		push_error("[AnimationUtil::try_get_call_method_track_time()] - animation not found")
+		return null
+	
 	for track_idx in animation.get_track_count():
 		if animation.track_get_type(track_idx) == Animation.TYPE_METHOD:
 			for key_idx in animation.track_get_key_count(track_idx):
@@ -38,3 +42,6 @@ class Playback:
 	
 	func get_current_node() -> StringName:
 		return _playback.get_current_node()
+	
+	func get_current_play_position() -> float:
+		return _playback.get_current_play_position()
