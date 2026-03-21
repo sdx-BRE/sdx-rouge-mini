@@ -18,6 +18,7 @@
 
 # allow all .gd files anywhere
 !*.gd
+!*.gdshader
 
 
 
