@@ -6,14 +6,15 @@ extends Area3D
 
 func _ready() -> void:
 	get_tree().create_timer(lifespan).timeout.connect(queue_free)
-	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
 
 func _process(delta: float) -> void:
 	var forward = -global_transform.basis.z
 	global_position += forward * speed * delta
 
-func _on_body_entered(body: Node3D) -> void:
-	if body.has_method("take_dmg"):
-		body.take_dmg(dmg)
+func _on_area_entered(body: Node3D) -> void:
+	var hitbox = body as DamageHitbox
+	if hitbox != null:
+		hitbox.take_dmg(dmg)
 	
 	queue_free()

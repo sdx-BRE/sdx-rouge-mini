@@ -69,10 +69,12 @@ jump={
 
 [layer_names]
 
-3d_physics/layer_1="Player"
-3d_physics/layer_2="Enemy"
-3d_physics/layer_3="World"
-3d_physics/layer_4="Spells"
+3d_physics/layer_1="PlayerCollision"
+3d_physics/layer_2="PlayerDamage"
+3d_physics/layer_3="EnemyCollision"
+3d_physics/layer_4="EnemyDamage"
+3d_physics/layer_5="World"
+3d_physics/layer_6="Spells"
 
 [physics]
 
