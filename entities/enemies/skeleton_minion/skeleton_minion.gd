@@ -18,6 +18,9 @@ signal died()
 
 @export_group("Animation - State names")
 @export var state_full_body_death: String
+@export var state_upper_body_unarmed_idle: String
+@export var state_upper_body_unarmed_punch: String
+@export var state_upper_body_unarmed_kick: String
 
 @export_group("Animation - Oneshot")
 @export var path_oneshot_hit_weak: String
@@ -28,15 +31,26 @@ signal died()
 @export_group("Animation - Thresholds")
 @export var threshold_hit_strong: float = 12.5
 
+@export_group("Field of view")
+@export var fov_angle: float = 70:
+	set(value):
+		fov_angle = value
+		fov_threshold = cos(deg_to_rad(fov_angle / 2.0))
+
 @onready var pivot: Node3D = $Pivot
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui: EnemyUI = $EnemyViewport
+@onready var fov: Area3D = $Fov
+@onready var punch_hitbox: Area3D = $Pivot/Rig_Medium/Skeleton3D/BoneHandslotR/Hitbox
+
 @onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
 var state_machine: SkeletonMinionStateMachine
-var anim: Animator
+var anim: SkeletonMinionAnimator
 var processor: Processor
 var stats: EnemyStats
+
+var fov_threshold = cos(deg_to_rad(fov_angle / 2.0))
 
 func _ready() -> void:
 	state_machine = SkeletonMinionStateMachine.start_walking(
@@ -44,24 +58,29 @@ func _ready() -> void:
 		data.walking_speed,
 		wait_time,
 	)
-	anim = Animator.Factory.create_animator(
-		anim_tree,
-		path_playback_full_body,
-		path_playback_upper_body,
-		self,
-		path_full_body_locomotion_blend,
-		path_upper_body_blend2,
-		path_oneshot_hit_weak,
-		path_oneshot_hit_strong,
-		path_oneshot_spawn_air,
-		path_oneshot_spawn_ground,
-	)
+	
+	anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
+		.set_playbacks(path_playback_full_body, path_playback_upper_body)\
+		.set_paths(path_full_body_locomotion_blend, path_upper_body_blend2)\
+		.set_state_names(state_full_body_death, state_upper_body_unarmed_idle, state_upper_body_unarmed_punch, state_upper_body_unarmed_kick)\
+		.set_oneshots(path_oneshot_hit_weak, path_oneshot_hit_strong, path_oneshot_spawn_air, path_oneshot_spawn_ground)\
+		.build()
+	
 	processor = Processor.create(self, anim.blender)
 	stats = EnemyStats.from_data(data)
 	
 	if ui is EnemyUI:
 		stats.health_changed.connect(ui.update_health)
 	stats.hp_reached_zero.connect(on_die)
+	
+	fov.body_entered.connect(_on_fov_entered)
+	fov.body_exited.connect(_on_fov_exited)
+	
+	punch_hitbox.body_entered.connect(_on_punch)
+
+func _on_punch(body: Node3D):
+	print("punched: ", body)
+	pass
 
 func is_alive() -> bool:
 	return stats.is_alive()
@@ -76,6 +95,7 @@ func take_dmg(value: float) -> void:
 	else:
 		anim.oneshot_hit_weak()
 
+#region event callbacks
 func on_die() -> void:
 	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
 		anim_tree.animation_finished.connect(on_death_anim_finished)
@@ -91,20 +111,28 @@ func on_death_anim_finished(anim_name: StringName) -> void:
 		died.emit()
 		queue_free()
 
-func on_death_anim_finished_b(anim_name: StringName) -> void:
-	print("anim finished yooo aber BBB, name: ", anim_name)
+func _on_fov_entered(body: Node3D):
+	state_machine.target_entered(body)
+
+func _on_fov_exited(body: Node3D):
+	state_machine.target_exited(body)
+#endregion
+
+func _process(delta: float) -> void:
+	anim.process(delta)
 
 func _physics_process(delta: float) -> void:
 	processor.velicoty.process(delta)
 	processor.blend.process(delta)
 	move_and_slide()
-	
+
 class HasMinion extends RefCounted:
 	var _minion: SkeletonMinion
 		
 	func _init(minion: SkeletonMinion) -> void:
 		_minion = minion
 
+#region processor
 class Processor:
 	var velicoty: Velocity
 	var blend: Blend
@@ -113,7 +141,7 @@ class Processor:
 		velicoty = p_velicoty
 		blend = p_blend
 	
-	static func create(minion: SkeletonMinion, blender: SkeletonMinion.Animator.Blender):
+	static func create(minion: SkeletonMinion, blender: SkeletonMinionAnimator.Blender):
 		var arg_velicoty = Velocity.new(minion)
 		var arg_blend = Blend.new(minion, blender)
 		
@@ -132,10 +160,10 @@ class Processor:
 			_minion.state_machine.process(delta)
 	
 	class Blend extends HasMinion:
-		var _blender: SkeletonMinion.Animator.Blender
+		var _blender: SkeletonMinionAnimator.Blender
 		var _movement_blend := 0.0
 		
-		func _init(minion: SkeletonMinion, blender: SkeletonMinion.Animator.Blender) -> void:
+		func _init(minion: SkeletonMinion, blender: SkeletonMinionAnimator.Blender) -> void:
 			super(minion)
 			_blender = blender
 		
@@ -146,123 +174,4 @@ class Processor:
 		
 		func _get_speed() -> float:
 			return Vector3(_minion.velocity.x, 0, _minion.velocity.z).length()
-
-class Animator:
-	var _full_body_playback: AnimationUtil.Playback
-	var _upper_body_playback: AnimationUtil.Playback
-	var _tree: AnimationTree
-	
-	var blender: Blender
-	var paths: Paths
-	
-	func _init(
-		full_body_playback: AnimationUtil.Playback,
-		upper_body_playback: AnimationUtil.Playback,
-		tree: AnimationTree,
-		p_blender: Blender,
-		p_paths: Paths,
-	) -> void:
-		_full_body_playback = full_body_playback
-		_upper_body_playback = upper_body_playback
-		_tree = tree
-		blender = p_blender
-		paths = p_paths
-	
-	func play_full_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
-		_play(_full_body_playback, to_node, mode)
-	
-	func play_upper_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
-		_play(_upper_body_playback, to_node, mode)
-	
-	func oneshot_hit_weak() -> void:
-		_tree.set(paths.oneshot_hit_weak, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	
-	func oneshot_hit_strong() -> void:
-		_tree.set(paths.oneshot_hit_strong, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	
-	func oneshot_spawn_air() -> void:
-		_tree.set(paths.oneshot_spawn_air, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	
-	func oneshot_spawn_ground() -> void:
-		_tree.set(paths.oneshot_spawn_ground, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	
-	func _play(playback: AnimationUtil.Playback, to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel):
-		playback.play(to_node, mode)
-	
-	class Blender:
-		var _minion: SkeletonMinion
-		var _tree: AnimationTree
-		var _paths: Paths
-		
-		func _init(minion: SkeletonMinion, tree: AnimationTree, paths: Paths) -> void:
-			_minion = minion
-			_tree = tree
-			_paths = paths
-		
-		func blend_loco(value: float) -> void:
-			_tree.set(_paths.full_body_locomotion, value)
-		
-		func blend2_upper_body(value: float, duration = 0.1) -> void:
-			var tween = _minion.create_tween()
-			tween.tween_property(_tree, _paths.upper_body_blend2, value, duration)
-		
-		func get_blend2_upper_body():
-			return _tree.get(_paths.upper_body_blend2)
-		
-	class Paths:
-		var full_body_locomotion: String
-		var upper_body_blend2: String
-		var oneshot_hit_weak: String
-		var oneshot_hit_strong: String
-		var oneshot_spawn_air: String
-		var oneshot_spawn_ground: String
-		
-		func _init(
-			p_full_body_locomotion: String,
-			p_upper_body_blend2: String,
-			p_oneshot_hit_weak: String,
-			p_oneshot_hit_strong: String,
-			p_oneshot_spawn_air: String,
-			p_oneshot_spawn_ground: String,
-		) -> void:
-			full_body_locomotion = p_full_body_locomotion
-			upper_body_blend2 = p_upper_body_blend2
-			oneshot_hit_weak = p_oneshot_hit_weak
-			oneshot_hit_strong = p_oneshot_hit_strong
-			oneshot_spawn_air = p_oneshot_spawn_air
-			oneshot_spawn_ground = p_oneshot_spawn_ground
-	
-	class Factory:
-		static func create_animator(
-			anim_tree: AnimationTree,
-			path_playback_full_body: String,
-			path_playback_upper_body: String,
-			minion: SkeletonMinion,
-			path_full_body_locomotion: String,
-			path_upper_body_blend2: String,
-			path_oneshot_hit_weak: String,
-			path_oneshot_hit_strong: String,
-			path_oneshot_spawn_air: String,
-			path_oneshot_spawn_ground: String,
-		) -> Animator:
-			var full_body_playback = anim_tree.get(path_playback_full_body)
-			var right_arm_playback = anim_tree.get(path_playback_upper_body)
-			var prefix = "[ERROR][Animator.Factory::create_animator('%s', '%s')]" % [path_playback_full_body, path_playback_upper_body]
-			
-			assert(full_body_playback != null, "%s - full_body playback not found at '%s'" % [prefix, path_playback_full_body])
-			assert(right_arm_playback != null, "%s - right_arm playback not found at '%s'" % [prefix, path_playback_upper_body])
-			
-			full_body_playback = AnimationUtil.Playback.new(full_body_playback)
-			right_arm_playback = AnimationUtil.Playback.new(right_arm_playback)
-			
-			var paths = Animator.Paths.new(
-				path_full_body_locomotion,
-				path_upper_body_blend2,
-				path_oneshot_hit_weak,
-				path_oneshot_hit_strong,
-				path_oneshot_spawn_air,
-				path_oneshot_spawn_ground,
-			)
-			var blender = Animator.Blender.new(minion, anim_tree, paths)
-			
-			return Animator.new(full_body_playback, right_arm_playback, anim_tree, blender, paths)
+#endregion

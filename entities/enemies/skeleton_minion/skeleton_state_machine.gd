@@ -1,4 +1,4 @@
-class_name SkeletonMinionStateMachine extends RefCounted
+class_name SkeletonStateMachine extends RefCounted
 
 var _handler: StateHandler
 
@@ -9,7 +9,7 @@ static func start_walking(
 	minion: SkeletonMinion,
 	walking_speed: float,
 	wait_time: float,
-) -> SkeletonMinionStateMachine:
+) -> SkeletonStateMachine:
 	var controller = PatrolController.new(minion)
 	controller.init_patrol_point()
 	
@@ -27,7 +27,7 @@ static func start_walking(
 	var registry = States.Registry.new(walking_state, waiting_state)
 	var handler = StateHandler.new(dead_handler, registry)
 	
-	return SkeletonMinionStateMachine.new(handler)
+	return SkeletonStateMachine.new(handler)
 
 func process(delta: float) -> void:
 	_handler.handle(delta)
@@ -42,6 +42,7 @@ class States:
 		var minion: SkeletonMinion
 		var walking_speed: float
 		var controller: PatrolController
+		var targets: Array[Node3D] = []
 		
 		func _init(
 			p_minion: SkeletonMinion,

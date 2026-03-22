@@ -33,7 +33,7 @@ class Playback:
 	func _init(playback: AnimationNodeStateMachinePlayback) -> void:
 		_playback = playback
 	
-	func play(to_node: StringName, mode: AnimationUtil.Play):
+	func play(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel):
 		match mode:
 			Play.Travel:
 				_playback.travel(to_node)

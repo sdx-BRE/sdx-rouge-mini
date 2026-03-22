@@ -34,14 +34,7 @@ extends Node3D
 
 var last_position: Vector3 = Vector3.ZERO
 
-func _get_configuration_warnings():
-	if dissolve_material_resource == null:
-		return ["Dissolve shader material resource required!"]
-	return []
-
 func _ready():
-	if Engine.is_editor_hint():
-		_setup_editor_hints()
 	_update_bounds()
 	last_position = global_position
 
@@ -60,13 +53,13 @@ func remove_dissolve_material() -> void:
 	var meshes = _get_all_mesh_instances(self)
 	for mesh in meshes:
 		mesh.material_override = null
-	print("Removed materials")
+	info("Removed materials")
 
 func _apply_material(material: Resource):
 	var meshes = _get_all_mesh_instances(self)
 	for mesh in meshes:
 		mesh.material_override = material
-	print("Applied materials")
+	info("Applied materials")
 
 func _update_bounds():
 	var meshes = _get_all_mesh_instances(self)
@@ -95,7 +88,6 @@ func _update_bounds():
 	var bounds_min = INF
 	var bounds_max = -INF
 	
-	# Gehe alle Ecken von allen Meshes durch
 	for mesh in meshes:
 		var aabb = mesh.mesh.get_aabb() if mesh.mesh else mesh.get_aabb()
 		
@@ -123,7 +115,6 @@ func _update_bounds():
 	_update_materials("object_min", bounds_min)
 	_update_materials("object_max", bounds_max)
 
-# recursively loads all mesh instances from node
 func _get_all_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 	var result: Array[MeshInstance3D] = []
 	for child in node.get_children():
@@ -142,3 +133,14 @@ func _update_materials(param_name: String, value: Variant):
 			
 		if mat:
 			mat.set_shader_parameter(param_name, value)
+
+#region editor methods
+func _get_configuration_warnings():
+	if dissolve_material_resource == null:
+		return ["Dissolve shader material resource required!"]
+	return []
+
+func info(message: String):
+	if Engine.is_editor_hint():
+		DbgHelper.tprint(message)
+#region
