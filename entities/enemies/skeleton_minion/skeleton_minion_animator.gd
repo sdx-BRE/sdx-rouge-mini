@@ -91,7 +91,7 @@ class Blender:
 		_tree.set(_paths.locomotion_move, value)
 	
 	func blend_loco_timescale(value: float) -> void:
-		_tree.set(_paths.llocomotion_timescale, value)
+		_tree.set(_paths.locomotion_timescale, value)
 
 class StateNames:
 	var death: StringName
@@ -100,11 +100,11 @@ class StateNames:
 
 class BlendPaths:
 	var locomotion_move: StringName
-	var llocomotion_timescale: StringName
+	var locomotion_timescale: StringName
 	
 	func _init(loco_move: StringName, loco_time: StringName) -> void:
 		locomotion_move = loco_move
-		llocomotion_timescale = loco_time
+		locomotion_timescale = loco_time
 
 class OneShots:
 	var hit_weak: StringName

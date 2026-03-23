@@ -3,15 +3,12 @@ class_name MageAbilities
 var registry: Registry
 var _active_spell: BaseSpell
 var _buffered_spell: BaseSpell
-var _attack_anim_names: Array[String]
 
-func _init(p_registry: Registry, attack_anim_names: Array[String]) -> void:
+func _init(p_registry: Registry) -> void:
 	registry = p_registry
-	_attack_anim_names = attack_anim_names
 
 static func create(
-	mage: MageCharacter,
-	attack_anim_names: Array[String]
+	mage: MageCharacter
 ) -> MageAbilities:
 	var player: AnimationPlayer = mage.anim_tree.get_node(mage.anim_tree.anim_player)
 	
@@ -33,7 +30,7 @@ static func create(
 		player,
 	))
 	
-	return MageAbilities.new(Registry.new(firebolt, firepulse, meteor), attack_anim_names)
+	return MageAbilities.new(Registry.new(firebolt, firepulse, meteor))
 
 func prepare_spell(spell: BaseSpell) -> void:
 	if _active_spell != null:
@@ -71,9 +68,6 @@ func release() -> void:
 		_buffered_spell.release()
 		_buffered_spell = null
 
-func is_attack_anim_name(name: StringName) -> bool:
-	return _attack_anim_names.has(name)
-
 func unset_when_active(spell: BaseSpell) -> void:
 	if _active_spell == spell:
 		_active_spell = null
@@ -96,19 +90,16 @@ class Registry:
 
 class SpellAnimation:
 	var scene: PackedScene
-	var state_name: StringName
-	var anim_name: StringName
+	var oneshot_prop: StringName
 	var cast_point: float
 	
 	func _init(
 		p_scene: PackedScene,
-		p_state_name: StringName,
-		p_anim_name: StringName,
+		p_oneshot_prop: StringName,
 		p_cast_point: float
 	) -> void:
 		scene = p_scene
-		state_name = p_state_name
-		anim_name = p_anim_name
+		oneshot_prop = p_oneshot_prop
 		cast_point = p_cast_point
 	
 	static func create(
@@ -122,8 +113,7 @@ class SpellAnimation:
 		
 		return SpellAnimation.new(
 			resource.scene,
-			animation.state_name,
-			animation.animation_name,
+			animation.oneshot_property,
 			c_point,
 		)
 
@@ -151,7 +141,7 @@ class BaseSpell extends HasMage:
 	
 	func casting() -> void:
 		_mage.notify_casting_progressed(
-			_mage.anim.get_current_upper_body_play_position(),
+			_mage.anim.get_current_position(anim.oneshot_prop),
 			anim.cast_point,
 		)
 	
@@ -170,27 +160,6 @@ class BaseSpell extends HasMage:
 		var node = scene.instantiate()
 		_mage.get_tree().current_scene.add_child(node)
 		return node
-	
-	func _handle_upper_body_blend2():
-		_mage.anim.blender.blend2_upper_body(1.0, 0.075)
-		
-		_mage.conditional_queue.queue(
-			CQueueTask,
-			CQueueTask.FinishAttack,
-			func(_d, task: ConditionalQueue.ConditionalQueueTask) -> bool:
-				var current = _mage.anim.get_current_upper_body_node()
-				var is_attack_animation = _mage.abilities.is_attack_anim_name(current)
-				var is_started = task.data.get("started", false)
-				
-				# playback travel occures after the setup of this callback,
-				# therefore it is necessary to check if the queue was started yet
-				if not is_started and is_attack_animation:
-					task.data.set("started", true)
-					return false
-				
-				return is_started and not is_attack_animation,
-				func(_d): _mage.anim.blender.blend2_upper_body(0.0)
-		)
 #endregion
 class InstantSpell extends BaseSpell:
 	func preparing(_delta: float) -> void: pass
@@ -210,8 +179,7 @@ class Firepulse extends InstantSpell:
 		node.global_position += forward * distance
 	
 	func prepare() -> void:
-		_handle_upper_body_blend2()
-		_mage.anim.play_upper_body(anim.state_name, AnimationUtil.Play.Start)
+		_mage.anim.request_oneshot_fire(anim.oneshot_prop)
 		_mage.abilities.buffer_active_spell()
 		_mage.notify_casting_started()
 #endregion
@@ -222,8 +190,7 @@ class Firebolt extends InstantSpell:
 		_init_at_wand_spawnpoint(anim.scene)
 	
 	func prepare():
-		_handle_upper_body_blend2()
-		_mage.anim.play_upper_body(anim.state_name, AnimationUtil.Play.Start)
+		_mage.anim.request_oneshot_fire(anim.oneshot_prop)
 		_mage.abilities.buffer_active_spell()
 		_mage.notify_casting_started()
 #endregion
@@ -253,8 +220,7 @@ class Meteor extends BaseSpell:
 			return true
 		
 		if event.is_action_pressed("attack"):
-			_handle_upper_body_blend2()
-			_mage.anim.play_upper_body(anim.state_name, AnimationUtil.Play.Start)
+			_mage.anim.request_oneshot_fire(anim.oneshot_prop)
 			_mage.camera_node.use_visible_mouse()
 			_mage.aim_decal.visible = false
 			

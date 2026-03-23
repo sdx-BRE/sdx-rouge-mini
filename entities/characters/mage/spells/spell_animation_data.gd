@@ -1,6 +1,6 @@
 class_name SpellAnimationData extends Resource
 
-@export var state_name: StringName
+@export var oneshot_property: StringName
 @export var animation_name: StringName
 
 const CALL_METHOD_TRACK_NAME = "execute_spell"

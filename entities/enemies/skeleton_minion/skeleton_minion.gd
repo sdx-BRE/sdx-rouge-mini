@@ -4,6 +4,8 @@ signal died()
 
 @export_group("Skeleton properties")
 @export var data: EnemyData
+@export var punch_dmg: float = 5.0
+@export var kick_dmg: float = 8.0
 
 @export_group("Patrol settings")
 @export var wait_time: float = 5.0
@@ -78,8 +80,8 @@ func _ready() -> void:
 	punch_hitbox.body_entered.connect(_on_punch)
 
 func _on_punch(body: Node3D):
-	print("punched: ", body)
-	pass
+	if body.has_method("take_dmg"):
+		body.take_dmg(punch_dmg)
 
 func is_alive() -> bool:
 	return stats.is_alive()

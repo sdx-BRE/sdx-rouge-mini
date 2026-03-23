@@ -18,12 +18,10 @@ signal casting_progressed(current: float, total: float)
 @export_group("Camera")
 @export var camera_node: ThirdPersonCam
 
-@export_group("Animation - General")
+@export_group("AnimationTree - Parameters")
 @export var anim_tree: AnimationTree
-@export var path_playback_full_body: String
-@export var path_playback_upper_body: String
-@export var path_full_body_locomotion_blend: String
-@export var path_upper_body_blend2: String
+@export var param_playback_full_body: String
+@export var param_blend_locomotion: String
 
 @export_group("Animation - data")
 @export var animation_shoot: SpellAnimationData
@@ -39,7 +37,7 @@ var queue: SimpleQueue
 var conditional_queue: ConditionalQueue
 var lock: SimpleLock
 
-var anim: Animator
+var anim: MageAnimator
 var processor: Processor
 
 var abilities: MageAbilities
@@ -50,18 +48,16 @@ func _ready() -> void:
 	conditional_queue = ConditionalQueue.new()
 	lock = SimpleLock.new()
 	
-	anim = Animator.Factory.create_animator(
+	anim = MageAnimator.create(
 		anim_tree,
-		path_playback_full_body,
-		path_playback_upper_body,
-		self,
-		path_full_body_locomotion_blend,
-		path_upper_body_blend2,
+		param_playback_full_body,
+		param_blend_locomotion,
 	)
-	processor = Processor.new(self, anim.blender)
+	processor = Processor.new(self)
 	
-	abilities = MageAbilities.create(self,  [animation_shoot.state_name, animation_raise.state_name])
+	abilities = MageAbilities.create(self)
 
+#region stat notification
 func notify_health_changed(current: float, total: float) -> void:
 	health_changed.emit(current, total)
 
@@ -76,7 +72,9 @@ func notify_casting_end() -> void:
 
 func notify_casting_progressed(current: float, total: float) -> void:
 	casting_progressed.emit(current, total)
+#endregion
 
+#region lifecycle methods
 func _process(delta: float) -> void:
 	conditional_queue.process(delta)
 	abilities.preparing(delta)
@@ -88,10 +86,7 @@ func _physics_process(delta: float) -> void:
 	processor.velocity.process(delta)
 	processor.blend.process(delta)
 	move_and_slide()
-
-func _physics_process_gravity(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+#endregion
 
 class HasMage extends RefCounted:
 	var _mage: MageCharacter
@@ -104,10 +99,10 @@ class Processor:
 	var velocity: Velocity
 	var blend: Blend
 	
-	func _init(mage: MageCharacter, blender: MageCharacter.Animator.Blender):
+	func _init(mage: MageCharacter):
 		input = InputHandler.new(mage)
 		velocity = Velocity.new(mage)
-		blend = Blend.new(mage, blender)
+		blend = Blend.new(mage)
 	
 	class InputHandler extends HasMage:
 		func handle(event: InputEvent) -> void:
@@ -172,17 +167,15 @@ class Processor:
 			return direction
 	
 	class Blend extends HasMage:
-		var _blender: MageCharacter.Animator.Blender
 		var _movement_blend := 0.0
 		
-		func _init(mage: MageCharacter, blender: MageCharacter.Animator.Blender) -> void:
+		func _init(mage: MageCharacter) -> void:
 			super(mage)
-			_blender = blender
 		
 		func process(delta: float) -> void:
 			var movement_blend_target = _get_speed() / _mage.max_speed
 			_movement_blend = lerp(_movement_blend, movement_blend_target, delta * 10)
-			_blender.blend_loco(_movement_blend)
+			_mage.anim.blend_loco(_movement_blend)
 		
 		func _get_speed() -> float:
 			return Vector3(_mage.velocity.x, 0, _mage.velocity.z).length()
@@ -209,97 +202,3 @@ class Stats extends HasMage:
 	func restore_mana(value: float) -> void:
 		_mana = min(_mana + value, _max_mana)
 		_mage.notify_mana_changed(_mana, _max_mana)
-
-class Animator:
-	var _full_body_playback: AnimationUtil.Playback
-	var _upper_body_playback: AnimationUtil.Playback
-	
-	var blender: Blender
-	
-	func _init(
-		full_body_playback: AnimationUtil.Playback,
-		upper_body_playback: AnimationUtil.Playback,
-		p_blender: Blender
-	) -> void:
-		_full_body_playback = full_body_playback
-		_upper_body_playback = upper_body_playback
-		blender = p_blender
-	
-	func play_full_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
-		_play(_full_body_playback, to_node, mode)
-	
-	func play_upper_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
-		_play(_upper_body_playback, to_node, mode)
-	
-	func _play(playback: AnimationUtil.Playback, to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel):
-		playback.play(to_node, mode)
-	
-	func get_current_full_body_node() -> StringName:
-		return _full_body_playback.get_current_node()
-	
-	func get_current_full_body_play_position():
-		return _full_body_playback.get_current_play_position()
-	
-	func get_current_upper_body_node() -> StringName:
-		return _upper_body_playback.get_current_node()
-	
-	func get_current_upper_body_play_position():
-		return _upper_body_playback.get_current_play_position()
-	
-	class Blender:
-		var _mage: MageCharacter
-		var _tree: AnimationTree
-		var _paths: Paths
-		
-		func _init(mage: MageCharacter, tree: AnimationTree, paths: Paths) -> void:
-			_mage = mage
-			_tree = tree
-			_paths = paths
-		
-		func blend_loco(value: float) -> void:
-			_tree.set(_paths.full_body_locomotion, value)
-		
-		func blend2_upper_body(value: float, duration = 0.1) -> void:
-			var tween = _mage.create_tween()
-			tween.tween_property(_tree, _paths.upper_body_blend2, value, duration)
-		
-		func get_blend2_upper_body():
-			return _tree.get(_paths.upper_body_blend2)
-		
-		class Paths:
-			var full_body_locomotion: String
-			var upper_body_blend2: String
-			
-			func _init(
-				p_full_body_locomotion: String,
-				p_upper_body_blend2: String,
-			) -> void:
-				full_body_locomotion = p_full_body_locomotion
-				upper_body_blend2 = p_upper_body_blend2
-	
-	class Factory:
-		static func create_animator(
-			anim_tree: AnimationTree,
-			path_playback_full_body: String,
-			path_playback_upper_body: String,
-			mage: MageCharacter,
-			path_full_body_locomotion: String,
-			path_upper_body_blend2: String,
-		) -> Animator:
-			var full_body_playback = anim_tree.get(path_playback_full_body)
-			var right_arm_playback = anim_tree.get(path_playback_upper_body)
-			var prefix = "[ERROR][Animator.Factory::create_animator('%s', '%s')]" % [path_playback_full_body, path_playback_upper_body]
-			
-			assert(full_body_playback != null, "%s - full_body playback not found at '%s'" % [prefix, path_playback_full_body])
-			assert(right_arm_playback != null, "%s - right_arm playback not found at '%s'" % [prefix, path_playback_upper_body])
-			
-			full_body_playback = AnimationUtil.Playback.new(full_body_playback)
-			right_arm_playback = AnimationUtil.Playback.new(right_arm_playback)
-			
-			var paths = Animator.Blender.Paths.new(
-				path_full_body_locomotion,
-				path_upper_body_blend2,
-			)
-			var blender = Animator.Blender.new(mage, anim_tree, paths)
-			
-			return Animator.new(full_body_playback, right_arm_playback, blender)
