@@ -50,23 +50,26 @@ func oneshot_spawn_air() -> void:
 func oneshot_spawn_ground() -> void:
 	_tree.set(oneshots.spawn_ground, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
-func dev_attack() -> void:
-	blender.instant_upper_blend(1.0)
-	_upper_body_playback.play(names.upper_body.punch, AnimationUtil.Play.Travel)
+func enter_aggro() -> void:
+	_upper_body_playback.play(names.upper_body.unarmed_idle)
+	blender.set_upper_blend(1.0, 0.2)
+
+func exit_aggro() -> void:
+	_upper_body_playback.play(names.upper_body.idle)
+	blender.set_upper_blend(0.0, 0.2)
 
 func punch_attack() -> void:
-	_handle_attack_upper_body_blend(names.upper_body.punch)
-	_upper_body_playback.play(names.upper_body.punch, AnimationUtil.Play.Start)
+	_queue_is_attacking_flag(names.upper_body.unarmed_punch)
+	_upper_body_playback.play(names.upper_body.unarmed_punch, AnimationUtil.Play.Start)
 #endregion
 
 func process(delta: float): _conditional_queue.process(delta)
 
-func _handle_attack_upper_body_blend(attack_anim_name: StringName):
+func _queue_is_attacking_flag(attack_anim_name: StringName):
 	is_attacking = true
-	blender.set_upper_blend(1.0)
 	_conditional_queue.queue(
 		CQueue,
-		CQueue.UpperBodyBlend,
+		CQueue.IsAttacking,
 		func(_delta, task: ConditionalQueue.ConditionalQueueTask) -> bool:
 			var anim_name = _upper_body_playback.get_current_node()
 			var is_attack = anim_name == attack_anim_name
@@ -77,13 +80,11 @@ func _handle_attack_upper_body_blend(attack_anim_name: StringName):
 				return false
 			
 			return is_started and not is_attack,
-		func(_d):
-			blender.set_upper_blend(0.0)
-			is_attacking = false,
+		func(_d): is_attacking = false,
 	)
 
 enum CQueue {
-	UpperBodyBlend,
+	IsAttacking,
 }
 
 class Blender:
@@ -118,12 +119,14 @@ class StateNames:
 			
 	class UpperBody:
 		var idle: StringName
-		var punch: StringName
-		var kick: StringName
-		func _init(i: StringName, p: StringName, k: StringName) -> void:
+		var unarmed_idle: StringName
+		var unarmed_punch: StringName
+		var unarmed_kick: StringName
+		func _init(i: StringName, ua_i: StringName, ua_p: StringName, ua_k: StringName) -> void:
 			idle = i
-			punch = p
-			kick = k
+			unarmed_idle = ua_i
+			unarmed_punch = ua_p
+			unarmed_kick = ua_k
 
 class BlendPaths:
 	var locomotion: StringName
@@ -156,8 +159,9 @@ class Builder:
 	
 	var _s_death: StringName
 	var _s_idle: StringName
-	var _s_punch: StringName
-	var _s_kick: StringName
+	var _s_ua_idle: StringName
+	var _s_ua_punch: StringName
+	var _s_ua_kick: StringName
 	
 	var _o_weak: StringName
 	var _o_strong: StringName
@@ -185,11 +189,12 @@ class Builder:
 		_p_blend = blend
 		return self
 
-	func set_state_names(death: StringName, idle: StringName, punch: StringName, kick: StringName) -> Builder:
+	func set_state_names(death: StringName, idle: StringName, ua_idle: StringName, ua_punch: StringName, ua_kick: StringName) -> Builder:
 		_s_death = death
 		_s_idle = idle
-		_s_punch = punch
-		_s_kick = kick
+		_s_ua_idle = ua_idle
+		_s_ua_punch = ua_punch
+		_s_ua_kick = ua_kick
 		return self
 
 	func set_oneshots(hit_weak: StringName, hit_strong: StringName, spawn_air: StringName, spawn_ground: StringName) -> Builder:
@@ -203,7 +208,7 @@ class Builder:
 		var paths_obj = BlendPaths.new(_p_loco, _p_blend)
 		var states_obj = StateNames.new(
 			StateNames.FullBody.new(_s_death),
-			StateNames.UpperBody.new(_s_idle, _s_punch, _s_kick)
+			StateNames.UpperBody.new(_s_idle, _s_ua_idle, _s_ua_punch, _s_ua_kick)
 		)
 		var oneshots_obj = OneShots.new(_o_weak, _o_strong, _o_air, _o_ground)
 		var blender_obj = Blender.new(_host, _tree, paths_obj)

@@ -18,6 +18,7 @@ signal died()
 
 @export_group("Animation - State names")
 @export var state_full_body_death: String
+@export var state_upper_body_idle: String
 @export var state_upper_body_unarmed_idle: String
 @export var state_upper_body_unarmed_punch: String
 @export var state_upper_body_unarmed_kick: String
@@ -62,7 +63,7 @@ func _ready() -> void:
 	anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
 		.set_playbacks(path_playback_full_body, path_playback_upper_body)\
 		.set_paths(path_full_body_locomotion_blend, path_upper_body_blend2)\
-		.set_state_names(state_full_body_death, state_upper_body_unarmed_idle, state_upper_body_unarmed_punch, state_upper_body_unarmed_kick)\
+		.set_state_names(state_full_body_death, state_upper_body_idle, state_upper_body_unarmed_idle, state_upper_body_unarmed_punch, state_upper_body_unarmed_kick)\
 		.set_oneshots(path_oneshot_hit_weak, path_oneshot_hit_strong, path_oneshot_spawn_air, path_oneshot_spawn_ground)\
 		.build()
 	

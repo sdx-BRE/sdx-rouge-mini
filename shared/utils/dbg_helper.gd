@@ -30,11 +30,16 @@ func call_every(cb: Callable, count: int, force: bool = false):
 
 static func tprint(...args: Array) -> void:
 	var msg = "".join(args)
-	
+	print(DbgHelper.timestamp(), " ", str(msg))
+
+static func tool_tprint(...args: Array) -> void:
+	if Engine.is_editor_hint():
+		DbgHelper.tprint.callv(args)
+
+static func timestamp() -> String:
 	var t = Time.get_time_dict_from_system()
 	var ms = Time.get_ticks_msec() % 1000
-	var ts = "[%02d:%02d:%02d:%03d]" % [t.hour, t.minute, t.second, ms]
-	print(ts, " ", str(msg))
+	return "[%02d:%02d:%02d:%03d]" % [t.hour, t.minute, t.second, ms]
 
 static func visualize_fov(source: Node3D, fov_threshold: float, duration: float = 2.0, distance: float = 5.0):
 	var node_name = "FOV_Debug_Timer_" + str(source.get_instance_id())

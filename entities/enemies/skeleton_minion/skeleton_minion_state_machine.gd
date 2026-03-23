@@ -1,6 +1,7 @@
 class_name SkeletonMinionStateMachine extends RefCounted
 
-const ATTACK_RANGE := 2.0
+const ATTACK_RANGE := 1.53
+const ATTACK_COOLDOWN := 3.0
 
 var _state_handler: StateHandler
 var _target_handler: TargetHandler
@@ -21,11 +22,22 @@ static func start_walking(
 	
 	var target_handler = TargetHandler.new(minion)
 	
-	var data =  State.Data.new(minion, walking_speed, wait_time, controller, target_handler)
+	var data = State.Data.new(
+		minion,
+		controller,
+		target_handler,
+		walking_speed,
+		wait_time,
+		0
+	)
 	
 	var walking_state = State.Alive.Walking.new(data)
 	var waiting_state = State.Alive.Waiting.new(data)
-	var aggro_state = State.Alive.Aggro.new(data)
+	var aggro_state = State.Alive.Aggro.new(
+		data,
+		State.Alive.Aggro.Attacking.new(data),
+		State.Alive.Aggro.Chasing.new(data),
+	)
 	
 	var alive_state = State.Alive.new(walking_state, data)
 	
@@ -42,8 +54,16 @@ static func start_walking(
 	
 	return SkeletonMinionStateMachine.new(state_handler, target_handler, data)
 
+var d = DbgHelper.new()
 func process(delta: float) -> void:
 	_state_handler.handle(delta)
+	
+	d.call_every(func():
+		var node = _data.minion.fov.get_node("CollisionShape3D") as CollisionShape3D
+		var shape = node.shape as SphereShape3D
+		DbgHelper.visualize_fov(_data.minion, _data.minion.fov_threshold, 1.0, shape.radius)
+	, 60)
+	
 
 func target_entered(target: Node3D) -> void:
 	_target_handler.add_target(target)
@@ -83,33 +103,44 @@ class TargetHandler:
 			return _target.global_position
 		
 		return Vector3.ZERO
+		
+	func is_target_in_range() -> bool:
+		if _target == null:
+			return false
+			
+		var distance_sqrd = _host.pivot.global_position.distance_squared_to(_target.global_position)
+		
+		return distance_sqrd <= ATTACK_RANGE * ATTACK_RANGE
 
 class State:
 	class Data:
-		var wait_time: float
 		var minion: SkeletonMinion
-		var walking_speed: float
 		var controller: SkeletonMinionController
 		var target_handler: TargetHandler
+		var wait_time: float
+		var walking_speed: float
+		var attack_cooldown: float
 		
 		func _init(
 			p_minion: SkeletonMinion,
-			p_walking_speed: float,
-			p_wait_time: float,
 			p_controller: SkeletonMinionController,
 			p_target_handler: TargetHandler,
+			p_walking_speed: float,
+			p_wait_time: float,
+			p_attack_cooldown: float,
 		) -> void:
 			minion = p_minion
-			walking_speed = p_walking_speed
-			wait_time = p_wait_time
 			controller = p_controller
 			target_handler = p_target_handler
+			walking_speed = p_walking_speed
+			wait_time = p_wait_time
+			attack_cooldown = p_attack_cooldown
 	
 	class Base:
-		func process(_delta: float) -> Id: return Id.NoChange
+		func process(_delta: float) -> int: return Id.NoChange
 		func enter() -> void: pass
 	
-	class BaseData extends Base:
+	class BaseWithData extends Base:
 		var _data: Data
 		func _init(data: Data) -> void: _data = data
 	
@@ -133,6 +164,7 @@ class State:
 			_states[id] = state
 		
 		func process(delta: float) -> void:
+			_data.attack_cooldown -= delta
 			_check_aggro()
 			
 			var new_state_id = _state.process(delta)
@@ -145,8 +177,10 @@ class State:
 			if _data.target_handler.has_target() and _state != _states[Id.Aggro]:
 				_state = _states[Id.Aggro]
 				_state.enter()
+				print("enter aggro")
+				_data.minion.anim.enter_aggro()
 		
-		class Walking extends BaseData:
+		class Walking extends BaseWithData:
 			func process(delta: float) -> Id:
 				if _data.minion.agent.is_navigation_finished():
 					return Id.Wating
@@ -155,7 +189,7 @@ class State:
 				
 				return Id.NoChange
 		 
-		class Waiting extends BaseData:
+		class Waiting extends BaseWithData:
 			var _wait_time: float
 			
 			func _init(data: Data) -> void:
@@ -174,41 +208,44 @@ class State:
 			func enter() -> void:
 				_wait_time = _data.wait_time
 		
-		class Aggro extends BaseData:
-			const ATTACK_COOLDOWN: float = 3.0
+		class Aggro extends BaseWithData:
+			var _attacking: Attacking
+			var _chasing: Chasing
 			
-			var _last_enemy_pos: Vector3 = Vector3.ZERO
-			var _cooldown: float = 0
+			func _init(data: Data, attacking: Attacking, chasing: Chasing) -> void:
+				super(data)
+				_attacking = attacking
+				_chasing = chasing
 			
 			func process(delta: float) -> Id:
 				if not _data.target_handler.has_target():
+					print("exit aggro")
+					_data.minion.anim.exit_aggro()
 					return Id.Wating # Todo: Implement pushdown automata to return to last state
 				
-				return _attack_enemy(delta) if _is_in_range() else _move_toward_enemy(delta)
-			
-			func _attack_enemy(delta: float) -> Id:
-				_data.controller.brake_when_moving(_data.walking_speed)
-				_cooldown -= delta
+				if _data.target_handler.is_target_in_range(): _attacking.process(delta)
+				else: _chasing.process(delta)
 				
-				if not _data.minion.anim.is_attacking and _cooldown <= 0:
-					_data.minion.anim.punch_attack()
-					_cooldown = ATTACK_COOLDOWN
-				return Id.NoChange
-				
-			func _move_toward_enemy(delta: float) -> Id:
-				var target_pos = _data.target_handler.get_target_position()
-				if _last_enemy_pos != target_pos:
-					_last_enemy_pos = target_pos
-					_data.controller.change_target(target_pos)
-				
-				_data.controller.move_towards_next_point(_data.walking_speed, delta)
 				return Id.NoChange
 			
-			func _is_in_range() -> bool:
-				var distance_sqrd = _data.minion.global_position.distance_squared_to(
-					_data.target_handler.get_target_position()
-				)
-				return distance_sqrd <= ATTACK_RANGE * ATTACK_RANGE
+			class Attacking extends BaseWithData:
+				func process(_delta: float):
+					_data.controller.brake_when_moving(_data.walking_speed)
+					
+					if not _data.minion.anim.is_attacking and _data.attack_cooldown <= 0:
+						_data.minion.anim.punch_attack()
+						_data.attack_cooldown = ATTACK_COOLDOWN
+			
+			class Chasing extends BaseWithData:
+				var _last_enemy_pos: Vector3 = Vector3.ZERO
+				
+				func process(delta: float):
+					var target_pos = _data.target_handler.get_target_position()
+					if _last_enemy_pos != target_pos:
+						_last_enemy_pos = target_pos
+						_data.controller.change_target(target_pos)
+					
+					_data.controller.move_towards_next_point(_data.walking_speed, delta)
 	
 	class Dead extends Base:
 		var _data: Data
@@ -282,11 +319,14 @@ class SkeletonMinionController:
 		_minion.velocity = dir * speed
 	
 	func brake(friction: float) -> void:
+		print("brake::start(), velo.x: ", _minion.velocity.x, " - velo.y: ", _minion.velocity.z)
 		_minion.velocity.x = move_toward(_minion.velocity.x, 0, friction)
 		_minion.velocity.z = move_toward(_minion.velocity.z, 0, friction)
+		print("brake::end(), velo.x: ", _minion.velocity.x, " - velo.y: ", _minion.velocity.z)
+		print()
 	
 	func brake_when_moving(friction: float) -> void:
-		if not _minion.velocity.is_zero_approx():
+		if _minion.velocity.length() > 0:
 			brake(friction)
 	
 	func next_patrol_point():
