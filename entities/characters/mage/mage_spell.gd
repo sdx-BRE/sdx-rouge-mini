@@ -131,6 +131,8 @@ enum CQueueTask {
 	FinishAttack,
 }
 
+#region spells
+#region basespell
 class BaseSpell extends HasMage:
 	var anim: SpellAnimation
 	
@@ -189,12 +191,13 @@ class BaseSpell extends HasMage:
 				return is_started and not is_attack_animation,
 				func(_d): _mage.anim.blender.blend2_upper_body(0.0)
 		)
-
+#endregion
 class InstantSpell extends BaseSpell:
 	func preparing(_delta: float) -> void: pass
 	func cancel() -> void: pass
 	func handle_input(_event: InputEvent) -> bool: return false
 	
+#region firepulse
 class Firepulse extends InstantSpell:
 	func release():
 		_mage.notify_casting_end()
@@ -211,7 +214,8 @@ class Firepulse extends InstantSpell:
 		_mage.anim.play_upper_body(anim.state_name, AnimationUtil.Play.Start)
 		_mage.abilities.buffer_active_spell()
 		_mage.notify_casting_started()
-
+#endregion
+#region firebolt
 class Firebolt extends InstantSpell:
 	func release():
 		_mage.notify_casting_end()
@@ -222,7 +226,8 @@ class Firebolt extends InstantSpell:
 		_mage.anim.play_upper_body(anim.state_name, AnimationUtil.Play.Start)
 		_mage.abilities.buffer_active_spell()
 		_mage.notify_casting_started()
-
+#endregion
+#region meteor
 class Meteor extends BaseSpell:
 	var _aim_pos := Vector3.ZERO
 	
@@ -270,10 +275,12 @@ class Meteor extends BaseSpell:
 		var end = origin + camera.project_ray_normal(mouse_pos) * cast_range
 		
 		var query = PhysicsRayQueryParameters3D.create(origin, end)
-		query.exclude = [_mage.get_rid()]
+		query.collision_mask = Layers.COLLISION_WORLD
 		
 		var result = _mage.get_world_3d().direct_space_state.intersect_ray(query)
 		
 		if result:
 			_mage.aim_decal.global_position = result.position
 			_aim_pos = result.position
+#endregion
+#endregion
