@@ -15,6 +15,7 @@ func _init(handler: StateHandler, target_handler: TargetHandler, data: State.Dat
 static func start_walking(
 	minion: SkeletonMinion,
 	walking_speed: float,
+	running_speed: float,
 	wait_time: float,
 ) -> SkeletonMinionStateMachine:
 	var controller = SkeletonMinionController.new(minion)
@@ -27,6 +28,7 @@ static func start_walking(
 		controller,
 		target_handler,
 		walking_speed,
+		running_speed,
 		wait_time,
 		0
 	)
@@ -119,6 +121,7 @@ class State:
 		var target_handler: TargetHandler
 		var wait_time: float
 		var walking_speed: float
+		var running_speed: float
 		var attack_cooldown: float
 		
 		func _init(
@@ -126,6 +129,7 @@ class State:
 			p_controller: SkeletonMinionController,
 			p_target_handler: TargetHandler,
 			p_walking_speed: float,
+			p_running_speed: float,
 			p_wait_time: float,
 			p_attack_cooldown: float,
 		) -> void:
@@ -133,6 +137,7 @@ class State:
 			controller = p_controller
 			target_handler = p_target_handler
 			walking_speed = p_walking_speed
+			running_speed = p_running_speed
 			wait_time = p_wait_time
 			attack_cooldown = p_attack_cooldown
 	
@@ -177,8 +182,7 @@ class State:
 			if _data.target_handler.has_target() and _state != _states[Id.Aggro]:
 				_state = _states[Id.Aggro]
 				_state.enter()
-				print("enter aggro")
-				_data.minion.anim.enter_aggro()
+				print("enter aggro (todo: remove)")
 		
 		class Walking extends BaseWithData:
 			func process(delta: float) -> Id:
@@ -219,8 +223,7 @@ class State:
 			
 			func process(delta: float) -> Id:
 				if not _data.target_handler.has_target():
-					print("exit aggro")
-					_data.minion.anim.exit_aggro()
+					print("exit aggro (todo: remove)")
 					return Id.Wating # Todo: Implement pushdown automata to return to last state
 				
 				if _data.target_handler.is_target_in_range(): _attacking.process(delta)
@@ -245,7 +248,7 @@ class State:
 						_last_enemy_pos = target_pos
 						_data.controller.change_target(target_pos)
 					
-					_data.controller.move_towards_next_point(_data.walking_speed, delta)
+					_data.controller.move_towards_next_point(_data.running_speed, delta)
 	
 	class Dead extends Base:
 		var _data: Data
@@ -319,11 +322,8 @@ class SkeletonMinionController:
 		_minion.velocity = dir * speed
 	
 	func brake(friction: float) -> void:
-		print("brake::start(), velo.x: ", _minion.velocity.x, " - velo.y: ", _minion.velocity.z)
 		_minion.velocity.x = move_toward(_minion.velocity.x, 0, friction)
 		_minion.velocity.z = move_toward(_minion.velocity.z, 0, friction)
-		print("brake::end(), velo.x: ", _minion.velocity.x, " - velo.y: ", _minion.velocity.z)
-		print()
 	
 	func brake_when_moving(friction: float) -> void:
 		if _minion.velocity.length() > 0:

@@ -12,22 +12,19 @@ signal died()
 @export_group("Animation - General")
 @export var anim_tree: AnimationTree
 @export var path_playback_full_body: String
-@export var path_playback_upper_body: String
-@export var path_full_body_locomotion_blend: String
-@export var path_upper_body_blend2: String
+@export var path_locomotion_blend: String
+@export var path_locomotion_timescale: String
 
 @export_group("Animation - State names")
-@export var state_full_body_death: String
-@export var state_upper_body_idle: String
-@export var state_upper_body_unarmed_idle: String
-@export var state_upper_body_unarmed_punch: String
-@export var state_upper_body_unarmed_kick: String
+@export var state_death: String
 
 @export_group("Animation - Oneshot")
-@export var path_oneshot_hit_weak: String
-@export var path_oneshot_hit_strong: String
-@export var path_oneshot_spawn_air: String
-@export var path_oneshot_spawn_ground: String
+@export var oneshot_hit_weak: String
+@export var oneshot_hit_strong: String
+@export var oneshot_spawn_air: String
+@export var oneshot_spawn_ground: String
+@export var oneshot_punch: String
+@export var oneshot_kick: String
 
 @export_group("Animation - Thresholds")
 @export var threshold_hit_strong: float = 12.5
@@ -57,14 +54,15 @@ func _ready() -> void:
 	state_machine = SkeletonMinionStateMachine.start_walking(
 		self,
 		data.walking_speed,
+		data.running_speed,
 		wait_time,
 	)
 	
 	anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
-		.set_playbacks(path_playback_full_body, path_playback_upper_body)\
-		.set_paths(path_full_body_locomotion_blend, path_upper_body_blend2)\
-		.set_state_names(state_full_body_death, state_upper_body_idle, state_upper_body_unarmed_idle, state_upper_body_unarmed_punch, state_upper_body_unarmed_kick)\
-		.set_oneshots(path_oneshot_hit_weak, path_oneshot_hit_strong, path_oneshot_spawn_air, path_oneshot_spawn_ground)\
+		.set_playbacks(path_playback_full_body)\
+		.set_paths(path_locomotion_blend, path_locomotion_timescale)\
+		.set_state_names(state_death)\
+		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
 	
 	processor = Processor.create(self, anim.blender)
@@ -101,12 +99,10 @@ func on_die() -> void:
 	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
 		anim_tree.animation_finished.connect(on_death_anim_finished)
 	
-	var death_anim_name = "%s_A" % state_full_body_death
-	anim.play_full_body(death_anim_name)
+	anim.play_full_body(state_death)
 
 func on_death_anim_finished(anim_name: StringName) -> void:
-	var death_anim_name = "%s_A" % state_full_body_death
-	if anim_name == death_anim_name:
+	if anim_name == state_death:
 		anim_tree.animation_finished.disconnect(on_death_anim_finished)
 		await get_tree().create_timer(1.0).timeout
 		died.emit()
@@ -161,17 +157,34 @@ class Processor:
 			_minion.state_machine.process(delta)
 	
 	class Blend extends HasMinion:
+		const BASE_TIMESCALE = 1.0
+		const MAX_TIMESCALE = 1.8
+		
 		var _blender: SkeletonMinionAnimator.Blender
+		
 		var _movement_blend := 0.0
+		var _movement_timescale := 1.0
 		
 		func _init(minion: SkeletonMinion, blender: SkeletonMinionAnimator.Blender) -> void:
 			super(minion)
 			_blender = blender
 		
 		func process(delta: float) -> void:
-			var movement_blend_target = _get_speed() / _minion.data.running_speed
-			_movement_blend = lerp(_movement_blend, movement_blend_target, delta * 10)
-			_blender.blend_loco(_movement_blend)
+			var speed = _get_speed()
+			var movement_blend = speed / _minion.data.walking_speed
+			
+			var run_to_walk_ratio = clamp(
+				(speed - _minion.data.walking_speed) / (_minion.data.running_speed - _minion.data.walking_speed),
+				0,
+				1
+			)
+			var movement_timescale = lerp(BASE_TIMESCALE, MAX_TIMESCALE, run_to_walk_ratio)
+			
+			_movement_blend = lerp(_movement_blend, movement_blend, delta * 10)
+			_movement_timescale = lerp(_movement_timescale, movement_timescale, delta * 10)
+			
+			_blender.blend_loco_move(_movement_blend)
+			_blender.blend_loco_timescale(_movement_timescale)
 		
 		func _get_speed() -> float:
 			return Vector3(_minion.velocity.x, 0, _minion.velocity.z).length()
