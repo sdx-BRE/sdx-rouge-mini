@@ -1,17 +1,15 @@
 class_name MageAbilities
 
-var registry: Registry
-var _active_spell: BaseSpell
-var _buffered_spell: BaseSpell
+var _registry: Registry
+var _active_ability: BaseAbility
+var _buffered_ability: BaseAbility
 
-func _init(p_registry: Registry) -> void:
-	registry = p_registry
+func _init(registry: Registry) -> void:
+	_registry = registry
 
-static func create(
-	mage: MageCharacter
-) -> MageAbilities:
+static func create(mage: MageCharacter) -> MageAbilities:
 	var player: AnimationPlayer = mage.anim_tree.get_node(mage.anim_tree.anim_player)
-	
+
 	var firebolt = Firebolt.new(mage, SpellAnimation.create(
 		mage.firebolt_data,
 		mage.animation_shoot,
@@ -30,47 +28,65 @@ static func create(
 		player,
 	))
 	
-	return MageAbilities.new(Registry.new(firebolt, firepulse, meteor))
+	var dash = Dash.new(mage)
+	
+	var reg = Registry.new()
+	reg.add(Id.Firepulse, AbilityInfo.new(firepulse, ["attack", "skill_2"]))
+	reg.add(Id.Firebolt, AbilityInfo.new(firebolt, ["skill_1"]))
+	reg.add(Id.Meteor, AbilityInfo.new(meteor, ["skill_3"]))
+	reg.add(Id.Dash, AbilityInfo.new(dash, ["dash"]))
+	
+	return MageAbilities.new(reg)
 
-func prepare_spell(spell: BaseSpell) -> void:
-	if _active_spell != null:
-		_active_spell.cancel()
-	_active_spell = spell
-	_active_spell.prepare()
+func prepare_ability(id: Id) -> void:
+	var ability = _registry.get_ability(id)
+	if ability == null:
+		return
+	
+	if _active_ability != null:
+		_active_ability.cancel()
+	_active_ability = ability
+	_active_ability.prepare()
 
 func handle_input(event: InputEvent) -> bool:
-	if _active_spell != null:
-		return _active_spell.handle_input(event)
+	if _active_ability != null and _active_ability.handle_input(event):
+		return true
+	
+	for action in _registry.actions:
+		if event.is_action_pressed(action):
+			prepare_ability(_registry.actions[action])
+			return true
+	
 	return false
 
 func preparing(delta: float) -> void:
-	if _active_spell != null:
-		_active_spell.preparing(delta)
+	if _active_ability != null:
+		_active_ability.preparing(delta)
 	
-	if _buffered_spell != null:
-		_buffered_spell.casting()
+	if _buffered_ability != null:
+		_buffered_ability.casting()
 
-func buffer_spell(spell: BaseSpell) -> void:
-	if _buffered_spell != null:
-		_buffered_spell.cancel()
-	_buffered_spell = spell
+func buffer_ability(ability: BaseAbility) -> void:
+	if _buffered_ability != null:
+		_buffered_ability.cancel()
+	_buffered_ability = ability
 
-func buffer_active_spell() -> void:
-	if _active_spell != null:
-		buffer_spell(_active_spell)
-		_active_spell = null
+func buffer_active_ability() -> void:
+	if _active_ability != null:
+		buffer_ability(_active_ability)
+		_active_ability = null
 
-func is_buffered(spell: BaseSpell) -> bool:
-	return _buffered_spell == spell
+func is_buffered(ability: BaseAbility) -> bool:
+	return _buffered_ability == ability
 
 func release() -> void:
-	if _buffered_spell != null:
-		_buffered_spell.release()
-		_buffered_spell = null
+	if _buffered_ability != null:
+		_buffered_ability.release()
+		_buffered_ability = null
 
-func unset_when_active(spell: BaseSpell) -> void:
-	if _active_spell == spell:
-		_active_spell = null
+func unset_when_active(ability: BaseAbility) -> void:
+	if _active_ability == ability:
+		_active_ability = null
 
 class HasMage:
 	var _mage: MageCharacter
@@ -78,15 +94,37 @@ class HasMage:
 	func _init(mage: MageCharacter):
 		_mage = mage
 
-class Registry:
-	var bolt: Firebolt
-	var pulse: Firepulse
-	var meteor: Meteor
+enum Id {
+	Firepulse,
+	Firebolt,
+	Meteor,
+	Dash,
+}
+class AbilityInfo:
+	var ability: BaseAbility
+	var actions: Array[StringName]
 	
-	func _init(p_bolt: Firebolt, p_pulse: Firepulse, p_meteor: Meteor) -> void:
-		bolt = p_bolt
-		pulse = p_pulse
-		meteor = p_meteor
+	func _init(p_ability: BaseAbility, p_actions: Array[StringName]) -> void:
+		ability = p_ability
+		actions = p_actions
+
+class Registry:
+	var _abilities: Dictionary[Id, AbilityInfo]
+	var actions: Dictionary[StringName, Id]
+	
+	func add(id: Id, ability: AbilityInfo) -> void:
+		_abilities[id] = ability
+		_build_actions_dict()
+	
+	func get_ability(id: Id) -> BaseAbility:
+		return _abilities[id].ability
+	
+	func _build_actions_dict():
+		var result: Dictionary[StringName, Id] = {}
+		for idx in _abilities:
+			for action in _abilities[idx].actions:
+				result[action] = idx
+		actions = result
 
 class SpellAnimation:
 	var scene: PackedScene
@@ -122,28 +160,18 @@ enum CQueueTask {
 }
 
 #region spells
-#region basespell
-class BaseSpell extends HasMage:
-	var anim: SpellAnimation
-	
-	func _init(mage: MageCharacter, p_anim: SpellAnimation):
-		super(mage)
-		anim = p_anim
-	
-	func prepare() -> void: push_error("[MageCharacter][Spell][BaseSpell].prepare() must be overriden by child implementations")
-	func preparing(_delta: float) -> void: push_error("[MageCharacter][Spell][BaseSpell].preparing() must be overriden by child implementations")
-	func release() -> void: push_error("[MageCharacter][Spell][BaseSpell].release() must be overriden by child implementations")
-	func cancel() -> void: push_error("[MageCharacter][Spell][BaseSpell].cancel() must be overriden by child implementations")
+#region BaseAbility
+class BaseAbility extends HasMage:
+	func prepare() -> void: push_error("[BaseAbility].prepare() must be overriden by child implementations")
+	func preparing(_delta: float) -> void: push_error("[BaseAbility].preparing() must be overriden by child implementations")
+	func release() -> void: push_error("[BaseAbility].release() must be overriden by child implementations")
+	func cancel() -> void: push_error("[BaseAbility].cancel() must be overriden by child implementations")
 	func handle_input(_event: InputEvent) -> bool: 
-		push_error("[MageCharacter][Spell][BaseSpell].push_error() must be overriden by child implementations")
+		push_error("[BaseAbility].push_error() must be overriden by child implementations")
 		return false
-	func progress(): push_error("[MageCharacter][Spell][BaseSpell].progress() must be overriden by child implementations")
+	func progress() -> void: push_error("[BaseAbility].progress() must be overriden by child implementations")
 	
-	func casting() -> void:
-		_mage.notify_casting_progressed(
-			_mage.anim.get_current_position(anim.oneshot_prop),
-			anim.cast_point,
-		)
+	func casting() -> void: push_error("[BaseAbility].casting() must be overriden by child implementations")
 	
 	func _init_at_wand_spawnpoint(scene: PackedScene) -> Node3D:
 		var node = _init_scene(scene)
@@ -161,11 +189,30 @@ class BaseSpell extends HasMage:
 		_mage.get_tree().current_scene.add_child(node)
 		return node
 #endregion
-class InstantSpell extends BaseSpell:
+
+class SpellAbility extends BaseAbility:
+	var anim: SpellAnimation
+	
+	func _init(mage: MageCharacter, p_anim: SpellAnimation):
+		super(mage)
+		anim = p_anim
+	
+	func casting() -> void:
+		_mage.notify_casting_progressed(
+			_mage.anim.get_current_position(anim.oneshot_prop),
+			anim.cast_point,
+		)
+
+class InstantAbility extends BaseAbility:
 	func preparing(_delta: float) -> void: pass
 	func cancel() -> void: pass
 	func handle_input(_event: InputEvent) -> bool: return false
-	
+
+class InstantSpell extends SpellAbility:
+	func preparing(_delta: float) -> void: pass
+	func cancel() -> void: pass
+	func handle_input(_event: InputEvent) -> bool: return false
+
 #region firepulse
 class Firepulse extends InstantSpell:
 	func release():
@@ -180,7 +227,7 @@ class Firepulse extends InstantSpell:
 	
 	func prepare() -> void:
 		_mage.anim.request_oneshot_fire(anim.oneshot_prop)
-		_mage.abilities.buffer_active_spell()
+		_mage.abilities.buffer_active_ability()
 		_mage.notify_casting_started()
 #endregion
 #region firebolt
@@ -191,11 +238,11 @@ class Firebolt extends InstantSpell:
 	
 	func prepare():
 		_mage.anim.request_oneshot_fire(anim.oneshot_prop)
-		_mage.abilities.buffer_active_spell()
+		_mage.abilities.buffer_active_ability()
 		_mage.notify_casting_started()
 #endregion
 #region meteor
-class Meteor extends BaseSpell:
+class Meteor extends SpellAbility:
 	var _aim_pos := Vector3.ZERO
 	
 	func release():
@@ -224,7 +271,7 @@ class Meteor extends BaseSpell:
 			_mage.camera_node.use_visible_mouse()
 			_mage.aim_decal.visible = false
 			
-			_mage.abilities.buffer_active_spell()
+			_mage.abilities.buffer_active_ability()
 			_mage.camera_node.use_captured_mouse()
 			_mage.notify_casting_started()
 			
@@ -248,5 +295,17 @@ class Meteor extends BaseSpell:
 		if result:
 			_mage.aim_decal.global_position = result.position
 			_aim_pos = result.position
+#endregion
+#region dash
+class Dash extends InstantAbility:
+	func prepare() -> void:
+		if _mage.controller.is_not_moving():
+			return
+		
+		var forward_vector = _mage.pivot.global_transform.basis.z
+		forward_vector.y = 0
+		forward_vector = forward_vector.normalized()
+		
+		_mage.controller.push_dash_motion(forward_vector * _mage.dash_power)
 #endregion
 #endregion

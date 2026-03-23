@@ -59,13 +59,6 @@ static func start_walking(
 var d = DbgHelper.new()
 func process(delta: float) -> void:
 	_state_handler.handle(delta)
-	
-	d.call_every(func():
-		var node = _data.minion.fov.get_node("CollisionShape3D") as CollisionShape3D
-		var shape = node.shape as SphereShape3D
-		DbgHelper.visualize_fov(_data.minion, _data.minion.fov_threshold, 1.0, shape.radius)
-	, 60)
-	
 
 func target_entered(target: Node3D) -> void:
 	_target_handler.add_target(target)
@@ -182,7 +175,6 @@ class State:
 			if _data.target_handler.has_target() and _state != _states[Id.Aggro]:
 				_state = _states[Id.Aggro]
 				_state.enter()
-				print("enter aggro (todo: remove)")
 		
 		class Walking extends BaseWithData:
 			func process(delta: float) -> Id:
@@ -223,7 +215,6 @@ class State:
 			
 			func process(delta: float) -> Id:
 				if not _data.target_handler.has_target():
-					print("exit aggro (todo: remove)")
 					return Id.Wating # Todo: Implement pushdown automata to return to last state
 				
 				if _data.target_handler.is_target_in_range(): _attacking.process(delta)

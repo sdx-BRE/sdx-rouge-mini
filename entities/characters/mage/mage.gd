@@ -9,6 +9,8 @@ signal casting_progressed(current: float, total: float)
 @export_group("Player properties")
 @export var max_speed = 5.0
 @export var look_at_weight := 10.0
+@export var dash_power := 20.0
+@export var dash_decay := 8.0
 
 @export_group("Spell resources")
 @export var firebolt_data: SpellResource
@@ -47,7 +49,7 @@ func _ready() -> void:
 		param_playback_full_body,
 		param_blend_locomotion,
 	)
-	controller = MageController.create(self, self.camera_node, max_speed)
+	controller = MageController.create(self, self.camera_node, max_speed, dash_decay)
 	abilities = MageAbilities.create(self)
 	processor = MageProcessor.new(controller, anim, abilities, get_viewport())
 
