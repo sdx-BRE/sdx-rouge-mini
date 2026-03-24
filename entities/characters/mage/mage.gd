@@ -2,12 +2,13 @@ class_name MageCharacter extends CharacterBody3D
 
 signal health_changed(current: float, total: float)
 signal mana_changed(current: float, total: float)
+signal stamina_changed(current: float, total: float)
 signal casting_started()
 signal casting_end()
 signal casting_progressed(current: float, total: float)
 
 @export_group("Player properties")
-@export var max_speed = 5.0
+@export var max_speed := 5.0
 @export var look_at_weight := 10.0
 @export var dash_power := 20.0
 @export var dash_decay := 8.0
@@ -39,7 +40,7 @@ var anim: MageAnimator
 var controller: MageController
 var processor: MageProcessor
 
-var abilities: MageAbilities
+var abilities: MageAbilityHandler
 
 func _ready() -> void:
 	stats = Stats.new(self)
@@ -50,7 +51,7 @@ func _ready() -> void:
 		param_blend_locomotion,
 	)
 	controller = MageController.create(self, self.camera_node, max_speed, dash_decay)
-	abilities = MageAbilities.create(self)
+	abilities = MageAbilityHandlerFactory.create(self, controller)
 	processor = MageProcessor.new(controller, anim, abilities, get_viewport())
 
 #region stat notification
@@ -59,6 +60,9 @@ func notify_health_changed(current: float, total: float) -> void:
 
 func notify_mana_changed(current: float, total: float) -> void:
 	mana_changed.emit(current, total)
+
+func notify_stamina_changed(current: float, total: float) -> void:
+	stamina_changed.emit(current, total)
 
 func notify_casting_started() -> void:
 	casting_started.emit()
@@ -90,9 +94,11 @@ class Stats extends RefCounted:
 	
 	var _max_health := 100.0
 	var _max_mana := 100.0
+	var _max_stamina := 100.0
 	
-	var _health := 100.0
-	var _mana := 100.0
+	var _health := _max_health
+	var _mana := _max_mana
+	var _stamina := _max_stamina
 	
 	func take_dmg(value: float) -> void:
 		_health = max(_health - value, 0)
@@ -102,10 +108,27 @@ class Stats extends RefCounted:
 		_health = min(_health + value, _max_health)
 		_mage.notify_health_changed(_health, _max_health)
 	
+	func has_health() -> bool:
+		return _health > 0
+	
 	func use_mana(value: float) -> void:
 		_mana = max(_mana - value, 0)
 		_mage.notify_mana_changed(_mana, _max_mana)
 	
+	func has_mana() -> bool:
+		return _mana > 0
+	
 	func restore_mana(value: float) -> void:
 		_mana = min(_mana + value, _max_mana)
 		_mage.notify_mana_changed(_mana, _max_mana)
+	
+	func use_stamina(value: float) -> void:
+		_stamina = max(_stamina - value, 0)
+		_mage.notify_stamina_changed(_stamina, _max_stamina)
+	
+	func has_stamina() -> bool:
+		return _stamina > 0
+	
+	func restore_stamina(value: float) -> void:
+		_stamina = min(_stamina + value, _max_stamina)
+		_mage.notify_stamina_changed(_stamina, _max_stamina)
