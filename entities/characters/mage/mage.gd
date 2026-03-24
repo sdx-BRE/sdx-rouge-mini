@@ -108,15 +108,21 @@ class Stats extends RefCounted:
 		_health = min(_health + value, _max_health)
 		_mage.notify_health_changed(_health, _max_health)
 	
-	func has_health() -> bool:
+	func has_health_left() -> bool:
 		return _health > 0
+	
+	func has_enough_health(value: float) -> bool:
+		return _health >= value
 	
 	func use_mana(value: float) -> void:
 		_mana = max(_mana - value, 0)
 		_mage.notify_mana_changed(_mana, _max_mana)
 	
-	func has_mana() -> bool:
+	func has_mana_left() -> bool:
 		return _mana > 0
+	
+	func has_enough_mana(value: float) -> bool:
+		return _mana >= value
 	
 	func restore_mana(value: float) -> void:
 		_mana = min(_mana + value, _max_mana)
@@ -126,8 +132,11 @@ class Stats extends RefCounted:
 		_stamina = max(_stamina - value, 0)
 		_mage.notify_stamina_changed(_stamina, _max_stamina)
 	
-	func has_stamina() -> bool:
+	func has_stamina_left() -> bool:
 		return _stamina > 0
+	
+	func has_enough_stamina(value: float) -> bool:
+		return _stamina >= value
 	
 	func restore_stamina(value: float) -> void:
 		_stamina = min(_stamina + value, _max_stamina)

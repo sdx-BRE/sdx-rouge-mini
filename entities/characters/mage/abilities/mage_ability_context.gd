@@ -5,6 +5,13 @@ var _mage: MageCharacter
 func _init(mage: MageCharacter):
 	_mage = mage
 
+func has_resources(cost: MageAbilityCost) -> bool:
+	return _mage.stats.has_enough_mana(cost.mana) and _mage.stats.has_enough_stamina(cost.stamina)
+
+func use_resources(cost: MageAbilityCost) -> void:
+	_mage.stats.use_mana(cost.mana)
+	_mage.stats.use_stamina(cost.stamina)
+
 func get_cast_origin() -> Vector3:
 	return _mage.wandspawn_node.global_position
 
@@ -51,9 +58,3 @@ func get_viewport() -> Viewport:
 
 func get_world_3d() -> World3D:
 	return _mage.get_world_3d()
-
-func use_stamina(value: float) -> void:
-	_mage.stats.use_stamina(value)
-
-func has_stamina() -> bool:
-	return _mage.stats.has_stamina()

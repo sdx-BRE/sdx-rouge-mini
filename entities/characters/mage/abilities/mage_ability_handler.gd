@@ -14,8 +14,12 @@ func try_activate_ability(id: MageAbilityId.Id) -> void:
 	if ability == null:
 		return
 	
+	if not ability.has_resources():
+		return
+	
 	if ability is MageAbilityInstant:
 		ability.trigger()
+		ability.use_resources()
 		return
 	
 	if _active != null:
@@ -49,6 +53,7 @@ func handle_input(event: InputEvent) -> bool:
 func execute_buffered_cast() -> void:
 	if _buffered != null:
 		_buffered.execute()
+		_buffered.use_resources()
 		_buffered = null
 
 func _buffer_active_ability() -> void:

@@ -9,6 +9,12 @@ func _init(controller: MageController, context: MageAbilityContext, cost: MageAb
 	_context = context
 	_cost = cost
 
+func has_resources() -> bool:
+	return _context.has_resources(_cost)
+
+func use_resources() -> void:
+	_context.use_resources(_cost)
+
 func cancel() -> void: 
 	push_error("[Error][MageAbilityBase]: cancel() must be overwritten by child implementations")
 
