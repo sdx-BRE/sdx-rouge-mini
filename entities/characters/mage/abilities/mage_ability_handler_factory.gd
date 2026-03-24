@@ -24,7 +24,9 @@ static func create(mage: MageCharacter, controller: MageController) -> MageAbili
 		player,
 	))
 	
-	var dash := MageAbilityDash.new(controller, context, empty_cost.with_stamina(5))
+	var dash := MageAbilityDash.new(controller, context, empty_cost.with_stamina(5), MageAbilityAnimation.from_data(
+		mage.animation_dash,
+	))
 	
 	var registry := MageAbilityRegistry.new()
 	registry.add(MageAbilityId.Id.Firepulse, MageAbilityInfo.new(firepulse, ["attack", "skill_2"]))

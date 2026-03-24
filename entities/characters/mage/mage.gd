@@ -26,6 +26,7 @@ signal casting_progressed(current: float, total: float)
 @export_group("Animation - data")
 @export var animation_shoot: SpellAnimationData
 @export var animation_raise: SpellAnimationData
+@export var animation_dash: MageAnimationData
 
 @onready var pivot := $Pivot
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn

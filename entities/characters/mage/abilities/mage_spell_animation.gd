@@ -1,16 +1,15 @@
-﻿class_name MageSpellAnimation
+﻿class_name MageSpellAnimation extends MageAbilityAnimation
 
 var scene: PackedScene
-var oneshot_prop: StringName
 var cast_point: float
 
 func _init(
-	p_scene: PackedScene,
 	p_oneshot_prop: StringName,
+	p_scene: PackedScene,
 	p_cast_point: float
 ) -> void:
+	super(p_oneshot_prop)
 	scene = p_scene
-	oneshot_prop = p_oneshot_prop
 	cast_point = p_cast_point
 
 static func create(
@@ -23,7 +22,7 @@ static func create(
 		c_point = 0.01
 	
 	return MageSpellAnimation.new(
-		resource.scene,
 		animation.oneshot_property,
+		resource.scene,
 		c_point,
 	)
