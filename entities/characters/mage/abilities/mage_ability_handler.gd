@@ -18,8 +18,8 @@ func try_activate_ability(id: MageAbilityId.Id) -> void:
 		return
 	
 	if ability is MageAbilityInstant:
-		ability.trigger()
-		ability.use_resources()
+		if ability.trigger() == MageAbilityInstant.Result.Trigger:
+			ability.use_resources()
 		return
 	
 	if _active != null:
