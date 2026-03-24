@@ -10,6 +10,8 @@ extends Node
 func _ready() -> void:
 	mage.health_changed.connect(hud.update_health)
 	mage.mana_changed.connect(hud.update_mana)
+	mage.stamina_changed.connect(hud.update_stamina)
+	
 	mage.casting_started.connect(hud.show_skill_progress)
 	mage.casting_end.connect(hud.hide_skill_progress)
 	mage.casting_progressed.connect(hud.update_skill_progress)
