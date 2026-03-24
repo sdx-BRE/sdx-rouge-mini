@@ -14,8 +14,9 @@ static func create(
 	camera_node: ThirdPersonCam, 
 	initial_movement_speed: float,
 	dash_decay: float,
+	look_at_weight: float,
 ) -> MageController:
-	var config = MovementConfig.new(camera_node, initial_movement_speed, dash_decay)
+	var config = MovementConfig.new(camera_node, initial_movement_speed, dash_decay, look_at_weight)
 	var motion = MovementMotion.new(Vector3.ZERO)
 	return MageController.new(host, config, motion)
 
@@ -61,7 +62,7 @@ func push_dash_motion(dash_power: Vector3) -> void:
 
 func _look_at(direction: Vector3, delta: float) -> void:
 	var target_rotation = atan2(direction.x, direction.z)
-	_host.pivot.rotation.y = lerp_angle(_host.pivot.rotation.y, target_rotation, delta * _host.look_at_weight)
+	_host.pivot.rotation.y = lerp_angle(_host.pivot.rotation.y, target_rotation, delta * _config.look_at_weight)
 
 func _calculate_movement_direction(input_dir: Vector2) -> Vector3:
 	if _config.camera_node == null:
@@ -85,15 +86,18 @@ class MovementConfig:
 	var camera_node: ThirdPersonCam
 	var movement_speed: float
 	var dash_decay: float
+	var look_at_weight: float
 	
 	func _init(
 		p_camera_node: ThirdPersonCam,
 		p_movement_speed: float,
 		p_dash_decay: float,
+		p_look_at_weight: float,
 	) -> void:
 		camera_node = p_camera_node
 		movement_speed = p_movement_speed
 		dash_decay = p_dash_decay
+		look_at_weight = p_look_at_weight
 
 class MovementMotion:
 	var dash_power: Vector3

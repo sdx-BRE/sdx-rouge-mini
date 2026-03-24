@@ -6,7 +6,7 @@ func _init(mage: MageCharacter):
 	_mage = mage
 
 func has_resources(cost: MageAbilityCost) -> bool:
-	return _mage.stats.has_enough_mana(cost.mana) and _mage.stats.has_enough_stamina(cost.stamina)
+	return _mage.stats.has_mana(cost.mana) and _mage.stats.has_stamina(cost.stamina)
 
 func use_resources(cost: MageAbilityCost) -> void:
 	_mage.stats.use_mana(cost.mana)
@@ -22,7 +22,7 @@ func get_forward() -> Vector3:
 	return _mage.pivot.global_transform.basis.z
 
 func get_dash_power() -> float:
-	return _mage.dash_power
+	return _mage.data.dash_power
 
 func spawn_node(node: Node3D) -> void:
 	_mage.get_tree().current_scene.add_child(node)
