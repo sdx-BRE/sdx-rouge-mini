@@ -4,8 +4,10 @@ class_name MageData extends Resource
 @export var health := 100.0
 @export var mana := 80.0
 @export var stamina := 100.0
-@export var mana_regeneration := 3.1415
-@export var stamina_regeneration := 1.618
+
+@export_group("Stat regeneration")
+@export var mana_regeneration := 1.618
+@export var stamina_regeneration := 3.1415
 
 @export_group("Movement")
 @export var max_speed := 5.0

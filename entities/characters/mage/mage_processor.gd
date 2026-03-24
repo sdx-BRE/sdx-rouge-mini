@@ -3,6 +3,7 @@ class_name MageProcessor extends RefCounted
 var _controller: MageController
 var _anim: MageAnimator
 var _abilities: MageAbilityHandler
+var _resource_generator: MageResourceGenerator
 var _viewport: Viewport
 
 var _movement_blend := 0.0
@@ -11,14 +12,17 @@ func _init(
 	controller: MageController,
 	anim: MageAnimator,
 	abilities: MageAbilityHandler,
+	resource_generator: MageResourceGenerator,
 	viewport: Viewport,
 ) -> void:
 	_controller = controller
 	_anim = anim
 	_abilities = abilities
+	_resource_generator = resource_generator
 	_viewport = viewport
 
-func process(delta: float) -> void: 
+func process(delta: float) -> void:
+	_resource_generator.process(delta)
 	_abilities.process_abilities(delta)
 
 func physics_process(delta: float) -> void: 

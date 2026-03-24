@@ -34,9 +34,9 @@ signal casting_progressed(current: float, total: float)
 var stats: MageStats
 var anim: MageAnimator
 var controller: MageController
-var processor: MageProcessor
-
 var abilities: MageAbilityHandler
+var resource_generator: MageResourceGenerator
+var processor: MageProcessor
 
 func _ready() -> void:
 	stats = MageStats.from_data(data)
@@ -52,7 +52,8 @@ func _ready() -> void:
 	)
 	controller = MageController.create(self, self.camera_node, data.max_speed, data.dash_decay, look_at_weight)
 	abilities = MageAbilityHandlerFactory.create(self, controller)
-	processor = MageProcessor.new(controller, anim, abilities, get_viewport())
+	resource_generator = MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
+	processor = MageProcessor.new(controller, anim, abilities, resource_generator, get_viewport())
 
 #region stat notification
 func notify_casting_started() -> void:
