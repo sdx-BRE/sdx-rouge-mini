@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 MusicPlayer="*uid://c4cp7nxlns5n8"
+GameUI="*uid://b1btchwkwomn0"
 
 [input]
 

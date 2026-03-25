@@ -1,13 +1,13 @@
 extends Node
 
+const LABEL_GAME_OVER = "Game Over!"
+
 @export var mage: MageCharacter
 @export var hud: PlayerHud
-@export var restart_menu: RestartMenu
 
 @export var skeleton_minion_scene: PackedScene
 @export var skeleton_minion_patrol_points: Array[Marker3D]
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mage.died.connect(_on_player_died)
 	mage.health_changed.connect(hud.update_health)
@@ -19,10 +19,7 @@ func _ready() -> void:
 	mage.casting_progressed.connect(hud.update_skill_progress)
 	
 	hud.skill_activated.connect(mage.processor.use_skill)
-	restart_menu.restart.connect(_on_restart)
 
 func _on_player_died() -> void:
-	restart_menu.visible = true
-
-func _on_restart() -> void:
-	get_tree().reload_current_scene()
+	GameUI.visible = true
+	GameUI.change_label(LABEL_GAME_OVER)
