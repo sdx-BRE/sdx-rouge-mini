@@ -74,8 +74,8 @@ func _ready() -> void:
 		stats.health_changed.connect(ui.update_health)
 	stats.hp_reached_zero.connect(on_die)
 	
-	fov.body_entered.connect(_on_fov_entered)
-	fov.body_exited.connect(_on_fov_exited)
+	fov.area_entered.connect(_on_fov_entered)
+	fov.area_exited.connect(_on_fov_exited)
 	
 	punch_hitbox.body_entered.connect(_on_punch)
 
