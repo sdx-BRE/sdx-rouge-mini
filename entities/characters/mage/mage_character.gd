@@ -82,7 +82,6 @@ func _on_dying() -> void:
 	$DamageHitbox.collision_layer = 0
 	$DamageHitbox.collision_mask = 0
 	_disable_processing()
-
 #endregion
 
 #region lifecycle methods
