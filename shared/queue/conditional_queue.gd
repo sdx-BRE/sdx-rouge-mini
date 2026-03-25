@@ -28,6 +28,8 @@ func process(delta: float) -> void:
 				_tasks[category].erase(task_id)
 
 class Task extends RefCounted:
+	const KEY_STARTED := "started"
+	
 	var _condition: Callable
 	var _action: Callable
 	var data: Dictionary = {}
@@ -42,3 +44,12 @@ class Task extends RefCounted:
 			return true
 		return false
 	
+	static func when_started(condition_callback: Callable) -> Callable:
+		return func(delta: float, task: Task) -> bool:
+			var is_finished = condition_callback.call(delta)
+			var is_started = task.data.get(KEY_STARTED, false)
+			
+			if not is_started and is_finished:
+				task.data.set(KEY_STARTED, true)
+			
+			return is_started and is_finished
