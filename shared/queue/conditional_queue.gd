@@ -15,19 +15,19 @@ func queue(
 		_tasks[cat] = {}
 	
 	if overwrite or not _tasks[cat].has(task):
-		_tasks[cat][task] = ConditionalQueueTask.new(condition, action)
+		_tasks[cat][task] = Task.new(condition, action)
 
 func process(delta: float) -> void:
 	for category in _tasks.keys():
 		var category_task = _tasks[category]
 		
 		for task_id in category_task.keys():
-			var task: ConditionalQueueTask = category_task[task_id]
+			var task: Task = category_task[task_id]
 			
 			if task.try_execute(delta):
 				_tasks[category].erase(task_id)
 
-class ConditionalQueueTask extends RefCounted:
+class Task extends RefCounted:
 	var _condition: Callable
 	var _action: Callable
 	var data: Dictionary = {}

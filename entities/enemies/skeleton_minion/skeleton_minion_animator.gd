@@ -56,7 +56,7 @@ func _queue_is_attacking_flag(property: StringName) -> void:
 	_conditional_queue.queue(
 		CQueue,
 		CQueue.IsAttacking,
-		func(_d, task: ConditionalQueue.ConditionalQueueTask) -> bool:
+		func(_d, task: ConditionalQueue.Task) -> bool:
 			var is_in_attack = _is_oneshot_active(property)
 			var is_started = task.data.get("started", false)
 			
