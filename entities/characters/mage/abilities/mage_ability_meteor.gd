@@ -18,7 +18,7 @@ func cancel() -> void:
 	_context.hide_decal()
 
 func handle_input(event: InputEvent) -> HandleInputResult:
-	if event.is_action_pressed("ui_cancel"): return HandleInputResult.Cancel
+	if event.is_action("ui_cancel"): return HandleInputResult.Cancel
 	
 	if event.is_action_pressed("attack"):
 		_context.request_oneshot_animation(_anim.oneshot_prop)
