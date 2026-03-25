@@ -1,5 +1,8 @@
 class_name MageCharacter extends CharacterBody3D
 
+signal died()
+signal dying()
+
 signal health_changed(current: float, total: float)
 signal mana_changed(current: float, total: float)
 signal stamina_changed(current: float, total: float)
@@ -22,6 +25,7 @@ signal casting_progressed(current: float, total: float)
 @export var anim_tree: AnimationTree
 @export var param_playback_full_body: String
 @export var param_blend_locomotion: String
+@export var param_state_death: AnimStateMap
 
 @export_group("Animation - data")
 @export var animation_shoot: SpellAnimationData
@@ -45,12 +49,17 @@ func _ready() -> void:
 	stats.health_changed.connect(health_changed.emit)
 	stats.mana_changed.connect(mana_changed.emit)
 	stats.stamina_changed.connect(stamina_changed.emit)
+	stats.health_reached_zero.connect(_on_dying)
 	
 	anim = MageAnimator.create(
 		anim_tree,
 		param_playback_full_body,
 		param_blend_locomotion,
+		param_state_death,
 	)
+	anim.register_signals()
+	anim.die_animation_finished.connect(died.emit)
+	
 	controller = MageController.create(self, self.camera_node, data.max_speed, data.dash_decay, look_at_weight)
 	abilities = MageAbilityHandlerFactory.create(self, controller)
 	resource_generator = MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
@@ -65,6 +74,15 @@ func notify_casting_end() -> void:
 
 func notify_casting_progressed(current: float, total: float) -> void:
 	casting_progressed.emit(current, total)
+
+func _on_dying() -> void:
+	dying.emit()
+	anim.die()
+	
+	$DamageHitbox.collision_layer = 0
+	$DamageHitbox.collision_mask = 0
+	_disable_processing()
+
 #endregion
 
 #region lifecycle methods
@@ -78,3 +96,14 @@ func _physics_process(delta: float) -> void:
 	processor.physics_process(delta)
 	move_and_slide()
 #endregion
+
+func take_dmg(value: float) -> void:
+	stats.take_dmg(value)
+
+func _enable_processing() -> void: _set_processing(true)
+func _disable_processing() -> void: _set_processing(false)
+
+func _set_processing(to: bool) -> void:
+	set_process(to)
+	set_physics_process(to)
+	set_process_unhandled_input(to)

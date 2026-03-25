@@ -23,6 +23,7 @@ func _init(
 
 func process(delta: float) -> void:
 	_resource_generator.process(delta)
+	_anim.process(delta)
 	_abilities.process_abilities(delta)
 
 func physics_process(delta: float) -> void: 
