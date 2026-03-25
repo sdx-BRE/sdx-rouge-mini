@@ -55,12 +55,6 @@ func handle_input(event):
 			_scroll.scroll(-1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			_scroll.scroll(1)
-	
-	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			use_visible_mouse()
-		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			use_captured_mouse()
 
 class RotationHandler:
 	var _cam: ThirdPersonCam
