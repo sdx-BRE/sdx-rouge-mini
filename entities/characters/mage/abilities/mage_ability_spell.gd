@@ -1,4 +1,4 @@
-﻿class_name MageAbilitySpell extends MageAbilityPhased
+class_name MageAbilitySpell extends MageAbilityPhased
 
 var _anim: MageSpellAnimation
 
@@ -17,4 +17,4 @@ func tick_cast(_delta: float) -> void:
 class Instant extends MageAbilitySpell:
 	func update(_delta: float) -> void: pass
 	func cancel() -> void: pass
-	func handle_input(_event: InputEvent) -> bool: return false
+	func handle_input(_event: InputEvent) -> HandleInputResult: return HandleInputResult.Unhandled

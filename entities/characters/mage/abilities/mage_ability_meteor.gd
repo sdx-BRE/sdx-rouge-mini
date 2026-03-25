@@ -17,19 +17,17 @@ func start() -> MageAbilityPhased.StartResult:
 func cancel() -> void:
 	_context.hide_decal()
 
-func handle_input(event: InputEvent) -> bool:
-	if event.is_action_pressed("ui_cancel"):
-		cancel()
-		return true
+func handle_input(event: InputEvent) -> HandleInputResult:
+	if event.is_action_pressed("ui_cancel"): return HandleInputResult.Cancel
 	
 	if event.is_action_pressed("attack"):
 		_context.request_oneshot_animation(_anim.oneshot_prop)
 		_context.hide_decal()
 		_context.notify_casting_started()
 		
-		return true
+		return HandleInputResult.Trigger
 	
-	return false
+	return HandleInputResult.Unhandled
 
 func update(_delta: float) -> void:
 	var cast_range := 20.0 # Todo: replace with configurable value

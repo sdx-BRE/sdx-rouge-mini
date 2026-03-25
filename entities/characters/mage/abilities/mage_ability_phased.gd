@@ -7,9 +7,9 @@ func start() -> StartResult:
 func update(_delta: float) -> void: 
 	push_error("[Error][MageAbilityPhased]: update() must be overwritten by child implementations")
 
-func handle_input(_event: InputEvent) -> bool:
+func handle_input(_event: InputEvent) -> HandleInputResult:
 	push_error("[Error][MageAbilityPhased]: handle_input() must be overwritten by child implementations")
-	return false
+	return HandleInputResult.Cancel
 
 func execute() -> void: 
 	push_error("[Error][MageAbilityPhased]: execute() must be overwritten by child implementations")
@@ -20,4 +20,10 @@ func tick_cast(_delta: float) -> void:
 enum StartResult {
 	Handled,
 	Cast,
+}
+
+enum HandleInputResult {
+	Trigger,
+	Cancel,
+	Unhandled,
 }

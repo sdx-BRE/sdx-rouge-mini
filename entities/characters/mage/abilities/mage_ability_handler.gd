@@ -38,9 +38,14 @@ func process_abilities(delta: float) -> void:
 		_buffered.tick_cast(delta)
 
 func handle_input(event: InputEvent) -> bool:
-	if _active != null and _active.handle_input(event):
-		_buffer_active_ability()
-		return true
+	if _active != null:
+		var handle_result := _active.handle_input(event)
+		if _is_input_handled(handle_result):
+			match handle_result:
+				MageAbilityPhased.HandleInputResult.Trigger: _buffer_active_ability()
+				MageAbilityPhased.HandleInputResult.Cancel: _cancel_active_ability()
+			
+			return true
 	
 	var actions := _registry.get_actions()
 	for action in actions:
@@ -65,3 +70,11 @@ func _buffer_ability(ability: MageAbilityBase) -> void:
 	if _buffered != null:
 		_buffered.cancel()
 	_buffered = ability
+
+func _cancel_active_ability() -> void:
+	if _active != null:
+		_active.cancel()
+	_active = null
+
+func _is_input_handled(result: MageAbilityPhased.HandleInputResult) -> bool:
+	return result == MageAbilityPhased.HandleInputResult.Trigger or result == MageAbilityPhased.HandleInputResult.Cancel
