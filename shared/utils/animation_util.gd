@@ -10,7 +10,7 @@ static func try_get_call_method_track_time(
 	anim_name: StringName, 
 	call_method_track_name: StringName,
 ):
-	var animation = player.get_animation(anim_name)
+	var animation := player.get_animation(anim_name)
 	
 	if animation == null:
 		push_error("[AnimationUtil::try_get_call_method_track_time()] - animation not found")
@@ -33,11 +33,19 @@ class Playback:
 	func _init(playback: AnimationNodeStateMachinePlayback) -> void:
 		_playback = playback
 	
+	static func from_param(tree: AnimationTree, param: StringName) -> Playback:
+		var playback = tree.get(param)
+		
+		var error := "[AnimationUtil.Playback::from_param()] - can not create playback from param '%s'" % param
+		assert(playback is AnimationNodeStateMachinePlayback, error)
+		
+		return Playback.new(playback)
+	
 	func play(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel):
 		match mode:
-			Play.Travel:
+			AnimationUtil.Play.Travel:
 				_playback.travel(to_node)
-			Play.Start:
+			AnimationUtil.Play.Start:
 				_playback.start(to_node)
 	
 	func get_current_node() -> StringName:
