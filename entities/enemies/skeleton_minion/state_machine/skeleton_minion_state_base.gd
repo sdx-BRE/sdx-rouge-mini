@@ -7,7 +7,7 @@ func _init(
 ) -> void:
 	_context = context
 
-func process(delta: float) -> SkeletonMinionStateMachine.ChangeId:
+func process(_delta: float) -> SkeletonMinionStateMachine.ChangeId:
 	push_error("[Error][SkeletonMinionStateBase]: process() must be overwritten by child implementations")
 	return SkeletonMinionStateMachine.ChangeId
 

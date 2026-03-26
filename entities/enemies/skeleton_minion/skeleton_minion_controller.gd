@@ -17,10 +17,6 @@ func _init(
 	_patrol_points = patrol_points
 	_patrol_point_size = patrol_points.size()
 
-func update_velocity(delta: float) -> void:
-	
-	pass
-
 func move_and_slide() -> void:
 	_host.move_and_slide()
 
@@ -66,12 +62,12 @@ func is_navigation_finished() -> bool:
 func is_moving() -> bool:
 	return _host.velocity.length() > 0
 
-func use_first_patrol_point() -> void:
-	if _patrol_point_size == 0:
-		return
+func get_horizontal_speed() -> float:
+	return Vector3(_host.velocity.x, 0, _host.velocity.z).length()
 
-	_patrol_index = 0
-	_use_patrol_point_as_target()
+func handle_gravity(delta: float) -> void:
+	if not _host.is_on_floor():
+		_host.velocity += _host.get_gravity() * delta
 
 func _look_at(direction: Vector3, delta: float) -> void:
 	var target_rotation := atan2(-direction.x, -direction.z)

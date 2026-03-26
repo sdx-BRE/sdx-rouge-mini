@@ -46,70 +46,68 @@ signal died()
 
 @onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
-var state_machine: SkeletonMinionStateMachine
-var anim: SkeletonMinionAnimator
-var controller: SkeletonMinionController
-var processor: Processor
-var stats: EnemyStats
+var _processor: SkeletonMinionProcessor
+var _stats: EnemyStats
+var _anim: SkeletonMinionAnimator
 
 var fov_threshold := cos(deg_to_rad(fov_angle / 2.0))
 
 func _ready() -> void:
-	stats = EnemyStats.from_data(data)
-	controller = SkeletonMinionController.new(self, agent, patrol_points)
-	
-	anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
+	_stats = EnemyStats.from_data(data)
+	_anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
 		.set_playbacks(path_playback_full_body)\
 		.set_paths(path_locomotion_blend, path_locomotion_timescale)\
 		.set_state_names(state_death)\
 		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
 
-	state_machine = SkeletonMinionStateMachine.start_walking(
+	var controller := SkeletonMinionController.new(self, agent, patrol_points)
+	var state_machine := SkeletonMinionStateMachine.start_walking(
 		SkeletonMinionStateContext.new(
 			controller,
 			SkeletonMinionStateMachineTargetHandler.new(self),
-			anim,
+			_anim,
 			SkeletonMinionStateData.from_minion(self),
 			SkeletonMinionStateConfig.from_minion(self),
 		),
-		stats,
+		_stats,
 	)
 	
-	processor = Processor.create(self, anim.blender)
+	var locomotion_handler := SkeletonMinionLocomotionHandler.new(controller, _anim, data.walking_speed, data.running_speed)
+	_processor = SkeletonMinionProcessor.new(_anim, controller, state_machine, locomotion_handler)
 	
 	if ui is EnemyUI:
-		stats.health_changed.connect(ui.update_health)
-	stats.hp_reached_zero.connect(on_die)
+		_stats.health_changed.connect(ui.update_health)
+	_stats.hp_reached_zero.connect(on_die)
 	
 	fov.area_entered.connect(_on_fov_entered)
 	fov.area_exited.connect(_on_fov_exited)
 	
 	punch_hitbox.body_entered.connect(_on_punch)
 
-func _on_punch(body: Node3D):
-	if body.has_method("take_dmg"):
-		body.take_dmg(punch_dmg)
-
 func is_alive() -> bool:
-	return stats.is_alive()
+	return _stats.is_alive()
 
 func take_dmg(value: float) -> void:
-	stats.take_dmg(value)
+	_stats.take_dmg(value)
 	if not is_alive():
 		return
 	
 	if value >= threshold_hit_strong:
-		anim.oneshot_hit_strong()
+		_anim.oneshot_hit_strong()
 	else:
-		anim.oneshot_hit_weak()
+		_anim.oneshot_hit_weak()
 
 #region event callbacks
+func _on_punch(body: Node3D):
+	if body.has_method("take_dmg"):
+		body.take_dmg(punch_dmg)
+
 func on_die() -> void:
 	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
 		anim_tree.animation_finished.connect(on_death_anim_finished)
 	
-	anim.play_full_body(state_death)
+	_anim.play_full_body(state_death)
 
 func on_death_anim_finished(anim_name: StringName) -> void:
 	if anim_name == state_death:
@@ -119,83 +117,14 @@ func on_death_anim_finished(anim_name: StringName) -> void:
 		queue_free()
 
 func _on_fov_entered(body: Node3D):
-	state_machine.target_entered(body)
+	_processor.target_entered(body)
 
 func _on_fov_exited(body: Node3D):
-	state_machine.target_exited(body)
+	_processor.target_exited(body)
 #endregion
 
 func _process(delta: float) -> void:
-	anim.process(delta)
+	_processor.process(delta)
 
 func _physics_process(delta: float) -> void:
-	processor.velicoty.process(delta)
-	processor.blend.process(delta)
-	move_and_slide()
-
-class HasMinion extends RefCounted:
-	var _minion: SkeletonMinion
-		
-	func _init(minion: SkeletonMinion) -> void:
-		_minion = minion
-
-#region processor
-class Processor:
-	var velicoty: Velocity
-	var blend: Blend
-	
-	func _init(p_velicoty: Velocity, p_blend: Blend) -> void:
-		velicoty = p_velicoty
-		blend = p_blend
-	
-	static func create(minion: SkeletonMinion, blender: SkeletonMinionAnimator.Blender):
-		var arg_velicoty = Velocity.new(minion)
-		var arg_blend = Blend.new(minion, blender)
-		
-		return Processor.new(arg_velicoty, arg_blend)
-	
-	class Velocity extends HasMinion:
-		func process(delta: float) -> void:
-			_process_gravity(delta)
-			_process_patrol(delta)
-		
-		func _process_gravity(delta: float) -> void:
-			if not _minion.is_on_floor():
-				_minion.velocity += _minion.get_gravity() * delta
-		
-		func _process_patrol(delta: float) -> void:
-			_minion.state_machine.process(delta)
-	
-	class Blend extends HasMinion:
-		const BASE_TIMESCALE = 1.0
-		const MAX_TIMESCALE = 1.8
-		
-		var _blender: SkeletonMinionAnimator.Blender
-		
-		var _movement_blend := 0.0
-		var _movement_timescale := 1.0
-		
-		func _init(minion: SkeletonMinion, blender: SkeletonMinionAnimator.Blender) -> void:
-			super(minion)
-			_blender = blender
-		
-		func process(delta: float) -> void:
-			var speed = _get_speed()
-			var movement_blend = speed / _minion.data.walking_speed
-			
-			var run_to_walk_ratio = clamp(
-				(speed - _minion.data.walking_speed) / (_minion.data.running_speed - _minion.data.walking_speed),
-				0,
-				1
-			)
-			var movement_timescale = lerp(BASE_TIMESCALE, MAX_TIMESCALE, run_to_walk_ratio)
-			
-			_movement_blend = lerp(_movement_blend, movement_blend, delta * 10)
-			_movement_timescale = lerp(_movement_timescale, movement_timescale, delta * 10)
-			
-			_blender.blend_loco_move(_movement_blend)
-			_blender.blend_loco_timescale(_movement_timescale)
-		
-		func _get_speed() -> float:
-			return Vector3(_minion.velocity.x, 0, _minion.velocity.z).length()
-#endregion
+	_processor.physics_process(delta)
