@@ -64,16 +64,15 @@ func _ready() -> void:
 		.set_state_names(state_death)\
 		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
-	
-	var state_factory := SkeletonMinionStateFactory.new(
-		controller,
-		SkeletonMinionStateMachineTargetHandler.new(self),
-		anim,
-		SkeletonMinionStateData.from_minion(self),
-		SkeletonMinionStateConfig.from_minion(self),
-	)
+
 	state_machine = SkeletonMinionStateMachine.start_walking(
-		state_factory,
+		SkeletonMinionStateContext.new(
+			controller,
+			SkeletonMinionStateMachineTargetHandler.new(self),
+			anim,
+			SkeletonMinionStateData.from_minion(self),
+			SkeletonMinionStateConfig.from_minion(self),
+		),
 		stats,
 	)
 	
