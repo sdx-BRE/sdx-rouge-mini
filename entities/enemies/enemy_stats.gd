@@ -24,7 +24,7 @@ func is_alive() -> bool:
 	return _current_health > 0
 
 func _apply_health_modifier(delta: float) -> void:
-	var old = _current_health
+	var old := _current_health
 	_current_health = clamp(_current_health + delta, 0, _max_health)
 	
 	if old != _current_health:
