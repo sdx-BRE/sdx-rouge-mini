@@ -6,6 +6,7 @@ signal died()
 @export var data: EnemyData
 @export var punch_dmg: float = 5.0
 @export var kick_dmg: float = 8.0
+@export var attack_cooldown: float = 3.0
 
 @export_group("Patrol settings")
 @export var wait_time: float = 5.0
@@ -47,18 +48,15 @@ signal died()
 
 var state_machine: SkeletonMinionStateMachine
 var anim: SkeletonMinionAnimator
+var controller: SkeletonMinionController
 var processor: Processor
 var stats: EnemyStats
 
-var fov_threshold = cos(deg_to_rad(fov_angle / 2.0))
+var fov_threshold := cos(deg_to_rad(fov_angle / 2.0))
 
 func _ready() -> void:
-	state_machine = SkeletonMinionStateMachine.start_walking(
-		self,
-		data.walking_speed,
-		data.running_speed,
-		wait_time,
-	)
+	stats = EnemyStats.from_data(data)
+	controller = SkeletonMinionController.new(self, agent, patrol_points)
 	
 	anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
 		.set_playbacks(path_playback_full_body)\
@@ -67,8 +65,19 @@ func _ready() -> void:
 		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
 	
+	var state_factory := SkeletonMinionStateFactory.new(
+		controller,
+		SkeletonMinionStateMachineTargetHandler.new(self),
+		anim,
+		SkeletonMinionStateData.from_minion(self),
+		SkeletonMinionStateConfig.from_minion(self),
+	)
+	state_machine = SkeletonMinionStateMachine.start_walking(
+		state_factory,
+		stats,
+	)
+	
 	processor = Processor.create(self, anim.blender)
-	stats = EnemyStats.from_data(data)
 	
 	if ui is EnemyUI:
 		stats.health_changed.connect(ui.update_health)
