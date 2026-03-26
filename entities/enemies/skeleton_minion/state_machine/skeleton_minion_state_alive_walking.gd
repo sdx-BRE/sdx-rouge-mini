@@ -1,8 +1,8 @@
 class_name SkeletonMinionStateAliveWalking extends SkeletonMinionStateBase
 
 func process(delta: float) -> SkeletonMinionStateMachine.ChangeId:
-	if _controller.is_navigation_finished():
+	if _context.is_navigation_finished():
 		return SkeletonMinionStateMachine.ChangeId.Waiting
 	
-	_controller.navigate_to_target(_data.walking_speed, delta)
+	_context.walk_to_target(delta)
 	return SkeletonMinionStateMachine.ChangeId.None

@@ -45,6 +45,9 @@ func apply_friction(friction: float) -> void:
 	_host.velocity.x = move_toward(_host.velocity.x, 0, friction)
 	_host.velocity.z = move_toward(_host.velocity.z, 0, friction)
 
+func stop_instant() -> void:
+	_host.velocity = Vector3.ZERO
+
 func apply_friction_if_moving(friction: float) -> void:
 	if _host.velocity.length() > 0:
 		apply_friction(friction)
@@ -59,6 +62,9 @@ func next_patrol_point():
 
 func is_navigation_finished() -> bool:
 	return _agent.is_navigation_finished()
+
+func is_moving() -> bool:
+	return _host.velocity.length() > 0
 
 func use_first_patrol_point() -> void:
 	if _patrol_point_size == 0:
