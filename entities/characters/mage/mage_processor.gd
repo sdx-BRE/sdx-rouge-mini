@@ -28,11 +28,13 @@ func process(delta: float) -> void:
 
 func physics_process(delta: float) -> void: 
 	_controller.handle_gravity(delta)
-	_controller.move(delta)
+	_controller.update_velocity(delta)
 	
 	var movement_blend_target := _controller.get_speed_ratio()
 	_movement_blend = lerp(_movement_blend, movement_blend_target, delta * 10)
 	_anim.blend_loco(_movement_blend)
+	
+	_controller.move_and_slide()
 
 func handle_unhandled_input(event: InputEvent) -> void:
 	if _abilities.handle_input(event):

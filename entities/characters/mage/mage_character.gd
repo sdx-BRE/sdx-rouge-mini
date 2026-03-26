@@ -93,7 +93,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	processor.physics_process(delta)
-	move_and_slide()
 #endregion
 
 func take_dmg(value: float) -> void:

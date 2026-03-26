@@ -24,7 +24,7 @@ func handle_gravity(delta: float) -> void:
 	if not _host.is_on_floor():
 		_host.velocity += _host.get_gravity() * delta
 
-func move(delta: float) -> void:
+func update_velocity(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = _calculate_movement_direction(input_dir)
 	
@@ -41,6 +41,8 @@ func move(delta: float) -> void:
 	
 	_motion.dash_power = _motion.dash_power.move_toward(Vector3.ZERO, _config.dash_decay * delta * 10)
 
+func move_and_slide() -> void:
+	_host.move_and_slide()
 
 func change_speed(new_speed: float) -> void:
 	_config.movement_speed = new_speed
