@@ -140,7 +140,7 @@ class Builder:
 
 	func set_playbacks(full: StringName) -> Builder:
 		var full_body_playback = _tree.get(full)
-		var prefix = "[ERROR][SkeletonMinionAnimator.Builder::set_playbacks('%s')]" % [full]
+		var prefix := "[ERROR][SkeletonMinionAnimator.Builder::set_playbacks('%s')]" % [full]
 		
 		assert(full_body_playback != null, "%s - full_body playback not found at '%s'" % [prefix, full])
 		
@@ -173,10 +173,10 @@ class Builder:
 		return self
 
 	func build() -> SkeletonMinionAnimator:
-		var paths_obj = BlendPaths.new(_p_loco_move, _p_loco_time)
-		var states_obj = StateNames.new(_s_death)
-		var oneshots_obj = OneShots.new(_o_weak, _o_strong, _o_air, _o_ground, _o_punch, _o_kick)
-		var blender_obj = Blender.new(_host, _tree, paths_obj)
-		var c_queue = ConditionalQueue.new()
+		var paths_obj := BlendPaths.new(_p_loco_move, _p_loco_time)
+		var states_obj := StateNames.new(_s_death)
+		var oneshots_obj := OneShots.new(_o_weak, _o_strong, _o_air, _o_ground, _o_punch, _o_kick)
+		var blender_obj := Blender.new(_host, _tree, paths_obj)
+		var c_queue := ConditionalQueue.new()
 		
 		return SkeletonMinionAnimator.new(_tree, _full_playback, c_queue, blender_obj, paths_obj, states_obj, oneshots_obj)
