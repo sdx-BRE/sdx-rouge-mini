@@ -8,6 +8,6 @@ func trigger() -> Result:
 	forward_vector = forward_vector.normalized()
 	
 	_controller.push_dash_motion(forward_vector * _context.get_dash_power())
-	_context.request_oneshot_animation(_anim.oneshot_prop)
+	_context.request_oneshot_animation(_anim.trigger)
 	
 	return Result.Trigger

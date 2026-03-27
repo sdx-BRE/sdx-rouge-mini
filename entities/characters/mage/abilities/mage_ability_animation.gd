@@ -1,11 +1,11 @@
 ﻿class_name MageAbilityAnimation extends RefCounted
 
-var oneshot_prop: StringName
+var trigger: StringName
 
 func _init(
-	p_oneshot_prop: StringName,
+	p_trigger: StringName,
 ) -> void:
-	oneshot_prop = p_oneshot_prop
+	trigger = p_trigger
 
 static func from_data(animation: MageAnimationData) -> MageAbilityAnimation:
-	return MageAbilityAnimation.new(animation.oneshot_property)
+	return MageAbilityAnimation.new(animation.anim_trigger)

@@ -21,7 +21,7 @@ func handle_input(event: InputEvent) -> HandleInputResult:
 	if event.is_action("ui_cancel"): return HandleInputResult.Cancel
 	
 	if event.is_action_pressed("attack"):
-		_context.request_oneshot_animation(_anim.oneshot_prop)
+		_context.request_oneshot_animation(_anim.trigger)
 		_context.hide_decal()
 		_context.notify_casting_started()
 		

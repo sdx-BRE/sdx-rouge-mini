@@ -46,7 +46,7 @@ func notify_casting_started() -> void:
 
 func notify_casting_progressed(anim: MageSpellAnimation) -> void:
 	_mage.notify_casting_progressed(
-		_mage.anim.get_current_position(anim.oneshot_prop),
+		_mage.anim.get_current_position(anim.trigger),
 		anim.cast_point,
 	)
 

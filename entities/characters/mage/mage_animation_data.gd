@@ -1,3 +1,3 @@
 ﻿class_name MageAnimationData extends Resource
 
-@export var oneshot_property: StringName
+@export var anim_trigger: StringName
