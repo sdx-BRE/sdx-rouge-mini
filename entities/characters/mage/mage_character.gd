@@ -38,42 +38,40 @@ signal casting_progressed(current: float, total: float)
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
 @onready var aim_decal := $AimTarget
 
-var stats: MageStats
-var anim: MageAnimator
-var controller: MageController
-var abilities: MageAbilityHandler
-var resource_generator: MageResourceGenerator
-var processor: MageProcessor
+var _stats: MageStats
+var _anim: MageAnimator
+var _abilities: MageAbilityHandler
+var _processor: MageProcessor
 
 func _ready() -> void:
-	stats = MageStats.from_data(data)
+	_stats = MageStats.from_data(data)
 	
-	stats.health_changed.connect(health_changed.emit)
-	stats.mana_changed.connect(mana_changed.emit)
-	stats.stamina_changed.connect(stamina_changed.emit)
-	stats.health_reached_zero.connect(_on_dying)
+	_stats.health_changed.connect(health_changed.emit)
+	_stats.mana_changed.connect(mana_changed.emit)
+	_stats.stamina_changed.connect(stamina_changed.emit)
+	_stats.health_reached_zero.connect(_on_dying)
 	
-	anim = MageAnimator.create(
+	_anim = MageAnimator.create(
 		anim_tree,
 		param_playback_full_body,
 		param_blend_locomotion,
 		param_state_death,
 	)
-	anim.register_signals()
-	anim.die_animation_finished.connect(died.emit)
+	_anim.register_signals(died)
 	
 	var movement_config := MageMovementConfig.new(camera_node, data.max_speed, data.dash_decay, look_at_weight)
 	var movement_motion := MageMovementMotion.create()
 	var kinematics := MageKinematics.new(self, movement_config, movement_motion)
 	
-	controller = MageController.new(self, movement_config, movement_motion)
-	abilities = MageAbilityHandler.create(self, anim, stats, controller, casting_started, casting_progressed, casting_end)
-	resource_generator = MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
-	processor = MageProcessor.new(kinematics, anim, abilities, resource_generator, get_viewport())
+	var controller := MageController.new(self, movement_config, movement_motion)
+	_abilities = MageAbilityHandler.create(self, _anim, _stats, controller, casting_started, casting_progressed, casting_end)
+	
+	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)
+	_processor = MageProcessor.new(kinematics, _anim, _abilities, resource_generator, get_viewport())
 
 func _on_dying() -> void:
 	dying.emit()
-	anim.die()
+	_anim.die()
 	
 	$DamageHitbox.collision_layer = 0
 	$DamageHitbox.collision_mask = 0
@@ -82,17 +80,23 @@ func _on_dying() -> void:
 
 #region lifecycle methods
 func _process(delta: float) -> void:
-	processor.process(delta)
+	_processor.process(delta)
 
 func _unhandled_input(event: InputEvent) -> void:
-	processor.handle_unhandled_input(event)
+	_processor.handle_unhandled_input(event)
 
 func _physics_process(delta: float) -> void:
-	processor.physics_process(delta)
+	_processor.physics_process(delta)
 #endregion
 
 func take_dmg(value: float) -> void:
-	stats.take_dmg(value)
+	_stats.take_dmg(value)
+
+func use_skill(index: int) -> void:
+	_processor.use_skill(index)
+
+func execute_buffered_ability() -> void:
+	_abilities.execute_buffered_ability()
 
 func _enable_processing() -> void: _set_processing(true)
 func _disable_processing() -> void: _set_processing(false)

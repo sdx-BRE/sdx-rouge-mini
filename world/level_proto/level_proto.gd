@@ -18,7 +18,7 @@ func _ready() -> void:
 	mage.casting_end.connect(hud.hide_skill_progress)
 	mage.casting_progressed.connect(hud.update_skill_progress)
 	
-	hud.skill_activated.connect(mage.processor.use_skill)
+	hud.skill_activated.connect(mage.use_skill)
 
 func _on_player_died() -> void:
 	GameUI.visible = true

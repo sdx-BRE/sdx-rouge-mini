@@ -20,8 +20,9 @@ func _init(
 	_params = params
 	_conditional_queue = conditional_queue
 
-func register_signals() -> void:
+func register_signals(died: Signal) -> void:
 	_tree.animation_finished.connect(_on_animation_finished)
+	die_animation_finished.connect(died.emit)
 
 func request_oneshot_fire(property: StringName) -> void:
 	_queue_is_attacking_flag(property)
