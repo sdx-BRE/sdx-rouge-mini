@@ -55,7 +55,7 @@ func handle_input(event: InputEvent) -> bool:
 	
 	return false
 
-func execute_buffered_cast() -> void:
+func execute_buffered_ability() -> void:
 	if _buffered != null:
 		_buffered.execute()
 		_buffered.use_resources()
