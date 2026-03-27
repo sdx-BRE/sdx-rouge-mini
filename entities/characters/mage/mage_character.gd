@@ -60,7 +60,7 @@ func _ready() -> void:
 	_anim.register_signals(died)
 	
 	var movement_config := MageMovementConfig.from_mage(self)
-	var movement_motion := MageMovementMotion.create()
+	var movement_motion := MageMovementMotion.from_mage(self)
 	var kinematics := MageKinematics.new(self, movement_config, movement_motion)
 	
 	var controller := MageController.new(self, movement_config, movement_motion)

@@ -20,3 +20,4 @@ class_name MageData extends Resource
 @export var time_to_descent := 0.25
 @export var apex_threshold := 6.0
 @export var apex_gravity_multiplier := 1.0
+@export var coyote_time := 0.1 # usually between 0.08 – 0.15 second

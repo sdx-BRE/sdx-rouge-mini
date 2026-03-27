@@ -19,5 +19,5 @@ func push_dash_motion(dash_power: Vector3) -> void:
 	_motion.dash_power = dash_power
 
 func jump() -> void:
-	if _host.is_on_floor():
+	if _motion.coyote_timer > 0:
 		_host.velocity.y = _config.get_jump_impulse_velocity()

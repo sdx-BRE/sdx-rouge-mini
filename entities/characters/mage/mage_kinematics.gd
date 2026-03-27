@@ -11,7 +11,9 @@ func _init(host: CharacterBody3D, config: MageMovementConfig, motion: MageMoveme
 
 func handle_gravity(delta: float) -> void:
 	if _host.is_on_floor():
-		return
+		_motion.coyote_timer = _config.coyote_time
+	else:
+		_motion.coyote_timer -= delta
 	
 	var gravity := 0.0
 	if _host.velocity.y > 0:
