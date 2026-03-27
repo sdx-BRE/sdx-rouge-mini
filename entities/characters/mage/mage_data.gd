@@ -11,5 +11,6 @@ class_name MageData extends Resource
 
 @export_group("Movement")
 @export var max_speed := 5.0
+@export var jump_power := 15.0
 @export var dash_power := 20.0
 @export var dash_decay := 8.0
