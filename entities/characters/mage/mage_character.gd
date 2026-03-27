@@ -62,10 +62,14 @@ func _ready() -> void:
 	anim.register_signals()
 	anim.die_animation_finished.connect(died.emit)
 	
-	controller = MageController.create(self, self.camera_node, data.max_speed, data.dash_decay, look_at_weight)
+	var movement_config := MageMovementConfig.new(camera_node, data.max_speed, data.dash_decay, look_at_weight)
+	var movement_motion := MageMovementMotion.create()
+	var kinematics := MageKinematics.new(self, movement_config, movement_motion)
+	
+	controller = MageController.new(self, movement_config, movement_motion)
 	abilities = MageAbilityHandler.create(self, anim, stats, controller, casting_started, casting_progressed, casting_end)
 	resource_generator = MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
-	processor = MageProcessor.new(controller, anim, abilities, resource_generator, get_viewport())
+	processor = MageProcessor.new(kinematics, anim, abilities, resource_generator, get_viewport())
 
 func _on_dying() -> void:
 	dying.emit()

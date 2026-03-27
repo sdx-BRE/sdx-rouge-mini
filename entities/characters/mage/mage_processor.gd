@@ -1,6 +1,6 @@
 class_name MageProcessor extends RefCounted
 
-var _controller: MageController
+var _controller: MageKinematics
 var _anim: MageAnimator
 var _abilities: MageAbilityHandler
 var _resource_generator: MageResourceGenerator
@@ -9,7 +9,7 @@ var _viewport: Viewport
 var _movement_blend := 0.0
 
 func _init(
-	controller: MageController,
+	controller: MageKinematics,
 	anim: MageAnimator,
 	abilities: MageAbilityHandler,
 	resource_generator: MageResourceGenerator,
