@@ -1,4 +1,4 @@
-﻿class_name MageKinematics extends RefCounted
+class_name MageKinematics extends RefCounted
 
 var _host: CharacterBody3D
 var _config: MageMovementConfig
@@ -10,8 +10,19 @@ func _init(host: CharacterBody3D, config: MageMovementConfig, motion: MageMoveme
 	_motion = motion
 
 func handle_gravity(delta: float) -> void:
-	if not _host.is_on_floor():
-		_host.velocity += _host.get_gravity() * delta
+	if _host.is_on_floor():
+		return
+	
+	var gravity := 0.0
+	if _host.velocity.y > 0:
+		gravity = _config.get_jump_gravity() * delta
+	else:
+		gravity = _config.get_fall_gravity() * delta
+	
+	if abs(_host.velocity.y) < _config.apex_threshold:
+		gravity *= _config.apex_gravity_multiplier
+	
+	_host.velocity.y -= gravity
 
 func update_velocity(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
