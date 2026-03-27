@@ -1,6 +1,5 @@
-﻿class_name MageAbilityLoadoutBuilder extends RefCounted
+class_name MageAbilityLoadoutBuilder extends RefCounted
 
-var _mage: MageCharacter
 var _controller: MageController
 var _context: MageAbilityContext
 var _anim_player: AnimationPlayer
@@ -8,11 +7,10 @@ var _registry: MageAbilityRegistry
 
 var _base_cost := MageAbilityCost.new(0, 0)
 
-func _init(mage: MageCharacter, controller: MageController) -> void:
-	_mage = mage
+func _init(context: MageAbilityContext, controller: MageController, anim_player: AnimationPlayer) -> void:
 	_controller = controller
-	_context = MageAbilityContext.new(mage)
-	_anim_player = mage.anim_tree.get_node(mage.anim_tree.anim_player)
+	_context = context
+	_anim_player = anim_player
 	_registry = MageAbilityRegistry.new()
 
 func add_spell(

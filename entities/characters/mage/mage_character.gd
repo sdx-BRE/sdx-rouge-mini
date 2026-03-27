@@ -12,6 +12,7 @@ signal casting_progressed(current: float, total: float)
 
 @export var data: MageData
 @export var look_at_weight := 10.0
+@export var spawn_container: Node3D
 
 @export_group("Spell resources")
 @export var firebolt_data: SpellResource
@@ -31,6 +32,7 @@ signal casting_progressed(current: float, total: float)
 @export var animation_shoot: SpellAnimationData
 @export var animation_raise: SpellAnimationData
 @export var animation_dash: MageAnimationData
+@export var animation_jump: MageAnimationData
 
 @onready var pivot := $Pivot
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
@@ -61,19 +63,9 @@ func _ready() -> void:
 	anim.die_animation_finished.connect(died.emit)
 	
 	controller = MageController.create(self, self.camera_node, data.max_speed, data.dash_decay, look_at_weight)
-	abilities = MageAbilityHandlerFactory.create(self, controller)
+	abilities = MageAbilityHandler.create(self, anim, stats, controller, casting_started, casting_progressed, casting_end)
 	resource_generator = MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
 	processor = MageProcessor.new(controller, anim, abilities, resource_generator, get_viewport())
-
-#region stat notification
-func notify_casting_started() -> void:
-	casting_started.emit()
-
-func notify_casting_end() -> void:
-	casting_end.emit()
-
-func notify_casting_progressed(current: float, total: float) -> void:
-	casting_progressed.emit(current, total)
 
 func _on_dying() -> void:
 	dying.emit()
