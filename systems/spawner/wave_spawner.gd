@@ -6,6 +6,7 @@ class_name WaveSpawner extends Node
 @export var spawn_radius: float = 5.0
 @export var respawn_timeout: float = 3.0
 @export var skeleton_minion_scene: PackedScene
+@export var patrol_points: Array[Marker3D]
 
 var _spawn_location_idx := 0
 var _enemy_count := 0
@@ -16,7 +17,10 @@ var _state: State
 func _ready() -> void:
 	var emitter = PacedEmitter.new(max_enemies, spawn_duration)
 	emitter.restart()
-	emitter.tick_triggered.connect(func(_i): _spawn_minion())
+	emitter.tick_triggered.connect(func(_i): 
+		_spawn_minion()
+		_next_spawn_location()
+	)
 	
 	_state = State.create(emitter, respawn_timeout)
 
@@ -32,11 +36,14 @@ func _on_enemy_died() -> void:
 #region spawning
 func _spawn_minion():
 	var spawn_position = _get_spawn_position()
+	
 	var minion: SkeletonMinion = _init_minion()
+	minion.patrol_points = patrol_points
+	
 	add_child(minion)
 	
 	minion.global_position = spawn_position
-	minion.anim.oneshot_spawn_ground()
+	minion._anim.oneshot_spawn_ground() # Todo: Fix private access
 	
 	minion.died.connect(_on_enemy_died)
 	
@@ -52,10 +59,10 @@ func _get_spawn_position():
 	return _get_random_pos_in_radius(spawn_location, spawn_radius)
 
 func _next_spawn_location() -> void:
-	if _spawn_location_idx >= spawn_locations.size():
-		_spawn_location_idx = 0
-	else:
-		_spawn_location_idx += 1
+	if spawn_locations.size() == 0:
+		return
+	
+	_spawn_location_idx = (_spawn_location_idx + 1) % spawn_locations.size()
 
 func _get_random_pos_in_radius(marker: Marker3D, radius: float) -> Vector3:
 	var angle = randf() * TAU
