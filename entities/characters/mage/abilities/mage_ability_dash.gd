@@ -1,16 +1,4 @@
-class_name MageAbilityDash extends MageAbilityInstant
-
-var _anim: MageAbilityAnimation
-
-func _init(
-	controller: MageController,
-	context: MageAbilityContext,
-	cost: MageAbilityCost,
-	anim: MageAbilityAnimation,
-) -> void:
-	super(controller, context, cost)
-	_anim = anim
-
+class_name MageAbilityDash extends MageAbilityInstantAnimated
 
 func trigger() -> Result:
 	if _controller.is_not_moving(): return Result.Abort
