@@ -17,3 +17,7 @@ func is_not_moving() -> bool:
 
 func push_dash_motion(dash_power: Vector3) -> void:
 	_motion.dash_power = dash_power
+
+func jump() -> void:
+	if _host.is_on_floor():
+		_host.velocity.y = _config.get_jump_impulse_velocity()

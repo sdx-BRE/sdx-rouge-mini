@@ -35,9 +35,6 @@ func get_forward() -> Vector3:
 func get_dash_power() -> float:
 	return _data.dash_power
 
-func get_jump_power() -> float:
-	return _data.jump_power
-
 func spawn_node(node: Node3D) -> void:
 	_environment.spawn_node(node)
 

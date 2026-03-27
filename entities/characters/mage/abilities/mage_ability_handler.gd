@@ -1,5 +1,11 @@
 class_name MageAbilityHandler extends RefCounted
 
+const INPUT_FIREPULSE: Array[StringName] = [&"attack"]
+const INPUT_FIREBOLT: Array[StringName] = [&"skill_1"]
+const INPUT_METEOR: Array[StringName] = [&"skill_3"]
+const INPUT_DASH: Array[StringName] = [&"dash"]
+const INPUT_JUMP: Array[StringName] = [&"jump"]
+
 var _registry: MageAbilityRegistry
 
 var _active: MageAbilityPhased
@@ -7,6 +13,29 @@ var _buffered: MageAbilityPhased
 
 func _init(registry: MageAbilityRegistry) -> void:
 	_registry = registry
+
+static func create(
+	mage: MageCharacter, 
+	anim: MageAnimator, 
+	stats: MageStats, 
+	controller: MageController,
+	notify_started: Signal,
+	notify_progressed: Signal,
+	notify_end: Signal,
+) -> MageAbilityHandler:
+	var anim_player: AnimationPlayer = mage.anim_tree.get_node(mage.anim_tree.anim_player)
+	var context_environment := MageAbilityContextEnvironment.from_mage(mage, notify_started, notify_progressed, notify_end)
+	var context_data := MageAbilityContextData.from_mage(mage)
+	var context := MageAbilityContext.new(anim, stats, context_data, context_environment)
+	var builder := MageAbilityLoadoutBuilder.new(context, controller, anim_player)
+	
+	return builder \
+		.add_spell(MageAbilityId.Id.Firepulse, MageAbilityFirepulse, 2, mage.firepulse_data, mage.animation_shoot, INPUT_FIREPULSE) \
+		.add_spell(MageAbilityId.Id.Firebolt, MageAbilityFirebolt, 5, mage.firebolt_data, mage.animation_shoot, INPUT_FIREBOLT) \
+		.add_spell(MageAbilityId.Id.Meteor, MageAbilityMeteor, 15, mage.meteor_data, mage.animation_raise, INPUT_METEOR) \
+		.add_instant_animated(MageAbilityId.Id.Dash, MageAbilityDash, 5, mage.animation_dash, INPUT_DASH) \
+		.add_instant_animated(MageAbilityId.Id.Jump, MageAbilityJump, 10, mage.animation_jump, INPUT_JUMP) \
+		.build()
 
 func try_activate_ability(id: MageAbilityId.Id) -> void:
 	var ability: MageAbilityBase = _registry.get_ability(id)
