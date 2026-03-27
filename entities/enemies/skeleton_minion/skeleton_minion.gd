@@ -60,7 +60,7 @@ func _ready() -> void:
 		.set_state_names(state_death)\
 		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
-
+	
 	var controller := SkeletonMinionController.new(self, agent, patrol_points)
 	var state_machine := SkeletonMinionStateMachine.start_walking(
 		SkeletonMinionStateContext.new(
