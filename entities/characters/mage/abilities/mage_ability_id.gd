@@ -5,4 +5,5 @@ enum Id {
 	Firebolt,
 	Meteor,
 	Dash,
+	Jump,
 }
