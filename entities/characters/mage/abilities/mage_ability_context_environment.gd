@@ -1,14 +1,15 @@
 class_name MageAbilityContextEnvironment extends RefCounted
 
-const NODE_NAME_SPAWN_CONTAINER = "AbilityContextEnvironmentSpawnContainer"
+const NODE_NAME_SPAWN_CONTAINER := "AbilityContextEnvironmentSpawnContainer"
 
 var anim: MageAnimator
 var wandspawn_node: Node3D
 var pivot: Node3D
 var camera_node: ThirdPersonCam
-var aim_decal: Decal
+var ground_target_marker: Decal
 var viewport: Viewport
 var world_3d: World3D
+var enemy_target_marker: Sprite2D
 var casting_started: Signal
 var casting_end: Signal
 var casting_progressed: Signal
@@ -20,7 +21,8 @@ func _init(
 	p_wandspawn_node: Node3D,
 	p_pivot: Node3D,
 	p_camera_node: ThirdPersonCam,
-	p_aim_decal: Decal,
+	p_ground_target_marker: Decal,
+	p_enemy_target_marker: Sprite2D,
 	p_viewport: Viewport,
 	p_world_3d: World3D,
 	p_casting_started: Signal,
@@ -31,7 +33,8 @@ func _init(
 	wandspawn_node = p_wandspawn_node
 	pivot = p_pivot
 	camera_node = p_camera_node
-	aim_decal = p_aim_decal
+	ground_target_marker = p_ground_target_marker
+	enemy_target_marker = p_enemy_target_marker
 	viewport = p_viewport
 	world_3d = p_world_3d
 	casting_started = p_casting_started
@@ -60,7 +63,8 @@ static func from_mage(
 		mage.wandspawn_node,
 		mage.pivot,
 		mage.camera_node,
-		mage.aim_decal,
+		mage.ground_target_marker,
+		mage.enemy_target_marker,
 		mage.get_viewport(),
 		mage.get_world_3d(),
 		started,

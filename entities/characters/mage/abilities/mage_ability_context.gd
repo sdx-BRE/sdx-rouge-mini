@@ -44,16 +44,26 @@ func request_oneshot_animation(property: StringName) -> void:
 func play_full_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
 	_anim.play_full_body(to_node, mode)
 
-func show_decal() -> void:
-	_environment.camera_node.use_visible_mouse()
-	_environment.aim_decal.visible = true
+func show_ground_target_marker() -> void:
+	_environment.ground_target_marker.visible = true
 
-func hide_decal() -> void:
+func hide_ground_target_marker() -> void:
+	_environment.ground_target_marker.visible = false
+
+func show_enemy_target_marker() -> void:
+	_environment.enemy_target_marker.visible = true
+
+func hide_enemy_target_marker() -> void:
+	_environment.enemy_target_marker.visible = false
+
+func use_visible_mouse() -> void:
+	_environment.camera_node.use_visible_mouse()
+
+func use_captured_mouse() -> void:
 	_environment.camera_node.use_captured_mouse()
-	_environment.aim_decal.visible = false
 
 func set_decal_position(position: Vector3) -> void:
-	_environment.aim_decal.global_position = position
+	_environment.ground_target_marker.global_position = position
 
 func notify_casting_started() -> void:
 	_environment.casting_started.emit()
@@ -67,8 +77,17 @@ func notify_casting_progressed(anim: MageSpellAnimation) -> void:
 func notify_casting_end() -> void:
 	_environment.casting_end.emit()
 
-func get_viewport() -> Viewport:
-	return _environment.viewport
+func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary:
+	var mouse_pos := _environment.viewport.get_mouse_position()
+	var camera := _environment.viewport.get_camera_3d()
+	
+	var origin := camera.project_ray_origin(mouse_pos)
+	var end := origin + camera.project_ray_normal(mouse_pos) * ray_range
+	
+	var query := PhysicsRayQueryParameters3D.create(origin, end)
+	query.collision_mask = collision_mask
+	
+	return _environment.world_3d.direct_space_state.intersect_ray(query)
 
-func get_world_3d() -> World3D:
-	return _environment.world_3d
+func unproject_position(position: Vector3) -> Vector2:
+	return _environment.viewport.get_camera_3d().unproject_position(position)

@@ -36,7 +36,8 @@ signal casting_progressed(current: float, total: float)
 
 @onready var pivot := $Pivot
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
-@onready var aim_decal := $AimTarget
+@onready var ground_target_marker := $GroundTargetMarker
+@onready var enemy_target_marker := $EnemyTargetMarker
 
 var _stats: MageStats
 var _anim: MageAnimator
