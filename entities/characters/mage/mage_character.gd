@@ -32,7 +32,6 @@ signal casting_progressed(current: float, total: float)
 @export var animation_shoot: SpellAnimationData
 @export var animation_raise: SpellAnimationData
 @export var animation_dash: MageAnimationData
-@export var animation_jump: MageAnimationData
 @export var animation_jump_land: MageAnimationData
 
 @onready var pivot := $Pivot

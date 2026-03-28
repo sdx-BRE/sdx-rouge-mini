@@ -34,7 +34,7 @@ static func create(
 		.add_spell(MageAbilityId.Id.Firebolt, MageAbilityFirebolt, 5, mage.firebolt_data, mage.animation_shoot, INPUT_FIREBOLT) \
 		.add_spell(MageAbilityId.Id.Meteor, MageAbilityMeteor, 15, mage.meteor_data, mage.animation_raise, INPUT_METEOR) \
 		.add_instant_animated(MageAbilityId.Id.Dash, MageAbilityDash, 5, mage.animation_dash, INPUT_DASH) \
-		.add_instant_animated(MageAbilityId.Id.Jump, MageAbilityJump, 10, mage.animation_jump, INPUT_JUMP) \
+		.add_instant(MageAbilityId.Id.Jump, MageAbilityJump, 10, INPUT_JUMP) \
 		.build()
 
 func try_activate_ability(id: MageAbilityId.Id) -> void:

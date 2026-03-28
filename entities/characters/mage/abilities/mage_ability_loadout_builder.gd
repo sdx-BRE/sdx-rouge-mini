@@ -29,6 +29,18 @@ func add_spell(
 	
 	return self
 
+func add_instant(
+	id: MageAbilityId.Id,
+	ability_class: Script,
+	stamina_cost: int,
+	inputs: Array[StringName]
+) -> MageAbilityLoadoutBuilder:
+	var cost := _base_cost.with_stamina(stamina_cost)
+	var ability: MageAbilityInstant = ability_class.new(_controller, _context, cost)
+	
+	_registry.add(id, MageAbilityInfo.new(ability, inputs))
+	return self
+
 func add_instant_animated(
 	id: MageAbilityId.Id,
 	ability_class: Script,
