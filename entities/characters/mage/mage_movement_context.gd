@@ -12,3 +12,6 @@ func _init(
 	host = p_host
 	config = p_config
 	motion = p_motion
+
+func reset_coyote_timer() -> void:
+	motion.coyote_timer = config.coyote_time

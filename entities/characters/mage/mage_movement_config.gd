@@ -10,6 +10,7 @@ var time_to_descent: float
 var apex_threshold: float
 var apex_gravity_multiplier: float
 var coyote_time: float
+var jump_buffer_time: float
 
 func _init(
 	p_camera_node: ThirdPersonCam,
@@ -22,6 +23,7 @@ func _init(
 	p_apex_threshold: float,
 	p_apex_gravity_multiplier: float,
 	p_coyote_time: float,
+	p_jump_buffer_time: float,
 ) -> void:
 	camera_node = p_camera_node
 	movement_speed = p_movement_speed
@@ -33,6 +35,7 @@ func _init(
 	apex_threshold = p_apex_threshold
 	apex_gravity_multiplier = p_apex_gravity_multiplier
 	coyote_time = p_coyote_time
+	jump_buffer_time = p_jump_buffer_time
 
 static func from_mage(mage: MageCharacter) -> MageMovementConfig:
 	return MageMovementConfig.new(
@@ -46,6 +49,7 @@ static func from_mage(mage: MageCharacter) -> MageMovementConfig:
 		mage.data.apex_threshold,
 		mage.data.apex_gravity_multiplier,
 		mage.data.coyote_time,
+		mage.data.jump_buffer_time,
 	)
 
 func get_jump_gravity() -> float:

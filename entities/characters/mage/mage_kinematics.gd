@@ -6,11 +6,6 @@ func _init(context: MageMovementContext) -> void:
 	_ctx = context
 
 func handle_gravity(delta: float) -> void:
-	if _ctx.host.is_on_floor():
-		_ctx.motion.coyote_timer = _ctx.config.coyote_time
-	else:
-		_ctx.motion.coyote_timer -= delta
-	
 	var gravity := 0.0
 	if _ctx.host.velocity.y > 0:
 		gravity = _ctx.config.get_jump_gravity() * delta

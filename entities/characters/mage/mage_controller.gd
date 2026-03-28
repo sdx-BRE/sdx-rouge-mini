@@ -11,13 +11,8 @@ func get_speed() -> float:
 func is_not_moving() -> bool:
 	return is_zero_approx(get_speed())
 
-func is_on_floor() -> bool:
-	return _ctx.motion.coyote_timer > 0
+func buffer_jump() -> void:
+	_ctx.motion.jump_buffer_timer = _ctx.config.jump_buffer_time
 
 func push_dash_motion(dash_power: Vector3) -> void:
 	_ctx.motion.dash_power = dash_power
-
-func jump() -> void:
-	if _motion.coyote_timer > 0:
-		_host.velocity.y = _config.get_jump_impulse_velocity()
-		_motion.coyote_timer = 0

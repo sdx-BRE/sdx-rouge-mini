@@ -65,14 +65,16 @@ func _ready() -> void:
 	
 	var kinematics := MageKinematics.new(movement_context)
 	var controller := MageController.new(movement_context)
+	var motor := MageMotor.new(movement_context)
+	var sensors := MageSensors.new(movement_context)
 	
 	_abilities = MageAbilityHandler.create(self, _anim, _stats, controller, casting_started, casting_progressed, casting_end)
 	
 	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)
 	var airbourne_observer := ObserverAirbourne.new(self)
-	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(_anim, animation_jump_land.anim_trigger))
+	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(_anim, movement_context, animation_jump_land.anim_trigger))
 	
-	_processor = MageProcessor.new(kinematics, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
+	_processor = MageProcessor.new(kinematics, motor, sensors, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
 
 func _on_dying() -> void:
 	dying.emit()
