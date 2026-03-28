@@ -67,7 +67,9 @@ func _ready() -> void:
 	_abilities = MageAbilityHandler.create(self, _anim, _stats, controller, casting_started, casting_progressed, casting_end)
 	
 	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)
-	_processor = MageProcessor.new(kinematics, _anim, _abilities, resource_generator, get_viewport())
+	var airbourne_observer := ObserverAirbourne.new(self)
+	
+	_processor = MageProcessor.new(kinematics, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
 
 func _on_dying() -> void:
 	dying.emit()

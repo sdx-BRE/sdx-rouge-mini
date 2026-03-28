@@ -4,6 +4,7 @@ var _controller: MageKinematics
 var _anim: MageAnimator
 var _abilities: MageAbilityHandler
 var _resource_generator: MageResourceGenerator
+var _airboune_observer: ObserverAirbourne
 var _viewport: Viewport
 
 var _movement_blend := 0.0
@@ -13,18 +14,21 @@ func _init(
 	anim: MageAnimator,
 	abilities: MageAbilityHandler,
 	resource_generator: MageResourceGenerator,
+	airboune_observer: ObserverAirbourne,
 	viewport: Viewport,
 ) -> void:
 	_controller = controller
 	_anim = anim
 	_abilities = abilities
 	_resource_generator = resource_generator
+	_airboune_observer = airboune_observer
 	_viewport = viewport
 
 func process(delta: float) -> void:
 	_resource_generator.process(delta)
 	_anim.process(delta)
 	_abilities.process_abilities(delta)
+	_airboune_observer.process()
 
 func physics_process(delta: float) -> void: 
 	_controller.handle_gravity(delta)
