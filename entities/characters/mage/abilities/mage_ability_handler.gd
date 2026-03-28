@@ -1,10 +1,10 @@
 class_name MageAbilityHandler extends RefCounted
 
-const INPUT_FIREPULSE: Array[StringName] = [&"attack"]
-const INPUT_FIREBOLT: Array[StringName] = [&"skill_1"]
-const INPUT_METEOR: Array[StringName] = [&"skill_3"]
-const INPUT_DASH: Array[StringName] = [&"dash"]
-const INPUT_JUMP: Array[StringName] = [&"jump"]
+const INPUT_FIREPULSE: Array[StringName] = [MageAbilityActions.ACTION_FIREPULSE]
+const INPUT_FIREBOLT: Array[StringName] = [MageAbilityActions.ACTION_FIREBOLT]
+const INPUT_METEOR: Array[StringName] = [MageAbilityActions.ACTION_METEOR]
+const INPUT_DASH: Array[StringName] = [MageAbilityActions.ACTION_DASH]
+const INPUT_JUMP: Array[StringName] = [MageAbilityActions.ACTION_JUMP]
 
 var _registry: MageAbilityRegistry
 
@@ -73,6 +73,9 @@ func process_abilities(delta: float) -> void:
 		_buffered.tick_cast(delta)
 
 func handle_input(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	
 	if _active != null:
 		var handle_result := _active.handle_input(event)
 		if _is_input_handled(handle_result):
@@ -84,7 +87,7 @@ func handle_input(event: InputEvent) -> bool:
 	
 	var actions := _registry.get_actions()
 	for action in actions:
-		if event.is_action(action) and not event.is_echo():
+		if event.is_action(action):
 			var state := MageAbilityBase.TriggerState.PRESS if event.is_pressed() else MageAbilityBase.TriggerState.RELEASE
 			
 			try_activate_ability(actions[action], state)
