@@ -7,7 +7,8 @@ class_name MageAbilityJump extends MageAbilityInstant
 # Todo: adjust kinetic, implement jump buffer, so pressing jump right before landing triggers next jump
 
 # Todo: when prematurely release jump button, reduce jump height
-func trigger() -> Result:
-	_controller.buffer_jump()
+func trigger(state: MageAbilityBase.TriggerState) -> Result:
+	if state == MageAbilityBase.TriggerState.PRESS:
+		_controller.buffer_jump()
 	
 	return Result.Abort

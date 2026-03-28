@@ -4,6 +4,11 @@ var _controller: MageController
 var _context: MageAbilityContext
 var _cost: MageAbilityCost
 
+enum TriggerState {
+	PRESS,
+	RELEASE,
+}
+
 func _init(controller: MageController, context: MageAbilityContext, cost: MageAbilityCost) -> void:
 	_controller = controller
 	_context = context

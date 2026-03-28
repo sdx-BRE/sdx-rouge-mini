@@ -1,7 +1,8 @@
 class_name MageAbilityDash extends MageAbilityInstantAnimated
 
-func trigger() -> Result:
-	if _controller.is_not_moving(): return Result.Abort
+func trigger(state: MageAbilityBase.TriggerState) -> Result:
+	if state != MageAbilityBase.TriggerState.PRESS or _controller.is_not_moving():
+		return Result.Abort
 	
 	var forward_vector := _context.get_forward()
 	forward_vector.y = 0

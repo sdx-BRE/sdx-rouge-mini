@@ -37,7 +37,10 @@ static func create(
 		.add_instant(MageAbilityId.Id.Jump, MageAbilityJump, 10, INPUT_JUMP) \
 		.build()
 
-func try_activate_ability(id: MageAbilityId.Id) -> void:
+func try_activate_ability(
+	id: MageAbilityId.Id, 
+	state: MageAbilityBase.TriggerState = MageAbilityBase.TriggerState.PRESS,
+) -> void:
 	var ability: MageAbilityBase = _registry.get_ability(id)
 	
 	if ability == null:
@@ -47,8 +50,11 @@ func try_activate_ability(id: MageAbilityId.Id) -> void:
 		return
 	
 	if ability is MageAbilityInstant:
-		if ability.trigger() == MageAbilityInstant.Result.Trigger:
+		if ability.trigger(state) == MageAbilityInstant.Result.Trigger:
 			ability.use_resources()
+		return
+	
+	if state != MageAbilityBase.TriggerState.PRESS:
 		return
 	
 	if _active != null:
@@ -78,8 +84,10 @@ func handle_input(event: InputEvent) -> bool:
 	
 	var actions := _registry.get_actions()
 	for action in actions:
-		if event.is_action_pressed(action):
-			try_activate_ability(actions[action])
+		if event.is_action(action) and not event.is_echo():
+			var state := MageAbilityBase.TriggerState.PRESS if event.is_pressed() else MageAbilityBase.TriggerState.RELEASE
+			
+			try_activate_ability(actions[action], state)
 			return true
 	
 	return false
