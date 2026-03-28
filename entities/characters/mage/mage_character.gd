@@ -33,6 +33,7 @@ signal casting_progressed(current: float, total: float)
 @export var animation_raise: SpellAnimationData
 @export var animation_dash: MageAnimationData
 @export var animation_jump: MageAnimationData
+@export var animation_jump_land: MageAnimationData
 
 @onready var pivot := $Pivot
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
@@ -68,6 +69,7 @@ func _ready() -> void:
 	
 	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)
 	var airbourne_observer := ObserverAirbourne.new(self)
+	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(_anim, animation_jump_land.anim_trigger))
 	
 	_processor = MageProcessor.new(kinematics, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
 
