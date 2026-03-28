@@ -62,7 +62,7 @@ func try_activate_ability(
 	_active = ability
 	
 	var result := _active.start()
-	if result == MageAbilityPhased.StartResult.Cast:
+	if result == MageAbilityPhased.StartResult.BufferAbility:
 		_buffer_active_ability()
 
 func process_abilities(delta: float) -> void:

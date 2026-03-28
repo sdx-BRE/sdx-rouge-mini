@@ -14,4 +14,4 @@ func start() -> MageAbilityPhased.StartResult:
 	_context.request_oneshot_animation(_anim.trigger)
 	_context.notify_casting_started()
 	
-	return MageAbilityPhased.StartResult.Cast
+	return MageAbilityPhased.StartResult.BufferAbility

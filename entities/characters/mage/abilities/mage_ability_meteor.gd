@@ -15,7 +15,7 @@ func start() -> MageAbilityPhased.StartResult:
 	_context.use_visible_mouse()
 	_is_started = false
 	
-	return MageAbilityPhased.StartResult.Handled
+	return MageAbilityPhased.StartResult.HandleWithInput
 
 func cancel() -> void:
 	_context.use_captured_mouse()

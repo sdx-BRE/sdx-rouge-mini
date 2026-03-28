@@ -2,7 +2,7 @@ class_name MageAbilityPhased extends MageAbilityBase
 
 func start() -> StartResult: 
 	push_error("[Error][MageAbilityPhased]: start() must be overwritten by child implementations")
-	return StartResult.Handled
+	return StartResult.HandleWithInput
 
 func update(_delta: float) -> void: 
 	push_error("[Error][MageAbilityPhased]: update() must be overwritten by child implementations")
@@ -18,12 +18,17 @@ func tick_cast(_delta: float) -> void:
 	push_error("[Error][MageAbilityPhased]: tick_cast() must be overwritten by child implementations")
 
 enum StartResult {
-	Handled,
-	Cast,
+	HandleWithInput,
+	BufferAbility,
 }
 
 enum HandleInputResult {
 	Trigger,
 	Cancel,
 	Unhandled,
+}
+
+enum ExecuteResult {
+	Trigger,
+	Cancel,
 }
