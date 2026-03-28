@@ -5,6 +5,7 @@ const INPUT_FIREBOLT: Array[StringName] = [MageAbilityActions.ACTION_FIREBOLT]
 const INPUT_METEOR: Array[StringName] = [MageAbilityActions.ACTION_METEOR]
 const INPUT_DASH: Array[StringName] = [MageAbilityActions.ACTION_DASH]
 const INPUT_JUMP: Array[StringName] = [MageAbilityActions.ACTION_JUMP]
+const INPUT_SPRINT: Array[StringName] = [MageAbilityActions.ACTION_SPRINT]
 
 var _registry: MageAbilityRegistry
 
@@ -35,6 +36,7 @@ static func create(
 		.add_spell(MageAbilityId.Id.Meteor, MageAbilityMeteor, 15, mage.meteor_data, mage.animation_raise, INPUT_METEOR) \
 		.add_instant_animated(MageAbilityId.Id.Dash, MageAbilityDash, 5, mage.animation_dash, INPUT_DASH) \
 		.add_instant(MageAbilityId.Id.Jump, MageAbilityJump, 10, INPUT_JUMP) \
+		.add_phased(MageAbilityId.Id.Sprint, MageAbilitySprint, 0, 10, INPUT_SPRINT) \
 		.build()
 
 func try_activate_ability(

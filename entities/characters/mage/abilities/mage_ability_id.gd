@@ -6,4 +6,5 @@ enum Id {
 	Meteor,
 	Dash,
 	Jump,
+	Sprint,
 }
