@@ -41,6 +41,9 @@ func spawn_node(node: Node3D) -> void:
 func request_oneshot_animation(property: StringName) -> void:
 	_anim.request_oneshot_fire(property)
 
+func play_full_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
+	_anim.play_full_body(to_node, mode)
+
 func show_decal() -> void:
 	_environment.camera_node.use_visible_mouse()
 	_environment.aim_decal.visible = true

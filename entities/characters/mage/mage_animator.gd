@@ -31,6 +31,9 @@ func request_oneshot_fire(property: StringName) -> void:
 func get_current_position(property: StringName) -> float:
 	return _tree.get(property + "/current_position") as float
 
+func play_full_body(to_node: StringName, mode: AnimationUtil.Play = AnimationUtil.Play.Travel) -> void:
+	_playback_fullbody.play(to_node, mode)
+
 func blend_loco(value: float) -> void:
 	_tree.set(_params.blend_loco, value)
 
