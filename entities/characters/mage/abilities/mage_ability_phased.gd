@@ -1,5 +1,8 @@
 class_name MageAbilityPhased extends MageAbilityBase
 
+func resolve_activation(handler: MageAbilityHandler, state: MageAbilityBase.TriggerState) -> void:
+	handler.try_activate_phased(self, state)
+
 func start() -> StartResult: 
 	push_error("[Error][MageAbilityPhased]: start() must be overwritten by child implementations")
 	return StartResult.HandleWithInput

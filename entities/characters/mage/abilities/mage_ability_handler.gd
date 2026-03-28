@@ -36,7 +36,6 @@ static func create(
 		.add_spell(MageAbilityId.Id.Meteor, MageAbilityMeteor, 15, mage.meteor_data, mage.animation_raise, INPUT_METEOR) \
 		.add_instant_animated(MageAbilityId.Id.Dash, MageAbilityDash, 5, mage.animation_dash, INPUT_DASH) \
 		.add_instant(MageAbilityId.Id.Jump, MageAbilityJump, 10, INPUT_JUMP) \
-		.add_phased(MageAbilityId.Id.Sprint, MageAbilitySprint, 0, 10, INPUT_SPRINT) \
 		.build()
 
 func try_activate_ability(
@@ -51,11 +50,13 @@ func try_activate_ability(
 	if not ability.has_resources():
 		return
 	
-	if ability is MageAbilityInstant:
-		if ability.trigger(state) == MageAbilityInstant.Result.Trigger:
-			ability.use_resources()
-		return
-	
+	ability.resolve_activation(self, state)
+
+func try_activate_instant(ability: MageAbilityInstant, state: MageAbilityBase.TriggerState) -> void:
+	if ability.trigger(state) == MageAbilityInstant.Result.Trigger:
+		ability.use_resources()
+
+func try_activate_phased(ability: MageAbilityPhased, state: MageAbilityBase.TriggerState) -> void:
 	if state != MageAbilityBase.TriggerState.PRESS:
 		return
 	

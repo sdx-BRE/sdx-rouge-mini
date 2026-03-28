@@ -20,7 +20,11 @@ func has_resources() -> bool:
 func use_resources() -> void:
 	_context.use_resources(_cost)
 
-func cancel() -> void: 
+func resolve_activation(handler: MageAbilityHandler, state: MageAbilityBase.TriggerState) -> void:
+	var msg := "[Error][MageAbilityBase]: resolve_activation() must be overwritten by child implementations"
+	push_error(msg, " - handler: ", handler, " - state: ", state)
+
+func cancel() -> void:
 	push_error("[Error][MageAbilityBase]: cancel() must be overwritten by child implementations")
 
 func _init_at_wand_spawnpoint(scene: PackedScene) -> Node3D:
