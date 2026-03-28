@@ -43,6 +43,7 @@ signal died()
 @onready var ui: EnemyUI = $EnemyViewport
 @onready var fov: Area3D = $Fov
 @onready var punch_hitbox: Area3D = $Pivot/Rig_Medium/Skeleton3D/BoneHandslotR/Hitbox
+@onready var target_point := $TargetPoint
 
 @onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
@@ -98,8 +99,11 @@ func take_dmg(value: float) -> void:
 	else:
 		_anim.oneshot_hit_weak()
 
+func get_target_point() -> Marker3D:
+	return target_point
+
 #region event callbacks
-func _on_punch(body: Node3D):
+func _on_punch(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
 		body.take_dmg(punch_dmg)
 
