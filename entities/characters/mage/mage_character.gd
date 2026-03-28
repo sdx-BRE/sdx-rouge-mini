@@ -100,9 +100,6 @@ func _physics_process(delta: float) -> void:
 func take_dmg(value: float) -> void:
 	_stats.take_dmg(value)
 
-func use_skill(index: int) -> void:
-	_processor.use_skill(index)
-
 func execute_buffered_ability() -> void:
 	_abilities.execute_buffered_ability()
 

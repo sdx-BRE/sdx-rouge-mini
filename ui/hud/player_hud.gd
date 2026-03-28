@@ -1,7 +1,5 @@
 class_name PlayerHud extends CanvasLayer
 
-signal skill_activated(index: int)
-
 @onready var health_bar := $MarginContainer/Control/StatContainer/Health
 @onready var mana_bar := $MarginContainer/Control/StatContainer/Mana
 @onready var stamina_bar := $MarginContainer/Control/StatContainer/Stamina
@@ -11,10 +9,30 @@ signal skill_activated(index: int)
 @onready var skill_3 := $MarginContainer/Control/VBoxContainer/SkillsContainer/Skill3
 @onready var skill_progress := $MarginContainer/Control/VBoxContainer/CenterContainer/SkillProgres
 
-func _ready() -> void:
-	skill_1.pressed.connect(func(): skill_activated.emit(0))
-	skill_2.pressed.connect(func(): skill_activated.emit(1))
-	skill_3.pressed.connect(func(): skill_activated.emit(2))
+func _input(event: InputEvent) -> void:
+	if event.is_action("dbg"):
+		get_viewport().set_input_as_handled()
+		if not event.is_pressed():
+			return
+		print("dbg! 2")
+		skill_2.set_pressed_no_signal(true)
+		await get_tree().create_timer(0.075).timeout
+		skill_2.set_pressed_no_signal(false)
+
+func emulate_press_skill_1() -> void:
+	_toggle_btn(skill_1)
+
+func emulate_press_skill_2() -> void:
+	_toggle_btn(skill_2)
+
+func emulate_press_skill_3() -> void:
+	_toggle_btn(skill_3)
+
+func _toggle_btn(btn: Button, duration: float = 0.075) -> void:
+	btn.toggle_mode = true
+	btn.set_pressed_no_signal(true)
+	await get_tree().create_timer(duration).timeout
+	btn.set_pressed_no_signal(false)
 
 func update_health(current: float, total: float) -> void:
 	health_bar.value = current

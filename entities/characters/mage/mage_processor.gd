@@ -54,9 +54,3 @@ func handle_unhandled_input(event: InputEvent) -> void:
 		return
 	
 	_kinematics.delegate_input_to_camera(event)
-
-func use_skill(index: int) -> void:
-	match index:
-		0: _abilities.try_activate_ability(MageAbilityId.Id.Firebolt)
-		1: print("Todo: implement skill 1")
-		2: _abilities.try_activate_ability(MageAbilityId.Id.Meteor)
