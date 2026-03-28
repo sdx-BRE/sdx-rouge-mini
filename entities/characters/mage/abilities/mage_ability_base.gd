@@ -1,4 +1,4 @@
-﻿class_name MageAbilityBase extends RefCounted
+class_name MageAbilityBase extends RefCounted
 
 var _controller: MageController
 var _context: MageAbilityContext
@@ -26,11 +26,6 @@ func cancel() -> void:
 func _init_at_wand_spawnpoint(scene: PackedScene) -> Node3D:
 	var node := _init_scene(scene)
 	node.global_position = _context.get_cast_origin()
-	
-	node.global_basis = _context.get_host_transform_basis()
-	node.global_basis = node.global_basis.rotated(Vector3.UP, PI)
-	node.global_basis.z.y = 0
-	node.global_basis = node.global_basis.orthonormalized()
 	
 	return node
 
