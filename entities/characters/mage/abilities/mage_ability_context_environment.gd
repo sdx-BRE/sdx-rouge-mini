@@ -1,4 +1,6 @@
-﻿class_name MageAbilityContextEnvironment extends RefCounted
+class_name MageAbilityContextEnvironment extends RefCounted
+
+const NODE_NAME_SPAWN_CONTAINER = "AbilityContextEnvironmentSpawnContainer"
 
 var anim: MageAnimator
 var wandspawn_node: Node3D
@@ -45,9 +47,13 @@ static func from_mage(
 	var spawn_container := mage.spawn_container
 	if spawn_container == null:
 		spawn_container = Node3D.new()
+		spawn_container.name = NODE_NAME_SPAWN_CONTAINER
+		
 		mage.add_child(spawn_container)
-	
-	spawn_container.top_level = true
+		spawn_container.owner = mage.get_tree().current_scene
+		
+		spawn_container.top_level = true
+		spawn_container.global_position = Vector3.ZERO
 	
 	return MageAbilityContextEnvironment.new(
 		spawn_container,
