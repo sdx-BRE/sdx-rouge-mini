@@ -97,8 +97,9 @@ func handle_input(event: InputEvent) -> bool:
 
 func execute_buffered_ability() -> void:
 	if _buffered != null:
-		_buffered.execute()
-		_buffered.use_resources()
+		var result := _buffered.execute()
+		if result == MageAbilityPhased.ExecuteResult.Trigger:
+			_buffered.use_resources()
 		_buffered = null
 
 func _buffer_active_ability() -> void:

@@ -4,12 +4,14 @@ var _aim_pos := Vector3.ZERO
 
 var _is_started := false
 
-func execute() -> void:
+func execute() -> ExecuteResult:
 	_context.notify_casting_end()
 	
 	var node := _anim.scene.instantiate()
 	node.position = _aim_pos
 	_context.spawn_node(node)
+	
+	return ExecuteResult.Trigger
 
 func start() -> MageAbilityPhased.StartResult:
 	_context.use_visible_mouse()

@@ -1,6 +1,6 @@
 class_name MageAbilityFirepulse extends MageAbilitySpell.Instant
 
-func execute() -> void:
+func execute() -> ExecuteResult:
 	_context.notify_casting_end()
 	var node := _init_at_wand_spawnpoint(_anim.scene)
 	node.scale = Vector3(3, 3, 3)
@@ -9,6 +9,8 @@ func execute() -> void:
 	var forward := _context.get_forward()
 	
 	node.global_position += forward * distance
+	
+	return ExecuteResult.Trigger
 
 func start() -> MageAbilityPhased.StartResult:
 	_context.request_oneshot_animation(_anim.trigger)
