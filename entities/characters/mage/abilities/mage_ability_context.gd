@@ -50,20 +50,23 @@ func show_ground_target_marker() -> void:
 func hide_ground_target_marker() -> void:
 	_environment.ground_target_marker.visible = false
 
+func set_ground_target_marker_position(position: Vector3) -> void:
+	_environment.ground_target_marker.global_position = position
+
 func show_enemy_target_marker() -> void:
 	_environment.enemy_target_marker.visible = true
 
 func hide_enemy_target_marker() -> void:
 	_environment.enemy_target_marker.visible = false
 
+func set_enemy_target_marker_position(position: Vector2) -> void:
+	_environment.enemy_target_marker.global_position = position
+
 func use_visible_mouse() -> void:
 	_environment.camera_node.use_visible_mouse()
 
 func use_captured_mouse() -> void:
 	_environment.camera_node.use_captured_mouse()
-
-func set_decal_position(position: Vector3) -> void:
-	_environment.ground_target_marker.global_position = position
 
 func notify_casting_started() -> void:
 	_environment.casting_started.emit()
