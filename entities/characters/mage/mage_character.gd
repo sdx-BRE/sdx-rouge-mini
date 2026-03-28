@@ -61,9 +61,11 @@ func _ready() -> void:
 	
 	var movement_config := MageMovementConfig.from_mage(self)
 	var movement_motion := MageMovementMotion.from_mage(self)
-	var kinematics := MageKinematics.new(self, movement_config, movement_motion)
+	var movement_context := MageMovementContext.new(self, movement_config, movement_motion)
 	
-	var controller := MageController.new(self, movement_config, movement_motion)
+	var kinematics := MageKinematics.new(movement_context)
+	var controller := MageController.new(movement_context)
+	
 	_abilities = MageAbilityHandler.create(self, _anim, _stats, controller, casting_started, casting_progressed, casting_end)
 	
 	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)

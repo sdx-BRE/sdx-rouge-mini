@@ -1,73 +1,69 @@
 class_name MageKinematics extends RefCounted
 
-var _host: CharacterBody3D
-var _config: MageMovementConfig
-var _motion: MageMovementMotion
+var _ctx: MageMovementContext
 
-func _init(host: CharacterBody3D, config: MageMovementConfig, motion: MageMovementMotion) -> void:
-	_host = host
-	_config = config
-	_motion = motion
+func _init(context: MageMovementContext) -> void:
+	_ctx = context
 
 func handle_gravity(delta: float) -> void:
-	if _host.is_on_floor():
-		_motion.coyote_timer = _config.coyote_time
+	if _ctx.host.is_on_floor():
+		_ctx.motion.coyote_timer = _ctx.config.coyote_time
 	else:
-		_motion.coyote_timer -= delta
+		_ctx.motion.coyote_timer -= delta
 	
 	var gravity := 0.0
-	if _host.velocity.y > 0:
-		gravity = _config.get_jump_gravity() * delta
+	if _ctx.host.velocity.y > 0:
+		gravity = _ctx.config.get_jump_gravity() * delta
 	else:
-		gravity = _config.get_fall_gravity() * delta
+		gravity = _ctx.config.get_fall_gravity() * delta
 	
-	if abs(_host.velocity.y) < _config.apex_threshold:
-		gravity *= _config.apex_gravity_multiplier
+	if abs(_ctx.host.velocity.y) < _ctx.config.apex_threshold:
+		gravity *= _ctx.config.apex_gravity_multiplier
 	
-	_host.velocity.y -= gravity
+	_ctx.host.velocity.y -= gravity
 
 func update_velocity(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction := _calculate_movement_direction(input_dir)
 	
 	if direction:
-		_host.velocity.x = direction.x * _config.movement_speed
-		_host.velocity.z = direction.z * _config.movement_speed
+		_ctx.host.velocity.x = direction.x * _ctx.config.movement_speed
+		_ctx.host.velocity.z = direction.z * _ctx.config.movement_speed
 		_look_at(direction, delta)
 		
-		_host.velocity.x += _motion.dash_power.x
-		_host.velocity.z += _motion.dash_power.z
+		_ctx.host.velocity.x += _ctx.motion.dash_power.x
+		_ctx.host.velocity.z += _ctx.motion.dash_power.z
 	else:
-		_host.velocity.x = move_toward(_host.velocity.x, 0, _config.movement_speed)
-		_host.velocity.z = move_toward(_host.velocity.z, 0, _config.movement_speed)
+		_ctx.host.velocity.x = move_toward(_ctx.host.velocity.x, 0, _ctx.config.movement_speed)
+		_ctx.host.velocity.z = move_toward(_ctx.host.velocity.z, 0, _ctx.config.movement_speed)
 	
-	_motion.dash_power = _motion.dash_power.move_toward(Vector3.ZERO, _config.dash_decay * delta * 10)
+	_ctx.motion.dash_power = _ctx.motion.dash_power.move_toward(Vector3.ZERO, _ctx.config.dash_decay * delta * 10)
 
 func move_and_slide() -> void:
-	_host.move_and_slide()
+	_ctx.host.move_and_slide()
 
 func get_speed_ratio() -> float:
-	return get_speed() / _config.movement_speed
+	return get_speed() / _ctx.config.movement_speed
 
 func get_speed() -> float:
-	return Vector3(_host.velocity.x, 0, _host.velocity.z).length()
+	return Vector3(_ctx.host.velocity.x, 0, _ctx.host.velocity.z).length()
 
 func delegate_input_to_camera(event: InputEvent):
-	_config.camera_node.handle_input(event)
+	_ctx.config.camera_node.handle_input(event)
 
 func _look_at(direction: Vector3, delta: float) -> void:
 	var target_rotation := atan2(direction.x, direction.z)
-	_host.pivot.rotation.y = lerp_angle(_host.pivot.rotation.y, target_rotation, delta * _config.look_at_weight)
+	_ctx.host.pivot.rotation.y = lerp_angle(_ctx.host.pivot.rotation.y, target_rotation, delta * _ctx.config.look_at_weight)
 
 func _calculate_movement_direction(input_dir: Vector2) -> Vector3:
-	if _config.camera_node == null:
-		return (_host.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if _ctx.config.camera_node == null:
+		return (_ctx.host.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	var cam_forward := _config.camera_node.global_transform.basis.z
+	var cam_forward := _ctx.config.camera_node.global_transform.basis.z
 	cam_forward.y = 0
 	cam_forward = cam_forward.normalized()
 	
-	var cam_right := _config.camera_node.global_transform.basis.x
+	var cam_right := _ctx.config.camera_node.global_transform.basis.x
 	cam_right.y = 0
 	cam_right = cam_right.normalized()
 	
