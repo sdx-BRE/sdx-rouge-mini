@@ -13,6 +13,9 @@ func _init(
 	_mana_regen = mana_regen
 	_stamina_regen = stamina_regen
 
+static func from_data(stats: MageStats, data: MageData) -> MageResourceGenerator:
+	return MageResourceGenerator.new(stats, data.mana_regeneration, data.stamina_regeneration)
+
 func process(delta: float) -> void:
 	_stats.restore_mana(_mana_regen * delta)
 	_stats.restore_stamina(_stamina_regen * delta)

@@ -45,37 +45,17 @@ var _abilities: MageAbilityHandler
 var _processor: EntityProcessor
 
 func _ready() -> void:
-	_stats = MageStats.from_data(data)
-	
-	_stats.health_changed.connect(health_changed.emit)
-	_stats.mana_changed.connect(mana_changed.emit)
-	_stats.stamina_changed.connect(stamina_changed.emit)
-	_stats.health_reached_zero.connect(_on_dying)
-	
-	_anim = MageAnimator.create(
-		anim_tree,
-		param_playback_full_body,
-		param_blend_locomotion,
-		param_state_death,
+	var signals := MageSignals.new(
+		died,
+		dying,
+		health_changed,
+		mana_changed,
+		stamina_changed,
+		casting_started,
+		casting_end,
+		casting_progressed,
 	)
-	_anim.register_signals(died)
-	
-	var movement_config := MageMovementConfig.from_mage(self)
-	var movement_motion := MageMovementMotion.from_mage(self)
-	var movement_context := MageMovementContext.new(self, movement_config, movement_motion)
-	
-	var kinematics := MageKinematics.new(movement_context)
-	var controller := MageController.new(movement_context)
-	var motor := MageMotor.new(movement_context)
-	var sensors := MageSensors.new(movement_context)
-	
-	_abilities = MageAbilityHandler.create(self, _anim, _stats, controller, casting_started, casting_progressed, casting_end)
-	
-	var resource_generator := MageResourceGenerator.new(_stats, data.mana_regeneration, data.stamina_regeneration)
-	var airbourne_observer := ObserverAirbourne.new(self)
-	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(_anim, movement_context, animation_jump_land.anim_trigger))
-	
-	_processor = MageProcessorAssembler.assemble(kinematics, motor, sensors, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
+	MageBootstrapper.bootstrap(self, signals)
 
 func _on_dying() -> void:
 	dying.emit()
