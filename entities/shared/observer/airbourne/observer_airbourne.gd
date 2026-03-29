@@ -1,4 +1,4 @@
-﻿class_name ObserverAirbourne extends RefCounted
+﻿class_name ObserverAirbourne extends ProcessHandler
 
 var _host: CharacterBody3D
 var _was_on_floor: bool
@@ -10,7 +10,7 @@ func _init(host: CharacterBody3D) -> void:
 	_host = host
 	_was_on_floor = _host.is_on_floor()
 
-func process() -> void:
+func process(_delta: float) -> void:
 	var is_on_floor := _host.is_on_floor()
 	
 	if is_on_floor != _was_on_floor:
