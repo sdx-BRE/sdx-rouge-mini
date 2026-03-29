@@ -45,20 +45,27 @@ static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMove
 	var kinematics := MageKinematics.new(movement_context)
 	var motor := MageMotor.new(movement_context)
 	
-	var sensors := MageSensors.new(movement_context)
-	var resource_generator := MageResourceGenerator.from_data(mage._stats, mage.data)
-	var airbourne_observer := ObserverAirbourne.new(mage)
+	var input_handler := MageInputHandler.new(mage._abilities, kinematics)
 	
+	var resource_generator := MageResourceGenerator.from_data(mage._stats, mage.data)
+	var process_handler := MageProcessHandler.new(mage._anim, mage._abilities)
+	var airbourne_observer := ObserverAirbourne.new(mage)
 	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land.anim_trigger))
 	
+	var sensors := MageSensors.new(movement_context)
+	var velocity_handler := MageVelocityHandler.new(kinematics, motor)
+	var blend_handler := MageBlendHandler.new(kinematics, mage._anim)
+	var collision_handler := MageCollisionsHandler.new(kinematics)
+	
 	mage._processor = MageProcessorAssembler.assemble(
-		kinematics, 
-		motor, 
-		sensors, 
-		mage._anim, 
-		mage._abilities, 
-		resource_generator, 
-		airbourne_observer, 
+		input_handler,
+		resource_generator,
+		process_handler,
+		airbourne_observer,
+		sensors,
+		velocity_handler,
+		blend_handler,
+		collision_handler,
 		mage.get_viewport(),
 	)
 
