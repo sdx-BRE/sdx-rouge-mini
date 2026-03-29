@@ -29,7 +29,9 @@ func update(_delta: float) -> void:
 	var result := _context.raycast_from_mouse(cast_range, Layers.COLLISION_ENEMY_COLLISION)
 	
 	if result:
-		var enemy_position = result.collider.global_position + Vector3(0.0, 1.0, 0.0)
+		var aim_target = result.collider.get_target_point() if result.collider.has_method("get_target_point") else result.collider
+		
+		var enemy_position = aim_target.global_position
 		var enemy_position_2d := _context.unproject_position(enemy_position)
 		
 		_context.set_enemy_target_marker_position(enemy_position_2d)
