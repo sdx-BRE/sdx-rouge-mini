@@ -12,6 +12,15 @@ var _registry: MageAbilityRegistry
 var _active: MageAbilityPhased
 var _buffered: MageAbilityPhased
 
+var _channeled: MageAbilityChanneled
+
+func try_activate_channeled(ability: MageAbilityChanneled, state: MageAbilityBase.TriggerState) -> void:
+	if state == MageAbilityBase.TriggerState.PRESS:
+		_channeled = ability
+	else:
+		_channeled.end()
+		_channeled = null
+
 func _init(registry: MageAbilityRegistry) -> void:
 	_registry = registry
 
@@ -36,6 +45,7 @@ static func create(
 		.add_spell(MageAbilityId.Id.Meteor, MageAbilityMeteor, 15, mage.meteor_data, mage.animation_raise, INPUT_METEOR) \
 		.add_instant_animated(MageAbilityId.Id.Dash, MageAbilityDash, 5, mage.animation_dash, INPUT_DASH) \
 		.add_instant(MageAbilityId.Id.Jump, MageAbilityJump, 10, INPUT_JUMP) \
+		.add_channeled(MageAbilityId.Id.Sprint, MageAbilitySprint, 0.0, 0.2, INPUT_SPRINT) \
 		.build()
 
 func try_activate_ability(
@@ -74,6 +84,11 @@ func process_abilities(delta: float) -> void:
 	
 	if _buffered != null:
 		_buffered.tick_cast(delta)
+	
+	if _channeled != null:
+		var result := _channeled.tick(delta)
+		if result == MageAbilityChanneled.TickResult.Consume:
+			_channeled.use_resources()
 
 func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():

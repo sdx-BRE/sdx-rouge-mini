@@ -56,15 +56,15 @@ func add_instant_animated(
 	
 	return self
 
-func add_phased(
+func add_channeled(
 	id: MageAbilityId.Id,
 	ability_class: Script,
-	mana_cost: int,
-	stamina_cost: int,
+	mana_cost: float,
+	stamina_cost: float,
 	inputs: Array[StringName]
 ) -> MageAbilityLoadoutBuilder:
 	var cost := _base_cost.with_mana(mana_cost).with_stamina(stamina_cost)
-	var ability: MageAbilityPhased = ability_class.new(_controller, _context, cost)
+	var ability: MageAbilityChanneled = ability_class.new(_controller, _context, cost)
 	
 	_registry.add(id, MageAbilityInfo.new(ability, inputs))
 	return self
