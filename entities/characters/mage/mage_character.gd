@@ -42,7 +42,7 @@ signal casting_progressed(current: float, total: float)
 var _stats: MageStats
 var _anim: MageAnimator
 var _abilities: MageAbilityHandler
-var _processor: MageProcessor
+var _processor: EntityProcessor
 
 func _ready() -> void:
 	_stats = MageStats.from_data(data)
@@ -75,7 +75,7 @@ func _ready() -> void:
 	var airbourne_observer := ObserverAirbourne.new(self)
 	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(_anim, movement_context, animation_jump_land.anim_trigger))
 	
-	_processor = MageProcessor.new(kinematics, motor, sensors, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
+	_processor = MageProcessorAssembler.assemble(kinematics, motor, sensors, _anim, _abilities, resource_generator, airbourne_observer, get_viewport())
 
 func _on_dying() -> void:
 	dying.emit()

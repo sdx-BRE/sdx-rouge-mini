@@ -1,4 +1,4 @@
-class_name MageResourceGenerator extends RefCounted
+class_name MageResourceGenerator extends ProcessHandler
 
 var _stats: MageStats
 var _mana_regen: float
