@@ -22,15 +22,15 @@ func update_velocity(delta: float) -> void:
 	var direction := _calculate_movement_direction(input_dir)
 	
 	if direction:
-		_ctx.host.velocity.x = direction.x * _ctx.config.movement_speed
-		_ctx.host.velocity.z = direction.z * _ctx.config.movement_speed
+		_ctx.host.velocity.x = direction.x * _ctx.motion.movement_speed
+		_ctx.host.velocity.z = direction.z * _ctx.motion.movement_speed
 		_look_at(direction, delta)
 		
 		_ctx.host.velocity.x += _ctx.motion.dash_power.x
 		_ctx.host.velocity.z += _ctx.motion.dash_power.z
 	else:
-		_ctx.host.velocity.x = move_toward(_ctx.host.velocity.x, 0, _ctx.config.movement_speed)
-		_ctx.host.velocity.z = move_toward(_ctx.host.velocity.z, 0, _ctx.config.movement_speed)
+		_ctx.host.velocity.x = move_toward(_ctx.host.velocity.x, 0, _ctx.motion.movement_speed)
+		_ctx.host.velocity.z = move_toward(_ctx.host.velocity.z, 0, _ctx.motion.movement_speed)
 	
 	_ctx.motion.dash_power = _ctx.motion.dash_power.move_toward(Vector3.ZERO, _ctx.config.dash_decay * delta * 10)
 
@@ -38,7 +38,7 @@ func move_and_slide() -> void:
 	_ctx.host.move_and_slide()
 
 func get_speed_ratio() -> float:
-	return get_speed() / _ctx.config.movement_speed
+	return get_speed() / _ctx.motion.movement_speed
 
 func get_speed() -> float:
 	return Vector3(_ctx.host.velocity.x, 0, _ctx.host.velocity.z).length()

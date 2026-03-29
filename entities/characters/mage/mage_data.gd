@@ -10,7 +10,8 @@ class_name MageData extends Resource
 @export var stamina_regeneration := 3.1415
 
 @export_group("Movement")
-@export var max_speed := 5.0
+@export var speed_normal := 5.0
+@export var speed_sprinting := 5.0
 @export var dash_power := 20.0
 @export var dash_decay := 8.0
 

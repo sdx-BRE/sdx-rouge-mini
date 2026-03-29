@@ -1,7 +1,8 @@
 class_name MageMovementConfig extends RefCounted
 
 var camera_node: ThirdPersonCam
-var movement_speed: float
+var speed_normal: float
+var speed_sprinting: float
 var dash_decay: float
 var look_at_weight: float
 var jump_height: float
@@ -14,7 +15,8 @@ var jump_buffer_time: float
 
 func _init(
 	p_camera_node: ThirdPersonCam,
-	p_movement_speed: float,
+	p_speed_normal: float,
+	p_speed_sprinting: float,
 	p_dash_decay: float,
 	p_look_at_weight: float,
 	p_jump_height: float,
@@ -26,7 +28,8 @@ func _init(
 	p_jump_buffer_time: float,
 ) -> void:
 	camera_node = p_camera_node
-	movement_speed = p_movement_speed
+	speed_normal = p_speed_normal
+	speed_sprinting = p_speed_sprinting
 	dash_decay = p_dash_decay
 	look_at_weight = p_look_at_weight
 	jump_height = p_jump_height
@@ -40,7 +43,8 @@ func _init(
 static func from_mage(mage: MageCharacter) -> MageMovementConfig:
 	return MageMovementConfig.new(
 		mage.camera_node,
-		mage.data.max_speed,
+		mage.data.speed_normal,
+		mage.data.speed_sprinting,
 		mage.data.dash_decay,
 		mage.look_at_weight,
 		mage.data.jump_height,
