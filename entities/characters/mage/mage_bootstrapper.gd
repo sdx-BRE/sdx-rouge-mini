@@ -42,32 +42,48 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 	)
 
 static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMovementContext) -> void:
+	var processor := EntityProcessor.new(mage.get_viewport())
 	var kinematics := MageKinematics.new(movement_context)
 	var motor := MageMotor.new(movement_context)
 	
-	var input_handler := MageInputHandler.new(mage._abilities, kinematics)
+	_bootstrap_process_handler(processor, mage, movement_context)
+	_bootstrap_physic_process_handler(processor, movement_context, kinematics, motor, mage._anim)
+	_bootstrap_input_handler(processor, kinematics, mage._abilities)
 	
-	var resource_generator := MageResourceGenerator.from_data(mage._stats, mage.data)
-	var process_handler := MageProcessHandler.new(mage._anim, mage._abilities)
+	mage._processor = processor
+
+static func _bootstrap_process_handler(
+	processor: EntityProcessor,
+	mage: MageCharacter,
+	movement_context: MageMovementContext,
+) -> void:
+	processor.add_process_handler(MageResourceGenerator.from_data(mage._stats, mage.data))
+	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._abilities))
+	
 	var airbourne_observer := ObserverAirbourne.new(mage)
 	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land.anim_trigger))
+	processor.add_process_handler(airbourne_observer)
 	
-	var sensors := MageSensors.new(movement_context)
-	var velocity_handler := MageVelocityHandler.new(kinematics, motor)
-	var blend_handler := MageBlendHandler.new(kinematics, mage._anim)
-	var collision_handler := MageCollisionsHandler.new(kinematics)
-	
-	mage._processor = MageProcessorAssembler.assemble(
-		input_handler,
-		resource_generator,
-		process_handler,
-		airbourne_observer,
-		sensors,
-		velocity_handler,
-		blend_handler,
-		collision_handler,
-		mage.get_viewport(),
-	)
+	processor.add_process_handler(EnemyTargetMarkerOscillator.new(mage.enemy_target_marker))
+
+static func _bootstrap_physic_process_handler(
+	processor: EntityProcessor,
+	movement_context: MageMovementContext,
+	kinematics: MageKinematics,
+	motor: MageMotor,
+	anim: MageAnimator,
+) -> void:
+	processor.add_physics_handler(MageSensors.new(movement_context))
+	processor.add_physics_handler(MageVelocityHandler.new(kinematics, motor))
+	processor.add_physics_handler(MageBlendHandler.new(kinematics, anim))
+	processor.add_physics_handler(MageCollisionsHandler.new(kinematics))
+
+static func _bootstrap_input_handler(
+	processor: EntityProcessor,
+	kinematics: MageKinematics,
+	abilities: MageAbilityHandler,
+) -> void:
+	processor.add_input_handler(MageInputHandler.new(abilities, kinematics))
 
 static func _create_movement_context(mage: MageCharacter) -> MageMovementContext:
 	var movement_config := MageMovementConfig.from_mage(mage)
