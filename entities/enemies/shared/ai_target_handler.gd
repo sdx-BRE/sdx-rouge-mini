@@ -1,11 +1,14 @@
-class_name SkeletonMinionStateMachineTargetHandler extends RefCounted
+class_name AiTargetHandler extends RefCounted
 
 var _host: CharacterBody3D
+var _attack_range: float
+
 var _targets_in_range: Array[Node3D]
 var _target: Node3D
 
-func _init(host: CharacterBody3D) -> void:
+func _init(host: CharacterBody3D, attack_range: float) -> void:
 	_host = host
+	_attack_range = attack_range
 
 func add_target(target: Node3D) -> void:
 	if not _targets_in_range.has(target):
@@ -17,7 +20,7 @@ func remove_target(target: Node3D) -> void:
 
 func update_target() -> void:
 	for target in _targets_in_range:
-		if AiUtil.is_visible(target, _host, _host.fov_threshold):
+		if AiTargetHandler.is_visible(target, _host, _host.fov_threshold):
 			_target = target
 			return
 	
@@ -31,7 +34,7 @@ func is_target_in_range() -> bool:
 		return false
 	
 	var distance_sqrd := _host.global_position.distance_squared_to(_target.global_position)
-	var attack_range_sqrd :=  SkeletonMinionStateMachine.ATTACK_RANGE * SkeletonMinionStateMachine.ATTACK_RANGE
+	var attack_range_sqrd :=  _attack_range * _attack_range
 	
 	return distance_sqrd <= attack_range_sqrd
 
@@ -40,3 +43,10 @@ func get_target_position() -> Vector3:
 		return _target.global_position
 	
 	return Vector3.ZERO
+
+static func is_visible(target: Node3D, source: Node3D, fov_threshold: float) -> bool:
+	var direction := (target.global_position
+		- source.global_position).normalized()
+	var dot := -source.global_transform.basis.z.dot(direction)
+	
+	return dot >= fov_threshold

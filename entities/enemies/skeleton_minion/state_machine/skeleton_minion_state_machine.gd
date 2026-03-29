@@ -1,14 +1,12 @@
 class_name SkeletonMinionStateMachine extends RefCounted
 
-const ATTACK_RANGE := 1.53
-
 var _state_handler: SkeletonMinionStateMachineStateHandler
-var _target_handler: SkeletonMinionStateMachineTargetHandler
+var _target_handler: AiTargetHandler
 var _data: SkeletonMinionStateData
 
 func _init(
 	state_handler: SkeletonMinionStateMachineStateHandler,
-	target_handler: SkeletonMinionStateMachineTargetHandler,
+	target_handler: AiTargetHandler,
 	data: SkeletonMinionStateData,
 ) -> void:
 	_state_handler = state_handler

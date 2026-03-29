@@ -1,5 +1,7 @@
 class_name SkeletonMinion extends CharacterBody3D
 
+const ATTACK_RANGE := 1.53
+
 signal died()
 
 @export_group("Skeleton properties")
@@ -66,7 +68,7 @@ func _ready() -> void:
 	var state_machine := SkeletonMinionStateMachine.start_walking(
 		SkeletonMinionStateContext.new(
 			controller,
-			SkeletonMinionStateMachineTargetHandler.new(self),
+			AiTargetHandler.new(self, ATTACK_RANGE),
 			_anim,
 			SkeletonMinionStateData.from_minion(self),
 			SkeletonMinionStateConfig.from_minion(self),

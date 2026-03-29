@@ -1,14 +1,14 @@
 ﻿class_name SkeletonMinionStateContext extends RefCounted
 
 var _controller: SkeletonMinionController
-var _target_handler: SkeletonMinionStateMachineTargetHandler
+var _target_handler: AiTargetHandler
 var _anim: SkeletonMinionAnimator
 var _data: SkeletonMinionStateData
 var _config: SkeletonMinionStateConfig
 
 func _init(
 	controller: SkeletonMinionController,
-	target_handler: SkeletonMinionStateMachineTargetHandler,
+	target_handler: AiTargetHandler,
 	anim: SkeletonMinionAnimator,
 	data: SkeletonMinionStateData,
 	config: SkeletonMinionStateConfig,
@@ -18,8 +18,6 @@ func _init(
 	_anim = anim
 	_data = data
 	_config = config
-
-
 
 func has_target() -> bool:
 	return _target_handler.has_target()
