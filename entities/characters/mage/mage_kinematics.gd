@@ -1,6 +1,6 @@
 class_name MageKinematics extends RefCounted
 
-const ACCELERATION = 70.0
+const ACCELERATION := 70.0
 
 var _ctx: MageMovementContext
 var _current_speed: float = 0.0
