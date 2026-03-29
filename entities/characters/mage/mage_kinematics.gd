@@ -1,6 +1,9 @@
 class_name MageKinematics extends RefCounted
 
+const ACCELERATION = 70.0
+
 var _ctx: MageMovementContext
+var _current_speed: float = 0.0
 
 func _init(context: MageMovementContext) -> void:
 	_ctx = context
@@ -22,13 +25,17 @@ func update_velocity(delta: float) -> void:
 	var direction := _calculate_movement_direction(input_dir)
 	
 	if direction:
-		_ctx.host.velocity.x = direction.x * _ctx.motion.target_speed
-		_ctx.host.velocity.z = direction.z * _ctx.motion.target_speed
+		_current_speed = move_toward(_current_speed, _ctx.motion.target_speed, ACCELERATION * delta)
+		
+		_ctx.host.velocity.x = direction.x * _current_speed
+		_ctx.host.velocity.z = direction.z * _current_speed
 		_look_at(direction, delta)
 		
 		_ctx.host.velocity.x += _ctx.motion.dash_power.x
 		_ctx.host.velocity.z += _ctx.motion.dash_power.z
 	else:
+		_current_speed = move_toward(_current_speed, 0, ACCELERATION * delta)
+		
 		_ctx.host.velocity.x = move_toward(_ctx.host.velocity.x, 0, _ctx.motion.target_speed)
 		_ctx.host.velocity.z = move_toward(_ctx.host.velocity.z, 0, _ctx.motion.target_speed)
 	
