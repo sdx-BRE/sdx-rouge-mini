@@ -1,15 +1,15 @@
 ﻿class_name MageMovementMotion extends RefCounted
 
-var movement_speed: float
+var target_speed: float
 var coyote_timer: float
 var dash_power: Vector3 = Vector3.ZERO
 var jump_buffer_timer: float = 0.0
 
 func _init(
-	p_movement_speed: float,
+	p_target_speed: float,
 	p_coyote_timer: float,
 ) -> void:
-	movement_speed = p_movement_speed
+	target_speed = p_target_speed
 	coyote_timer = p_coyote_timer
 
 static func from_mage(mage: MageCharacter) -> MageMovementMotion:

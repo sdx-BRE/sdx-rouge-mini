@@ -16,3 +16,9 @@ func buffer_jump() -> void:
 
 func push_dash_motion(dash_power: Vector3) -> void:
 	_ctx.motion.dash_power = dash_power
+
+func use_normal_speed() -> void:
+	_ctx.motion.target_speed = _ctx.config.speed_normal
+
+func use_sprinting_speed() -> void:
+	_ctx.motion.target_speed = _ctx.config.speed_sprinting
