@@ -25,8 +25,6 @@ func add_playback_from_param(
 	]
 	assert(playback is AnimationNodeStateMachinePlayback, errorMessage)
 	
-	print("added playback for ", StatePlayback.keys()[identifier])
-	
 	add_playback(identifier, playback)
 
 func playback_travel(identifier: StatePlayback, to_node: StringName) -> void:
