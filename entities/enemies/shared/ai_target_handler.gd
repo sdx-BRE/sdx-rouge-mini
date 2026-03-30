@@ -29,6 +29,10 @@ func update_target() -> void:
 func has_target() -> bool:
 	return _target != null
 
+func update_and_has_target() -> bool:
+	update_target()
+	return has_target()
+
 func is_target_in_range() -> bool:
 	if _target == null:
 		return false
