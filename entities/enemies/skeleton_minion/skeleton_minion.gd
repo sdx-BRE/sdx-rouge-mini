@@ -52,6 +52,7 @@ signal died()
 var _processor: SkeletonMinionProcessor
 var _stats: EnemyStats
 var _anim: SkeletonMinionAnimator
+var _target_handler: AiTargetHandler
 
 var fov_threshold := cos(deg_to_rad(fov_angle / 2.0))
 
@@ -64,20 +65,19 @@ func _ready() -> void:
 		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
 		.build()
 	
-	var controller := SkeletonMinionController.new(self, agent, patrol_points)
-	var state_machine := SkeletonMinionStateMachine.start_walking(
-		SkeletonMinionStateContext.new(
-			controller,
-			AiTargetHandler.new(self, ATTACK_RANGE),
-			_anim,
-			SkeletonMinionStateData.from_minion(self),
-			SkeletonMinionStateConfig.from_minion(self),
-		),
+	_target_handler = AiTargetHandler.new(self, ATTACK_RANGE)
+	var controller := EnemyController.new(self, agent, patrol_points)
+	var kinematics := EnemyKinematics.new(self)
+	var state_machine := SkeletonMinionStateMachine.create(
+		_target_handler,
+		controller,
+		data,
 		_stats,
+		_anim,
 	)
 	
 	var locomotion_handler := SkeletonMinionLocomotionHandler.new(controller, _anim, data.walking_speed, data.running_speed)
-	_processor = SkeletonMinionProcessor.new(_anim, controller, state_machine, locomotion_handler)
+	_processor = SkeletonMinionProcessor.new(_anim, kinematics, state_machine, locomotion_handler)
 	
 	if ui is EnemyUI:
 		_stats.health_changed.connect(ui.update_health)
@@ -110,6 +110,8 @@ func _on_punch(body: Node3D) -> void:
 		body.take_dmg(punch_dmg)
 
 func on_die() -> void:
+	set_physics_process(false)
+	set_process(false)
 	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
 		anim_tree.animation_finished.connect(on_death_anim_finished)
 	
@@ -123,10 +125,10 @@ func on_death_anim_finished(anim_name: StringName) -> void:
 		queue_free()
 
 func _on_fov_entered(body: Node3D):
-	_processor.target_entered(body)
+	_target_handler.add_target(body)
 
 func _on_fov_exited(body: Node3D):
-	_processor.target_exited(body)
+	_target_handler.remove_target(body)
 #endregion
 
 func _process(delta: float) -> void:

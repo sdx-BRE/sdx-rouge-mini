@@ -3,7 +3,7 @@
 const BASE_TIMESCALE := 1.0
 const MAX_TIMESCALE := 1.8
 
-var _controller: SkeletonMinionController
+var _controller: EnemyController
 var _anim: SkeletonMinionAnimator
 var _walk_speed: float
 var _run_speed: float
@@ -12,7 +12,7 @@ var _movement_blend := 0.0
 var _movement_timescale := 1.0
 
 func _init(
-	controller: SkeletonMinionController,
+	controller: EnemyController,
 	anim: SkeletonMinionAnimator,
 	walk_speed: float,
 	run_speed: float,
