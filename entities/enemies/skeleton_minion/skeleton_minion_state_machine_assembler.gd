@@ -1,17 +1,12 @@
-class_name SkeletonMinionStateMachine extends RefCounted
+class_name SkeletonMinionStateMachineAssembler extends RefCounted
 
-var _machine: EnemyStateMachine
-
-func _init(machine: EnemyStateMachine) -> void:
-	_machine = machine
-
-static func create(
+static func assemble(
 	target_handler: AiTargetHandler,
 	controller: EnemyController,
 	data: EnemyData,
 	stats: EnemyStats,
 	anim: SkeletonMinionAnimator,
-) -> SkeletonMinionStateMachine:
+) -> EnemyStateMachine:
 	var aggro_rule := StateTransitionRule.new(
 		StateTransition.AGGRO,
 		func() -> bool: return target_handler.update_and_has_target()
@@ -33,9 +28,4 @@ static func create(
 	states.set(StateTransition.WAITING, waiting_state)
 	states.set(StateTransition.TARGET_LOST, waiting_state)
 	
-	var machine := EnemyStateMachine.new(walking_state, states, [aggro_rule])
-	
-	return SkeletonMinionStateMachine.new(machine)
-
-func process(delta: float) -> void:
-	_machine.process(delta)
+	return EnemyStateMachine.new(walking_state, states, [aggro_rule])

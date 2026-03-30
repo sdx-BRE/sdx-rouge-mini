@@ -49,7 +49,7 @@ signal died()
 
 @onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
-var _processor: SkeletonMinionProcessor
+var _processor: EntityProcessor
 var _stats: EnemyStats
 var _anim: SkeletonMinionAnimator
 var _target_handler: AiTargetHandler
@@ -68,7 +68,7 @@ func _ready() -> void:
 	
 	var controller := EnemyController.new(self, agent, patrol_points)
 	var kinematics := EnemyKinematics.new(self)
-	var state_machine := SkeletonMinionStateMachine.create(
+	var state_machine := SkeletonMinionStateMachineAssembler.assemble(
 		_target_handler,
 		controller,
 		data,
@@ -76,8 +76,17 @@ func _ready() -> void:
 		_anim,
 	)
 	
-	var locomotion_handler := SkeletonMinionLocomotionHandler.new(controller, _anim, data.walking_speed, data.running_speed)
-	_processor = SkeletonMinionProcessor.new(kinematics, state_machine, locomotion_handler)
+	_processor = EntityProcessor.new(get_viewport())
+	
+	_processor.add_physics_handler(EnemyGravityHandler.new(kinematics))
+	_processor.add_physics_handler(EnemyStateMachineHandler.new(state_machine))
+	_processor.add_physics_handler(SkeletonMinionLocomotionHandler.new(
+		controller, 
+		_anim, 
+		data.walking_speed, 
+		data.running_speed,
+	))
+	_processor.add_physics_handler(EnemyCollisionsHandler.new(kinematics))
 	
 	if ui is EnemyUI:
 		_stats.health_changed.connect(ui.update_health)

@@ -1,4 +1,4 @@
-﻿class_name SkeletonMinionLocomotionHandler extends RefCounted
+﻿class_name SkeletonMinionLocomotionHandler extends PhysicsProcessHandler
 
 const BASE_TIMESCALE := 1.0
 const MAX_TIMESCALE := 1.8
@@ -22,7 +22,7 @@ func _init(
 	_walk_speed = walk_speed
 	_run_speed = run_speed
 
-func handle(delta: float) -> void:
+func physics_process(delta: float) -> void:
 	var speed := _controller.get_horizontal_speed()
 	
 	var run_to_walk_ratio = clamp(
