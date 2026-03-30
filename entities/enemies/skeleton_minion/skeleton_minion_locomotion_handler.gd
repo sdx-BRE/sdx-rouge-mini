@@ -36,5 +36,5 @@ func handle(delta: float) -> void:
 	_movement_timescale = lerp(_movement_timescale, movement_timescale, delta * 10)
 	_movement_blend = lerp(_movement_blend, movement_blend, delta * 10)
 	
-	_anim.blender.blend_loco_timescale(_movement_timescale)
-	_anim.blender.blend_loco_move(_movement_blend)
+	_anim.blend_loco_timescale(_movement_timescale)
+	_anim.blend_loco_move(_movement_blend)

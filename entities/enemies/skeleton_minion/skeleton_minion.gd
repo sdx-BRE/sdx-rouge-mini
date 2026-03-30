@@ -58,14 +58,14 @@ var fov_threshold := cos(deg_to_rad(fov_angle / 2.0))
 
 func _ready() -> void:
 	_stats = EnemyStats.from_data(data)
-	_anim = SkeletonMinionAnimator.Builder.new(self, anim_tree)\
-		.set_playbacks(path_playback_full_body)\
-		.set_paths(path_locomotion_blend, path_locomotion_timescale)\
-		.set_state_names(state_death)\
-		.set_oneshots(oneshot_hit_weak, oneshot_hit_strong, oneshot_spawn_air, oneshot_spawn_ground, oneshot_punch, oneshot_kick)\
-		.build()
-	
 	_target_handler = AiTargetHandler.new(self, ATTACK_RANGE)
+	
+	var anim_params := SkeletonMinionAnimationParams.from_minion(self)
+	var animator := EnemyAnimator.new(anim_tree)
+	
+	animator.add_playback_from_param(EnemyAnimator.StatePlayback.FullBody, path_playback_full_body)
+	_anim = SkeletonMinionAnimator.new(animator, anim_params)
+	
 	var controller := EnemyController.new(self, agent, patrol_points)
 	var kinematics := EnemyKinematics.new(self)
 	var state_machine := SkeletonMinionStateMachine.create(
@@ -77,7 +77,7 @@ func _ready() -> void:
 	)
 	
 	var locomotion_handler := SkeletonMinionLocomotionHandler.new(controller, _anim, data.walking_speed, data.running_speed)
-	_processor = SkeletonMinionProcessor.new(_anim, kinematics, state_machine, locomotion_handler)
+	_processor = SkeletonMinionProcessor.new(kinematics, state_machine, locomotion_handler)
 	
 	if ui is EnemyUI:
 		_stats.health_changed.connect(ui.update_health)
@@ -97,9 +97,9 @@ func take_dmg(value: float) -> void:
 		return
 	
 	if value >= threshold_hit_strong:
-		_anim.oneshot_hit_strong()
+		_anim.hit_strong()
 	else:
-		_anim.oneshot_hit_weak()
+		_anim.hit_weak()
 
 func get_target_point() -> Marker3D:
 	return target_point
@@ -110,12 +110,12 @@ func _on_punch(body: Node3D) -> void:
 		body.take_dmg(punch_dmg)
 
 func on_die() -> void:
-	set_physics_process(false)
-	set_process(false)
 	if not anim_tree.animation_finished.is_connected(on_death_anim_finished):
 		anim_tree.animation_finished.connect(on_death_anim_finished)
 	
-	_anim.play_full_body(state_death)
+	_anim.die()
+	set_physics_process(false)
+	set_process(false)
 
 func on_death_anim_finished(anim_name: StringName) -> void:
 	if anim_name == state_death:
@@ -130,9 +130,6 @@ func _on_fov_entered(body: Node3D):
 func _on_fov_exited(body: Node3D):
 	_target_handler.remove_target(body)
 #endregion
-
-func _process(delta: float) -> void:
-	_processor.process(delta)
 
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
