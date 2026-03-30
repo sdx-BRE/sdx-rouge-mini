@@ -20,7 +20,6 @@ static func create(
 	var attack_context := SkeletonMinionMeleeAttack.new(anim)
 	var context := StateContext.new(target_handler, controller, data, stats, attack_context)
 	
-	
 	var waiting_state := WaitingState.new(context)
 	var walking_state := WalkingState.new(context)
 	
