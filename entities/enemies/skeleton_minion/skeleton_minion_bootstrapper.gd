@@ -21,6 +21,7 @@ static func _bootstrap_processor(minion: SkeletonMinion) -> void:
 	var state_machine := SkeletonMinionStateMachineAssembler.assemble(
 		minion._target_handler,
 		controller,
+		EnemyBlackboard.from_data(minion.data),
 		minion.data,
 		minion._stats,
 		minion._anim,

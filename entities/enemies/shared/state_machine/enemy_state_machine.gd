@@ -1,6 +1,7 @@
-﻿class_name EnemyStateMachine extends RefCounted
+class_name EnemyStateMachine extends RefCounted
 
 var _states: Dictionary[int, StateBase]
+var _ctx: StateContext
 var _transition_rules: Array[StateTransitionRule]
 
 var _stack: Array[StateBase]
@@ -8,13 +9,16 @@ var _stack: Array[StateBase]
 func _init(
 	initial_state: StateBase,
 	states: Dictionary[int, StateBase],
+	ctx: StateContext,
 	transition_rules: Array[StateTransitionRule],
 ) -> void:
-	_states = states
-	_transition_rules = transition_rules
 	_stack.append(initial_state)
+	_states = states
+	_ctx = ctx
+	_transition_rules = transition_rules
 
 func process(delta: float) -> void:
+	_ctx.tick(delta)
 	_check_rules()
 	_handle_state(delta)
 

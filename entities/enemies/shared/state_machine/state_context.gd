@@ -2,6 +2,7 @@ class_name StateContext extends RefCounted
 
 var _target_handler: AiTargetHandler
 var _controller: EnemyController
+var _blackboard: EnemyBlackboard
 var _data: EnemyData
 var _stats: EnemyStats
 var _attack: StateContextAttack
@@ -9,21 +10,23 @@ var _attack: StateContextAttack
 func _init(
 	target_handler: AiTargetHandler,
 	controller: EnemyController,
+	blackboard: EnemyBlackboard,
 	data: EnemyData,
 	stats: EnemyStats,
 	attack: StateContextAttack,
 ) -> void:
 	_target_handler = target_handler
 	_controller = controller
+	_blackboard = blackboard
 	_data = data
 	_stats = stats
 	_attack = attack
 
+func tick(delta: float) -> void:
+	_blackboard.tick(delta)
+
 func has_target() -> bool:
 	return _target_handler.has_target()
-
-func update_target() -> void:
-	_target_handler.update_target()
 
 func is_target_in_range() -> bool:
 	return _target_handler.is_target_in_range()
@@ -50,19 +53,13 @@ func is_navigation_finished() -> bool:
 	return _controller.is_navigation_finished()
 
 func get_wait_time() -> float:
-	return 3.0 #Todo: add proper wait time _data.wait_time
+	return _data.wait_time
 
 func next_patrol_point() -> void:
 	_controller.next_patrol_point()
 
-func stop_instant() -> void:
-	return _controller.stop_instant()
+func can_attack() -> bool:
+	return _blackboard.can_attack()
 
-func is_moving() -> bool:
-	return _controller.is_moving()
-
-func is_alive() -> bool:
-	return _stats.is_alive()
-
-func is_dead() -> bool:
-	return not is_alive()
+func start_attack_cooldown() -> void:
+	_blackboard.start_attack_cooldown(_data.attack_cooldown)

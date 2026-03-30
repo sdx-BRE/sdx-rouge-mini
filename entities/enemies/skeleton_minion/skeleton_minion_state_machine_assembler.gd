@@ -3,6 +3,7 @@ class_name SkeletonMinionStateMachineAssembler extends RefCounted
 static func assemble(
 	target_handler: AiTargetHandler,
 	controller: EnemyController,
+	blackboard: EnemyBlackboard,
 	data: EnemyData,
 	stats: EnemyStats,
 	anim: SkeletonMinionAnimator,
@@ -13,7 +14,7 @@ static func assemble(
 	)
 	
 	var attack_context := SkeletonMinionMeleeAttack.new(anim)
-	var context := StateContext.new(target_handler, controller, data, stats, attack_context)
+	var context := StateContext.new(target_handler, controller, blackboard, data, stats, attack_context)
 	
 	var waiting_state := WaitingState.new(context)
 	var walking_state := WalkingState.new(context)
@@ -28,4 +29,4 @@ static func assemble(
 	states.set(StateTransition.WAITING, waiting_state)
 	states.set(StateTransition.TARGET_LOST, waiting_state)
 	
-	return EnemyStateMachine.new(walking_state, states, [aggro_rule])
+	return EnemyStateMachine.new(walking_state, states, context, [aggro_rule])
