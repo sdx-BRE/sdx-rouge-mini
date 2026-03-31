@@ -18,10 +18,7 @@ static func assemble(
 	
 	var waiting_state := WaitingState.new(context)
 	var walking_state := WalkingState.new(context)
-	
-	var attack_target := AggroAttackTarget.new(context)
-	var chase_target := AggroChaseTarget.new(context)
-	var aggro_state := AggroState.new(context, attack_target, chase_target)
+	var aggro_state := AggroState.new(context)
 	
 	var states: Dictionary[int, StateBase] = {}
 	states.set(StateTransition.AGGRO, aggro_state)
