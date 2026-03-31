@@ -8,7 +8,7 @@ static func bootstrap(minion: SkeletonMinion) -> void:
 static func _bootstrap_props(minion: SkeletonMinion) -> void:
 	var fov_threshold := cos(deg_to_rad(minion.fov_angle / 2.0))
 	
-	minion._stats = EnemyStats.from_data(minion.data)
+	minion._stats = EntityStats.from_data(minion.data)
 	minion._target_handler = AiTargetHandler.new(minion, minion.ATTACK_RANGE, fov_threshold)
 	
 	var anim_params := SkeletonMinionAnimationParams.from_minion(minion)

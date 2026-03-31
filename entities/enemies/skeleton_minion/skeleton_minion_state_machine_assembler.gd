@@ -5,7 +5,7 @@ static func assemble(
 	controller: EnemyController,
 	blackboard: EnemyBlackboard,
 	data: EnemyData,
-	stats: EnemyStats,
+	stats: EntityStats,
 	anim: SkeletonMinionAnimator,
 ) -> EnemyStateMachine:
 	var aggro_rule := StateTransitionRule.new(

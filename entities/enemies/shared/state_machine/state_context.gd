@@ -4,7 +4,7 @@ var _target_handler: AiTargetHandler
 var _controller: EnemyController
 var _blackboard: EnemyBlackboard
 var _data: EnemyData
-var _stats: EnemyStats
+var _stats: EntityStats
 var _attack: StateContextAttack
 
 func _init(
@@ -12,7 +12,7 @@ func _init(
 	controller: EnemyController,
 	blackboard: EnemyBlackboard,
 	data: EnemyData,
-	stats: EnemyStats,
+	stats: EntityStats,
 	attack: StateContextAttack,
 ) -> void:
 	_target_handler = target_handler

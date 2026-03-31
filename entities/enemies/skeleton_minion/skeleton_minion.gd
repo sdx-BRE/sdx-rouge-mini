@@ -46,7 +46,7 @@ signal died()
 @onready var player: AnimationPlayer = anim_tree.get_node(anim_tree.anim_player)
 
 var _processor: EntityProcessor
-var _stats: EnemyStats
+var _stats: EntityStats
 var _anim: SkeletonMinionAnimator
 var _target_handler: AiTargetHandler
 

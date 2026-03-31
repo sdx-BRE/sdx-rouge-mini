@@ -41,7 +41,7 @@ signal died()
 @onready var target_point := $TargetPoint
 
 var _anim: SkeletonIceMageAnimator
-var _stats: EnemyStats
+var _stats: EntityStats
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler
 
