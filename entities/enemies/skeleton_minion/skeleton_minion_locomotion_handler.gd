@@ -3,7 +3,7 @@
 const BASE_TIMESCALE := 1.0
 const MAX_TIMESCALE := 1.8
 
-var _controller: EnemyController
+var _kinematics: EnemyKinematics
 var _anim: SkeletonMinionAnimator
 var _walk_speed: float
 var _run_speed: float
@@ -12,18 +12,18 @@ var _movement_blend := 0.0
 var _movement_timescale := 1.0
 
 func _init(
-	controller: EnemyController,
+	kinematics: EnemyKinematics,
 	anim: SkeletonMinionAnimator,
 	walk_speed: float,
 	run_speed: float,
 ):
-	_controller = controller
+	_kinematics = kinematics
 	_anim = anim
 	_walk_speed = walk_speed
 	_run_speed = run_speed
 
 func physics_process(delta: float) -> void:
-	var speed := _controller.get_horizontal_speed()
+	var speed := _kinematics.get_horizontal_speed()
 	
 	var run_to_walk_ratio = clamp(
 		(speed - _walk_speed) / (_run_speed - _walk_speed),

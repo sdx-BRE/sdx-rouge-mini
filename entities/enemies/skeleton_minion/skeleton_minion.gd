@@ -102,5 +102,8 @@ func _on_fov_exited(body: Node3D):
 	_target_handler.remove_target(body)
 #endregion
 
+func _process(delta: float) -> void:
+	_processor.process(delta)
+
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)

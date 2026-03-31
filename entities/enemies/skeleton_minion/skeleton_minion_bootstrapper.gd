@@ -1,4 +1,4 @@
-﻿class_name SkeletonMinionBootstrapper extends RefCounted
+class_name SkeletonMinionBootstrapper extends RefCounted
 
 static func bootstrap(minion: SkeletonMinion) -> void:
 	_bootstrap_props(minion)
@@ -16,8 +16,14 @@ static func _bootstrap_props(minion: SkeletonMinion) -> void:
 	minion._anim = SkeletonMinionAnimator.new(animator, anim_params)
 
 static func _bootstrap_processor(minion: SkeletonMinion) -> void:
-	var controller := EnemyController.new(minion, minion.agent, minion.patrol_points)
-	var kinematics := EnemyKinematics.new(minion)
+	# Todo: Replace hard coded config
+	var config := EnemyMovementConfig.new()
+	
+	var motion := EnemyMovementMotion.create()
+	var context := EnemyMovementContext.new(minion, minion.agent, config, motion)
+	var controller := EnemyController.new(context, minion.patrol_points)
+	var kinematics := EnemyKinematics.new(context)
+	
 	var state_machine := SkeletonMinionStateMachineAssembler.assemble(
 		minion._target_handler,
 		controller,
@@ -26,12 +32,12 @@ static func _bootstrap_processor(minion: SkeletonMinion) -> void:
 		minion._stats,
 		minion._anim,
 	)
-	
 	minion._processor = EntityProcessor.new(minion.get_viewport())
-	minion._processor.add_physics_handler(EnemyGravityHandler.new(kinematics))
-	minion._processor.add_physics_handler(EnemyStateMachineHandler.new(state_machine))
+	minion._processor.add_process_handler(EnemyStateMachineHandler.new(state_machine))
+	
+	minion._processor.add_physics_handler(EnemyVelocityHandler.new(kinematics))
 	minion._processor.add_physics_handler(SkeletonMinionLocomotionHandler.new(
-		controller, 
+		kinematics,
 		minion._anim, 
 		minion.data.walking_speed, 
 		minion.data.running_speed,
