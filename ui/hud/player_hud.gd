@@ -9,16 +9,6 @@ class_name PlayerHud extends CanvasLayer
 @onready var skill_3 := $MarginContainer/Control/VBoxContainer/SkillsContainer/Skill3
 @onready var skill_progress := $MarginContainer/Control/VBoxContainer/CenterContainer/SkillProgres
 
-func _input(event: InputEvent) -> void:
-	if event.is_action("dbg"):
-		get_viewport().set_input_as_handled()
-		if not event.is_pressed():
-			return
-		print("dbg! 2")
-		skill_2.set_pressed_no_signal(true)
-		await get_tree().create_timer(0.075).timeout
-		skill_2.set_pressed_no_signal(false)
-
 func emulate_press_skill_1() -> void:
 	_toggle_btn(skill_1)
 
