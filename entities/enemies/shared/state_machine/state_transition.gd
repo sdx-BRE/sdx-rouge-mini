@@ -5,4 +5,3 @@ const POP 			:= 5
 const AGGRO 		:= 10
 const WALKING 		:= 20
 const WAITING 		:= 30
-const TARGET_LOST 	:= 40

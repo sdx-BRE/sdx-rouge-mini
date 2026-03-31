@@ -2,13 +2,19 @@ class_name AiTargetHandler extends RefCounted
 
 var _host: CharacterBody3D
 var _attack_range: float
+var _fov_threshold: float
 
 var _targets_in_range: Array[Node3D]
 var _target: Node3D
 
-func _init(host: CharacterBody3D, attack_range: float) -> void:
+func _init(
+	host: CharacterBody3D, 
+	attack_range: float,
+	fov_threshold: float,
+) -> void:
 	_host = host
 	_attack_range = attack_range
+	_fov_threshold = fov_threshold
 
 func add_target(target: Node3D) -> void:
 	if not _targets_in_range.has(target):
@@ -20,7 +26,7 @@ func remove_target(target: Node3D) -> void:
 
 func update_target() -> void:
 	for target in _targets_in_range:
-		if AiTargetHandler.is_visible(target, _host, _host.fov_threshold):
+		if AiTargetHandler.is_visible(target, _host, _fov_threshold):
 			_target = target
 			return
 	

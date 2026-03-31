@@ -24,6 +24,5 @@ static func assemble(
 	states.set(StateTransition.AGGRO, aggro_state)
 	states.set(StateTransition.WALKING, walking_state)
 	states.set(StateTransition.WAITING, waiting_state)
-	states.set(StateTransition.TARGET_LOST, waiting_state)
 	
 	return EnemyStateMachine.new(walking_state, states, context, [aggro_rule])

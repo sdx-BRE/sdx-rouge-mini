@@ -23,5 +23,4 @@ func hit_weak() -> void:
 	_animator.oneshot_fire(_params.oneshot_hit_weak)
 
 func die() -> void:
-	print("play die anim, by travel to: ", _params.state_death)
 	_animator.playback_travel(EnemyAnimator.StatePlayback.FullBody, _params.state_death)

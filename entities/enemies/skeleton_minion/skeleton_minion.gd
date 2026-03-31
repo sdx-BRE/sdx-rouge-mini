@@ -35,12 +35,8 @@ signal died()
 @export var threshold_hit_strong: float = 12.5
 
 @export_group("Field of view")
-@export var fov_angle: float = 70:
-	set(value):
-		fov_angle = value
-		fov_threshold = cos(deg_to_rad(fov_angle / 2.0))
+@export var fov_angle: float = 70
 
-@onready var pivot: Node3D = $Pivot
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui: EnemyUI = $EnemyViewport
 @onready var fov: Area3D = $Fov
@@ -53,8 +49,6 @@ var _processor: EntityProcessor
 var _stats: EnemyStats
 var _anim: SkeletonMinionAnimator
 var _target_handler: AiTargetHandler
-
-var fov_threshold := cos(deg_to_rad(fov_angle / 2.0))
 
 func _ready() -> void:
 	SkeletonMinionBootstrapper.bootstrap(self)
