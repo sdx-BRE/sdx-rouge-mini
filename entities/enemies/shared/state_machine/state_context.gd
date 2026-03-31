@@ -38,16 +38,16 @@ func get_target_position() -> Vector3:
 	return _target_handler.get_target_position()
 
 func stop_moving() -> void:
-	_controller.apply_friction_if_moving(_data.walking_speed)
+	_controller.stop_moving()
 
 func change_target(target_pos: Vector3) -> void:
 	_controller.change_target(target_pos)
 
-func run_to_target(delta: float) -> void:
-	_controller.navigate_to_target(_data.running_speed, delta)
+func run_to_target() -> void:
+	_controller.run_to_target()
 
-func walk_to_target(delta: float) -> void:
-	_controller.navigate_to_target(_data.walking_speed, delta)
+func walk_to_target() -> void:
+	_controller.walk_to_target()
 
 func is_navigation_finished() -> bool:
 	return _controller.is_navigation_finished()
