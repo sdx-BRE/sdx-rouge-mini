@@ -6,11 +6,14 @@ signal died()
 
 @export_group("Skeleton properties")
 @export var data: EnemyData
-@export var attack_cooldown: float = 3.0
 
 @export_group("Patrol settings")
 @export var wait_time: float = 5.0
 @export var patrol_points: Array[Marker3D]
+
+@export_group("Abilities")
+@export var frost_bolt: CastAbility
+@export var dev_ability: InstantAbility
 
 @export_group("Animation - General")
 @export var anim_tree: AnimationTree
@@ -39,11 +42,13 @@ signal died()
 @onready var ui: EnemyUI = $EnemyViewport
 @onready var fov: Area3D = $Fov
 @onready var target_point := $TargetPoint
+@onready var staff_spawn_point := $Skeleton_Mage/Rig_Medium/Skeleton3D/BoneAttachment3D/staff2/StaffSpawnPoint
 
 var _anim: SkeletonIceMageAnimator
 var _stats: EntityStats
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler
+var _ability_system: AbilitySystem
 
 func _ready() -> void:
 	SkeletonIceMageBootstrapper.bootstrap(self)
@@ -63,14 +68,25 @@ func on_death_anim_finished(anim_name: StringName) -> void:
 		died.emit()
 		queue_free()
 
+var d = DbgHelper.new()
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
+	
+	d.call_every(func():
+		DbgHelper.visualize_fov(
+			self,
+			cos(deg_to_rad(fov_angle / 2.0)),
+			2.0,
+			ATTACK_RANGE,
+		)
+	, 115)
+	
 
 func _process(delta: float) -> void:
 	_processor.process(delta)
 
-func execute_spell() -> void:
-	DbgHelper.tprint("execute spell")
+func execute_cast() -> void:
+	_ability_system.execute_cast()
 
 func take_dmg(value: float) -> void:
 	_stats.take_dmg(value)

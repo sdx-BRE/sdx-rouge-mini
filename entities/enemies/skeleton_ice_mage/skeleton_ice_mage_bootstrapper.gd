@@ -1,21 +1,22 @@
 class_name SkeletonIceMageBootstrapper extends RefCounted
 
 static func bootstrap(entity: SkeletonIceMage) -> void:
-	_bootstrap_props(entity)
+	var anim := _create_enemy_animator(entity.anim_tree)
+	_bootstrap_props(entity, anim)
+	_bootstrap_ability_system(entity, anim)
 	_bootstrap_processor(entity)
 	_wire_signals(entity)
 
-static func _bootstrap_props(entity: SkeletonIceMage) -> void:
+static func _bootstrap_props(entity: SkeletonIceMage, anim: EnemyAnimator) -> void:
 	var fov_threshold := cos(deg_to_rad(entity.fov_angle / 2.0))
 	
 	entity._stats = EntityStats.from_data(entity.data)
 	entity._target_handler = AiTargetHandler.new(entity, entity.ATTACK_RANGE, fov_threshold)
 	
-	var anim_params := SkeletonIceMageAnimationParams.from_entity((entity))
+	var anim_params := SkeletonIceMageAnimationParams.from_entity(entity)
 	var animator := EnemyAnimator.new(entity.anim_tree)
-	
 	animator.add_playback_from_param(EnemyAnimator.StatePlayback.FullBody, entity.path_playback_full_body)
-	entity._anim = SkeletonIceMageAnimator.new(animator, anim_params)
+	entity._anim = SkeletonIceMageAnimator.new(anim, anim_params)
 
 static func _bootstrap_processor(entity: SkeletonIceMage) -> void:
 	# Todo: Replace hard coded config
@@ -38,6 +39,25 @@ static func _bootstrap_processor(entity: SkeletonIceMage) -> void:
 	))
 	entity._processor.add_physics_handler(EnemyCollisionsHandler.new(kinematics))
 
+static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimator) -> void:
+	var registry := AbilityRegistry.new()
+	registry.add_ability(AbilityId.FROST_BOLT, entity.frost_bolt)
+	registry.add_ability(AbilityId.DEV, entity.dev_ability)
+	
+	var cast_context := AbilityContextCast.create(
+		entity._stats,
+		entity,
+		anim,
+		entity.staff_spawn_point
+	)
+	
+	var resolver := AbilityResolver.new(
+		AbilityHandlerCast.new(cast_context),
+		AbilityHandlerInstant.new(),
+	)
+	
+	entity._ability_system =  AbilitySystem.new(registry, resolver)
+
 static func create_state_machine(
 	entity: SkeletonIceMage,
 	movement_context: EnemyMovementContext,
@@ -49,7 +69,8 @@ static func create_state_machine(
 	
 	var controller := EnemyController.new(movement_context, entity.patrol_points)
 	var blackboard := EnemyBlackboard.from_data(entity.data)
-	var attack_context := SkeletonIceMageAttack.new()
+	
+	var attack_context := SkeletonIceMageAttack.new(entity._ability_system)
 	var context := StateContext.new(entity._target_handler, controller, blackboard, entity.data, entity._stats, attack_context)
 	
 	var waiting_state := WaitingState.new(context)
@@ -66,7 +87,10 @@ static func create_state_machine(
 static func _wire_signals(entity: SkeletonIceMage) -> void:
 	if entity.ui is EnemyUI:
 		entity._stats.health_changed.connect(entity.ui.update_health)
-	entity._stats.hp_reached_zero.connect(entity.on_die)
+	entity._stats.health_reached_zero.connect(entity.on_die)
 	
 	entity.fov.area_entered.connect(entity._on_fov_entered)
 	entity.fov.area_exited.connect(entity._on_fov_exited)
+
+static func _create_enemy_animator(tree: AnimationTree) -> EnemyAnimator:
+	return EnemyAnimator.new(tree)
