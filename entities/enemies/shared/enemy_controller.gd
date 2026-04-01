@@ -1,4 +1,4 @@
-﻿class_name EnemyController extends RefCounted
+class_name EnemyController extends RefCounted
 
 var _ctx: EnemyMovementContext
 var _patrol_points: Array[Marker3D]
@@ -43,3 +43,10 @@ func _use_patrol_point_as_target() -> void:
 		return
 	var patrol_point := _patrol_points[_patrol_index]
 	change_target(patrol_point.global_position)
+
+func rotate_to_target(position: Vector3) -> void:
+	_ctx.motion.rotate_to_target = position
+	_ctx.motion.is_target_rotation_enabled = true
+
+func stop_rotate_to_target() -> void:
+	_ctx.motion.is_target_rotation_enabled = false

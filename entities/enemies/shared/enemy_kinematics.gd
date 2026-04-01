@@ -8,22 +8,56 @@ func _init(ctx: EnemyMovementContext) -> void:
 	_ctx = ctx
 
 func update_velocity(delta: float) -> void:
-	if _ctx.motion.is_movement_enabled: _move_to_target(delta)
-	else: _stop_moving()
+	_handle_rotation(delta)
+	
+	if _ctx.motion.is_movement_enabled: 
+		_move_to_target(delta)
+	else: 
+		_stop_moving()
 
-func _move_to_target(delta: float) -> void:
+func handle_gravity(delta: float) -> void:
+	if not _ctx.host.is_on_floor():
+		_ctx.host.velocity += _ctx.host.get_gravity() * delta
+
+func get_horizontal_speed() -> float:
+	return Vector3(_ctx.host.velocity.x, 0, _ctx.host.velocity.z).length()
+
+func move_and_slide() -> void:
+	_ctx.host.move_and_slide()
+
+func _move_to_target(_delta: float) -> void:
 	var next_pos := _ctx.agent.get_next_path_position()
 	var direction := (next_pos - _ctx.host.global_position)
-	
 	direction.y = 0.0
 	direction = direction.normalized()
-	
-	if not direction.is_zero_approx():
-		_look_at(direction, delta)
 	
 	var desired_velocity := direction * _ctx.motion.speed
 	_ctx.agent.set_velocity(desired_velocity)
 	_ctx.host.velocity = _ctx.agent.get_velocity()
+
+func _handle_rotation(delta: float) -> void:
+	var target_direction := Vector3.ZERO
+	
+	if _ctx.motion.is_target_rotation_enabled:
+		target_direction = (_ctx.motion.rotate_to_target - _ctx.host.global_position)
+		
+	elif _ctx.motion.is_movement_enabled:
+		var next_pos := _ctx.agent.get_next_path_position()
+		target_direction = (next_pos - _ctx.host.global_position)
+	
+	target_direction.y = 0.0 
+	
+	if not target_direction.is_zero_approx():
+		_rotate_to(target_direction.normalized(), delta)
+
+func _rotate_to(direction: Vector3, delta: float) -> void:
+	var target_angle := atan2(-direction.x,-direction.z)
+	
+	_ctx.host.rotation.y = lerp_angle(
+		_ctx.host.rotation.y, 
+		target_angle, 
+		delta * _ctx.config.look_at_weight
+	)
 
 func _stop_moving() -> void:
 	if get_horizontal_speed() > 0:
@@ -36,21 +70,3 @@ func _stop_moving() -> void:
 func _apply_friction(friction: float) -> void:
 	_ctx.host.velocity.x = move_toward(_ctx.host.velocity.x, 0, friction)
 	_ctx.host.velocity.z = move_toward(_ctx.host.velocity.z, 0, friction)
-
-func handle_gravity(delta: float) -> void:
-	if not _ctx.host.is_on_floor():
-		_ctx.host.velocity += _ctx.host.get_gravity() * delta
-
-func get_horizontal_speed() -> float:
-	return Vector3(_ctx.host.velocity.x, 0, _ctx.host.velocity.z).length()
-
-func move_and_slide() -> void:
-	_ctx.host.move_and_slide()
-
-func _look_at(direction: Vector3, delta: float) -> void:
-	var target_rotation := atan2(-direction.x, -direction.z)
-	_ctx.host.rotation.y = lerp_angle(
-	_ctx.host.rotation.y, 
-	target_rotation, 
-	delta * _ctx.config.look_at_weight
-)

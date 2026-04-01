@@ -22,3 +22,6 @@ func _chase_target() -> void:
 func _attack_target() -> void:
 	_ctx.stop_moving()
 	_ctx.try_attack()
+
+func exit() -> void:
+	_ctx.stop_rotate_to_target()

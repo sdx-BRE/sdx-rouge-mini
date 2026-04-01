@@ -63,3 +63,9 @@ func can_attack() -> bool:
 
 func start_attack_cooldown() -> void:
 	_blackboard.start_attack_cooldown(_data.attack_cooldown)
+
+func rotate_to_target() -> void:
+	_controller.rotate_to_target(_target_handler.get_target_position())
+
+func stop_rotate_to_target() -> void:
+	_controller.stop_rotate_to_target()
