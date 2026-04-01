@@ -49,7 +49,7 @@ static func _bootstrap_processor(minion: SkeletonMinion) -> void:
 static func _wire_signals(minion: SkeletonMinion) -> void:
 	if minion.ui is EnemyUI:
 		minion._stats.health_changed.connect(minion.ui.update_health)
-	minion._stats.hp_reached_zero.connect(minion.on_die)
+	minion._stats.health_reached_zero.connect(minion.on_die)
 	
 	minion.fov.area_entered.connect(minion._on_fov_entered)
 	minion.fov.area_exited.connect(minion._on_fov_exited)
