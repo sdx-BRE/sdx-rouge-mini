@@ -1,0 +1,1 @@
+﻿class_name InstantAbility extends BaseAbility
