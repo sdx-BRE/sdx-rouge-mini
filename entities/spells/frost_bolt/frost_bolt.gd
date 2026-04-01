@@ -1,7 +1,7 @@
 extends Area3D
 
 @export var dmg := 3.5
-@export var speed := 0.30
+@export var speed := 3.0
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
