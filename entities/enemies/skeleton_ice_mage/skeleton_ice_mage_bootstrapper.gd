@@ -27,7 +27,9 @@ static func _bootstrap_processor(entity: SkeletonIceMage) -> void:
 	var kinematics := EnemyKinematics.new(context)
 	
 	var state_machine := create_state_machine(entity, context)
+	
 	entity._processor = EntityProcessor.new(entity.get_viewport())
+	entity._processor.add_process_handler(EnemyAbilitySystemHandler.new(entity._ability_system))
 	entity._processor.add_process_handler(EnemyStateMachineHandler.new(state_machine))
 	
 	entity._processor.add_physics_handler(EnemyVelocityHandler.new(kinematics))
@@ -53,12 +55,13 @@ static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimat
 		entity.staff_spawn_point
 	)
 	
+	var cooldown_manager := CooldownManager.new()
 	var resolver := AbilityResolver.new(
-		AbilityHandlerCast.new(cast_context),
+		AbilityHandlerCast.new(cast_context, cooldown_manager),
 		AbilityHandlerInstant.new(),
 	)
 	
-	entity._ability_system =  AbilitySystem.new(registry, resolver)
+	entity._ability_system =  AbilitySystem.new(registry, resolver, cooldown_manager)
 
 static func create_state_machine(
 	entity: SkeletonIceMage,
@@ -71,6 +74,7 @@ static func create_state_machine(
 	
 	var controller := EnemyController.new(movement_context, entity.patrol_points)
 	var blackboard := EnemyBlackboard.from_data(entity.data)
+	DbgHelper.tprint("initial cooldown: ", blackboard._attack_cooldown)
 	
 	var attack_context := SkeletonIceMageAttack.new(entity._ability_system)
 	var context := StateContext.new(entity._target_handler, controller, blackboard, entity.data, entity._stats, attack_context)
@@ -95,7 +99,7 @@ static func _wire_signals(entity: SkeletonIceMage) -> void:
 	entity.fov.area_exited.connect(entity._on_fov_exited)
 
 static func _create_enemy_animator(entity: SkeletonIceMage) -> EnemyAnimator:
-	var anim = EnemyAnimator.new(entity.anim_tree)
+	var anim := EnemyAnimator.new(entity.anim_tree)
 	anim.add_playback_from_param(EnemyAnimator.StatePlayback.FullBody, entity.path_playback_full_body)
 	
 	return anim
