@@ -9,7 +9,7 @@ func _ready() -> void:
 func _on_area_entered(body: Node3D) -> void:
 	var hitbox = body as DamageHitbox
 	if hitbox != null:
-		hitbox.take_dmg(dmg)
+		hitbox.take_dmg(damage)
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Init":
