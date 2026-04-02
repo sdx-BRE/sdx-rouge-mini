@@ -1,12 +1,15 @@
 class_name AbilityHandlerCast extends AbilityHandler
 
 var _ctx: AbilityContextCast
+var _cooldown_manager: CooldownManager
 var _ability: CastAbility
 
 func _init(
 	ctx: AbilityContextCast,
+	cooldown_manager: CooldownManager,
 ) -> void:
 	_ctx = ctx
+	_cooldown_manager = cooldown_manager
 
 func setup(ability: BaseAbility) -> AbilityHandler:
 	_ability = ability as CastAbility
@@ -24,5 +27,7 @@ func execute() -> void:
 	if _ability is CastAbility and node is AbilityEntity:
 		_ctx.spawn_node(node)
 		node.launch_ability(_ability, _ctx)
+		
+		_cooldown_manager.start_cooldown(_ability)
 	
 	_ability = null
