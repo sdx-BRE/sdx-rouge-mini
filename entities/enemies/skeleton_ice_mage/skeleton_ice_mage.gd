@@ -68,19 +68,8 @@ func on_death_anim_finished(anim_name: StringName) -> void:
 		died.emit()
 		queue_free()
 
-var d = DbgHelper.new()
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
-	
-	d.call_every(func():
-		DbgHelper.visualize_fov(
-			self,
-			cos(deg_to_rad(fov_angle / 2.0)),
-			2.0,
-			ATTACK_RANGE,
-		)
-	, 115)
-	
 
 func _process(delta: float) -> void:
 	_processor.process(delta)
