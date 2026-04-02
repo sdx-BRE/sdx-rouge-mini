@@ -1,13 +1,13 @@
 class_name MageAbilityContext extends RefCounted
 
 var _anim: MageAnimator
-var _stats: MageStats
+var _stats: EntityStats
 var _data: MageAbilityContextData
 var _environment: MageAbilityContextEnvironment
 
 func _init(
 	anim: MageAnimator,
-	stats: MageStats,
+	stats: EntityStats,
 	data: MageAbilityContextData,
 	environment: MageAbilityContextEnvironment,
 ):

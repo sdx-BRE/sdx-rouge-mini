@@ -12,7 +12,7 @@ static func bootstrap(
 	MageBootstrapper._bootstrap_processor(mage, movement_context)
 
 static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
-	mage._stats = MageStats.from_data(mage.data)
+	mage._stats = EntityStats.from_data(mage.data)
 	
 	mage._stats.health_changed.connect(signals.health_changed.emit)
 	mage._stats.mana_changed.connect(signals.mana_changed.emit)

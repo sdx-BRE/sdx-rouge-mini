@@ -44,7 +44,7 @@ signal casting_progressed(current: float, total: float)
 @onready var ground_target_marker := $GroundTargetMarker
 @onready var enemy_target_marker := $EnemyTargetMarker
 
-var _stats: MageStats
+var _stats: EntityStats
 var _anim: MageAnimator
 var _abilities: MageAbilityHandler
 var _processor: EntityProcessor

@@ -27,7 +27,7 @@ func _init(registry: MageAbilityRegistry) -> void:
 static func create(
 	mage: MageCharacter, 
 	anim: MageAnimator, 
-	stats: MageStats, 
+	stats: EntityStats, 
 	controller: MageController,
 	notify_started: Signal,
 	notify_progressed: Signal,
