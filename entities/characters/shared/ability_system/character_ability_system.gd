@@ -1,20 +1,20 @@
 ﻿class_name CharacterAbilitySystem extends RefCounted
 
 var _registry: CharacterAbilityRegistry
-var _resolver: CharacterAbilityResolver
+var _manager: CharacterAbilityManager
 
 func _init(
 	registry: CharacterAbilityRegistry,
-	resolver: CharacterAbilityResolver,
+	manager: CharacterAbilityManager,
 ) -> void:
 	_registry = registry
-	_resolver = resolver
+	_manager = manager
 
 func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():
 		return false
 	
-	if _resolver.is_handling_active_ability(event):
+	if _manager.is_handling_active_ability(event):
 		return true
 	
 	var actions := _registry.get_actions()
@@ -26,6 +26,9 @@ func handle_input(event: InputEvent) -> bool:
 			return true
 	
 	return false
+
+func tick(delta: float) -> void:
+	_manager.tick(delta)
 
 func _try_activate_ability(
 	id: CharacterAbilityRegistry.Id,
@@ -39,7 +42,7 @@ func _try_activate_ability(
 	if not ability.has_resources():
 		return
 	
-	_resolver.try_activate(ability, state)
+	_manager.try_activate(ability, state)
 
 enum TriggerState {
 	Press,
