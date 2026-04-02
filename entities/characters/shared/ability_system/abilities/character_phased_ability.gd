@@ -1,22 +1,37 @@
 ﻿class_name CharacterPhasedAbility extends CharacterAbility
 
+var _context: PhasedContext
+
+func _init(context: PhasedContext) -> void:
+	_context = context
+
+func has_resources() -> bool:
+	return _context.has_resources(_get_cost())
+
+func use_resources() -> void:
+	_context.use_resources(_get_cost())
+
+func _get_cost() -> AbilityCost:
+	push_error("[Error][CharacterPhasedAbility]: _get_cost() must be overwritten by child implementations")
+	return null
+
 func start() -> StartResult: 
-	push_error("[Error][MageAbilityPhased]: start() must be overwritten by child implementations")
+	push_error("[Error][CharacterPhasedAbility]: start() must be overwritten by child implementations")
 	return StartResult.HandleWithInput
 
 func update(_delta: float) -> void: 
-	push_error("[Error][MageAbilityPhased]: update() must be overwritten by child implementations")
+	push_error("[Error][CharacterPhasedAbility]: update() must be overwritten by child implementations")
 
 func handle_input(_event: InputEvent) -> HandleInputResult:
-	push_error("[Error][MageAbilityPhased]: handle_input() must be overwritten by child implementations")
+	push_error("[Error][CharacterPhasedAbility]: handle_input() must be overwritten by child implementations")
 	return HandleInputResult.Cancel
 
 func execute() -> ExecuteResult: 
-	push_error("[Error][MageAbilityPhased]: execute() must be overwritten by child implementations")
+	push_error("[Error][CharacterPhasedAbility]: execute() must be overwritten by child implementations")
 	return ExecuteResult.Cancel
 
 func tick_cast(_delta: float) -> void: 
-	push_error("[Error][MageAbilityPhased]: tick_cast() must be overwritten by child implementations")
+	push_error("[Error][CharacterPhasedAbility]: tick_cast() must be overwritten by child implementations")
 
 func cancel() -> void:
 	push_error("[Error][MageAbilityBase]: cancel() must be overwritten by child implementations")

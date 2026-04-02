@@ -7,7 +7,9 @@ var _stats: EntityStats
 var _anim_tree: AnimationTree
 var _signals: CharacterAbilitySignals
 var _camera_node: ThirdPersonCam
+var _wandspawn_node: Node3D
 var _ground_target_marker: Decal
+var _enemy_target_marker: Sprite2D
 var _viewport: Viewport
 var _world_3d: World3D
 var _spawn_container: Node3D
@@ -18,7 +20,9 @@ func _init(
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
+	wandspawn_node: Node3D,
 	ground_target_marker: Decal,
+	enemy_target_marker: Sprite2D,
 	viewport: Viewport,
 	world_3d: World3D,
 	spawn_container: Node3D,
@@ -28,7 +32,9 @@ func _init(
 	_anim_tree = anim_tree
 	_signals = signals
 	_camera_node = camera_node
+	_wandspawn_node = wandspawn_node
 	_ground_target_marker = ground_target_marker
+	_enemy_target_marker = enemy_target_marker
 	_viewport = viewport
 	_world_3d = world_3d
 	_spawn_container = spawn_container
@@ -39,7 +45,9 @@ static func create(
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
+	wandspawn_node: Node3D,
 	ground_target_marker: Decal,
+	enemy_target_marker: Sprite2D,
 	viewport: Viewport,
 	world_3d: World3D,
 ) -> PhasedContext:
@@ -56,7 +64,9 @@ static func create(
 		anim_tree,
 		signals,
 		camera_node,
+		wandspawn_node,
 		ground_target_marker,
+		enemy_target_marker,
 		viewport,
 		world_3d,
 		spawn_container,
@@ -72,6 +82,12 @@ func use_resources(cost: AbilityCost) -> void:
 func spawn_node(node: Node3D) -> void:
 	_spawn_container.add_child(node)
 
+func spawn_at_wand(node: Node3D) -> void:
+	spawn_node(node)
+	
+	node.global_position = _wandspawn_node.global_position
+	node.global_basis = _host.global_basis
+
 func use_visible_mouse() -> void:
 	_camera_node.use_visible_mouse()
 
@@ -86,6 +102,15 @@ func hide_ground_target_marker() -> void:
 
 func set_ground_target_marker_position(position: Vector3) -> void:
 	_ground_target_marker.global_position = position
+
+func show_enemy_target_marker() -> void:
+	_enemy_target_marker.visible = true
+
+func hide_enemy_target_marker() -> void:
+	_enemy_target_marker.visible = false
+
+func set_enemy_target_marker_position(position: Vector2) -> void:
+	_enemy_target_marker.global_position = position
 
 func notify_casting_started() -> void:
 	_signals.ability_started.emit()
@@ -111,10 +136,14 @@ func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary
 func animate(anim: AbilityAnim) -> void:
 	_anim_tree.set(anim.trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+func unproject_position(position: Vector3) -> Vector2:
+	return _viewport.get_camera_3d().unproject_position(position)
+
 func get_animation_position(anim: AbilityAnim) -> float:
 	var value = _anim_tree.get(anim.trigger + "/current_position")
 	
 	return 0.0 if value == null else value
 
-func update_cast_point(data: GroundTargetAbility) -> void:
-	data.update_cast_point(_anim_tree)
+func update_cast_point(data) -> void:
+	if data.has_method("update_cast_point"):
+		data.update_cast_point(_anim_tree)

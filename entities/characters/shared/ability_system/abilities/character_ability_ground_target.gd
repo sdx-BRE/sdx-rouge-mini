@@ -1,24 +1,17 @@
 ﻿class_name CharacterAbilityGroundTarget extends CharacterPhasedAbility
 
-var _context: PhasedContext
 var _data: GroundTargetAbility
 
 var _aim_pos := Vector3.ZERO
 var _is_started := false
 
 func _init(context: PhasedContext, data: GroundTargetAbility) -> void:
-	_context = context
+	super(context)
 	_data = data
 
 static func create(context: PhasedContext, data: GroundTargetAbility) -> CharacterAbilityGroundTarget:
 	context.update_cast_point(data)
 	return CharacterAbilityGroundTarget.new(context, data)
-
-func has_resources() -> bool:
-	return _context.has_resources(_data.cost)
-
-func use_resources() -> void:
-	_context.use_resources(_data.cost)
 
 func execute() -> ExecuteResult:
 	_context.notify_casting_end()
@@ -71,3 +64,6 @@ func tick_cast(_delta: float) -> void:
 		_context.get_animation_position(_data.anim),
 		_data.anim.cast_point,
 	)
+
+func _get_cost() -> AbilityCost:
+	return _data.cost
