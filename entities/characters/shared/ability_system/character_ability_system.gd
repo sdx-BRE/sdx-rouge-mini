@@ -1,0 +1,47 @@
+﻿class_name CharacterAbilitySystem extends RefCounted
+
+var _registry: CharacterAbilityRegistry
+var _resolver: CharacterAbilityResolver
+
+func _init(
+	registry: CharacterAbilityRegistry,
+	resolver: CharacterAbilityResolver,
+) -> void:
+	_registry = registry
+	_resolver = resolver
+
+func handle_input(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	
+	if _resolver.is_handling_active_ability(event):
+		return true
+	
+	var actions := _registry.get_actions()
+	for action in actions:
+		if event.is_action(action):
+			var state := CharacterAbilitySystem.TriggerState.Press if event.is_pressed() else CharacterAbilitySystem.TriggerState.Release
+			
+			_try_activate_ability(actions[action], state)
+			return true
+	
+	return false
+
+func _try_activate_ability(
+	id: CharacterAbilityRegistry.Id,
+	state: TriggerState,
+) -> void:
+	var ability: CharacterAbility = _registry.get_ability(id)
+	
+	if ability == null:
+		return
+	
+	if not ability.has_resources():
+		return
+	
+	_resolver.try_activate(ability, state)
+
+enum TriggerState {
+	Press,
+	Release,
+}
