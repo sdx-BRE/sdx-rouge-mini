@@ -10,7 +10,7 @@ static func bootstrap(entity: SkeletonIceMage) -> void:
 static func _bootstrap_props(entity: SkeletonIceMage, anim: EnemyAnimator) -> void:
 	var fov_threshold := cos(deg_to_rad(entity.fov_angle / 2.0))
 	
-	entity._stats = EntityStats.from_data(entity.data)
+	entity._stats = EntityStats.from_enemy_data(entity.data)
 	entity._target_handler = AiTargetHandler.new(entity, entity.ATTACK_RANGE, fov_threshold)
 	
 	var anim_params := SkeletonIceMageAnimationParams.from_entity(entity)

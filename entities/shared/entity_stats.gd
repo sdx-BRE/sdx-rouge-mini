@@ -31,7 +31,7 @@ func _init(
 	_mana = mana
 	_stamina = stamina
 
-static func from_data(data: EnemyData) -> EntityStats:
+static func from_enemy_data(data: EnemyData) -> EntityStats:
 	return EntityStats.new(
 		data.max_health, 
 		data.max_mana, 
