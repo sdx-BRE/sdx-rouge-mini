@@ -11,3 +11,6 @@ func tick(delta: float) -> TickResult:
 
 func end() -> void:
 	push_error("[Error][MageAbilityChanneled]: end() must be overwritten by child implementations")
+
+func _can_handle(handler: CharacterAbilityHandler) -> bool:
+	return handler is ChanneledAbilityHandler

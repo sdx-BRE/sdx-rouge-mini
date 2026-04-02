@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilitySystem extends RefCounted
+class_name CharacterAbilitySystem extends RefCounted
 
 var _registry: CharacterAbilityRegistry
 var _manager: CharacterAbilityManager
@@ -27,6 +27,9 @@ func handle_input(event: InputEvent) -> bool:
 	
 	return false
 
+func execute_buffered_ability() -> void:
+	_manager.execute_buffered_ability()
+
 func tick(delta: float) -> void:
 	_manager.tick(delta)
 
@@ -37,9 +40,6 @@ func _try_activate_ability(
 	var ability: CharacterAbility = _registry.get_ability(id)
 	
 	if ability == null:
-		return
-	
-	if not ability.has_resources():
 		return
 	
 	_manager.try_activate(ability, state)

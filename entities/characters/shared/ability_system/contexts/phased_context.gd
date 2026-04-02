@@ -1,8 +1,9 @@
-﻿class_name PhasedContext extends RefCounted
+class_name PhasedContext extends RefCounted
 
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
 var _host: CharacterBody3D
+var _stats: EntityStats
 var _anim_tree: AnimationTree
 var _signals: CharacterAbilitySignals
 var _camera_node: ThirdPersonCam
@@ -13,6 +14,7 @@ var _spawn_container: Node3D
 
 func _init(
 	host: CharacterBody3D,
+	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -22,6 +24,7 @@ func _init(
 	spawn_container: Node3D,
 ) -> void:
 	_host = host
+	_stats = stats
 	_anim_tree = anim_tree
 	_signals = signals
 	_camera_node = camera_node
@@ -32,6 +35,7 @@ func _init(
 
 static func create(
 	host: CharacterBody3D,
+	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -48,6 +52,7 @@ static func create(
 	
 	return PhasedContext.new(
 		host,
+		stats,
 		anim_tree,
 		signals,
 		camera_node,
@@ -56,6 +61,13 @@ static func create(
 		world_3d,
 		spawn_container,
 	)
+
+func has_resources(cost: AbilityCost) -> bool:
+	return _stats.has_mana(cost.mana) and _stats.has_stamina(cost.stamina)
+
+func use_resources(cost: AbilityCost) -> void:
+	_stats.use_mana(cost.mana)
+	_stats.use_stamina(cost.stamina)
 
 func spawn_node(node: Node3D) -> void:
 	_spawn_container.add_child(node)
@@ -100,4 +112,9 @@ func animate(anim: AbilityAnim) -> void:
 	_anim_tree.set(anim.trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func get_animation_position(anim: AbilityAnim) -> float:
-	return _anim_tree.get(anim.trigger + "/current_position") as float
+	var value = _anim_tree.get(anim.trigger + "/current_position")
+	
+	return 0.0 if value == null else value
+
+func update_cast_point(data: GroundTargetAbility) -> void:
+	data.update_cast_point(_anim_tree)

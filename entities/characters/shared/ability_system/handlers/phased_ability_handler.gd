@@ -6,7 +6,7 @@ var _active: CharacterPhasedAbility
 var _buffered: CharacterPhasedAbility
 
 func try_activate(state: CharacterAbilitySystem.TriggerState) -> void:
-	if state != CharacterAbilitySystem.TriggerState.Press:
+	if state != CharacterAbilitySystem.TriggerState.Press or not _ability.has_resources():
 		return
 	
 	if _active != null:

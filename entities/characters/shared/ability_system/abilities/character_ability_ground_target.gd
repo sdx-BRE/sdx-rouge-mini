@@ -10,12 +10,22 @@ func _init(context: PhasedContext, data: GroundTargetAbility) -> void:
 	_context = context
 	_data = data
 
+static func create(context: PhasedContext, data: GroundTargetAbility) -> CharacterAbilityGroundTarget:
+	context.update_cast_point(data)
+	return CharacterAbilityGroundTarget.new(context, data)
+
+func has_resources() -> bool:
+	return _context.has_resources(_data.cost)
+
+func use_resources() -> void:
+	_context.use_resources(_data.cost)
+
 func execute() -> ExecuteResult:
 	_context.notify_casting_end()
 	
 	var node := _data.scene.instantiate()
-	node.position = _aim_pos
 	_context.spawn_node(node)
+	node.global_position = _aim_pos
 	
 	return ExecuteResult.Trigger
 

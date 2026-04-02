@@ -21,6 +21,9 @@ func tick_cast(_delta: float) -> void:
 func cancel() -> void:
 	push_error("[Error][MageAbilityBase]: cancel() must be overwritten by child implementations")
 
+func _can_handle(handler: CharacterAbilityHandler) -> bool:
+	return handler is PhasedAbilityHandler
+
 enum StartResult {
 	HandleWithInput,
 	BufferAbility,

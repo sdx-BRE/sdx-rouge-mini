@@ -25,6 +25,9 @@ func try_activate(ability: CharacterAbility, state: CharacterAbilitySystem.Trigg
 func is_handling_active_ability(event: InputEvent) -> bool:
 	return _phased_handler.is_input_handled(event)
 
+func execute_buffered_ability() -> void:
+	_phased_handler.execute_buffered_ability()
+
 func tick(delta: float) -> void:
 	_phased_handler.tick(delta)
 	_channeled_handler.tick(delta)
