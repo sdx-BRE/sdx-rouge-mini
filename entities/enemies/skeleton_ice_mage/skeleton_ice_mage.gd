@@ -12,7 +12,8 @@ signal died()
 @export var patrol_points: Array[Marker3D]
 
 @export_group("Abilities")
-@export var frost_bolt: CastAbility
+@export var frost_bolt: CastProjectileAbility
+@export var ground_aoe: CastAbilityArea
 @export var dev_ability: InstantAbility
 
 @export_group("Animation - General")

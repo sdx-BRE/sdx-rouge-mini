@@ -23,26 +23,14 @@ func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	#_timer -= delta
-	
-	#var elapsed := _delay - timer.time_left
-	#var ratio := elapsed / _delay
-	#var percent := ratio * 100
-	
 	var elapsed: float = _delay - timer.time_left
 	var ratio := elapsed / _delay
 	var percent := ratio * 100
 	
 	progess_bar.value = percent
-	print("bam neu")
-	
-	#if _timer <= 0.0:
-		#_trigger_aoe()
 
 func _on_area_entered(body: Node3D) -> void:
-	DbgHelper.tprint("entered: ", body)
 	if body.has_method("take_dmg"):
-		DbgHelper.tprint("    <-- and takes dmg")
 		body.take_dmg(_damage)
 
 func _trigger_aoe():

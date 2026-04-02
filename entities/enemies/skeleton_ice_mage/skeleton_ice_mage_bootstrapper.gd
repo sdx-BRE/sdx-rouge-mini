@@ -1,7 +1,7 @@
 class_name SkeletonIceMageBootstrapper extends RefCounted
 
 static func bootstrap(entity: SkeletonIceMage) -> void:
-	var anim := _create_enemy_animator(entity.anim_tree)
+	var anim := _create_enemy_animator(entity)
 	_bootstrap_props(entity, anim)
 	_bootstrap_ability_system(entity, anim)
 	_bootstrap_processor(entity)
@@ -42,12 +42,14 @@ static func _bootstrap_processor(entity: SkeletonIceMage) -> void:
 static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimator) -> void:
 	var registry := AbilityRegistry.new()
 	registry.add_ability(AbilityId.FROST_BOLT, entity.frost_bolt)
+	registry.add_ability(AbilityId.SIMPLE_DEV_AOE, entity.ground_aoe)
 	registry.add_ability(AbilityId.DEV, entity.dev_ability)
 	
 	var cast_context := AbilityContextCast.create(
 		entity._stats,
 		entity,
 		anim,
+		entity._target_handler,
 		entity.staff_spawn_point
 	)
 	
@@ -92,5 +94,8 @@ static func _wire_signals(entity: SkeletonIceMage) -> void:
 	entity.fov.area_entered.connect(entity._on_fov_entered)
 	entity.fov.area_exited.connect(entity._on_fov_exited)
 
-static func _create_enemy_animator(tree: AnimationTree) -> EnemyAnimator:
-	return EnemyAnimator.new(tree)
+static func _create_enemy_animator(entity: SkeletonIceMage) -> EnemyAnimator:
+	var anim = EnemyAnimator.new(entity.anim_tree)
+	anim.add_playback_from_param(EnemyAnimator.StatePlayback.FullBody, entity.path_playback_full_body)
+	
+	return anim
