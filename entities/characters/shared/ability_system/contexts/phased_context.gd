@@ -3,6 +3,7 @@ class_name PhasedContext extends RefCounted
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
 var _host: CharacterBody3D
+var _pivot: Node3D
 var _stats: EntityStats
 var _anim_tree: AnimationTree
 var _signals: CharacterAbilitySignals
@@ -16,6 +17,7 @@ var _spawn_container: Node3D
 
 func _init(
 	host: CharacterBody3D,
+	pivot: Node3D,
 	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
@@ -28,6 +30,7 @@ func _init(
 	spawn_container: Node3D,
 ) -> void:
 	_host = host
+	_pivot = pivot
 	_stats = stats
 	_anim_tree = anim_tree
 	_signals = signals
@@ -41,6 +44,7 @@ func _init(
 
 static func create(
 	host: CharacterBody3D,
+	pivot: Node3D,
 	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
@@ -60,6 +64,7 @@ static func create(
 	
 	return PhasedContext.new(
 		host,
+		pivot,
 		stats,
 		anim_tree,
 		signals,
@@ -87,6 +92,15 @@ func spawn_at_wand(node: Node3D) -> void:
 	
 	node.global_position = _wandspawn_node.global_position
 	node.global_basis = _host.global_basis
+
+func get_wandspawn_position() -> Vector3:
+	return _wandspawn_node.global_position
+
+func get_wand_transform() -> Transform3D:
+	return _wandspawn_node.global_transform
+
+func get_pivot_basis() -> Basis:
+	return _pivot.global_basis
 
 func use_visible_mouse() -> void:
 	_camera_node.use_visible_mouse()
@@ -144,6 +158,5 @@ func get_animation_position(anim: AbilityAnim) -> float:
 	
 	return 0.0 if value == null else value
 
-func update_cast_point(data) -> void:
-	if data.has_method("update_cast_point"):
-		data.update_cast_point(_anim_tree)
+func update_cast_point(data: CharacterCastedAbility) -> void:
+	data.update_cast_point(_anim_tree)
