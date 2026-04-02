@@ -1,0 +1,34 @@
+class_name BaseProjectile extends Area3D
+
+var _damage: float
+var _speed: float
+var _lifetime: float
+var _enable_homing: bool
+var _homing_fov: float
+var _homing_steer_speed: float
+
+@onready var timer := $Timer
+
+func _ready() -> void:
+	area_entered.connect(_on_area_entered)
+	timer.timeout.connect(queue_free)
+
+func _process(delta: float) -> void:
+	var forward := -global_basis.z
+	global_position += forward * _speed * delta
+
+func launch_ability(data: CastProjectileAbility) -> void:
+	_damage = data.damage
+	_speed = data.speed
+	_lifetime = data.lifetime
+	_enable_homing = data.enable_homing
+	_homing_fov = data.homing_fov
+	_homing_steer_speed = data.homing_steer_speed
+	
+	timer.wait_time = _lifetime
+	timer.start()
+
+func _on_area_entered(body: Node3D) -> void:
+	if body.has_method("take_dmg"):
+		body.take_dmg(_damage)
+		queue_free()
