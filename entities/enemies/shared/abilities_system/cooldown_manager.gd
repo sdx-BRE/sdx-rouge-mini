@@ -9,12 +9,12 @@ func tick(delta: float) -> void:
 		if _cooldowns[id] <= 0:
 			_cooldowns.erase(id)
 
-func start_cooldown(ability: BaseAbility) -> void:
+func start_cooldown(ability: EnemyBaseAbility) -> void:
 	_cooldowns[ability.id] = ability.cooldown
 
 func has_cooldown(id: int) -> bool:
 	return _cooldowns.has(id)
 
-func has_ability_cooldown(ability: BaseAbility) -> bool:
+func has_ability_cooldown(ability: EnemyBaseAbility) -> bool:
 	return _cooldowns.has(ability.id)
 

@@ -1,4 +1,4 @@
-class_name CastAbilityArea extends CastAbility
+class_name EnemyCastAbilityArea extends EnemyCastAbility
 
 @export var damage: float = 0.0
 @export var delay: float = 0.75

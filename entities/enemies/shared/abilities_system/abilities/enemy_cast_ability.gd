@@ -1,4 +1,4 @@
-﻿class_name CastAbility extends BaseAbility
+﻿class_name EnemyCastAbility extends EnemyBaseAbility
 
 enum AnimType {
 	Oneshot

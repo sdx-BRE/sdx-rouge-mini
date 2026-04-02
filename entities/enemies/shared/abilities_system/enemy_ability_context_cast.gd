@@ -1,4 +1,4 @@
-﻿class_name AbilityContextCast extends AbilityContext
+﻿class_name EnemyAbilityContextCast extends EnemyAbilityContext
 
 const NODE_NAME_SPAWN_CONTAINER := "AbilityContextCastSpawnContainer"
 
@@ -29,7 +29,7 @@ static func create(
 	anim: EnemyAnimator,
 	target_handler: AiTargetHandler,
 	cast_spawn_node: Node3D,
-) -> AbilityContextCast:
+) -> EnemyAbilityContextCast:
 	var spawn_container := Node3D.new()
 	
 	spawn_container.name = NODE_NAME_SPAWN_CONTAINER
@@ -38,7 +38,7 @@ static func create(
 	spawn_container.top_level = true
 	spawn_container.global_position = Vector3.ZERO
 	
-	return AbilityContextCast.new(
+	return EnemyAbilityContextCast.new(
 		stats,
 		host,
 		anim,

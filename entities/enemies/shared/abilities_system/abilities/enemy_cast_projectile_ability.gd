@@ -1,4 +1,4 @@
-class_name CastProjectileAbility extends CastAbility
+class_name EnemyCastProjectileAbility extends EnemyCastAbility
 
 @export_group("Projectile Stats")
 @export var damage := 10.0

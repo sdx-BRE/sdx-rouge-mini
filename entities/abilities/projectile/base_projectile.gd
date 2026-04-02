@@ -17,8 +17,8 @@ func _process(delta: float) -> void:
 	var forward := -global_basis.z
 	global_position += forward * _speed * delta
 
-func launch_ability(ability: CastAbility, context: AbilityContextCast) -> void:
-	var data := ability as CastProjectileAbility
+func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+	var data := ability as EnemyCastProjectileAbility
 	if not data:
 		return
 	

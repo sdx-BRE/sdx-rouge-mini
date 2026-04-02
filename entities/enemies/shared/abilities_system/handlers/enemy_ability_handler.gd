@@ -1,6 +1,6 @@
-﻿class_name AbilityHandler extends RefCounted
+﻿class_name EnemyAbilityHandler extends RefCounted
 
-func setup(ability: BaseAbility) -> AbilityHandler:
+func setup(ability: EnemyBaseAbility) -> EnemyAbilityHandler:
 	push_error("[Error][AbilityHandler]: setup() must be overwritten by child implementations, ability: ", ability)
 	return null
 

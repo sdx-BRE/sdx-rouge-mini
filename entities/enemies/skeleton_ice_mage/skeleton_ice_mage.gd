@@ -12,9 +12,9 @@ signal died()
 @export var patrol_points: Array[Marker3D]
 
 @export_group("Abilities")
-@export var frost_bolt: CastProjectileAbility
-@export var ground_aoe: CastAbilityArea
-@export var dev_ability: InstantAbility
+@export var frost_bolt: EnemyCastProjectileAbility
+@export var ground_aoe: EnemyCastAbilityArea
+@export var dev_ability: EnemyInstantAbility
 
 @export_group("Animation - General")
 @export var anim_tree: AnimationTree
@@ -49,7 +49,7 @@ var _anim: SkeletonIceMageAnimator
 var _stats: EntityStats
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler
-var _ability_system: AbilitySystem
+var _ability_system: EnemyAbilitySystem
 
 func _ready() -> void:
 	SkeletonIceMageBootstrapper.bootstrap(self)

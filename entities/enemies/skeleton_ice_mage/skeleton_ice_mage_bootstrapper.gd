@@ -42,12 +42,12 @@ static func _bootstrap_processor(entity: SkeletonIceMage) -> void:
 	entity._processor.add_physics_handler(EnemyCollisionsHandler.new(kinematics))
 
 static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimator) -> void:
-	var registry := AbilityRegistry.new()
-	registry.add_ability(AbilityId.FROST_BOLT, entity.frost_bolt)
-	registry.add_ability(AbilityId.SIMPLE_DEV_AOE, entity.ground_aoe)
-	registry.add_ability(AbilityId.DEV, entity.dev_ability)
+	var registry := EnemyAbilityRegistry.new()
+	registry.add_ability(EnemyAbilityId.FROST_BOLT, entity.frost_bolt)
+	registry.add_ability(EnemyAbilityId.SIMPLE_DEV_AOE, entity.ground_aoe)
+	registry.add_ability(EnemyAbilityId.DEV, entity.dev_ability)
 	
-	var cast_context := AbilityContextCast.create(
+	var cast_context := EnemyAbilityContextCast.create(
 		entity._stats,
 		entity,
 		anim,
@@ -56,12 +56,12 @@ static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimat
 	)
 	
 	var cooldown_manager := CooldownManager.new()
-	var resolver := AbilityResolver.new(
-		AbilityHandlerCast.new(cast_context, cooldown_manager),
-		AbilityHandlerInstant.new(),
+	var resolver := EnemyAbilityResolver.new(
+		EnemyAbilityHandlerCast.new(cast_context, cooldown_manager),
+		EnemyAbilityHandlerInstant.new(),
 	)
 	
-	entity._ability_system =  AbilitySystem.new(registry, resolver, cooldown_manager)
+	entity._ability_system =  EnemyAbilitySystem.new(registry, resolver, cooldown_manager)
 
 static func create_state_machine(
 	entity: SkeletonIceMage,

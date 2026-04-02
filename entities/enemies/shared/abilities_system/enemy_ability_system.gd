@@ -1,12 +1,12 @@
-class_name AbilitySystem extends RefCounted
+class_name EnemyAbilitySystem extends RefCounted
 
-var _registry: AbilityRegistry
-var _resolver: AbilityResolver
+var _registry: EnemyAbilityRegistry
+var _resolver: EnemyAbilityResolver
 var _cooldown_manager: CooldownManager
 
 func _init(
-	registry: AbilityRegistry,
-	resolver: AbilityResolver,
+	registry: EnemyAbilityRegistry,
+	resolver: EnemyAbilityResolver,
 	cooldown_manager: CooldownManager,
 ) -> void:
 	_registry = registry
