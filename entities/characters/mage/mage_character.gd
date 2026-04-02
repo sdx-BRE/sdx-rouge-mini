@@ -24,15 +24,20 @@ signal casting_progressed(current: float, total: float)
 
 @export_group("AnimationTree - Parameters")
 @export var anim_tree: AnimationTree
-@export var param_playback_full_body: String
-@export var param_blend_locomotion: String
+@export var param_playback_full_body: StringName
+@export var param_blend_locomotion: StringName
 @export var param_state_death: AnimStateMap
+@export var oneshot_hit_weak: StringName
+@export var oneshot_hit_strong: StringName
 
 @export_group("Animation - data")
 @export var animation_shoot: SpellAnimationData
 @export var animation_raise: SpellAnimationData
 @export var animation_dash: MageAnimationData
 @export var animation_jump_land: MageAnimationData
+
+@export_group("Animation - Thresholds")
+@export var threshold_hit_strong: float = 12.5
 
 @onready var pivot := $Pivot
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
@@ -79,6 +84,11 @@ func _physics_process(delta: float) -> void:
 
 func take_dmg(value: float) -> void:
 	_stats.take_dmg(value)
+	
+	if value >= threshold_hit_strong:
+		_anim.hit_strong()
+	else:
+		_anim.hit_weak()
 
 func execute_buffered_ability() -> void:
 	_abilities.execute_buffered_ability()

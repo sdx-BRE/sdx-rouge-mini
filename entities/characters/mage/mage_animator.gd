@@ -40,6 +40,12 @@ func blend_loco(value: float) -> void:
 func die() -> void:
 	_playback_fullbody.play(_params.state_death.state_name)
 
+func hit_weak() -> void:
+	request_oneshot_fire(_params.oneshot_hit_weak)
+
+func hit_strong() -> void:
+	request_oneshot_fire(_params.oneshot_hit_strong)
+
 func process(delta: float) -> void: _conditional_queue.process(delta)
 
 static func create(
@@ -47,8 +53,10 @@ static func create(
 	param_playback_full_body: StringName,
 	param_blend_loco: StringName,
 	param_state_death: AnimStateMap,
+	param_oneshot_hit_weak,
+	param_oneshot_hit_strong,
 ) -> MageAnimator:
-	var params := Params.new(param_blend_loco, param_state_death)
+	var params := Params.new(param_blend_loco, param_state_death, param_oneshot_hit_weak, param_oneshot_hit_strong)
 	var conditional_queue := ConditionalQueue.new()
 	var playback_full_body := AnimationUtil.Playback.from_param(tree, param_playback_full_body)
 	
@@ -78,7 +86,11 @@ enum CQueue {
 class Params:
 	var blend_loco: StringName
 	var state_death: AnimStateMap
+	var oneshot_hit_weak: StringName
+	var oneshot_hit_strong: StringName
 	
-	func _init(blend_l: StringName, state_d: AnimStateMap):
+	func _init(blend_l: StringName, state_d: AnimStateMap, os_hit_weak: StringName, os_hit_strong: StringName):
 		blend_loco = blend_l
 		state_death = state_d
+		oneshot_hit_weak = os_hit_weak
+		oneshot_hit_strong = os_hit_strong

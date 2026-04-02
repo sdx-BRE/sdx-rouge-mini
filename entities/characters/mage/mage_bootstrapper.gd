@@ -1,4 +1,4 @@
-﻿class_name MageBootstrapper extends RefCounted
+class_name MageBootstrapper extends RefCounted
 
 static func bootstrap(
 	mage: MageCharacter,
@@ -25,6 +25,8 @@ static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 		mage.param_playback_full_body,
 		mage.param_blend_locomotion,
 		mage.param_state_death,
+		mage.oneshot_hit_weak,
+		mage.oneshot_hit_strong,
 	)
 	mage._anim.register_signals(signals.died)
 
