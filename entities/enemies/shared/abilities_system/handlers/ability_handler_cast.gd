@@ -1,4 +1,4 @@
-﻿class_name AbilityHandlerCast extends AbilityHandler
+class_name AbilityHandlerCast extends AbilityHandler
 
 var _ctx: AbilityContextCast
 var _ability: CastAbility
@@ -22,8 +22,10 @@ func execute() -> void:
 	
 	if node is Node3D:
 		_ctx.spawn_node(node)
-		
 		node.global_position = _ctx.get_cast_position()
 		node.global_basis = _ctx.get_host_basis()
+	
+	if _ability is CastProjectileAbility and node is BaseProjectile:
+		node.launch_ability(_ability)
 	
 	_ability = null
