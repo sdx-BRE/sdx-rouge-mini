@@ -4,6 +4,7 @@ const NODE_NAME_SPAWN_CONTAINER := "AbilityContextCastSpawnContainer"
 
 var _host: CharacterBody3D
 var _anim: EnemyAnimator
+var _target_handler: AiTargetHandler
 var _cast_spawn_node: Node3D
 var _spawn_container: Node3D
 
@@ -11,12 +12,14 @@ func _init(
 	stats: EntityStats,
 	host: CharacterBody3D,
 	anim: EnemyAnimator,
+	target_handler: AiTargetHandler,
 	cast_spawn_node: Node3D,
 	spawn_container: Node3D,
 ) -> void:
 	super(stats)
 	_host = host
 	_anim = anim
+	_target_handler = target_handler
 	_cast_spawn_node = cast_spawn_node
 	_spawn_container = spawn_container
 
@@ -24,6 +27,7 @@ static func create(
 	stats: EntityStats,
 	host: CharacterBody3D,
 	anim: EnemyAnimator,
+	target_handler: AiTargetHandler,
 	cast_spawn_node: Node3D,
 ) -> AbilityContextCast:
 	var spawn_container := Node3D.new()
@@ -38,6 +42,7 @@ static func create(
 		stats,
 		host,
 		anim,
+		target_handler,
 		cast_spawn_node,
 		spawn_container,
 	)
@@ -53,3 +58,9 @@ func spawn_node(node: Node) -> void:
 
 func play_oneshot_anim(oneshot_param) -> void:
 	_anim.oneshot_fire(oneshot_param)
+
+func get_target() -> Node3D:
+	return _target_handler.get_target()
+
+func get_target_position() -> Vector3:
+	return _target_handler.get_target_position()

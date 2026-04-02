@@ -3,7 +3,9 @@ class_name AbilityHandlerCast extends AbilityHandler
 var _ctx: AbilityContextCast
 var _ability: CastAbility
 
-func _init(ctx: AbilityContextCast) -> void:
+func _init(
+	ctx: AbilityContextCast,
+) -> void:
 	_ctx = ctx
 
 func setup(ability: BaseAbility) -> AbilityHandler:
@@ -19,13 +21,8 @@ func execute() -> void:
 		return
 	
 	var node := _ability.scene.instantiate()
-	
-	if node is Node3D:
+	if _ability is CastAbility and node is AbilityEntity:
 		_ctx.spawn_node(node)
-		node.global_position = _ctx.get_cast_position()
-		node.global_basis = _ctx.get_host_basis()
-	
-	if _ability is CastProjectileAbility and node is BaseProjectile:
-		node.launch_ability(_ability)
+		node.launch_ability(_ability, _ctx)
 	
 	_ability = null

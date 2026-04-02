@@ -1,4 +1,4 @@
-class_name BaseProjectile extends Area3D
+class_name BaseProjectile extends AbilityEntity
 
 var _damage: float
 var _speed: float
@@ -17,7 +17,14 @@ func _process(delta: float) -> void:
 	var forward := -global_basis.z
 	global_position += forward * _speed * delta
 
-func launch_ability(data: CastProjectileAbility) -> void:
+func launch_ability(ability: CastAbility, context: AbilityContextCast) -> void:
+	var data := ability as CastProjectileAbility
+	if not data:
+		return
+	
+	global_position = context.get_cast_position()
+	global_basis = context.get_host_basis()
+	
 	_damage = data.damage
 	_speed = data.speed
 	_lifetime = data.lifetime

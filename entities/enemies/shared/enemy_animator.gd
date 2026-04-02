@@ -31,7 +31,7 @@ func playback_travel(identifier: StatePlayback, to_node: StringName) -> void:
 	var playback := _get_playback(identifier)
 	if playback == null:
 		var kind = StatePlayback.keys()[identifier]
-		var msg := "%s: playback '%s' not found" % [_log_prefix("playback_travel"), kind]
+		var msg := "%s: playback '%s' not found. Destination: '%s'" % [_log_prefix("playback_travel"), kind, to_node]
 		push_error(msg)
 		return
 	

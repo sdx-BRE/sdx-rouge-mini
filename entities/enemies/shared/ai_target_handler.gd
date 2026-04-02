@@ -48,6 +48,9 @@ func is_target_in_range() -> bool:
 	
 	return distance_sqrd <= attack_range_sqrd
 
+func get_target() -> Node3D:
+	return _target
+
 func get_target_position() -> Vector3:
 	if _target != null:
 		return _target.global_position
