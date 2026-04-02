@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var dmg := 80.0
+@export var damage := 20.0
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
