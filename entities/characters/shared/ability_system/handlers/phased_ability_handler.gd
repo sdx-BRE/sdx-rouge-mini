@@ -38,6 +38,13 @@ func is_input_handled(event: InputEvent) -> bool:
 	
 	return result != CharacterPhasedAbility.HandleInputResult.Unhandled
 
+func execute_buffered_ability() -> void:
+	if _buffered != null:
+		var result := _buffered.execute()
+		if result == MageAbilityPhased.ExecuteResult.Trigger:
+			_buffered.use_resources()
+		_buffered = null
+
 func setup(ability: CharacterAbility) -> CharacterAbilityHandler:
 	_ability = ability as CharacterPhasedAbility
 	return self

@@ -1,0 +1,103 @@
+﻿class_name PhasedContext extends RefCounted
+
+const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
+
+var _host: CharacterBody3D
+var _anim_tree: AnimationTree
+var _signals: CharacterAbilitySignals
+var _camera_node: ThirdPersonCam
+var _ground_target_marker: Decal
+var _viewport: Viewport
+var _world_3d: World3D
+var _spawn_container: Node3D
+
+func _init(
+	host: CharacterBody3D,
+	anim_tree: AnimationTree,
+	signals: CharacterAbilitySignals,
+	camera_node: ThirdPersonCam,
+	ground_target_marker: Decal,
+	viewport: Viewport,
+	world_3d: World3D,
+	spawn_container: Node3D,
+) -> void:
+	_host = host
+	_anim_tree = anim_tree
+	_signals = signals
+	_camera_node = camera_node
+	_ground_target_marker = ground_target_marker
+	_viewport = viewport
+	_world_3d = world_3d
+	_spawn_container = spawn_container
+
+static func create(
+	host: CharacterBody3D,
+	anim_tree: AnimationTree,
+	signals: CharacterAbilitySignals,
+	camera_node: ThirdPersonCam,
+	ground_target_marker: Decal,
+	viewport: Viewport,
+	world_3d: World3D,
+) -> PhasedContext:
+	var spawn_container := Node3D.new()
+	host.add_child(spawn_container)
+	
+	spawn_container.top_level = true
+	spawn_container.name = SPAWN_CONTAINER_NAME
+	spawn_container.owner = host.get_tree().current_scene
+	
+	return PhasedContext.new(
+		host,
+		anim_tree,
+		signals,
+		camera_node,
+		ground_target_marker,
+		viewport,
+		world_3d,
+		spawn_container,
+	)
+
+func spawn_node(node: Node3D) -> void:
+	_spawn_container.add_child(node)
+
+func use_visible_mouse() -> void:
+	_camera_node.use_visible_mouse()
+
+func use_captured_mouse() -> void:
+	_camera_node.use_captured_mouse()
+
+func show_ground_target_marker() -> void:
+	_ground_target_marker.visible = true
+
+func hide_ground_target_marker() -> void:
+	_ground_target_marker.visible = false
+
+func set_ground_target_marker_position(position: Vector3) -> void:
+	_ground_target_marker.global_position = position
+
+func notify_casting_started() -> void:
+	_signals.ability_started.emit()
+
+func notify_casting_progressed(current: float, total: float) -> void:
+	_signals.ability_progressed.emit(current, total)
+
+func notify_casting_end() -> void:
+	_signals.ability_end.emit()
+
+func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary:
+	var mouse_pos := _viewport.get_mouse_position()
+	var camera := _viewport.get_camera_3d()
+	
+	var origin := camera.project_ray_origin(mouse_pos)
+	var end := origin + camera.project_ray_normal(mouse_pos) * ray_range
+	
+	var query := PhysicsRayQueryParameters3D.create(origin, end)
+	query.collision_mask = collision_mask
+	
+	return _world_3d.direct_space_state.intersect_ray(query)
+
+func animate(anim: AbilityAnim) -> void:
+	_anim_tree.set(anim.trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func get_animation_position(anim: AbilityAnim) -> float:
+	return _anim_tree.get(anim.trigger + "/current_position") as float
