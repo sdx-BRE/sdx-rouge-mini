@@ -1,4 +1,4 @@
-class_name PhasedContext extends RefCounted
+class_name PhasedContext extends CharacterAbilityContext
 
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 

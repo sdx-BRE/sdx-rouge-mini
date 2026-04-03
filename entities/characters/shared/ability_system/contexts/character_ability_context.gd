@@ -1,0 +1,1 @@
+﻿class_name CharacterAbilityContext extends RefCounted

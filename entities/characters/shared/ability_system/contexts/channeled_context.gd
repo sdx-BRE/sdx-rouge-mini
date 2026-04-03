@@ -1,3 +1,3 @@
-﻿class_name ChanneledContext extends RefCounted
+﻿class_name ChanneledContext extends CharacterAbilityContext
 
 

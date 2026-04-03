@@ -1,4 +1,4 @@
-﻿class_name InstantContext extends RefCounted
+﻿class_name InstantContext extends CharacterAbilityContext
 
 var _pivot: Node3D
 var _controller: MageController
