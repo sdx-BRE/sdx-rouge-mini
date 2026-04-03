@@ -4,7 +4,6 @@ const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
 var _host: CharacterBody3D
 var _pivot: Node3D
-var _stats: EntityStats
 var _anim_tree: AnimationTree
 var _signals: CharacterAbilitySignals
 var _camera_node: ThirdPersonCam
@@ -18,7 +17,6 @@ var _spawn_container: Node3D
 func _init(
 	host: CharacterBody3D,
 	pivot: Node3D,
-	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -31,7 +29,6 @@ func _init(
 ) -> void:
 	_host = host
 	_pivot = pivot
-	_stats = stats
 	_anim_tree = anim_tree
 	_signals = signals
 	_camera_node = camera_node
@@ -45,7 +42,6 @@ func _init(
 static func create(
 	host: CharacterBody3D,
 	pivot: Node3D,
-	stats: EntityStats,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -65,7 +61,6 @@ static func create(
 	return PhasedContext.new(
 		host,
 		pivot,
-		stats,
 		anim_tree,
 		signals,
 		camera_node,
@@ -76,13 +71,6 @@ static func create(
 		world_3d,
 		spawn_container,
 	)
-
-func has_resources(cost: AbilityCost) -> bool:
-	return _stats.has_mana(cost.mana) and _stats.has_stamina(cost.stamina)
-
-func use_resources(cost: AbilityCost) -> void:
-	_stats.use_mana(cost.mana)
-	_stats.use_stamina(cost.stamina)
 
 func spawn_node(node: Node3D) -> void:
 	_spawn_container.add_child(node)

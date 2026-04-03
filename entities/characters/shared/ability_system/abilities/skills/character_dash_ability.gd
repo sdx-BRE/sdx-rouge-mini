@@ -2,8 +2,8 @@
 
 var _dash_data: CharacterAbilityDash
 
-func _init(data: CharacterAbilityDash, context: InstantContext) -> void:
-	super(data, context)
+func _init(data: CharacterAbilityDash, stats: EntityStats, context: InstantContext) -> void:
+	super(data, stats, context)
 	_dash_data = data
 
 func trigger(state: CharacterAbilitySystem.TriggerState) -> Result:

@@ -5,13 +5,13 @@ var _new_data: CharacterAbilityEnemyTarget
 var _target: Node3D
 var _is_started := false
 
-func _init(data: CharacterAbilityEnemyTarget, context: PhasedContext) -> void:
-	super(data, context)
+func _init(data: CharacterAbilityEnemyTarget, stats: EntityStats, context: PhasedContext) -> void:
+	super(data, stats, context)
 	_new_data = data
 
-static func create(data: CharacterAbilityEnemyTarget, context: PhasedContext) -> CharacterEnemyTargetAbility:
+static func create(data: CharacterAbilityEnemyTarget, stats: EntityStats, context: PhasedContext) -> CharacterEnemyTargetAbility:
 	context.update_cast_point(data)
-	return CharacterEnemyTargetAbility.new(data, context)
+	return CharacterEnemyTargetAbility.new(data, stats, context)
 
 func execute() -> ExecuteResult:
 	if _target == null:
