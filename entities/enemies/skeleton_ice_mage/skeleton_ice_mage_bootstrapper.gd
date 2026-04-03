@@ -74,7 +74,6 @@ static func create_state_machine(
 	
 	var controller := EnemyController.new(movement_context, entity.patrol_points)
 	var blackboard := EnemyBlackboard.from_data(entity.data)
-	DbgHelper.tprint("initial cooldown: ", blackboard._attack_cooldown)
 	
 	var attack_context := SkeletonIceMageAttack.new(entity._ability_system)
 	var context := StateContext.new(entity._target_handler, controller, blackboard, entity.data, entity._stats, attack_context)
