@@ -7,6 +7,13 @@ class_name CharacterAbilityData extends Resource
 
 var id: int
 
+func to_ability(
+	stats: EntityStats,
+	context: CharacterAbilityContext,
+) -> CharacterAbility:
+	push_error("[Error][CharacterAbilityData]: to_ability() must be overwritten by child implementations - state: ", stats, " - context: ", context)
+	return null
+
 func _get_property_list() -> Array[Dictionary]:
 	var constants = CharacterAbilityId.new().get_script().get_script_constant_map()
 	var hint_strings := []
