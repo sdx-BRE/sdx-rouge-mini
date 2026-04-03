@@ -30,6 +30,13 @@ func handle_input(event: InputEvent) -> bool:
 func execute_buffered_ability() -> void:
 	_manager.execute_buffered_ability()
 
+func on_ability_triggered(id: CharacterAbilityRegistry.Id) -> void:
+	var ability := _registry.get_ability(id)
+	if ability == null:
+		return
+	
+	ability.use_resources()
+
 func tick(delta: float) -> void:
 	_manager.tick(delta)
 
