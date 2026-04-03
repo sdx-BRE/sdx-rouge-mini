@@ -11,7 +11,8 @@ func _init(data: CharacterAbilityData, context: InstantContext) -> void:
 
 # Todo: when prematurely release jump button, reduce jump height
 func trigger(state: CharacterAbilitySystem.TriggerState) -> Result:
-	if state == CharacterAbilitySystem.TriggerState.Press:
-		_context.buffer_jump()
+	if state != CharacterAbilitySystem.TriggerState.Press:
+		return Result.Abort
 	
-	return Result.Abort
+	_context.buffer_jump()
+	return Result.Trigger

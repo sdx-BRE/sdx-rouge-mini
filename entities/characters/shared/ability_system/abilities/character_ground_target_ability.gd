@@ -46,7 +46,7 @@ func handle_input(event: InputEvent) -> HandleInputResult:
 		_is_started = true
 	
 	if event.is_action_pressed(MageAbilityActions.ACTION_ATTACK):
-		_context.animate(_data.anim)
+		_context.animate(_new_data)
 		_context.use_captured_mouse()
 		_context.hide_ground_target_marker()
 		_context.notify_casting_started()
