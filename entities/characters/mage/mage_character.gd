@@ -14,6 +14,9 @@ signal casting_progressed(current: float, total: float)
 @export var look_at_weight := 10.0
 @export var spawn_container: Node3D
 
+@export_group("Abilities")
+@export var abilities: Array[CharacterAbilityData]
+
 @export_group("Spell resources")
 @export var firebolt_data: SpellResource
 @export var firepulse_data: SpellResource
@@ -46,7 +49,7 @@ signal casting_progressed(current: float, total: float)
 
 var _stats: EntityStats
 var _anim: MageAnimator
-var _abilities: MageAbilityHandler
+var _ability_system: CharacterAbilitySystem
 var _processor: EntityProcessor
 
 func _ready() -> void:
@@ -90,8 +93,8 @@ func take_dmg(value: float) -> void:
 	else:
 		_anim.hit_weak()
 
-func execute_buffered_ability() -> void:
-	_abilities.execute_buffered_ability()
+func execute_cast() -> void:
+	_ability_system.execute_buffered_ability()
 
 func _enable_processing() -> void: _set_processing(true)
 func _disable_processing() -> void: _set_processing(false)

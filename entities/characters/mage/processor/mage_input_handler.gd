@@ -1,17 +1,17 @@
 ﻿class_name MageInputHandler extends InputHandler
 
-var _abilities: MageAbilityHandler
+var _ability_system: CharacterAbilitySystem
 var _kinematics: MageKinematics
 
 func _init(
-	abilities: MageAbilityHandler,
+	ability_system: CharacterAbilitySystem,
 	kinematics: MageKinematics,
 ) -> void:
-	_abilities = abilities
+	_ability_system = ability_system
 	_kinematics = kinematics
 
 func handle_input(event: InputEvent, viewport: Viewport) -> void:
-	if _abilities.handle_input(event):
+	if _ability_system.handle_input(event):
 		viewport.set_input_as_handled()
 		return
 	
