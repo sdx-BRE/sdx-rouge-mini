@@ -1,4 +1,5 @@
-﻿class_name CharacterAbilityPhasedAnim extends Resource
+﻿@tool
+class_name CharacterAbilityPhasedAnim extends Resource
 
 @export var trigger: StringName
 @export var name: StringName

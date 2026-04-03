@@ -1,1 +1,2 @@
-﻿class_name CharacterAbilityJump extends CharacterAbilityData
+﻿@tool
+class_name CharacterAbilityJump extends CharacterAbilityData

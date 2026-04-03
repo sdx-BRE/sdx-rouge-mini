@@ -1,3 +1,4 @@
+@tool
 class_name CharacterAbilityPhased extends CharacterAbilityData
 
 @export var scene: PackedScene

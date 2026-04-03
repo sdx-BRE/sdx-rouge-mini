@@ -1,3 +1,4 @@
+@tool
 class_name CharacterAbilityGroundTarget extends CharacterAbilityPhased
 
 @export var cast_range: float = 20.0
