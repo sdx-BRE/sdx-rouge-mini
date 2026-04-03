@@ -1,24 +1,14 @@
 ﻿class_name CharacterAbilityRegistry extends RefCounted
 
-var _abilities: Dictionary[CharacterAbilityRegistry.Id, CharacterAbility]
-var _actions: Dictionary[StringName, CharacterAbilityRegistry.Id]
+var _abilities: Dictionary[int, CharacterAbility]
+var _actions: Dictionary[StringName, int]
 
-func add(id: CharacterAbilityRegistry.Id, ability: CharacterAbility) -> void:
+func add(id: int, ability: CharacterAbility) -> void:
 	_abilities[id] = ability
 	_actions[ability.get_input()] = id
 
-func get_ability(id: CharacterAbilityRegistry.Id) -> CharacterAbility:
+func get_ability(id: int) -> CharacterAbility:
 	return _abilities[id]
 
-func get_actions() -> Dictionary[StringName, CharacterAbilityRegistry.Id]:
+func get_actions() -> Dictionary[StringName, int]:
 	return _actions
-
-# Todo: Move IDS out of ability system, use simple integers, so each character can use their own, locally valid ids
-enum Id {
-	Firepulse,
-	Firebolt,
-	Meteor,
-	Dash,
-	Jump,
-	Sprint,
-}
