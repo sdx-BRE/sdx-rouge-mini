@@ -5,13 +5,13 @@ var _new_data: CharacterAbilityGroundTarget
 var _aim_pos := Vector3.ZERO
 var _is_started := false
 
-func _init(context: PhasedContext, new_data: CharacterAbilityGroundTarget) -> void:
-	super(new_data, context)
-	_new_data = new_data
+func _init(data: CharacterAbilityGroundTarget, context: PhasedContext) -> void:
+	super(data, context)
+	_new_data = data
 
-static func create(context: PhasedContext, new_data: CharacterAbilityGroundTarget) -> CharacterGroundTargetAbility:
-	context.update_cast_point(new_data)
-	return CharacterGroundTargetAbility.new(context, new_data)
+static func create(data: CharacterAbilityGroundTarget, context: PhasedContext) -> CharacterGroundTargetAbility:
+	context.update_cast_point(data)
+	return CharacterGroundTargetAbility.new(data, context)
 
 func execute() -> ExecuteResult:
 	_context.notify_casting_end()

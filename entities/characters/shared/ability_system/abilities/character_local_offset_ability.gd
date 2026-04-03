@@ -2,13 +2,13 @@ class_name CharacterLocalOffsetAbility extends CharacterPhasedAbility
 
 var _new_data: CharacterAbilityLocalOffset
 
-func _init(context: PhasedContext, new_data: CharacterAbilityLocalOffset) -> void:
-	super(new_data, context)
-	_new_data = new_data
+func _init(data: CharacterAbilityLocalOffset, context: PhasedContext) -> void:
+	super(data, context)
+	_new_data = data
 
-static func create(context: PhasedContext, new_data: CharacterAbilityLocalOffset) -> CharacterLocalOffsetAbility:
-	context.update_cast_point(new_data)
-	return CharacterLocalOffsetAbility.new(context, new_data)
+static func create(data: CharacterAbilityLocalOffset, context: PhasedContext) -> CharacterLocalOffsetAbility:
+	context.update_cast_point(data)
+	return CharacterLocalOffsetAbility.new(data, context)
 
 func execute() -> ExecuteResult:
 	_context.notify_casting_end()
