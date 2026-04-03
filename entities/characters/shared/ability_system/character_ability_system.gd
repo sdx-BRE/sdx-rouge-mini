@@ -37,6 +37,13 @@ func on_ability_triggered(id: CharacterAbilityRegistry.Id) -> void:
 	
 	ability.use_resources()
 
+func has_resources(id: CharacterAbilityRegistry.Id) -> bool:
+	var ability := _registry.get_ability(id)
+	if ability == null:
+		return false
+	
+	return ability.has_resources()
+
 func tick(delta: float) -> void:
 	_manager.tick(delta)
 
