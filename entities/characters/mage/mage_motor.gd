@@ -1,5 +1,7 @@
 ﻿class_name MageMotor extends RefCounted
 
+signal jumped()
+
 var _ctx: MageMovementContext
 
 func _init(context: MageMovementContext) -> void:
@@ -10,3 +12,5 @@ func apply_impulses(_delta: float) -> void:
 		_ctx.host.velocity.y = _ctx.config.get_jump_impulse_velocity()
 		_ctx.motion.coyote_timer = 0
 		_ctx.motion.jump_buffer_timer = 0
+		
+		jumped.emit()
