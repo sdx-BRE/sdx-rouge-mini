@@ -8,9 +8,9 @@ func _init(data: CharacterAbilityDash, stats: EntityStats, context: InstantConte
 
 func trigger(state: CharacterAbilitySystem.TriggerState) -> Result:
 	if state != CharacterAbilitySystem.TriggerState.Press or _context.is_not_moving():
-		return Result.Abort
+		return Result.NoCost
 	
 	_context.push_dash_motion(_dash_data.dash_power)
 	_context.request_oneshot(_dash_data.anim_trigger)
 	
-	return Result.Trigger
+	return Result.Consume
