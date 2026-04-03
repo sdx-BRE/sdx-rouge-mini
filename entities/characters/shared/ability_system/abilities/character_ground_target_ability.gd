@@ -1,22 +1,22 @@
-﻿class_name CharacterAbilityGroundTarget extends CharacterPhasedAbility
+class_name CharacterGroundTargetAbility extends CharacterPhasedAbility
 
-var _data: GroundTargetAbility
+var _new_data: CharacterAbilityGroundTarget
 
 var _aim_pos := Vector3.ZERO
 var _is_started := false
 
-func _init(context: PhasedContext, data: GroundTargetAbility) -> void:
-	super(context)
-	_data = data
+func _init(context: PhasedContext, new_data: CharacterAbilityGroundTarget) -> void:
+	super(new_data, context)
+	_new_data = new_data
 
-static func create(context: PhasedContext, data: GroundTargetAbility) -> CharacterAbilityGroundTarget:
-	context.update_cast_point(data)
-	return CharacterAbilityGroundTarget.new(context, data)
+static func create(context: PhasedContext, new_data: CharacterAbilityGroundTarget) -> CharacterGroundTargetAbility:
+	context.update_cast_point(new_data)
+	return CharacterGroundTargetAbility.new(context, new_data)
 
 func execute() -> ExecuteResult:
 	_context.notify_casting_end()
 	
-	var node := _data.scene.instantiate()
+	var node := _new_data.scene.instantiate()
 	_context.spawn_node(node)
 	node.global_position = _aim_pos
 	
@@ -29,7 +29,7 @@ func start() -> CharacterPhasedAbility.StartResult:
 	return CharacterPhasedAbility.StartResult.HandleWithInput
 
 func update(_delta: float) -> void:
-	var result := _context.raycast_from_mouse(_data.cast_range, Layers.COLLISION_WORLD)
+	var result := _context.raycast_from_mouse(_new_data.cast_range, Layers.COLLISION_WORLD)
 	
 	if result:
 		_context.show_ground_target_marker()
@@ -61,9 +61,6 @@ func cancel() -> void:
 
 func tick_cast(_delta: float) -> void:
 	_context.notify_casting_progressed(
-		_context.get_animation_position(_data.anim),
-		_data.anim.cast_point,
+		_context.get_animation_position(_new_data),
+		_new_data.anim.cast_point,
 	)
-
-func _get_cost() -> AbilityCost:
-	return _data.cost

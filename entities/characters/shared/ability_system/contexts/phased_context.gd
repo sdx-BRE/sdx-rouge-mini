@@ -147,16 +147,16 @@ func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary
 	
 	return _world_3d.direct_space_state.intersect_ray(query)
 
-func animate(anim: AbilityAnim) -> void:
-	_anim_tree.set(anim.trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+func animate(ability: CharacterAbilityPhased) -> void:
+	_anim_tree.set(ability.anim.trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func unproject_position(position: Vector3) -> Vector2:
 	return _viewport.get_camera_3d().unproject_position(position)
 
-func get_animation_position(anim: AbilityAnim) -> float:
-	var value = _anim_tree.get(anim.trigger + "/current_position")
+func get_animation_position(ability: CharacterAbilityPhased) -> float:
+	var value = _anim_tree.get(ability.anim.trigger + "/current_position")
 	
 	return 0.0 if value == null else value
 
-func update_cast_point(data: CharacterCastedAbility) -> void:
+func update_cast_point(data: CharacterAbilityPhased) -> void:
 	data.update_cast_point(_anim_tree)

@@ -1,17 +1,17 @@
-class_name CharacterAbilityEnemyTarget extends CharacterPhasedAbility
+class_name CharacterEnemyTargetAbility extends CharacterPhasedAbility
 
-var _data: EnemyTargetAbility
+var _new_data: CharacterAbilityEnemyTarget
 
 var _target: Node3D
 var _is_started := false
 
-func _init(context: PhasedContext, data: EnemyTargetAbility) -> void:
-	super(context)
-	_data = data
+func _init(context: PhasedContext, new_data: CharacterAbilityEnemyTarget) -> void:
+	super(new_data, context)
+	_new_data = new_data
 
-static func create(context: PhasedContext, data: EnemyTargetAbility) -> CharacterAbilityEnemyTarget:
-	context.update_cast_point(data)
-	return CharacterAbilityEnemyTarget.new(context, data)
+static func create(context: PhasedContext, new_data: CharacterAbilityEnemyTarget) -> CharacterEnemyTargetAbility:
+	context.update_cast_point(new_data)
+	return CharacterEnemyTargetAbility.new(context, new_data)
 
 func execute() -> ExecuteResult:
 	if _target == null:
@@ -21,7 +21,7 @@ func execute() -> ExecuteResult:
 	_context.use_captured_mouse()
 	_context.hide_enemy_target_marker()
 	
-	var node := _data.scene.instantiate()
+	var node := _new_data.scene.instantiate()
 	_context.spawn_at_wand(node)
 	
 	if node.has_method("set_target"):
@@ -68,7 +68,7 @@ func handle_input(event: InputEvent) -> HandleInputResult:
 		if _target == null:
 			return HandleInputResult.Cancel
 		
-		_context.animate(_data.anim)
+		_context.animate(_new_data)
 		_context.use_captured_mouse()
 		_context.notify_casting_started()
 		return HandleInputResult.Trigger
@@ -81,9 +81,6 @@ func cancel() -> void:
 
 func tick_cast(_delta: float) -> void:
 	_context.notify_casting_progressed(
-		_context.get_animation_position(_data.anim),
-		_data.anim.cast_point,
+		_context.get_animation_position(_new_data),
+		_new_data.anim.cast_point,
 	)
-
-func _get_cost() -> AbilityCost:
-	return _data.cost

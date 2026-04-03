@@ -1,19 +1,16 @@
-﻿class_name CharacterPhasedAbility extends CharacterAbility
+class_name CharacterPhasedAbility extends CharacterAbility
 
 var _context: PhasedContext
 
-func _init(context: PhasedContext) -> void:
+func _init(data: CharacterAbilityData, context: PhasedContext) -> void:
+	super(data)
 	_context = context
 
 func has_resources() -> bool:
-	return _context.has_resources(_get_cost())
+	return _context.has_resources(_data.cost)
 
 func use_resources() -> void:
-	_context.use_resources(_get_cost())
-
-func _get_cost() -> AbilityCost:
-	push_error("[Error][CharacterPhasedAbility]: _get_cost() must be overwritten by child implementations")
-	return null
+	_context.use_resources(_data.cost)
 
 func start() -> StartResult: 
 	push_error("[Error][CharacterPhasedAbility]: start() must be overwritten by child implementations")
