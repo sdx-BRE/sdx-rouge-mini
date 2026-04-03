@@ -89,7 +89,7 @@ static func _bootstrap_process_handler(
 	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._ability_system))
 	
 	var airbourne_observer := ObserverAirbourne.new(mage)
-	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land.anim_trigger))
+	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land))
 	processor.add_process_handler(airbourne_observer)
 	
 	processor.add_process_handler(EnemyTargetMarkerOscillator.new(mage.enemy_target_marker))

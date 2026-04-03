@@ -17,11 +17,6 @@ signal casting_progressed(current: float, total: float)
 @export_group("Abilities")
 @export var abilities: Array[CharacterAbilityData]
 
-@export_group("Spell resources")
-@export var firebolt_data: SpellResource
-@export var firepulse_data: SpellResource
-@export var meteor_data: SpellResource
-
 @export_group("Camera")
 @export var camera_node: ThirdPersonCam
 
@@ -32,12 +27,7 @@ signal casting_progressed(current: float, total: float)
 @export var param_state_death: AnimStateMap
 @export var oneshot_hit_weak: StringName
 @export var oneshot_hit_strong: StringName
-
-@export_group("Animation - data")
-@export var animation_shoot: SpellAnimationData
-@export var animation_raise: SpellAnimationData
-@export var animation_dash: MageAnimationData
-@export var animation_jump_land: MageAnimationData
+@export var animation_jump_land: StringName
 
 @export_group("Animation - Thresholds")
 @export var threshold_hit_strong: float = 12.5
