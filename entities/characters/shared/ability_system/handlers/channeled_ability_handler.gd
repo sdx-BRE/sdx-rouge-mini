@@ -3,7 +3,10 @@
 var _ability: CharacterChanneledAbility
 
 func try_activate(state: CharacterAbilitySystem.TriggerState) -> void:
-	if state == CharacterAbilitySystem.TriggerState.Release:
+	if _ability == null:
+		return
+	
+	if not _ability.has_resources() or state == CharacterAbilitySystem.TriggerState.Release:
 		_ability.end()
 		_ability = null
 
@@ -12,7 +15,14 @@ func setup(ability: CharacterAbility) -> CharacterAbilityHandler:
 	return self
 
 func tick(delta: float) -> void:
-	if _ability != null:
-		var result := _ability.tick(delta)
-		if result == MageAbilityChanneled.TickResult.Consume:
-			_ability.use_resources()
+	if _ability == null:
+		return
+	
+	if not _ability.has_resources():
+		_ability.end()
+		_ability = null
+		return
+	
+	var result := _ability.tick(delta)
+	if result == CharacterChanneledAbility.TickResult.Consume:
+		_ability.use_resources()

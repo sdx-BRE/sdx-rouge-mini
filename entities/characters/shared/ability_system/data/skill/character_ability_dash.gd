@@ -1,5 +1,5 @@
 ﻿@tool
-class_name CharacterAbilityDash extends CharacterAbilityData
+class_name CharacterAbilityDash extends CharacterAbilityInstant
 
 @export var dash_power: float = 60.0
 @export var anim_trigger: StringName

@@ -39,13 +39,17 @@ func update(_delta: float) -> void:
 		_context.hide_ground_target_marker()
 
 func handle_input(event: InputEvent) -> HandleInputResult:
-	if event.is_action(MageAbilityActions.ACTION_CANCEL) or (_is_started and event.is_action(MageAbilityActions.ACTION_METEOR)):
+	var is_cancel_pressed := event.is_action_pressed("ui_cancel")
+	var is_action_pressed_again := _is_started and event.is_action(_new_data.input)
+	
+	var is_canceled := is_cancel_pressed or is_action_pressed_again
+	if is_canceled:
 		return HandleInputResult.Cancel
 	
-	if event.is_action_released(MageAbilityActions.ACTION_METEOR):
+	if event.is_action_released(_new_data.input):
 		_is_started = true
 	
-	if event.is_action_pressed(MageAbilityActions.ACTION_ATTACK):
+	if event.is_action_pressed(_new_data.input_trigger):
 		_context.animate(_new_data)
 		_context.use_captured_mouse()
 		_context.hide_ground_target_marker()

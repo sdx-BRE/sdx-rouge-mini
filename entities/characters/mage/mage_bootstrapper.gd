@@ -53,7 +53,8 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 		mage.get_viewport(),
 		mage.get_world_3d(),
 	)
-	var factory := CharacterAbilityFactory.new(mage._stats, phased_context, instant_context)
+	var channeled_context := ChanneledContext.new(controller)
+	var factory := CharacterAbilityFactory.new(mage._stats, phased_context, instant_context, channeled_context)
 	
 	for ability_data in mage.abilities:
 		registry.add(ability_data.id, factory.create_ability(ability_data))

@@ -1,0 +1,2 @@
+﻿@tool
+class_name CharacterAbilityInstant extends CharacterAbilityData

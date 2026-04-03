@@ -54,17 +54,17 @@ func update(_delta: float) -> void:
 		_target = null
 
 func handle_input(event: InputEvent) -> HandleInputResult:
-	var is_cancel_pressed := event.is_action_pressed(MageAbilityActions.ACTION_CANCEL)
-	var is_action_pressed_again := _is_started and event.is_action(MageAbilityActions.ACTION_FIREBOLT)
+	var is_cancel_pressed := event.is_action_pressed("ui_cancel")
+	var is_action_pressed_again := _is_started and event.is_action(_new_data.input)
 	
 	var is_canceled := is_cancel_pressed or is_action_pressed_again
 	if is_canceled:
 		return HandleInputResult.Cancel
 	
-	if event.is_action_released(MageAbilityActions.ACTION_FIREBOLT):
+	if event.is_action_released(_new_data.input):
 		_is_started = true
 	
-	if event.is_action_pressed(MageAbilityActions.ACTION_ATTACK):
+	if event.is_action_pressed(_new_data.input_trigger):
 		if _target == null:
 			return HandleInputResult.Cancel
 		

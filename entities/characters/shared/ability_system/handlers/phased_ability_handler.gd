@@ -14,7 +14,7 @@ func try_activate(state: CharacterAbilitySystem.TriggerState) -> void:
 	_active = _ability
 	
 	var result := _active.start()
-	if result == MageAbilityPhased.StartResult.BufferAbility:
+	if result == CharacterPhasedAbility.StartResult.BufferAbility:
 		_buffer_active_ability()
 
 func tick(delta: float):
@@ -41,7 +41,7 @@ func is_input_handled(event: InputEvent) -> bool:
 func execute_buffered_ability() -> void:
 	if _buffered != null:
 		var result := _buffered.execute()
-		if result == MageAbilityPhased.ExecuteResult.Trigger:
+		if result == CharacterPhasedAbility.ExecuteResult.Trigger:
 			_buffered.use_resources()
 		_buffered = null
 

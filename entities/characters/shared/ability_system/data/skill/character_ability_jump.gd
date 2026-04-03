@@ -1,5 +1,5 @@
 ﻿@tool
-class_name CharacterAbilityJump extends CharacterAbilityData
+class_name CharacterAbilityJump extends CharacterAbilityInstant
 
 func to_ability(
 	stats: EntityStats,
