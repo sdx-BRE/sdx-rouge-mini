@@ -54,7 +54,7 @@ func delegate_input_to_camera(event: InputEvent):
 	_ctx.config.camera_node.handle_input(event)
 
 func _look_at(direction: Vector3, delta: float) -> void:
-	var target_rotation := atan2(direction.x, direction.z)
+	var target_rotation := atan2(-direction.x, -direction.z)
 	_ctx.host.pivot.rotation.y = lerp_angle(_ctx.host.pivot.rotation.y, target_rotation, delta * _ctx.config.look_at_weight)
 
 func _calculate_movement_direction(input_dir: Vector2) -> Vector3:
