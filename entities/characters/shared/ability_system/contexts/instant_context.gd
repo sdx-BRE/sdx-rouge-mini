@@ -30,6 +30,9 @@ func push_dash_motion(dash_power: float) -> void:
 	
 	_controller.push_dash_motion(forward * dash_power)
 
+func buffer_jump() -> void:
+	_controller.buffer_jump()
+
 func request_oneshot(param: StringName) -> void:
 	_anim_tree.set(param + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
