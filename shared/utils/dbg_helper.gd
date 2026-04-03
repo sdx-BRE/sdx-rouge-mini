@@ -44,6 +44,43 @@ static func timestamp() -> String:
 	var ms := Time.get_ticks_msec() % 1000
 	return "[%02d:%02d:%02d:%03d]" % [t.hour, t.minute, t.second, ms]
 
+static func visualize_position(
+	position: Vector3,
+	host: Node3D,
+	size: float = 1.0,
+) -> void:
+	var container_node_name := "Debug_Container_" + str(host.get_instance_id())
+	var container_node := host.get_node_or_null(container_node_name)
+	if container_node == null:
+		container_node = Node3D.new()
+		host.add_child(container_node)
+		
+		container_node.top_level = true
+		container_node.name = container_node_name
+		container_node.owner = host.get_tree().current_scene
+	
+	#var node_name := "Debug_VisualizePos_" + str(host.get_instance_id())
+	#var old_node := host.get_node_or_null(node_name)
+	#if old_node:
+		#old_node.queue_free()
+
+	var debug_node := MeshInstance3D.new()
+	container_node.add_child(debug_node)
+	debug_node.global_position = position
+	
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = Color.SPRING_GREEN
+	
+	debug_node.material_override = mat
+	
+	var sphere := SphereMesh.new()
+	sphere.radius = size * 0.5
+	sphere.height = size
+	
+	debug_node.mesh = sphere
+	container_node.get_tree().create_timer(1.0).timeout.connect(debug_node.queue_free)
+
 static func visualize_fov(source: Node3D, fov_threshold: float, duration: float = 2.0, distance: float = 5.0):
 	var node_name := "FOV_Debug_Timer_" + str(source.get_instance_id())
 	var old_node := source.get_node_or_null(node_name)
