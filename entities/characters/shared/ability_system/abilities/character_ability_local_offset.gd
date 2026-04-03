@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityLocalOffset extends CharacterPhasedAbility
+class_name CharacterAbilityLocalOffset extends CharacterPhasedAbility
 
 var _data: LocalOffsetAbility
 
@@ -15,11 +15,13 @@ func execute() -> ExecuteResult:
 	var node := _data.scene.instantiate()
 	_context.spawn_node(node)
 	
-	var spawn_transform := _context.get_wand_transform()
-	node.global_transform = spawn_transform.translated_local(_data.offset)
+	var player_basis := _context.get_pivot_basis()
+	var wand_pos := _context.get_wandspawn_position()
 	
-	var corrected_basis := _context.get_pivot_basis().rotated(Vector3.UP, PI)
-	node.global_basis = corrected_basis
+	var final_transform := Transform3D(player_basis, wand_pos)
+	final_transform = final_transform.translated_local(_data.offset)
+	
+	node.global_transform = final_transform
 	
 	return ExecuteResult.Trigger
 
