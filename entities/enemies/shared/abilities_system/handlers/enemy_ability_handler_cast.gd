@@ -32,8 +32,8 @@ func execute() -> void:
 func _setup_ability(ability: EnemyCastAbility, node: AbilityEntity):
 	node.collision_mask = ability.collision_mask
 	
-	node.setup(ability, _ctx)
+	node.setup_enemy_ability(ability, _ctx)
 	_ctx.spawn_node(node)
-	node.launch_ability(ability, _ctx)
+	node.launch_enemy_ability(ability, _ctx)
 	
 	_cooldown_manager.start_cooldown(ability)

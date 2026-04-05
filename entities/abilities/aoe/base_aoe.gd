@@ -11,7 +11,7 @@ func _on_area_entered(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
 		body.take_dmg(_damage)
 
-func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func launch_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	var data := ability as EnemyCastAbilityArea
 	if not data:
 		push_error(_err("launch_ability()", "ability arg MUST be CastAbiltiyArea"))
@@ -19,7 +19,7 @@ func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast)
 	
 	global_position = context.get_target_position()
 
-func setup(ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
+func setup_enemy_ability(ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
 	var data := ability as EnemyCastAbilityArea
 	if not data:
 		push_error(_err("setup()", "ability arg MUST be CastAbiltiyArea"))

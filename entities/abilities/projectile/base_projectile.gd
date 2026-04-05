@@ -17,14 +17,14 @@ func _process(delta: float) -> void:
 	var forward := -global_basis.z
 	global_position += forward * _speed * delta
 
-func launch_ability(_ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func launch_enemy_ability(_ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	global_position = context.get_cast_position()
 	global_basis = context.get_host_basis()
 	
 	timer.wait_time = _lifetime
 	timer.start()
 
-func setup(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	var data := ability as EnemyCastProjectileAbility
 	if not data:
 		return
