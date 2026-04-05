@@ -16,6 +16,10 @@ func setup(ability: EnemyBaseAbility) -> EnemyAbilityHandler:
 	return self
 
 func try_activate() -> void:
+	if _ability.disabled:
+		_cooldown_manager.start_cooldown(_ability)
+		return
+	
 	if _ability.anim_type == EnemyCastAbility.AnimType.Oneshot:
 		_ctx.play_oneshot_anim(_ability.anim_trigger)
 
