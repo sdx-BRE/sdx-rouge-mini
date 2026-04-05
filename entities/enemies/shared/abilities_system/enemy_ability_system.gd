@@ -20,7 +20,7 @@ func try_activate_ability(ability_id: int) -> void:
 		return
 	
 	var handler := _resolver.resolve(ability)
-	if handler != null and not _cooldown_manager.has_ability_cooldown(ability):
+	if handler != null and not _cooldown_manager.has_enemy_cooldown(ability):
 		handler.try_activate()
 
 func execute_cast() -> void:

@@ -17,7 +17,7 @@ func setup(ability: EnemyBaseAbility) -> EnemyAbilityHandler:
 
 func try_activate() -> void:
 	if _ability.disabled:
-		_cooldown_manager.start_cooldown(_ability)
+		_cooldown_manager.start_enemy_cooldown(_ability)
 		return
 	
 	if _ability.anim_type == EnemyCastAbility.AnimType.Oneshot:
@@ -40,4 +40,4 @@ func _setup_ability(ability: EnemyCastAbility, node: AbilityEntity):
 	_ctx.spawn_node(node)
 	node.launch_enemy_ability(ability, _ctx)
 	
-	_cooldown_manager.start_cooldown(ability)
+	_cooldown_manager.start_enemy_cooldown(ability)
