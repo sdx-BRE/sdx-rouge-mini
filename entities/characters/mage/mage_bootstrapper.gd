@@ -44,6 +44,7 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 	var phased_context := PhasedContext.create(
 		mage,
 		mage.pivot,
+		mage.buff_anchor,
 		mage.anim_tree,
 		signals,
 		mage.camera_node,

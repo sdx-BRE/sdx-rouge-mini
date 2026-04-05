@@ -33,6 +33,7 @@ signal casting_progressed(current: float, total: float)
 @export var threshold_hit_strong: float = 12.5
 
 @onready var pivot := $Pivot
+@onready var buff_anchor := $BuffAnchor
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
 @onready var ground_target_marker := $GroundTargetMarker
 @onready var enemy_target_marker := $EnemyTargetMarker
