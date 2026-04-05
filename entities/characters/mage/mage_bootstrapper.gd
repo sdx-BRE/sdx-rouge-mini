@@ -9,7 +9,7 @@ static func bootstrap(
 	
 	MageBootstrapper._bootstrap_stats(mage, signals)
 	MageBootstrapper._bootstrap_anim(mage, signals)
-	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor)
+	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
 
 static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
@@ -31,9 +31,18 @@ static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 	)
 	mage._anim.register_signals(signals.died)
 
-static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMovementContext, motor: MageMotor) -> void:
+static func _bootstrap_abilities(
+	mage: MageCharacter, 
+	movement_context: MageMovementContext, 
+	motor: MageMotor,
+	mage_signals: MageSignals,
+) -> void:
 	var registry := CharacterAbilityRegistry.new()
-	var signals := CharacterAbilitySignals.new(mage.casting_started, mage.casting_progressed, mage.casting_end)
+	var signals := CharacterAbilitySignals.new(
+		mage_signals.casting_started, 
+		mage_signals.casting_progressed, 
+		mage_signals.casting_end
+	)
 	
 	var controller := MageController.new(movement_context)
 	var instant_context := InstantContext.new(
@@ -61,6 +70,7 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 		registry.add(ability_data.id, factory.create_ability(ability_data))
 	
 	var cooldown_manager := CooldownManager.new()
+	cooldown_manager.cooldown_started.connect(mage_signals.skill_cooldown.emit)
 	
 	var channeled_handler := ChanneledAbilityHandler.new(cooldown_manager)
 	var instant_handler := InstantAbilityHandler.new(cooldown_manager)
@@ -68,7 +78,7 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 	
 	var manager := CharacterAbilityManager.new(channeled_handler, instant_handler, phased_handler)
 	
-	mage._ability_system = CharacterAbilitySystem.new(registry, manager)
+	mage._ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
 	
 	motor.jumped.connect(func(): mage._ability_system.on_ability_triggered(CharacterAbilityId.JUMP))
 	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_resources(CharacterAbilityId.JUMP))

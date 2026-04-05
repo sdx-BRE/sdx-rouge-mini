@@ -1,6 +1,6 @@
 extends Node
 
-const LABEL_GAME_OVER = "Game Over!"
+const LABEL_GAME_OVER := &"Game Over!"
 
 @export var mage: MageCharacter
 @export var hud: PlayerHud
@@ -17,6 +17,8 @@ func _ready() -> void:
 	mage.casting_started.connect(hud.show_skill_progress)
 	mage.casting_end.connect(hud.hide_skill_progress)
 	mage.casting_progressed.connect(hud.update_skill_progress)
+	
+	mage.skill_cooldown.connect(hud.start_cooldown)
 
 func _on_player_died() -> void:
 	GameUI.visible = true

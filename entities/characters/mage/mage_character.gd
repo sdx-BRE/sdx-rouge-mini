@@ -6,9 +6,12 @@ signal dying()
 signal health_changed(current: float, total: float)
 signal mana_changed(current: float, total: float)
 signal stamina_changed(current: float, total: float)
+
 signal casting_started()
 signal casting_end()
 signal casting_progressed(current: float, total: float)
+
+signal skill_cooldown(action: StringName, cooldown: float)
 
 @export var data: MageData
 @export var look_at_weight := 10.0
@@ -53,6 +56,7 @@ func _ready() -> void:
 		casting_started,
 		casting_end,
 		casting_progressed,
+		skill_cooldown,
 	)
 	MageBootstrapper.bootstrap(self, signals)
 
