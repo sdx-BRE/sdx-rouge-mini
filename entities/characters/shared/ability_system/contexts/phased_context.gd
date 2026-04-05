@@ -4,6 +4,7 @@ const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
 var _host: CharacterBody3D
 var _pivot: Node3D
+var _buff_anchor: Node3D
 var _anim_tree: AnimationTree
 var _signals: CharacterAbilitySignals
 var _camera_node: ThirdPersonCam
@@ -17,6 +18,7 @@ var _spawn_container: Node3D
 func _init(
 	host: CharacterBody3D,
 	pivot: Node3D,
+	buff_anchor: Node3D,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -29,6 +31,7 @@ func _init(
 ) -> void:
 	_host = host
 	_pivot = pivot
+	_buff_anchor = buff_anchor
 	_anim_tree = anim_tree
 	_signals = signals
 	_camera_node = camera_node
@@ -42,6 +45,7 @@ func _init(
 static func create(
 	host: CharacterBody3D,
 	pivot: Node3D,
+	buff_anchor: Node3D,
 	anim_tree: AnimationTree,
 	signals: CharacterAbilitySignals,
 	camera_node: ThirdPersonCam,
@@ -61,6 +65,7 @@ static func create(
 	return PhasedContext.new(
 		host,
 		pivot,
+		buff_anchor,
 		anim_tree,
 		signals,
 		camera_node,
@@ -80,6 +85,9 @@ func spawn_at_wand(node: Node3D) -> void:
 	
 	node.global_position = _wandspawn_node.global_position
 	node.global_basis = _host.global_basis
+
+func spawn_buff(node: Node3D) -> void:
+	_buff_anchor.add_child(node)
 
 func get_wandspawn_position() -> Vector3:
 	return _wandspawn_node.global_position
