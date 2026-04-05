@@ -25,10 +25,15 @@ func execute() -> void:
 	
 	var node := _ability.scene.instantiate()
 	if _ability is EnemyCastAbility and node is AbilityEntity:
-		node.setup(_ability, _ctx)
-		_ctx.spawn_node(node)
-		node.launch_ability(_ability, _ctx)
-		
-		_cooldown_manager.start_cooldown(_ability)
+		_setup_ability(_ability, node)
 	
 	_ability = null
+
+func _setup_ability(ability: EnemyCastAbility, node: AbilityEntity):
+	node.collision_mask = ability.collision_mask
+	
+	node.setup(ability, _ctx)
+	_ctx.spawn_node(node)
+	node.launch_ability(ability, _ctx)
+	
+	_cooldown_manager.start_cooldown(ability)
