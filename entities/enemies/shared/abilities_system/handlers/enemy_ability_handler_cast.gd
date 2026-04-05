@@ -25,6 +25,7 @@ func execute() -> void:
 	
 	var node := _ability.scene.instantiate()
 	if _ability is EnemyCastAbility and node is AbilityEntity:
+		node.setup(_ability, _ctx)
 		_ctx.spawn_node(node)
 		node.launch_ability(_ability, _ctx)
 		

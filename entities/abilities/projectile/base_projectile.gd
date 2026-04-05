@@ -17,13 +17,17 @@ func _process(delta: float) -> void:
 	var forward := -global_basis.z
 	global_position += forward * _speed * delta
 
-func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func launch_ability(_ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+	global_position = context.get_cast_position()
+	global_basis = context.get_host_basis()
+	
+	timer.wait_time = _lifetime
+	timer.start()
+
+func setup(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	var data := ability as EnemyCastProjectileAbility
 	if not data:
 		return
-	
-	global_position = context.get_cast_position()
-	global_basis = context.get_host_basis()
 	
 	_damage = data.damage
 	_speed = data.speed
@@ -31,9 +35,6 @@ func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast)
 	_enable_homing = data.enable_homing
 	_homing_fov = data.homing_fov
 	_homing_steer_speed = data.homing_steer_speed
-	
-	timer.wait_time = _lifetime
-	timer.start()
 
 func _on_area_entered(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
