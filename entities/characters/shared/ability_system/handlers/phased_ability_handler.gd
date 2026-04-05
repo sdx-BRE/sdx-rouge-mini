@@ -6,7 +6,9 @@ var _active: CharacterPhasedAbility
 var _buffered: CharacterPhasedAbility
 
 func try_activate(state: CharacterAbilitySystem.TriggerState) -> void:
-	if state != CharacterAbilitySystem.TriggerState.Press or not _ability.has_resources():
+	if state != CharacterAbilitySystem.TriggerState.Press \
+		or not _ability.has_resources() \
+		or _cooldown_manager.has_character_cooldown(_ability._data):
 		return
 	
 	if _active != null:
@@ -43,6 +45,7 @@ func execute_buffered_ability() -> void:
 		var result := _buffered.execute()
 		if result == CharacterPhasedAbility.ExecuteResult.Trigger:
 			_buffered.use_resources()
+			_cooldown_manager.start_character_cooldown(_buffered._data)
 		_buffered = null
 
 func setup(ability: CharacterAbility) -> CharacterAbilityHandler:

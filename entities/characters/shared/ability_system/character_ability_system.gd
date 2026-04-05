@@ -2,13 +2,16 @@ class_name CharacterAbilitySystem extends RefCounted
 
 var _registry: CharacterAbilityRegistry
 var _manager: CharacterAbilityManager
+var _cooldown_manager: CooldownManager
 
 func _init(
 	registry: CharacterAbilityRegistry,
 	manager: CharacterAbilityManager,
+	cooldown_manager: CooldownManager,
 ) -> void:
 	_registry = registry
 	_manager = manager
+	_cooldown_manager = cooldown_manager
 
 func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():
@@ -46,6 +49,7 @@ func has_resources(id: int) -> bool:
 
 func tick(delta: float) -> void:
 	_manager.tick(delta)
+	_cooldown_manager.tick(delta)
 
 func _try_activate_ability(
 	id: int,

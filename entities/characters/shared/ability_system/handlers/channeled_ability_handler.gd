@@ -3,7 +3,7 @@
 var _ability: CharacterChanneledAbility
 
 func try_activate(state: CharacterAbilitySystem.TriggerState) -> void:
-	if _ability == null:
+	if _ability == null or _cooldown_manager.has_character_cooldown(_ability._data):
 		return
 	
 	if not _ability.has_resources() or state == CharacterAbilitySystem.TriggerState.Release:
@@ -20,6 +20,7 @@ func tick(delta: float) -> void:
 	
 	if not _ability.has_resources():
 		_ability.end()
+		_cooldown_manager.start_character_cooldown(_ability._data)
 		_ability = null
 		return
 	

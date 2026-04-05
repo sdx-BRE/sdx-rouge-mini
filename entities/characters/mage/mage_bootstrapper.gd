@@ -60,9 +60,11 @@ static func _bootstrap_abilities(mage: MageCharacter, movement_context: MageMove
 	for ability_data in mage.abilities:
 		registry.add(ability_data.id, factory.create_ability(ability_data))
 	
-	var channeled_handler := ChanneledAbilityHandler.new()
-	var instant_handler := InstantAbilityHandler.new()
-	var phased_handler := PhasedAbilityHandler.new()
+	var cooldown_manager := CooldownManager.new()
+	
+	var channeled_handler := ChanneledAbilityHandler.new(cooldown_manager)
+	var instant_handler := InstantAbilityHandler.new(cooldown_manager)
+	var phased_handler := PhasedAbilityHandler.new(cooldown_manager)
 	
 	var manager := CharacterAbilityManager.new(channeled_handler, instant_handler, phased_handler)
 	

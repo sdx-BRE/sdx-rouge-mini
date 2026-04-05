@@ -1,5 +1,7 @@
 ﻿class_name CooldownManager extends RefCounted
 
+signal cooldown_started(action: StringName, cooldown: float)
+
 # int = AbilityId, float = remaining cooldown
 var _cooldowns: Dictionary[int, float] = {}
 
@@ -17,6 +19,7 @@ func start_enemy_cooldown(ability: EnemyBaseAbility) -> void:
 
 func start_character_cooldown(ability: CharacterAbilityData) -> void:
 	start_cooldown(ability.id, ability.cooldown)
+	cooldown_started.emit(ability.input, ability.cooldown)
 
 func has_cooldown(id: int) -> bool:
 	return _cooldowns.has(id)
@@ -26,4 +29,3 @@ func has_enemy_cooldown(ability: EnemyBaseAbility) -> bool:
 
 func has_character_cooldown(ability: CharacterAbilityData) -> bool:
 	return _cooldowns.has(ability.id)
-
