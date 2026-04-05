@@ -88,6 +88,9 @@ func take_dmg(value: float) -> void:
 	else:
 		_anim.hit_weak()
 
+func get_target_point() -> Marker3D:
+	return target_point
+
 func _on_fov_entered(body: Node3D):
 	_target_handler.add_target(body)
 
