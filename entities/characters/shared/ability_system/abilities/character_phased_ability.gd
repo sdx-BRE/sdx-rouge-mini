@@ -1,10 +1,12 @@
 class_name CharacterPhasedAbility extends CharacterAbility
 
 var _context: PhasedContext
+var _phased_data: CharacterAbilityPhased
 
-func _init(data: CharacterAbilityData, stats: EntityStats, context: PhasedContext) -> void:
+func _init(data: CharacterAbilityPhased, stats: EntityStats, context: PhasedContext) -> void:
 	super(data, stats)
 	_context = context
+	_phased_data = data
 
 func start() -> StartResult: 
 	push_error("[Error][CharacterPhasedAbility]: start() must be overwritten by child implementations")
@@ -21,8 +23,11 @@ func execute() -> ExecuteResult:
 	push_error("[Error][CharacterPhasedAbility]: execute() must be overwritten by child implementations")
 	return ExecuteResult.Cancel
 
-func tick_cast(_delta: float) -> void: 
-	push_error("[Error][CharacterPhasedAbility]: tick_cast() must be overwritten by child implementations")
+func tick_cast(_delta: float) -> void:
+	_context.notify_casting_progressed(
+		_context.get_animation_position(_phased_data),
+		_phased_data.anim.cast_point,
+	)
 
 func cancel() -> void:
 	push_error("[Error][CharacterPhasedAbility]: cancel() must be overwritten by child implementations")

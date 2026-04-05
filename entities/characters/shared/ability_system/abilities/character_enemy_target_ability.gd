@@ -78,9 +78,3 @@ func handle_input(event: InputEvent) -> HandleInputResult:
 func cancel() -> void:
 	_context.use_captured_mouse()
 	_context.hide_enemy_target_marker()
-
-func tick_cast(_delta: float) -> void:
-	_context.notify_casting_progressed(
-		_context.get_animation_position(_new_data),
-		_new_data.anim.cast_point,
-	)

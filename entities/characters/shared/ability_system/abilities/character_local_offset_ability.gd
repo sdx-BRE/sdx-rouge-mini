@@ -30,9 +30,3 @@ func start() -> CharacterPhasedAbility.StartResult:
 	_context.notify_casting_started()
 	
 	return CharacterPhasedAbility.StartResult.BufferAbility
-
-func tick_cast(_delta: float) -> void:
-	_context.notify_casting_progressed(
-		_context.get_animation_position(_new_data),
-		_new_data.anim.cast_point,
-	)
