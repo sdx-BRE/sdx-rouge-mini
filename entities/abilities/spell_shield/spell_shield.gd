@@ -19,10 +19,10 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 	super(ability, context)
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func launch_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
-func launch_character_ability(ability: CharacterAbilityData, context: CharacterAbilityContext) -> void:
+func launch_character_ability(ability: CharacterAbilityData, _context: CharacterAbilityContext) -> void:
 	if not ability is CharacterAbilityBuff:
 		push_error(DbgHelper.err("SpellShield.launch_character_ability", "ability arg MUST be CharacterAbilityBuff"))
 	
