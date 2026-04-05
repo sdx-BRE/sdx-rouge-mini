@@ -7,3 +7,4 @@ const FIREPULSE := 100
 const FIREBOLT := 110
 const METEOR := 120
 
+const DBG := 999
