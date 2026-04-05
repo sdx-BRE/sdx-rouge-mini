@@ -1,6 +1,6 @@
 ﻿class_name EnemyAbilityContextCast extends EnemyAbilityContext
 
-const NODE_NAME_SPAWN_CONTAINER := "AbilityContextCastSpawnContainer"
+const NODE_NAME_SPAWN_CONTAINER := &"AbilityContextCastSpawnContainer"
 
 var _host: CharacterBody3D
 var _anim: EnemyAnimator
