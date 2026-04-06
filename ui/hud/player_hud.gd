@@ -9,16 +9,6 @@ class_name PlayerHud extends CanvasLayer
 @onready var skill_3: TextureProgressBar = $MarginContainer/Control/VBoxContainer/SkillsContainer/Skill3
 @onready var skill_progress := $MarginContainer/Control/VBoxContainer/CenterContainer/SkillProgres
 
-func _process(delta: float) -> void:
-	#print("skill_1.value - delta_ ", skill_1.value - delta)
-	#skill_1.value = max(skill_1.value - delta, 0.0)
-	#print("skill_1.value:", skill_1.value)
-	#skill_2.value = max(skill_2.value - delta, 0v.0)
-	#skill_3.value = max(skill_3.value - delta, 0.0)
-	#print("skill_1.value:", skill_1.value)
-	#skill_1.value -= delta
-	pass
-
 func update_health(current: float, total: float) -> void:
 	health_bar.value = current
 	health_bar.max_value = total
