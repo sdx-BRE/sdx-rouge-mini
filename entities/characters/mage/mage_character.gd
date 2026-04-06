@@ -40,6 +40,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
 @onready var ground_target_marker := $GroundTargetMarker
 @onready var enemy_target_marker := $EnemyTargetMarker
+@onready var target_point := $TargetPoint
 
 var _stats: EntityStats
 var _anim: MageAnimator
@@ -98,3 +99,6 @@ func _set_processing(to: bool) -> void:
 	set_process(to)
 	set_physics_process(to)
 	set_process_unhandled_input(to)
+
+func get_target_point() -> Marker3D:
+	return target_point
