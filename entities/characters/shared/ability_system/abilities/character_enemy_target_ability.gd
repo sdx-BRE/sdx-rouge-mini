@@ -22,13 +22,19 @@ func execute() -> ExecuteResult:
 	_context.hide_enemy_target_marker()
 	
 	var node := _new_data.scene.instantiate()
+	_spawn_ability(node)
+	
+	return ExecuteResult.Trigger
+
+func _spawn_ability(node: Node3D):
 	_context.spawn_at_wand(node)
+	node.global_basis = _context.get_pivot_basis()
 	
 	if node.has_method("set_target"):
 		var target = _target.get_target_point() if _target.has_method("get_target_point") else _target
 		node.set_target(target)
 	
-	return ExecuteResult.Trigger
+	pass
 
 func start() -> CharacterPhasedAbility.StartResult:
 	_context.use_visible_mouse()

@@ -82,9 +82,7 @@ func spawn_node(node: Node3D) -> void:
 
 func spawn_at_wand(node: Node3D) -> void:
 	spawn_node(node)
-	
 	node.global_position = _wandspawn_node.global_position
-	node.global_basis = _host.global_basis
 
 func spawn_buff(node: Node3D) -> void:
 	_buff_anchor.add_child(node)
