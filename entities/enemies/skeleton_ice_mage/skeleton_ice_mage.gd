@@ -39,11 +39,12 @@ signal died()
 @export_group("Field of view")
 @export var fov_angle: float = 70
 
+@onready var pivot := $Pivot
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui: EnemyUI = $EnemyViewport
 @onready var fov: Area3D = $Fov
 @onready var target_point := $TargetPoint
-@onready var staff_spawn_point := $Skeleton_Mage/Rig_Medium/Skeleton3D/BoneAttachment3D/staff2/StaffSpawnPoint
+@onready var staff_spawn_point := $Pivot/Rig_Medium/Skeleton3D/BoneAttachment3D/staff2/StaffSpawnPoint
 
 var _anim: SkeletonIceMageAnimator
 var _stats: EntityStats

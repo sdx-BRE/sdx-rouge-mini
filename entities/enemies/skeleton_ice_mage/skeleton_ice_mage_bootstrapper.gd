@@ -50,6 +50,7 @@ static func _bootstrap_ability_system(entity: SkeletonIceMage, anim: EnemyAnimat
 	var cast_context := EnemyAbilityContextCast.create(
 		entity._stats,
 		entity,
+		entity.pivot,
 		anim,
 		entity._target_handler,
 		entity.staff_spawn_point
