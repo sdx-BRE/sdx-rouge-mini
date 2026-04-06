@@ -15,7 +15,7 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	timer.timeout.connect(_trigger_aoe)
 
-func launch_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
+func launch_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	super(ability, context)
 	_update_radius()
 
