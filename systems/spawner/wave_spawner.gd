@@ -1,193 +1,124 @@
-class_name WaveSpawner extends Node
+class_name WaveSpawner extends Node3D
 
-@export var max_enemies: int = 20
-@export var spawn_duration: float = 5.0
-@export var spawn_locations: Array[Marker3D]
-@export var spawn_radius: float = 5.0
-@export var respawn_timeout: float = 3.0
-@export var skeleton_minion_scene: PackedScene
+enum Mode {
+	Circle,
+	AtPositions,
+}
+
+@export_group("Wave Settings")
+@export var mode: Mode = Mode.Circle
+@export var enemy_scene: PackedScene
+@export var enemies_per_wave: int = 5
+@export var spawn_interval: float = 1.5
+@export var spawn_container: Node3D
+
+@export_group("Enemy configuration")
 @export var patrol_points: Array[Marker3D]
 
-var _spawn_location_idx := 0
-var _enemy_count := 0
+@export_group("Mode Circle")
+@export var spawn_point: Marker3D
+@export var spawn_radius: float = 5.0
 
-var _state: State
+@export_group("Mode At Positions")
+@export var positions: Array[Marker3D]
 
-#region lifecycle
+var _enemies_alive: int = 0
+var _spawned_this_wave: int = 0
+var _is_spawning: bool = false
+var _spawn_timer: Timer
+
+var _spawner: WaveSpawnBase
+
 func _ready() -> void:
-	var emitter = PacedEmitter.new(max_enemies, spawn_duration)
-	emitter.restart()
-	emitter.tick_triggered.connect(func(_i): 
-		_spawn_minion()
-		_next_spawn_location()
-	)
+	if _check_exports():
+		match mode:
+			Mode.Circle:
+				_spawner = WaveSpawnCircle.new(spawn_point, spawn_radius)
+			Mode.AtPositions:
+				_spawner = WaveSpawnAtPositions.new(positions)
 	
-	_state = State.create(emitter, respawn_timeout)
+	_spawn_timer = Timer.new()
+	_spawn_timer.wait_time = spawn_interval
+	_spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	add_child(_spawn_timer)
+	
+	check_and_start_wave()
 
-func _process(delta: float) -> void:
-	_state.process(delta, _enemy_count)
-#endregion
+func _process(_delta: float) -> void:
+	check_and_start_wave()
 
-#region event listener
+func check_and_start_wave() -> void:
+	if not _is_spawning and _enemies_alive <= 0:
+		_is_spawning = true
+		_spawned_this_wave = 0
+		_spawn_timer.start()
+
+func _on_spawn_timer_timeout() -> void:
+	var enemy := _create_enemy_node()
+	_spawner.place_enemy(enemy)
+	_enemies_alive += 1
+	
+	var patrol := patrol_points.duplicate()
+	patrol.shuffle()
+	
+	enemy.patrol_points = patrol
+	enemy.tree_exited.connect(_on_enemy_died)
+	
+	_spawned_this_wave += 1
+	if _spawned_this_wave >= enemies_per_wave:
+		_spawn_timer.stop()
+		_is_spawning = false
+
+func _create_enemy_node() -> Node3D:
+	var enemy := enemy_scene.instantiate()
+	enemy.patrol_points = patrol_points
+	
+	spawn_container.add_child(enemy)
+	return enemy
+
 func _on_enemy_died() -> void:
-	_enemy_count = max(_enemy_count - 1, 0)
-#endregion
+	_enemies_alive -= 1
 
-#region spawning
-func _spawn_minion():
-	var spawn_position = _get_spawn_position()
+func _check_exports() -> bool:
+	var is_valid := true
+	if not _is_valid_exports():
+		is_valid = false
 	
-	var minion: SkeletonMinion = _init_minion()
-	minion.patrol_points = patrol_points
+	match mode:
+		Mode.Circle:
+			is_valid = is_valid and _is_valid_circle_export()
+		Mode.AtPositions:
+			is_valid = is_valid and _is_valid_positions_export()
 	
-	add_child(minion)
-	
-	minion.global_position = spawn_position
-	minion._anim.oneshot_spawn_ground() # Todo: Fix private access
-	
-	minion.died.connect(_on_enemy_died)
-	
-	_enemy_count += 1
+	return is_valid
 
-func _init_minion() -> SkeletonMinion:
-	return skeleton_minion_scene.instantiate() as SkeletonMinion
-#endregion
+func _is_valid_exports() -> bool:
+	var err := []
+	
+	if enemy_scene == null:
+		err.append("required: enemy_scene (PackedScene)")
+	
+	if spawn_interval == null:
+		err.append("required: spawn_interval (Node3D)")
+	
+	if patrol_points == null or patrol_points.size() == 0:
+		err.append("required: patrol_points (Array[Marker3D]) and MUST be not empty")
+	
+	if err.size() != 0:
+		var separator := "\n\t"
+		var msg := "\nInvalid properties:%s%s" % [separator, separator.join(err)]
+		push_error(msg)
+	
+	return err.size() == 0
 
-#region spawn position/location
-func _get_spawn_position():
-	var spawn_location = spawn_locations[_spawn_location_idx]
-	return _get_random_pos_in_radius(spawn_location, spawn_radius)
-
-func _next_spawn_location() -> void:
-	if spawn_locations.size() == 0:
-		return
-	
-	_spawn_location_idx = (_spawn_location_idx + 1) % spawn_locations.size()
-
-func _get_random_pos_in_radius(marker: Marker3D, radius: float) -> Vector3:
-	var angle = randf() * TAU
-	var r = radius * sqrt(randf())
-	var x = r * cos(angle)
-	var z = r * sin(angle)
-	
-	return marker.global_position + Vector3(x, 0, z)
-#endregion
-
-#region FSM
-class State:
-	var _state: Base
-	var _registry: Registry
-	var _data: Data
-	
-	enum Kind {
-		Spawning,
-		Observing,
-	}
-	
-	func _init(state: Base, registry: Registry, data: Data) -> void:
-		_state = state
-		_registry = registry
-		_data = data
-	
-	static func create(emitter: PacedEmitter, respawn_timeout: float, start: Kind = Kind.Spawning) -> State:
-		var spawning = Spawning.new(emitter)
-		var observing = Observing.new(respawn_timeout)
-		var registry = Registry.new(spawning, observing)
-		var data = Data.new()
-		
-		if start == Kind.Observing:
-			return State.new(observing, registry, data)
-		return State.new(spawning, registry, data)
-	
-	func process(delta: float, enemy_count: int) -> void:
-		var new_state = _state.process(delta, _data, _registry)
-		if new_state != null:
-			_state = new_state
-			_state.enter(_data)
-		
-		_data.enemy_count = enemy_count
-	
-	class Registry:
-		var spawning: State.Spawning
-		var observing: State.Observing
-		
-		func _init(
-			p_spawning: State.Spawning,
-			p_observing: State.Observing,
-		) -> void:
-			spawning = p_spawning
-			observing = p_observing
-	
-	class Data:
-		var enemy_count: int = 0
-	
-	class Base:
-		func process(_delta: float, _data: Data, _registry: Registry) -> Base: return null
-		func enter(_data: Data) -> void: pass
-	
-	class Observing extends Base:
-		var _respawn_timeout: float
-		var _timeout: float
-		
-		func _init(respawn_timeout: float) -> void:
-			_respawn_timeout = respawn_timeout
-			_timeout = respawn_timeout
-		
-		func process(delta: float, data: Data, registry: Registry) -> Base:
-			if data.enemy_count > 0:
-				return null
-			
-			_timeout -= delta
-			if _timeout < 0:
-				return registry.spawning
-			
-			return null
-		
-		func enter(_data: Data) -> void: _timeout = _respawn_timeout
-	
-	class Spawning extends Base:
-		var _emitter: PacedEmitter
-		var _finished_emitting: bool = false
-		
-		func _init(emitter: PacedEmitter) -> void:
-			_emitter = emitter
-			_emitter.sequence_finished.connect(func(): _finished_emitting = true)
-		
-		func process(delta: float, _data: Data, registry: Registry):
-			_emitter.process(delta)
-			
-			if _finished_emitting:
-				return registry.observing
-			
-			return null
-		
-		func enter(_data: Data) -> void:
-			_finished_emitting = false
-			_emitter.restart()
-#endregion
-
-#region editor/@tool helper methods
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings = []
-	
-	if spawn_locations.is_empty():
-		warnings.append("Spawn locations must be set!")
-	if not _is_scene_type(skeleton_minion_scene, SkeletonMinion):
-		warnings.append("Skeleton minion scene must be res://entities/enemies/skeleton_minion/SkeletonMinion.tscn")
-	
-	return warnings
-
-func _is_scene_type(scene: PackedScene, type: GDScript) -> bool:
-	if scene == null:
+func _is_valid_circle_export() -> bool:
+	if spawn_point == null:
+		push_error("\nInvalid circle properties:\n\trequired: spawn_point (Node3D)")
 		return false
-	
-	var state = scene.get_state()
-	for i in state.get_node_property_count(0):
-		var prop_name = state.get_node_property_name(0, i)
-		if prop_name == "script":
-			var prop_value = state.get_node_property_value(0, i)
-			if prop_value == type:
-				return true
-	
-	return false
-#endregion
+	return true
+
+func _is_valid_positions_export() -> bool:
+	if positions == null:
+		push_error("\nInvalid positions properties:\n\required: positions (Array[Marker3D]) and MUST be not empty")
+		return false
+	return true
