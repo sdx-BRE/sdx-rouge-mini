@@ -3,6 +3,7 @@ class_name WaveSpawner extends Node3D
 enum Mode {
 	Circle,
 	AtPositions,
+	RandomNode,
 }
 
 @export_group("Wave Settings")
@@ -15,12 +16,15 @@ enum Mode {
 @export_group("Enemy configuration")
 @export var patrol_points: Array[Marker3D]
 
-@export_group("Mode Circle")
+@export_group("Mode 'Circle'")
 @export var spawn_point: Marker3D
 @export var spawn_radius: float = 5.0
 
-@export_group("Mode At Positions")
+@export_group("Mode 'At Positions'")
 @export var positions: Array[Marker3D]
+
+@export_group("Mode 'Random Node'")
+@export var random_node_container: Node3D
 
 var _enemies_alive: int = 0
 var _spawned_this_wave: int = 0
@@ -36,6 +40,8 @@ func _ready() -> void:
 				_spawner = WaveSpawnCircle.new(spawn_point, spawn_radius)
 			Mode.AtPositions:
 				_spawner = WaveSpawnAtPositions.new(positions)
+			Mode.RandomNode:
+				_spawner = WaveSpawnRandomNode.new(random_node_container)
 	
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = spawn_interval
@@ -89,6 +95,8 @@ func _check_exports() -> bool:
 			is_valid = is_valid and _is_valid_circle_export()
 		Mode.AtPositions:
 			is_valid = is_valid and _is_valid_positions_export()
+		Mode.RandomNode:
+			is_valid = is_valid and _is_valid_random_node_export()
 	
 	return is_valid
 
@@ -120,5 +128,11 @@ func _is_valid_circle_export() -> bool:
 func _is_valid_positions_export() -> bool:
 	if positions == null:
 		push_error("\nInvalid positions properties:\n\required: positions (Array[Marker3D]) and MUST be not empty")
+		return false
+	return true
+
+func _is_valid_random_node_export() -> bool:
+	if random_node_container == null or random_node_container.get_children().size() == 0:
+		push_error("\nInvalid random node properties:\n\required: random_node_container (Node3D) and MUST contain child nodes")
 		return false
 	return true
