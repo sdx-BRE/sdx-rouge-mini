@@ -1,5 +1,5 @@
 @tool
-extends Node
+class_name BoundaryGenerator extends Node
 
 enum Mode {
 	Mesh,
