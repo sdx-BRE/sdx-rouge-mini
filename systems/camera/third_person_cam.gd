@@ -16,9 +16,13 @@ extends Marker3D
 var _scroll: ScrollHandler
 var _rotate: RotationHandler
 
-func use_visible_mouse() -> void:
+func use_visible_mouse(cursor_type: Cursor.Type = Cursor.Type.Pointer) -> void:
 	_rotate.disable_rotation()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	match cursor_type:
+		Cursor.Type.Pointer: CursorManager.use_pointer()
+		Cursor.Type.Attack: CursorManager.use_attack_cursor()
 
 func use_captured_mouse() -> void:
 	_rotate.enable_rotation()

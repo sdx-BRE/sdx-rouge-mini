@@ -96,8 +96,8 @@ func get_wand_transform() -> Transform3D:
 func get_pivot_basis() -> Basis:
 	return _pivot.global_basis
 
-func use_visible_mouse() -> void:
-	_camera_node.use_visible_mouse()
+func use_visible_mouse(cursor_type: Cursor.Type = Cursor.Type.Pointer) -> void:
+	_camera_node.use_visible_mouse(cursor_type)
 
 func use_captured_mouse() -> void:
 	_camera_node.use_captured_mouse()

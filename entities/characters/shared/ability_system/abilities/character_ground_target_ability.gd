@@ -23,7 +23,7 @@ func execute() -> ExecuteResult:
 	return ExecuteResult.Trigger
 
 func start() -> CharacterPhasedAbility.StartResult:
-	_context.use_visible_mouse()
+	_context.use_visible_mouse(Cursor.Type.Pointer)
 	_is_started = false
 	
 	return CharacterPhasedAbility.StartResult.HandleWithInput

@@ -37,7 +37,7 @@ func _spawn_ability(node: Node3D):
 	pass
 
 func start() -> CharacterPhasedAbility.StartResult:
-	_context.use_visible_mouse()
+	_context.use_visible_mouse(Cursor.Type.Attack)
 	_is_started = false
 	
 	return CharacterPhasedAbility.StartResult.HandleWithInput
