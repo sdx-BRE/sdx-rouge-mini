@@ -2,20 +2,28 @@
 
 var _random_node_container: Node3D
 
+var _positions: Array[Vector3]
+
 func _init(
 	random_node_container: Node3D,
 ) -> void:
 	_random_node_container = random_node_container
 
 func place_enemy(enemy: Node3D) -> void:
-	enemy.global_position = _get_random_position()
+	enemy.global_position = _pick_random_position()
 
-func _get_random_position() -> Vector3:
-	var child_nodes := _random_node_container.get_children() \
-		.filter(func(node: Node) -> bool: return node is Marker3D)
+func _pick_random_position() -> Vector3:
+	if _positions.size() == 0:
+		_populate_positions()
 	
-	if child_nodes.size() == 0:
-		push_warning("[WARN][WaveSpawnRandomNode._get_random_position]: random_node_container must have Marker3D child nodes")
-		return Vector3.ZERO
+	var rng_idx := randi() % _positions.size()
+	var pos := _positions[rng_idx]
 	
-	return child_nodes.pick_random().global_position
+	_positions.remove_at(rng_idx)
+	return pos
+
+func _populate_positions():
+	_positions = []
+	for node in _random_node_container.get_children() \
+		.filter(func(node: Node) -> bool: return node is Marker3D):
+			_positions.append(node.global_position)
