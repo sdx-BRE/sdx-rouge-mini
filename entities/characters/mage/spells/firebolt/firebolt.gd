@@ -2,7 +2,7 @@ class_name Firebolt extends Area3D
 
 @export var speed: float = 20.0
 @export var lifespan: float = 5.0
-@export var dmg: float = 15
+@export var damage: float = 15.0
 @export var homing_steer_speed := 1.5
 @export var homing_fov := -0.6
 
@@ -36,7 +36,7 @@ func _smooth_look_at(target_pos: Vector3, forward: Vector3, delta: float) -> voi
 func _on_area_entered(body: Node3D) -> void:
 	var hitbox := body as DamageHitbox
 	if hitbox != null:
-		hitbox.take_dmg(dmg)
+		hitbox.take_dmg(damage)
 	
 	queue_free()
 

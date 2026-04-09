@@ -34,7 +34,7 @@ func _spawn_ability(node: Node3D):
 		var target = _target.get_target_point() if _target.has_method("get_target_point") else _target
 		node.set_target(target)
 	
-	pass
+	node.damage = _data.damage
 
 func start() -> CharacterPhasedAbility.StartResult:
 	_context.use_visible_mouse(Cursor.Type.Attack)
