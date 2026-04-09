@@ -13,9 +13,6 @@ enum Mode {
 @export var spawn_interval: float = 1.5
 @export var spawn_container: Node3D
 
-@export_group("Enemy configuration")
-@export var patrol_points: Array[Marker3D]
-
 @export_group("Mode 'Circle'")
 @export var spawn_point: Marker3D
 @export var spawn_radius: float = 5.0
@@ -33,7 +30,67 @@ var _spawn_timer: Timer
 
 var _spawner: WaveSpawnBase
 
+var _patrol_points: Array[Marker3D]
+
 func _ready() -> void:
+	_setup_spawner()
+	
+	_spawn_timer = Timer.new()
+	_spawn_timer.wait_time = spawn_interval
+	_spawn_timer.timeout.connect(_spawn_enemy)
+	add_child(_spawn_timer)
+	
+	_create_rng_patrol_points(self)
+
+func _process(_delta: float) -> void:
+	if not _is_spawning and _enemies_alive <= 0:
+		_is_spawning = true
+		_spawned_this_wave = 0
+		_spawn_timer.start()
+
+func _spawn_enemy() -> void:
+	var enemy := _create_enemy_node()
+	_spawner.place_enemy(enemy)
+	_enemies_alive += 1
+	
+	enemy.tree_exited.connect(_on_enemy_died)
+	
+	_spawned_this_wave += 1
+	if _spawned_this_wave >= enemies_per_wave:
+		_spawn_timer.stop()
+		_is_spawning = false
+
+func _create_rng_patrol_points(container: Node3D) -> void:
+	var patrol_points_container := Node3D.new()
+	container.add_child(patrol_points_container)
+	
+	patrol_points_container.top_level = true
+	patrol_points_container.name = "PatrolPointContainer"
+	patrol_points_container.owner = self.owner if self.owner else self
+	
+	_patrol_points = []
+	for i in range(0, 10):
+		var point := Marker3D.new()
+		patrol_points_container.add_child(point)
+		
+		point.name = "PatrolPoint"
+		point.owner = self.owner if self.owner else self
+		
+		var pos := Vector3(randf_range(-40.0, 40.0), 0.0, randf_range(-40.0, 40.0))
+		point.global_position = pos
+		_patrol_points.append(point)
+
+func _create_enemy_node() -> Node3D:
+	var enemy := enemy_scene.instantiate()
+	var patrol := _patrol_points.duplicate()
+	
+	patrol.shuffle()
+	enemy.patrol_points = patrol
+	
+	spawn_container.add_child(enemy)
+	return enemy
+
+func _setup_spawner() -> void:
 	if _check_exports():
 		match mode:
 			Mode.Circle:
@@ -42,45 +99,6 @@ func _ready() -> void:
 				_spawner = WaveSpawnAtPositions.new(positions)
 			Mode.RandomNode:
 				_spawner = WaveSpawnRandomNode.new(random_node_container)
-	
-	_spawn_timer = Timer.new()
-	_spawn_timer.wait_time = spawn_interval
-	_spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-	add_child(_spawn_timer)
-	
-	check_and_start_wave()
-
-func _process(_delta: float) -> void:
-	check_and_start_wave()
-
-func check_and_start_wave() -> void:
-	if not _is_spawning and _enemies_alive <= 0:
-		_is_spawning = true
-		_spawned_this_wave = 0
-		_spawn_timer.start()
-
-func _on_spawn_timer_timeout() -> void:
-	var enemy := _create_enemy_node()
-	_spawner.place_enemy(enemy)
-	_enemies_alive += 1
-	
-	var patrol := patrol_points.duplicate()
-	patrol.shuffle()
-	
-	enemy.patrol_points = patrol
-	enemy.tree_exited.connect(_on_enemy_died)
-	
-	_spawned_this_wave += 1
-	if _spawned_this_wave >= enemies_per_wave:
-		_spawn_timer.stop()
-		_is_spawning = false
-
-func _create_enemy_node() -> Node3D:
-	var enemy := enemy_scene.instantiate()
-	enemy.patrol_points = patrol_points
-	
-	spawn_container.add_child(enemy)
-	return enemy
 
 func _on_enemy_died() -> void:
 	_enemies_alive -= 1
@@ -108,9 +126,6 @@ func _is_valid_exports() -> bool:
 	
 	if spawn_interval == null:
 		err.append("required: spawn_interval (Node3D)")
-	
-	if patrol_points == null or patrol_points.size() == 0:
-		err.append("required: patrol_points (Array[Marker3D]) and MUST be not empty")
 	
 	if err.size() != 0:
 		var separator := "\n\t"
