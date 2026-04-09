@@ -8,13 +8,20 @@ var _targets_in_range: Array[Node3D]
 var _target: Node3D
 
 func _init(
-	host: CharacterBody3D, 
+	host: CharacterBody3D,
 	attack_range: float,
 	fov_threshold: float,
 ) -> void:
 	_host = host
 	_attack_range = attack_range
 	_fov_threshold = fov_threshold
+
+static func from_enemy_data(
+	host: CharacterBody3D,
+	data: EnemyData,
+) -> AiTargetHandler:
+	var fov_treshold := cos(deg_to_rad(data.fov_angle / 2.0))
+	return AiTargetHandler.new(host, data.attack_range, fov_treshold)
 
 func add_target(target: Node3D) -> void:
 	if not _targets_in_range.has(target):
