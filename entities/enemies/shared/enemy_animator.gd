@@ -27,7 +27,7 @@ func add_playback_from_param(
 	
 	add_playback(identifier, playback)
 
-func playback_travel(identifier: StatePlayback, to_node: StringName) -> void:
+func playback_travel(to_node: StringName, identifier: StatePlayback) -> void:
 	var playback := _get_playback(identifier)
 	if playback == null:
 		var kind = StatePlayback.keys()[identifier]
