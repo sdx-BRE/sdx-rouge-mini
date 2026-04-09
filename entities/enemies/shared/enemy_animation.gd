@@ -33,3 +33,6 @@ func blend_loco_move(value: float) -> void:
 
 func blend_loco_timescale(value: float) -> void:
 	_animator.set_param(_params.locomotion_timescale, value)
+
+func get_animator() -> EnemyAnimator:
+	return _animator
