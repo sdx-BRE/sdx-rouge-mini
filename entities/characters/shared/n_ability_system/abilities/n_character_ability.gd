@@ -16,3 +16,9 @@ func use_resources() -> void:
 
 func get_input() -> StringName:
 	return _data.input
+
+func get_handler() -> NCharacterAbilityHandler.Execution:
+	return _data.get_handler()
+
+func get_id() -> int:
+	return _data.id

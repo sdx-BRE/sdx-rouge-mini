@@ -13,9 +13,7 @@ func to_ability(
 	stats: EntityStats,
 	context: CharacterAbilityContext,
 ) -> NCharacterAbility:
-	#push_error("[Error][CharacterAbilityData]: to_ability() must be overwritten by child implementations - state: ", stats, " - context: ", context)
-	#return null
-	return NCharacterAbility.new(self)
+	return NCharacterAbility.new(self, stats)
 
 func _get_property_list() -> Array[Dictionary]:
 	var constants = NCharacaterAbilityId.new().get_script().get_script_constant_map()
@@ -32,3 +30,6 @@ func _get_property_list() -> Array[Dictionary]:
 		"hint": PROPERTY_HINT_ENUM,
 		"hint_string": enum_string
 	}]
+
+func get_handler() -> NCharacterAbilityHandler.Execution:
+	return execution.get_handler()
