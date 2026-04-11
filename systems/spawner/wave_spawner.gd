@@ -6,6 +6,8 @@ enum Mode {
 	RandomNode,
 }
 
+@export var disabled := false
+
 @export_group("Wave Settings")
 @export var mode: Mode = Mode.Circle
 @export var enemy_scene: PackedScene
@@ -43,7 +45,7 @@ func _ready() -> void:
 	_create_rng_patrol_points(self)
 
 func _process(_delta: float) -> void:
-	if not _is_spawning and _enemies_alive <= 0:
+	if not disabled and not _is_spawning and _enemies_alive <= 0:
 		_is_spawning = true
 		_spawned_this_wave = 0
 		_spawn_timer.start()
