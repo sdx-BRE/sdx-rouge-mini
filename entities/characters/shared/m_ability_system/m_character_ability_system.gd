@@ -1,4 +1,4 @@
-﻿## 	Idea:
+## 	Idea:
 ## 
 ##	Four steps:
 ##		1. Targeting (None, Mouse Target, Location, Direction)
@@ -9,22 +9,25 @@
 class_name MCharacterAbilitySystem extends RefCounted
 
 var _registry: MCharacterAbilityRegistry
+var _manager: MCharacterAbilityManager
 var _cooldown_manager: CooldownManager
 
 func _init(
 	registry: MCharacterAbilityRegistry,
+	manager: MCharacterAbilityManager,
 	cooldown_manager: CooldownManager,
 ) -> void:
 	_registry = registry
+	_manager = manager
 	_cooldown_manager = cooldown_manager
 
 func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():
 		return false
 	
-#	if _manager.is_handling_active_ability(event):
-#		return true
-#	
+	if _manager.is_handling_active_ability(event):
+		return true
+	
 	var actions := _registry.get_actions()
 	for action in actions:
 		if event.is_action(action):
@@ -46,7 +49,7 @@ func on_ability_triggered(id: int) -> void:
 #	
 #	ability.use_resources()
 
-func has_resources(id: int) -> bool:
+func has_resources(_id: int) -> bool:
 #	var ability := _registry.get_ability(id)
 #	if ability == null:
 #		return false
@@ -54,7 +57,7 @@ func has_resources(id: int) -> bool:
 #	return ability.has_resources()
 
 func tick(delta: float) -> void:
-	pass#_manager.tick(delta)
+	_manager.tick(delta)
 	#_cooldown_manager.tick(delta)
 
 enum TriggerState {
@@ -66,5 +69,9 @@ func _try_activate_ability(
 	id: int,
 	state: TriggerState,
 ) -> void:
-	print("try activate id: ", id, " - state: ", TriggerState.keys()[state])
-	pass
+	var ability := _registry.get_ability(id)
+	
+	if ability == null:
+		return
+	
+	_manager.try_activate(ability, state)

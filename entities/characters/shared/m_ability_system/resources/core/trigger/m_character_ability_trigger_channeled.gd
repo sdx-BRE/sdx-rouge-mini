@@ -1,0 +1,2 @@
+﻿class_name MCharacterAbilityTriggerChanneled extends MCharacterAbilityTrigger
+
