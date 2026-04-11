@@ -1,0 +1,2 @@
+﻿class_name MCharacterAbilityTargetingLocation extends MCharacterAbilityTargeting
+

@@ -1,0 +1,3 @@
+﻿class_name MCharacterAbilityEffectAoe extends MCharacterAbilityEffect
+
+
