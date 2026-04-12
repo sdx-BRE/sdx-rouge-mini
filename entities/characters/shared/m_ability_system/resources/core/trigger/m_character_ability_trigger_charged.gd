@@ -1,4 +1,1 @@
 ﻿class_name MCharacterAbilityTriggerCharged extends MCharacterAbilityTrigger
-
-func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupTriggerHandler:
-	return MCharacterAbilityExecutionSetupChargedHandler.new(context)

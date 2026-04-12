@@ -1,4 +1,1 @@
 ﻿class_name MCharacterAbilityTrigger extends Resource
-
-func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupTriggerHandler:
-	return MCharacterAbilityExecutionSetupTriggerHandler.new(context)
