@@ -1,6 +1,8 @@
 @tool
 class_name MCharacterAbilityData extends Resource
 
+@export var cooldown: float = 0.0
+@export var cost: AbilityCost = AbilityCost.new()
 @export var targeting: MCharacterAbilityTargeting
 @export var trigger: MCharacterAbilityTrigger
 @export var windup: MCharacterAbilityWindup
