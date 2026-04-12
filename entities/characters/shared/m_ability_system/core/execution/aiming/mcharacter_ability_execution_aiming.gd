@@ -30,7 +30,7 @@ func cancel() -> void:
 	_targeting.cancel()
 
 func _on_target_aquired(result: McharacterAbilityAimingResult) -> void:
-	_exec.blackboard.targeting_result = result
+	_exec.blackboard.aiming_result = result
 	_exec.next_phase()
 
 func _on_targeting_canceled() -> void:

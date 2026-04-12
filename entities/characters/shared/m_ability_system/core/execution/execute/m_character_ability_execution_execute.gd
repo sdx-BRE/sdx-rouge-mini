@@ -14,6 +14,7 @@ func _init(
 
 func start() -> void:
 	var effect_handler := _data.effect.create_handler(_context) 
+	effect_handler.setup(_data.effect)
 	
-	
-	pass
+	effect_handler.execute(_exec.blackboard.aiming_result)
+	_exec.finish()

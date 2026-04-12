@@ -68,7 +68,13 @@ func next_phase() -> void:
 		_phase = _factory.create(PHASES[_phase_idx], _ability._data, self)
 		_phase.start()
 
+func finish() -> void:
+	_cleanup_member()
+
 func abort() -> void:
+	_cleanup_member()
+
+func _cleanup_member() -> void:
 	_phase = null
 	_ability = null
 	_phase_idx = 0
