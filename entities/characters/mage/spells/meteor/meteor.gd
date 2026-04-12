@@ -1,4 +1,4 @@
-extends Area3D
+extends BaseAoe
 
 @export var damage := 20.0
 
