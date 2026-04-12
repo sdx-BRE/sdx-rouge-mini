@@ -11,9 +11,9 @@ func _init(
 	_context = context
 
 func setup(_data: MCharacterAbilityTargeting) -> void:
-	pass
+	_emit_target_aquired(McharacterAbilityAimingResult.new())
 
-func handle_input(event: InputEvent) -> bool:
+func handle_input(_event: InputEvent) -> bool:
 	return false
 
 func tick(_delta: float) -> void:

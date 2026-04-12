@@ -37,12 +37,14 @@ func start(
 	if _phase != null:
 		_phase.cancel()
 	
-	_phase = _factory.create(Phase.Aiming, ability._data, self)
-	_phase.start()
 	_phase_idx = 0
+	_phase = _factory.create(Phase.Aiming, ability._data, self)
+	
+	_phase.start()
 
 func release() -> void:
-	_phase.release()
+	if _phase != null:
+		_phase.release()
 
 func handle_input(event: InputEvent) -> bool:
 	if _phase == null:

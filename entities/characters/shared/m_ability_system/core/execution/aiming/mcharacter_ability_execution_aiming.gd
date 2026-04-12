@@ -15,10 +15,11 @@ func _init(
 
 func start() -> void:
 	_targeting = _data.get_strategy(_context)
-	_targeting.setup(_data)
 	
 	_targeting.target_aquired.connect(_on_target_aquired)
 	_targeting.canceled.connect(_on_targeting_canceled)
+	
+	_targeting.setup(_data)
 
 func handle_input(event: InputEvent) -> bool:
 	return _targeting.handle_input(event)
