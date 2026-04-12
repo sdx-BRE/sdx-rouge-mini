@@ -8,18 +8,8 @@ func setup(data: MCharacterAbilityEffect) -> void:
 func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	var node := _data.scene.instantiate()
 	
-	_when_ability(node, _setup_ability)
+	_setup_when_ability(node, _data)
 	_context.spawn_buff(node)
-	_when_ability(node, _launch_ability)
+	_launch_when_ability(node, _data)
 	
 	_emit_finished()
-
-func _setup_ability(ability: AbilityEntity) -> void:
-	ability.setup_mcharacter_ability(_data, _context)
-
-func _launch_ability(ability: AbilityEntity) -> void:
-	ability.launch_mcharacter_ability(_data, _context)
-
-func _when_ability(node: Node, then: Callable) -> void:
-	if node is AbilityEntity:
-		then.call(node)

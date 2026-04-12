@@ -25,3 +25,19 @@ func _emit_finished() -> void:
 
 func _emit_canceled() -> void:
 	canceled.emit()
+
+func _setup_when_ability(node: Node, data: MCharacterAbilityEffect) -> void:
+	_when_ability(node, data, _setup_ability)
+
+func _launch_when_ability(node: Node, data: MCharacterAbilityEffect) -> void:
+	_when_ability(node, data, _launch_ability)
+
+func _setup_ability(ability: AbilityEntity, data: MCharacterAbilityEffect) -> void:
+	ability.setup_mcharacter_ability(data, _context)
+
+func _launch_ability(ability: AbilityEntity, data: MCharacterAbilityEffect) -> void:
+	ability.launch_mcharacter_ability(data, _context)
+
+func _when_ability(node: Node, data: MCharacterAbilityEffect, then: Callable) -> void:
+	if node is AbilityEntity:
+		then.call(node, data)
