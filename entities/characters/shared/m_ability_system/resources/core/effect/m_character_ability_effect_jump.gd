@@ -1,0 +1,4 @@
+﻿class_name MCharacterAbilityEffectJump extends MCharacterAbilityEffect
+
+func create_handler(context: MCharacterAbilityExecutionExecuteContext) -> MCharacterAbilityExecutionExecuteEffectHandler:
+	return MCharacterAbilityExecutionExecuteJumpHandler.new(context)
