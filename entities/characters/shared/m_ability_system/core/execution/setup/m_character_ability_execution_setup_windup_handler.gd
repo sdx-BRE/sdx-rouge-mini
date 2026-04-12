@@ -21,5 +21,8 @@ func tick() -> void:
 func trigger() -> void:
 	pass
 
+func cancel() -> void:
+	pass
+
 func _emit_visual_ready() -> void:
 	visual_ready.emit()

@@ -43,28 +43,35 @@ func start(
 	_phase.start()
 
 func release() -> void:
-	if _phase != null:
+	if _is_active():
 		_phase.release()
 
 func handle_input(event: InputEvent) -> bool:
-	if _phase == null:
+	if not _is_active():
 		return false
 	
 	return _phase.handle_input(event)
 
 func tick(delta: float) -> void:
-	if _phase == null:
+	if not _is_active():
 		return
 	
 	_phase.tick(delta)
 
 func handle_animation_event() -> void:
+	if not _is_active():
+		return
+	
 	_phase.animation_trigger()
 
 func next_phase() -> void:
+	if not _is_active():
+		return
+	
 	var next_idx := _phase_idx + 1
-	if next_idx > PHASES.size():
-		abort()
+	
+	if next_idx >= PHASES.size():
+		finish()
 	else:
 		_phase_idx = next_idx
 		_phase = _factory.create(PHASES[_phase_idx], _ability._data, self)
@@ -80,3 +87,6 @@ func _cleanup_member() -> void:
 	_phase = null
 	_ability = null
 	_phase_idx = 0
+
+func _is_active() -> bool:
+	return _ability != null and _phase != null

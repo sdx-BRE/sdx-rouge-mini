@@ -6,7 +6,7 @@ func setup(data: MCharacterAbilityWindup) -> void:
 	_data = data
 
 func start() -> void:
-	_context.update_cast_point(_data) # Todo: double check if it is necessary here
+	_context.update_cast_point(_data)
 	_context.animate(_data)
 	_context.notify_casting_started()
 
@@ -19,3 +19,6 @@ func tick() -> void:
 func trigger() -> void:
 	_context.notify_casting_end()
 	_emit_visual_ready()
+
+func cancel() -> void:
+	_context.notify_casting_end()

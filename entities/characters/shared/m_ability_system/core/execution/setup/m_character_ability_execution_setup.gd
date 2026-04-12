@@ -22,7 +22,8 @@ func start() -> void:
 	_windup_handler.start()
 
 func cancel() -> void:
-	pass
+	_windup_handler.cancel()
+	_exec.abort()
 
 func tick(_delta: float) -> void:
 	_windup_handler.tick()
