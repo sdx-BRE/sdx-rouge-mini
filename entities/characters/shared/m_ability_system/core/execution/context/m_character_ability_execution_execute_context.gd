@@ -54,6 +54,9 @@ func spawn_at_wand(node: Node3D) -> void:
 	spawn_node(node)
 	node.global_position = _wandspawn_node.global_position
 
+func spawn_buff(node: Node3D) -> void:
+	_buff_anchor.add_child(node)
+
 func get_pivot_basis() -> Basis:
 	return _pivot.global_basis
 
