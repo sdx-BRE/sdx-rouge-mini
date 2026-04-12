@@ -1,2 +1,4 @@
 ﻿class_name MCharacterAbilityTriggerNormal extends MCharacterAbilityTrigger
 
+func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupTriggerHandler:
+	return MCharacterAbilityExecutionSetupNormalHandler.new(context)

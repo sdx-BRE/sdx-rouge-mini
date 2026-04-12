@@ -1,2 +1,4 @@
 ﻿class_name MCharacterAbilityWindupInstant extends MCharacterAbilityWindup
 
+func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupWindupHandler:
+	return MCharacterAbilityExecutionSetupInstantHandler.new(context)

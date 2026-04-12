@@ -1,2 +1,4 @@
 ﻿class_name MCharacterAbilityTriggerChanneled extends MCharacterAbilityTrigger
 
+func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupTriggerHandler:
+	return MCharacterAbilityExecutionSetupChanneledHandler.new(context)

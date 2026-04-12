@@ -8,7 +8,13 @@ func _init(exec: MCharacterAbilityExecution) -> void:
 func start() -> void:
 	pass
 
+func release() -> void:
+	pass
+
 func cancel() -> void:
+	pass
+
+func animation_trigger() -> void:
 	pass
 
 func tick(_delta: float) -> void:
