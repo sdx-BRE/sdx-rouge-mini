@@ -50,6 +50,18 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 	_homing_steer_speed = data.homing_steer_speed
 	_target = context.get_target()
 
+func setup_mcharacter_ability(data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
+	var projectile_data := data as MCharacterAbilityEffectProjectile
+	if not projectile_data:
+		return
+	
+	_damage = projectile_data.damage
+	_speed = projectile_data.speed
+	_lifetime = projectile_data.lifetime
+	_homing = projectile_data.homing
+	_homing_fov = projectile_data.homing_fov
+	_homing_steer_speed = projectile_data.homing_steer_speed
+
 func _on_area_entered(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
 		body.take_dmg(_damage)

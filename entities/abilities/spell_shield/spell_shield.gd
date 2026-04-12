@@ -29,6 +29,18 @@ func launch_character_ability(ability: CharacterAbilityData, _context: Character
 	var duration := (ability as CharacterAbilityBuff).duration if ability is CharacterAbilityBuff else DEFAULT_DURATION
 	get_tree().create_timer(duration).timeout.connect(queue_free)
 
+func launch_mcharacter_ability(data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
+	var buff_data := data as MCharacterAbilityEffectBuff
+	
+	var duration: float
+	if not buff_data:
+		push_error(DbgHelper.err("SpellShield.launch_character_ability", "data arg MUST be CharacterAbilityEffect"))
+		duration = DEFAULT_DURATION
+	else:
+		duration = buff_data.duration
+	
+	get_tree().create_timer(duration).timeout.connect(queue_free)
+
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 

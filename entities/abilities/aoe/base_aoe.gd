@@ -28,5 +28,14 @@ func setup_enemy_ability(ability: EnemyCastAbility, _context: EnemyAbilityContex
 	_delay = data.delay
 	_radius = data.radius
 
+func setup_mcharacter_ability(data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
+	var aoe_data := data as MCharacterAbilityEffectAoe
+	if not aoe_data:
+		push_error(_err("setup()", "ability arg MUST be MCharacterAbilityEffectAoe"))
+		return
+	_damage = aoe_data.damage
+	_delay = aoe_data.delay
+	_radius = aoe_data.radius
+
 func _err(method: String, msg: String) -> String:
 	return DbgHelper.err("BaseAoe.%s" % method, msg)
