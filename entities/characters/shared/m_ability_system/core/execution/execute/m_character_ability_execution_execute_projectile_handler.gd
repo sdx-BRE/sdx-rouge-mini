@@ -10,6 +10,7 @@ func execute(aiming_result: McharacterAbilityAimingResult) -> void:
 	if node is BaseProjectile:
 		_setup_projectile(node, aiming_result)
 	_spawn_ability(node)
+	_emit_finished()
 
 func _spawn_ability(node: Node3D) -> void:
 	_context.spawn_at_wand(node)

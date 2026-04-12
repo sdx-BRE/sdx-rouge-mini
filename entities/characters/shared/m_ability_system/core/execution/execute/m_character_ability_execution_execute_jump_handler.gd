@@ -7,3 +7,4 @@ func setup(data: MCharacterAbilityEffect) -> void:
 
 func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	_context.buffer_jump()
+	_emit_finished()

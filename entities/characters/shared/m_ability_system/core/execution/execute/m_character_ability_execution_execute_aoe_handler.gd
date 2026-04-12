@@ -11,6 +11,8 @@ func execute(aiming_result: McharacterAbilityAimingResult) -> void:
 	_when_aoe(node, _setup_aoe)
 	_spawn_ability(node)
 	_when_aoe(node, func(aoe: BaseAoe): _launch_aoe(aoe, aiming_result))
+	
+	_emit_finished()
 
 func _spawn_ability(node: Node3D) -> void:
 	_context.spawn_at_wand(node)

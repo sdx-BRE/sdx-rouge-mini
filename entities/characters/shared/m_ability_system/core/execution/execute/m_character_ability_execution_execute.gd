@@ -3,6 +3,8 @@ class_name MCharacterAbilityExecutionExecute extends MCharacterAbilityExecutionB
 var _data: MCharacterAbilityData
 var _context: MCharacterAbilityExecutionExecuteContext
 
+var _effect_handler: MCharacterAbilityExecutionExecuteEffectHandler
+
 func _init(
 	exec: MCharacterAbilityExecution,
 	data: MCharacterAbilityData,
@@ -13,8 +15,14 @@ func _init(
 	_context = context
 
 func start() -> void:
-	var effect_handler := _data.effect.create_handler(_context) 
-	effect_handler.setup(_data.effect)
+	_effect_handler = _data.effect.create_handler(_context)
+	_effect_handler.finished.connect(_exec.finish)
 	
-	effect_handler.execute(_exec.blackboard.aiming_result)
-	_exec.finish()
+	_effect_handler.setup(_data.effect)
+	_effect_handler.execute(_exec.blackboard.aiming_result)
+
+func tick(delta: float) -> void:
+	_effect_handler.tick(delta)
+
+func release() -> void:
+	_effect_handler.release()
