@@ -66,3 +66,9 @@ func push_dash_motion(dash_power: float) -> void:
 
 func buffer_jump() -> void:
 	_controller.buffer_jump()
+
+func use_sprinting_speed() -> void:
+	_controller.use_sprinting_speed()
+
+func use_normal_speed() -> void:
+	_controller.use_normal_speed()

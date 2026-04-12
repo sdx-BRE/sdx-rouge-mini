@@ -1,0 +1,4 @@
+﻿class_name MCharacterAbilityEffectSprint extends MCharacterAbilityEffect
+
+func create_handler(context: MCharacterAbilityExecutionExecuteContext) -> MCharacterAbilityExecutionExecuteEffectHandler:
+	return MCharacterAbilityExecutionExecuteSprintHandler.new(context)
