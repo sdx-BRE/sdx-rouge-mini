@@ -1,0 +1,3 @@
+﻿class_name MCharacterAbilityExecutionBlackboard extends RefCounted
+
+var targeting_result: McharacterAbilityAimingResult

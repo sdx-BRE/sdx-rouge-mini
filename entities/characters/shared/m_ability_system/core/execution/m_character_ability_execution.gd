@@ -1,40 +1,74 @@
-﻿class_name MCharacterAbilityExecution extends RefCounted
+class_name MCharacterAbilityExecution extends RefCounted
 
-var _target_context: MCharacterAbilityExecutionTargetingContext
+const PHASES: Array[Phase] = [
+	Phase.Aiming,
+	Phase.Setup,
+	Phase.Execute,
+	Phase.Recover,
+]
 
-var _state: MCharacterAbilityExecutionBase
+enum Phase {
+	Aiming,
+	Setup,
+	Execute,
+	Recover,
+}
+
+var blackboard: MCharacterAbilityExecutionBlackboard
+var _factory: MCharacterAbilityExecutionFactory
+
+var _phase: MCharacterAbilityExecutionBase
 var _ability: MCharacterAbility
 
+var _phase_idx: int = 0
+
 func _init(
-	target_context: MCharacterAbilityExecutionTargetingContext,
+	p_blackboard: MCharacterAbilityExecutionBlackboard,
+	factory: MCharacterAbilityExecutionFactory,
 ) -> void:
-	_target_context = target_context
+	blackboard = p_blackboard
+	_factory = factory
 
 func start(
 	ability: MCharacterAbility,
-	trigger_state: MCharacterAbilitySystem.TriggerState,
 ) -> void:
-	if trigger_state == MCharacterAbilitySystem.TriggerState.Press:
-		_ability = ability
-		
-		if _state != null:
-			_state.cancel()
-		
-		_state = MCharacterAbilityExecutionTargeting.new(self, ability._data.targeting, _target_context)
-		_state.start()
+	_ability = ability
+	
+	if _phase != null:
+		_phase.cancel()
+	
+	_phase = _factory.create(Phase.Aiming, ability._data, self)
+	_phase.start()
+	_phase_idx = 0
+
+func release() -> void:
+	_phase.release()
 
 func handle_input(event: InputEvent) -> bool:
-	if _state == null:
+	if _phase == null:
 		return false
 	
-	return _state.handle_input(event)
+	return _phase.handle_input(event)
 
 func tick(delta: float) -> void:
-	if _state == null:
+	if _phase == null:
 		return
 	
-	_state.tick(delta)
+	_phase.tick(delta)
+
+func handle_animation_event() -> void:
+	_phase.animation_trigger()
+
+func next_phase() -> void:
+	var next_idx := _phase_idx + 1
+	if next_idx > PHASES.size():
+		abort()
+	else:
+		_phase_idx = next_idx
+		_phase = _factory.create(PHASES[_phase_idx], _ability._data, self)
+		_phase.start()
 
 func abort() -> void:
-	_state = null
+	_phase = null
 	_ability = null
+	_phase_idx = 0
