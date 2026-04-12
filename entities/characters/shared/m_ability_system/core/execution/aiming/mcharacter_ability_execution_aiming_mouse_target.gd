@@ -41,4 +41,4 @@ func cancel() -> void:
 
 func _cleanup_ui_state() -> void:
 	_context.use_captured_mouse()
-	_context.hide_ground_target_marker()
+	_context.hide_enemy_target_marker()
