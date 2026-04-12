@@ -1,3 +1,0 @@
-﻿class_name NCharacterAbilityEffectBuff extends NCharacterAbilityEffect
-
-
