@@ -17,7 +17,7 @@ func to_ability(
 	return MCharacterAbility.new(self)
 
 func _get_property_list() -> Array[Dictionary]:
-	var constants = NCharacaterAbilityId.new().get_script().get_script_constant_map()
+	var constants = MCharacaterAbilityId.new().get_script().get_script_constant_map()
 	var hint_strings := []
 	for key in constants.keys():
 		hint_strings.append(str(key, ":", constants[key]))

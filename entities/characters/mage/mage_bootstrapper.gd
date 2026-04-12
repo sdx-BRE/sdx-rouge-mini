@@ -44,10 +44,10 @@ static func _bootstrap_abilities(
 		mage_signals.casting_end
 	)
 	
-	var controller := MageController.new(movement_context)
+	mage._controller = MageController.new(movement_context)
 	var instant_context := InstantContext.new(
 		mage.pivot,
-		controller,
+		mage._controller,
 		mage.anim_tree,
 	)
 	var phased_context := PhasedContext.create(
@@ -63,7 +63,7 @@ static func _bootstrap_abilities(
 		mage.get_viewport(),
 		mage.get_world_3d(),
 	)
-	var channeled_context := ChanneledContext.new(controller)
+	var channeled_context := ChanneledContext.new(mage._controller)
 	var factory := CharacterAbilityFactory.new(mage._stats, phased_context, instant_context, channeled_context)
 	
 	for ability_data in mage.abilities:

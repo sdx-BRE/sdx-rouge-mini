@@ -1,4 +1,4 @@
-﻿class_name CooldownManager extends RefCounted
+class_name CooldownManager extends RefCounted
 
 signal cooldown_started(action: StringName, cooldown: float)
 
@@ -21,6 +21,10 @@ func start_character_cooldown(ability: CharacterAbilityData) -> void:
 	start_cooldown(ability.id, ability.cooldown)
 	cooldown_started.emit(ability.input, ability.cooldown)
 
+func start_mcharacter_cooldown(ability: MCharacterAbilityData) -> void:
+	start_cooldown(ability.id, ability.cooldown)
+	cooldown_started.emit(ability.input, ability.cooldown)
+
 func has_cooldown(id: int) -> bool:
 	return _cooldowns.has(id)
 
@@ -28,4 +32,7 @@ func has_enemy_cooldown(ability: EnemyBaseAbility) -> bool:
 	return _cooldowns.has(ability.id)
 
 func has_character_cooldown(ability: CharacterAbilityData) -> bool:
+	return _cooldowns.has(ability.id)
+
+func has_mcharacter_cooldown(ability: MCharacterAbilityData) -> bool:
 	return _cooldowns.has(ability.id)

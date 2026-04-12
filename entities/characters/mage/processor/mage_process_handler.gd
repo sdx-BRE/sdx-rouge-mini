@@ -12,4 +12,4 @@ func _init(
 
 func process(delta: float) -> void:
 	_anim.process(delta)
-	_ability_system.tick(delta)
+	#_ability_system.tick(delta)

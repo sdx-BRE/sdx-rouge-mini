@@ -1,4 +1,4 @@
-﻿class_name EnemyTargetMarkerOscillator extends ProcessHandler
+class_name EnemyTargetMarkerOscillator extends ProcessHandler
 
 const BASE := 0.1
 const AMPLITUDE := 0.025
@@ -11,8 +11,8 @@ func _init(target_marker: Sprite2D):
 	_target_marker = target_marker
 
 func process(delta: float) -> void:
-	var factor := _oscillate(_time, BASE, AMPLITUDE, FREQUENCY)
-	_target_marker.scale = Vector2.ONE * factor
+	var _factor := _oscillate(_time, BASE, AMPLITUDE, FREQUENCY)
+	#_target_marker.scale = Vector2.ONE * factor
 	
 	_time += delta
 
@@ -23,4 +23,3 @@ func _oscillate(
 	frequency: float = 1.0,
 ) -> float:
 	return base + amplitude * sin(t * frequency)
-
