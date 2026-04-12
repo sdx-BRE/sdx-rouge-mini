@@ -1,17 +1,10 @@
-extends Area3D
+extends BaseAoe
 
 @export var dmg := 30.0
 
 func _ready() -> void:
-	area_entered.connect(_on_area_entered)
+	super()
 	$AnimationPlayer.animation_finished.connect(_on_animation_finished)
-
-func _on_area_entered(body: Node3D) -> void:
-	var hitbox = body as DamageHitbox
-	if hitbox != null:
-		hitbox.take_dmg(dmg)
-	
-	queue_free()
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Init":
