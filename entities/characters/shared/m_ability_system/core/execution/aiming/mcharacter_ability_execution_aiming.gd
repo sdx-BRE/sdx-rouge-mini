@@ -1,13 +1,13 @@
 ﻿class_name McharacterAbilityExecutionAiming extends MCharacterAbilityExecutionBase
 
-var _targeting: McharacterAbilityExecutionAimingBase
+var _targeting: MCharacterAbilityExecutionAimingBase
 var _data: MCharacterAbilityTargeting
-var _context: McharacterAbilityExecutionAimingContext
+var _context: MCharacterAbilityExecutionAimingContext
 
 func _init(
 	exec: MCharacterAbilityExecution, 
 	data: MCharacterAbilityTargeting,
-	context: McharacterAbilityExecutionAimingContext,
+	context: MCharacterAbilityExecutionAimingContext,
 ) -> void:
 	super(exec)
 	_data = data
@@ -30,7 +30,7 @@ func cancel() -> void:
 	_targeting.cancel()
 
 func _on_target_aquired(result: McharacterAbilityAimingResult) -> void:
-	# todo: write to blackboard
+	_exec.blackboard.targeting_result = result
 	_exec.next_phase()
 
 func _on_targeting_canceled() -> void:

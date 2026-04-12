@@ -33,13 +33,13 @@ func handle_input(event: InputEvent) -> bool:
 		if event.is_action(action):
 			var state := MCharacterAbilitySystem.TriggerState.Press if event.is_pressed() else MCharacterAbilitySystem.TriggerState.Release
 			
-			_try_activate_ability(actions[action], state)
+			handle_ability_action(actions[action], state)
 			return true
 	
 	return false
 
-func execute_buffered_ability() -> void:
-	pass#_manager.execute_buffered_ability()
+func notify_animation_event() -> void:
+	_manager.handle_animation_event()
 
 func on_ability_triggered(id: int) -> void:
 	pass
@@ -65,7 +65,7 @@ enum TriggerState {
 	Release,
 }
 
-func _try_activate_ability(
+func handle_ability_action(
 	id: int,
 	state: TriggerState,
 ) -> void:
@@ -74,4 +74,4 @@ func _try_activate_ability(
 	if ability == null:
 		return
 	
-	_manager.try_activate(ability, state)
+	_manager.handle_ability_action(ability, state)

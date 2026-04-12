@@ -1,4 +1,4 @@
 ﻿class_name MCharacterAbilityTargetingMouseTarget extends MCharacterAbilityTargeting
 
-func get_strategy(context: MCharacterAbilityExecutionTargetingContext) -> MCharacterAbilityExecutionTargetingBase:
-	return MCharacterAbilityExecutionTargetingMouseTarget.new(context)
+func get_strategy(context: McharacterAbilityExecutionAimingContext) -> MCharacterAbilityExecutionAimingBase:
+	return McharacterAbilityExecutionAimingMouseTarget.new(context)

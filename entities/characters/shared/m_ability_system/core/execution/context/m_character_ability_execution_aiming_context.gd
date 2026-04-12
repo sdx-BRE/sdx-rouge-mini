@@ -1,4 +1,4 @@
-﻿class_name McharacterAbilityExecutionAimingContext extends RefCounted
+﻿class_name MCharacterAbilityExecutionAimingContext extends RefCounted
 
 var _camera_node: ThirdPersonCam
 var _ground_target_marker: Decal

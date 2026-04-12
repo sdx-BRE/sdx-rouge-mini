@@ -1,12 +1,12 @@
-﻿class_name McharacterAbilityExecutionAimingBase extends RefCounted
+﻿class_name MCharacterAbilityExecutionAimingBase extends RefCounted
 
 signal target_aquired(result: McharacterAbilityAimingResult)
 signal canceled()
 
-var _context: McharacterAbilityExecutionAimingContext
+var _context: MCharacterAbilityExecutionAimingContext
 
 func _init(
-	context: McharacterAbilityExecutionAimingContext,
+	context: MCharacterAbilityExecutionAimingContext,
 ) -> void:
 	_context = context
 

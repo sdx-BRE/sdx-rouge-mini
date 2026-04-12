@@ -1,10 +1,10 @@
 ﻿class_name MCharacterAbilityExecutionFactory extends RefCounted
 
-var _target_context: McharacterAbilityExecutionAimingContext
+var _target_context: MCharacterAbilityExecutionAimingContext
 var _setup_context: MCharacterAbilityExecutionSetupContext
 
 func _init(
-	target_context: McharacterAbilityExecutionAimingContext,
+	target_context: MCharacterAbilityExecutionAimingContext,
 	setup_context: MCharacterAbilityExecutionSetupContext,
 ) -> void:
 	_target_context = target_context

@@ -1,4 +1,4 @@
-﻿class_name McharacterAbilityExecutionAimingMouseTarget extends McharacterAbilityExecutionAimingBase
+﻿class_name McharacterAbilityExecutionAimingMouseTarget extends MCharacterAbilityExecutionAimingBase
 
 var _data: MCharacterAbilityTargetingMouseTarget
 
@@ -14,6 +14,7 @@ func handle_input(event: InputEvent) -> bool:
 		return true
 	
 	if event.is_action_pressed(_data.input_trigger):
+		_cleanup_ui_state()
 		_emit_target_aquired(McharacterAbilityAimingResultMouseTarget.new(_target))
 		return true
 	
@@ -36,5 +37,8 @@ func tick(_delta: float) -> void:
 		_target = null
 
 func cancel() -> void:
+	_cleanup_ui_state()
+
+func _cleanup_ui_state() -> void:
 	_context.use_captured_mouse()
 	_context.hide_ground_target_marker()

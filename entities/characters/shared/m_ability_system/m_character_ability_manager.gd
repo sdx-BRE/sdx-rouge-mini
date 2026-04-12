@@ -7,14 +7,21 @@ func _init(
 ) -> void:
 	_execution = execution
 
-func try_activate(
+func handle_ability_action(
 	ability: MCharacterAbility,
 	state: MCharacterAbilitySystem.TriggerState,
 ) -> void:
-	_execution.start(ability, state)
+	match state:
+		MCharacterAbilitySystem.TriggerState.Press:
+			_execution.start(ability)
+		MCharacterAbilitySystem.TriggerState.Release:
+			_execution.release()
 
 func is_handling_active_ability(event: InputEvent) -> bool:
 	return _execution.handle_input(event)
 
 func tick(delta: float) -> void:
 	_execution.tick(delta)
+
+func handle_animation_event() -> void:
+	_execution.handle_animation_event()

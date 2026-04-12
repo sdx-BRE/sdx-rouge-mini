@@ -1,4 +1,4 @@
 ﻿class_name MCharacterAbilityTargetingLocation extends MCharacterAbilityTargeting
 
-func get_strategy(context: MCharacterAbilityExecutionTargetingContext) -> MCharacterAbilityExecutionTargetingBase:
-	return MCharacterAbilityExecutionTargetingLocation.new(context)
+func get_strategy(context: McharacterAbilityExecutionAimingContext) -> MCharacterAbilityExecutionAimingBase:
+	return McharacterAbilityExecutionAimingLocation.new(context)
