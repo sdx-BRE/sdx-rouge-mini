@@ -4,6 +4,6 @@
 
 func create_handler(
 	ability: CharacterAbility,
-	context: CharacterAbilityExecutionExecuteContext,
+	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecutionExecuteEffectHandler:
 	return CharacterAbilityExecutionExecuteDashHandler.new(ability, context)

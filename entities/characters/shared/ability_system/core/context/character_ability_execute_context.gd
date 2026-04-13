@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteContext extends RefCounted
+﻿class_name CharacterAbilityExecuteContext extends RefCounted
 
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
@@ -30,7 +30,7 @@ static func create(
 	buff_anchor: Node3D,
 	wandspawn_node: Node3D,
 	controller: MageController,
-) -> CharacterAbilityExecutionExecuteContext:
+) -> CharacterAbilityExecuteContext:
 	var spawn_container := Node3D.new()
 	host.add_child(spawn_container)
 	
@@ -38,7 +38,7 @@ static func create(
 	spawn_container.name = SPAWN_CONTAINER_NAME
 	spawn_container.owner = host.get_tree().current_scene
 	
-	return CharacterAbilityExecutionExecuteContext.new(
+	return CharacterAbilityExecuteContext.new(
 		host,
 		pivot,
 		buff_anchor,

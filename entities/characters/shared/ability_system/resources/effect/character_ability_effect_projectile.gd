@@ -14,6 +14,6 @@
 
 func create_handler(
 	ability: CharacterAbility,
-	context: CharacterAbilityExecutionExecuteContext,
+	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecutionExecuteEffectHandler:
 	return CharacterAbilityExecutionExecuteProjectileHandler.new(ability, context)

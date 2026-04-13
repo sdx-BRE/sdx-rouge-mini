@@ -50,7 +50,7 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 	_homing_steer_speed = data.homing_steer_speed
 	_target = context.get_target()
 
-func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecutionExecuteContext) -> void:
+func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
 	var projectile_data := data as CharacterAbilityEffectProjectile
 	if not projectile_data:
 		return

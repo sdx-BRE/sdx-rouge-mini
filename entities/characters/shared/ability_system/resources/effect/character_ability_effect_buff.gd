@@ -5,6 +5,6 @@
 
 func create_handler(
 	ability: CharacterAbility,
-	context: CharacterAbilityExecutionExecuteContext,
+	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecutionExecuteEffectHandler:
 	return CharacterAbilityExecutionExecuteBuffHandler.new(ability, context)

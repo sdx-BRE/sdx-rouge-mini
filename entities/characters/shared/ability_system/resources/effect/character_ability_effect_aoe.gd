@@ -7,6 +7,6 @@
 
 func create_handler(
 	ability: CharacterAbility,
-	context: CharacterAbilityExecutionExecuteContext,
+	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecutionExecuteEffectHandler:
 	return CharacterAbilityExecutionExecuteAoeHandler.new(ability, context)

@@ -3,10 +3,10 @@
 signal target_aquired(result: CharacterAbilityAimingResult)
 signal canceled()
 
-var _context: CharacterAbilityExecutionAimingContext
+var _context: CharacterAbilityAimingContext
 
 func _init(
-	context: CharacterAbilityExecutionAimingContext,
+	context: CharacterAbilityAimingContext,
 ) -> void:
 	_context = context
 

@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilitySignals extends RefCounted
+﻿class_name CharacterAbilityContextSignals extends RefCounted
 
 var ability_started: Signal
 var ability_end: Signal

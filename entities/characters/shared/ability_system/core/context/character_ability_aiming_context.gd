@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionAimingContext extends RefCounted
+﻿class_name CharacterAbilityAimingContext extends RefCounted
 
 var _camera_node: ThirdPersonCam
 var _ground_target_marker: Decal

@@ -2,12 +2,12 @@
 
 var _targeting: CharacterAbilityExecutionAimingBase
 var _data: CharacterAbilityData
-var _context: CharacterAbilityExecutionAimingContext
+var _context: CharacterAbilityAimingContext
 
 func _init(
 	exec: CharacterAbilityExecution,
 	data: CharacterAbilityData,
-	context: CharacterAbilityExecutionAimingContext,
+	context: CharacterAbilityAimingContext,
 ) -> void:
 	super(exec)
 	_data = data

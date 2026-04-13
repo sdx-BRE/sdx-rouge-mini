@@ -1,14 +1,14 @@
 class_name CharacterAbilityExecutionExecute extends CharacterAbilityExecutionBase
 
 var _ability: CharacterAbility
-var _context: CharacterAbilityExecutionExecuteContext
+var _context: CharacterAbilityExecuteContext
 
 var _effect_handler: CharacterAbilityExecutionExecuteEffectHandler
 
 func _init(
 	exec: CharacterAbilityExecution,
 	ability: CharacterAbility,
-	context: CharacterAbilityExecutionExecuteContext,
+	context: CharacterAbilityExecuteContext,
 ) -> void:
 	super(exec)
 	_ability = ability

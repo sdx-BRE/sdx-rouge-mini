@@ -2,10 +2,10 @@
 
 signal visual_ready()
 
-var _context: CharacterAbilityExecutionSetupContext
+var _context: CharacterAbilitySetupContext
 
 func _init(
-	context: CharacterAbilityExecutionSetupContext,
+	context: CharacterAbilitySetupContext,
 ) -> void:
 	_context = context
 

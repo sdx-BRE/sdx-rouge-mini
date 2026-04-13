@@ -4,9 +4,9 @@ signal finished()
 signal canceled()
 
 var _ability: CharacterAbility
-var _context: CharacterAbilityExecutionExecuteContext
+var _context: CharacterAbilityExecuteContext
 
-func _init(ability: CharacterAbility, context: CharacterAbilityExecutionExecuteContext) -> void:
+func _init(ability: CharacterAbility, context: CharacterAbilityExecuteContext) -> void:
 	_ability = ability
 	_context = context
 

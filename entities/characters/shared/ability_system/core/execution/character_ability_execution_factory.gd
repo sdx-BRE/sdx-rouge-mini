@@ -1,13 +1,13 @@
 ﻿class_name CharacterAbilityExecutionFactory extends RefCounted
 
-var _target_context: CharacterAbilityExecutionAimingContext
-var _setup_context: CharacterAbilityExecutionSetupContext
-var _execute_context: CharacterAbilityExecutionExecuteContext
+var _target_context: CharacterAbilityAimingContext
+var _setup_context: CharacterAbilitySetupContext
+var _execute_context: CharacterAbilityExecuteContext
 
 func _init(
-	target_context: CharacterAbilityExecutionAimingContext,
-	setup_context: CharacterAbilityExecutionSetupContext,
-	execute_context: CharacterAbilityExecutionExecuteContext,
+	target_context: CharacterAbilityAimingContext,
+	setup_context: CharacterAbilitySetupContext,
+	execute_context: CharacterAbilityExecuteContext,
 ) -> void:
 	_target_context = target_context
 	_setup_context = setup_context

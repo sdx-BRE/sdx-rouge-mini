@@ -1,11 +1,11 @@
-﻿class_name CharacterAbilityExecutionSetupContext extends RefCounted
+﻿class_name CharacterAbilitySetupContext extends RefCounted
 
 var _anim_tree: AnimationTree
-var _signals: CharacterAbilitySignals
+var _signals: CharacterAbilityContextSignals
 
 func _init(
 	anim_tree: AnimationTree,
-	signals: CharacterAbilitySignals,
+	signals: CharacterAbilityContextSignals,
 ) -> void:
 	_anim_tree = anim_tree
 	_signals = signals

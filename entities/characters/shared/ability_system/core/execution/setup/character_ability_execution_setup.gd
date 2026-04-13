@@ -1,14 +1,14 @@
 ﻿class_name CharacterAbilityExecutionSetup extends CharacterAbilityExecutionBase
 
 var _data: CharacterAbilityData
-var _context: CharacterAbilityExecutionSetupContext
+var _context: CharacterAbilitySetupContext
 
 var _windup_handler: CharacterAbilityExecutionSetupWindupHandler
 
 func _init(
 	exec: CharacterAbilityExecution,
 	data: CharacterAbilityData,
-	context: CharacterAbilityExecutionSetupContext,
+	context: CharacterAbilitySetupContext,
 ) -> void:
 	super(exec)
 	_data = data
