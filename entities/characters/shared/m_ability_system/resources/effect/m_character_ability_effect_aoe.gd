@@ -5,5 +5,8 @@
 @export var delay: float = 0.75
 @export var radius: float = 2.0
 
-func create_handler(context: MCharacterAbilityExecutionExecuteContext) -> MCharacterAbilityExecutionExecuteEffectHandler:
-	return MCharacterAbilityExecutionExecuteAoeHandler.new(context)
+func create_handler(
+	ability: MCharacterAbility,
+	context: MCharacterAbilityExecutionExecuteContext,
+) -> MCharacterAbilityExecutionExecuteEffectHandler:
+	return MCharacterAbilityExecutionExecuteAoeHandler.new(ability, context)

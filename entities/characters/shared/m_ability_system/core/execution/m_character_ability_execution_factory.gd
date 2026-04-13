@@ -15,16 +15,16 @@ func _init(
 
 func create(
 	state: MCharacterAbilityExecution.Phase,
-	data: MCharacterAbilityData,
+	ability: MCharacterAbility,
 	exec: MCharacterAbilityExecution,
 ) -> MCharacterAbilityExecutionBase:
 	match state:
 		MCharacterAbilityExecution.Phase.Aiming:
-			return McharacterAbilityExecutionAiming.new(exec, data.targeting, _target_context)
+			return McharacterAbilityExecutionAiming.new(exec, ability._data, _target_context)
 		MCharacterAbilityExecution.Phase.Setup:
-			return MCharacterAbilityExecutionSetup.new(exec, data, _setup_context)
+			return MCharacterAbilityExecutionSetup.new(exec, ability._data, _setup_context)
 		MCharacterAbilityExecution.Phase.Execute:
-			return MCharacterAbilityExecutionExecute.new(exec, data, _execute_context)
+			return MCharacterAbilityExecutionExecute.new(exec, ability, _execute_context)
 		MCharacterAbilityExecution.Phase.Recover:
 			push_error("[MCharacterAbilityExecutionFactory.create()]: 'Recover' must be implemented!")	
 	return null

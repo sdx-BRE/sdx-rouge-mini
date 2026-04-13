@@ -38,7 +38,7 @@ func start(
 	blackboard.cleanup()
 	_ability = ability
 	_phase_idx = 0
-	_phase = _factory.create(Phase.Aiming, ability._data, self)
+	_phase = _factory.create(Phase.Aiming, ability, self)
 	
 	_phase.start()
 
@@ -74,7 +74,7 @@ func next_phase() -> void:
 		finish()
 	else:
 		_phase_idx = next_idx
-		_phase = _factory.create(PHASES[_phase_idx], _ability._data, self)
+		_phase = _factory.create(PHASES[_phase_idx], _ability, self)
 		_phase.start()
 
 func finish() -> void:

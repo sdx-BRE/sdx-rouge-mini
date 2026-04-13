@@ -41,20 +41,19 @@ func handle_input(event: InputEvent) -> bool:
 func notify_animation_event() -> void:
 	_manager.handle_animation_event()
 
-func on_ability_triggered(id: int) -> void:
-	pass
-#	var ability := _registry.get_ability(id)
-#	if ability == null:
-#		return
-#	
-#	ability.use_resources()
+func use_ability_resources(id: int) -> void:
+	var ability := _registry.get_ability(id)
+	if ability == null:
+		return
+	
+	ability.use_resources()
 
-func has_resources(_id: int) -> bool:
-#	var ability := _registry.get_ability(id)
-#	if ability == null:
-#		return false
-	return false
-#	return ability.has_resources()
+func has_ability_resources(id: int) -> bool:
+	var ability := _registry.get_ability(id)
+	if ability == null:
+		return false
+	
+	return ability.has_resources()
 
 func tick(delta: float) -> void:
 	_manager.tick(delta)
@@ -73,5 +72,9 @@ func handle_ability_action(
 	
 	if ability == null:
 		return
+	
+	if state == TriggerState.Press:
+		if not ability.check_resources():
+			return
 	
 	_manager.handle_ability_action(ability, state)

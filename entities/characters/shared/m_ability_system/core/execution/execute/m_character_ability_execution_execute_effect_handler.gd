@@ -3,9 +3,11 @@
 signal finished()
 signal canceled()
 
+var _ability: MCharacterAbility
 var _context: MCharacterAbilityExecutionExecuteContext
 
-func _init(context: MCharacterAbilityExecutionExecuteContext) -> void:
+func _init(ability: MCharacterAbility, context: MCharacterAbilityExecutionExecuteContext) -> void:
+	_ability = ability
 	_context = context
 
 func setup(_data: MCharacterAbilityEffect) -> void:
@@ -14,7 +16,7 @@ func setup(_data: MCharacterAbilityEffect) -> void:
 func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	pass
 
-func tick(_delat: float) -> void:
+func tick(_delta: float) -> void:
 	pass
 
 func release() -> void:
@@ -41,3 +43,7 @@ func _launch_ability(ability: AbilityEntity, data: MCharacterAbilityEffect) -> v
 func _when_ability(node: Node, data: MCharacterAbilityEffect, then: Callable) -> void:
 	if node is AbilityEntity:
 		then.call(node, data)
+
+func _use_resources() -> void:
+	if _ability._data.cost.type == AbilityCost.Type.Instant:
+		_ability.use_resources()

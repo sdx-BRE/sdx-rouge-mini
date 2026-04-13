@@ -1,24 +1,24 @@
 class_name MCharacterAbilityExecutionExecute extends MCharacterAbilityExecutionBase
 
-var _data: MCharacterAbilityData
+var _ability: MCharacterAbility
 var _context: MCharacterAbilityExecutionExecuteContext
 
 var _effect_handler: MCharacterAbilityExecutionExecuteEffectHandler
 
 func _init(
 	exec: MCharacterAbilityExecution,
-	data: MCharacterAbilityData,
+	ability: MCharacterAbility,
 	context: MCharacterAbilityExecutionExecuteContext,
 ) -> void:
 	super(exec)
-	_data = data
+	_ability = ability
 	_context = context
 
 func start() -> void:
-	_effect_handler = _data.effect.create_handler(_context)
+	_effect_handler = _ability._data.effect.create_handler(_ability, _context)
 	_effect_handler.finished.connect(_exec.finish)
 	
-	_effect_handler.setup(_data.effect)
+	_effect_handler.setup(_ability._data.effect)
 	_effect_handler.execute(_exec.blackboard.aiming_result)
 
 func tick(delta: float) -> void:

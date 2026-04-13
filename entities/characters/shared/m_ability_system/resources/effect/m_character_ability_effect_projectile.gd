@@ -12,5 +12,8 @@
 @export_range(-1, 1) var homing_fov := -0.5
 @export var homing_steer_speed := 2.0
 
-func create_handler(context: MCharacterAbilityExecutionExecuteContext) -> MCharacterAbilityExecutionExecuteEffectHandler:
-	return MCharacterAbilityExecutionExecuteProjectileHandler.new(context)
+func create_handler(
+	ability: MCharacterAbility,
+	context: MCharacterAbilityExecutionExecuteContext,
+) -> MCharacterAbilityExecutionExecuteEffectHandler:
+	return MCharacterAbilityExecutionExecuteProjectileHandler.new(ability, context)

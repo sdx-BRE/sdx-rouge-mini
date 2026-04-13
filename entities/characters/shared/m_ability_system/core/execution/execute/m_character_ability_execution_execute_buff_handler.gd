@@ -9,6 +9,8 @@ func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	var node := _data.scene.instantiate()
 	
 	_setup_when_ability(node, _data)
+	_use_resources()
+	
 	_context.spawn_buff(node)
 	_launch_when_ability(node, _data)
 	

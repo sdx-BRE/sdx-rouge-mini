@@ -11,3 +11,7 @@ func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 func release() -> void:
 	_context.use_normal_speed()
 	_emit_finished()
+
+func tick(delta: float) -> void:
+	if _ability._data.cost.type == AbilityCost.Type.Tick:
+		_ability.use_resources_delta(delta)

@@ -1,4 +1,7 @@
 ﻿class_name MCharacterAbilityEffect extends Resource
 
-func create_handler(context: MCharacterAbilityExecutionExecuteContext) -> MCharacterAbilityExecutionExecuteEffectHandler:
-	return MCharacterAbilityExecutionExecuteEffectHandler.new(context)
+func create_handler(
+	ability: MCharacterAbility,
+	context: MCharacterAbilityExecutionExecuteContext,
+) -> MCharacterAbilityExecutionExecuteEffectHandler:
+	return MCharacterAbilityExecutionExecuteEffectHandler.new(ability, context)
