@@ -18,7 +18,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 @export var spawn_container: Node3D
 
 @export_group("Abilities")
-@export var abilities: Array[MCharacterAbilityData]
+@export var abilities: Array[CharacterAbilityData]
 
 @export_group("Camera")
 @export var camera_node: ThirdPersonCam
@@ -44,7 +44,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 
 var _stats: EntityStats
 var _anim: MageAnimator
-var _m_ability_system: MCharacterAbilitySystem
+var _m_ability_system: CharacterAbilitySystem
 var _processor: EntityProcessor
 
 func _ready() -> void:

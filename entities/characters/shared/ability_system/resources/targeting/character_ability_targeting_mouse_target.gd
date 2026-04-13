@@ -1,0 +1,4 @@
+﻿class_name CharacterAbilityTargetingMouseTarget extends CharacterAbilityTargeting
+
+func get_strategy(context: CharacterAbilityExecutionAimingContext) -> CharacterAbilityExecutionAimingBase:
+	return CharacterAbilityExecutionAimingMouseTarget.new(context)

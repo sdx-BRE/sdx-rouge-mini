@@ -1,4 +1,0 @@
-﻿class_name MCharacterAbilityWindup extends Resource
-
-func create_handler(context: MCharacterAbilityExecutionSetupContext) -> MCharacterAbilityExecutionSetupWindupHandler:
-	return MCharacterAbilityExecutionSetupWindupHandler.new(context)

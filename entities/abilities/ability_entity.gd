@@ -12,12 +12,12 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 		var err := DbgHelper.err("AbilityEntity.setup_enemy_ability", "must be overwritten by child implementations")
 		push_error(err, " - ability: ", ability, " - context: ", context)
 
-func setup_mcharacter_ability(data: MCharacterAbilityEffect, context: MCharacterAbilityExecutionExecuteContext) -> void:
+func setup_character_ability(data: CharacterAbilityEffect, context: CharacterAbilityExecutionExecuteContext) -> void:
 	if enable_debug:
 		var err := DbgHelper.err("AbilityEntity.setup_character_ability", "must be overwritten by child implementations")
 		push_error(err, " - data: ", data, ", context: ", context)
 
-func launch_mcharacter_ability(data: MCharacterAbilityEffect, context: MCharacterAbilityExecutionExecuteContext) -> void:
+func launch_character_ability(data: CharacterAbilityEffect, context: CharacterAbilityExecutionExecuteContext) -> void:
 	if enable_debug:
 		var err := DbgHelper.err("AbilityEntity.setup_character_ability", "must be overwritten by child implementations")
 		push_error(err, " - data: ", data, ", context: ", context)

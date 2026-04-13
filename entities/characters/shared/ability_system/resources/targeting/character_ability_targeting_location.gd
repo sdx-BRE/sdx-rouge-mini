@@ -1,0 +1,4 @@
+﻿class_name CharacterAbilityTargetingLocation extends CharacterAbilityTargeting
+
+func get_strategy(context: CharacterAbilityExecutionAimingContext) -> CharacterAbilityExecutionAimingBase:
+	return CharacterAbilityExecutionAimingLocation.new(context)

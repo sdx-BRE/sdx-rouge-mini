@@ -1,0 +1,4 @@
+﻿class_name CharacterAbilityWindup extends Resource
+
+func create_handler(context: CharacterAbilityExecutionSetupContext) -> CharacterAbilityExecutionSetupWindupHandler:
+	return CharacterAbilityExecutionSetupWindupHandler.new(context)

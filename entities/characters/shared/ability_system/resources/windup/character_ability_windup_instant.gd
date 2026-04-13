@@ -1,0 +1,4 @@
+﻿class_name CharacterAbilityWindupInstant extends CharacterAbilityWindup
+
+func create_handler(context: CharacterAbilityExecutionSetupContext) -> CharacterAbilityExecutionSetupWindupHandler:
+	return CharacterAbilityExecutionSetupInstantHandler.new(context)

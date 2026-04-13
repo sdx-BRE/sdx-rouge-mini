@@ -17,11 +17,11 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 func launch_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
-func setup_mcharacter_ability(_data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
+func setup_character_ability(_data: CharacterAbilityEffect, _context: CharacterAbilityExecutionExecuteContext) -> void:
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_mcharacter_ability(data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
-	var buff_data := data as MCharacterAbilityEffectBuff
+func launch_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecutionExecuteContext) -> void:
+	var buff_data := data as CharacterAbilityEffectBuff
 	
 	var duration: float
 	if not buff_data:

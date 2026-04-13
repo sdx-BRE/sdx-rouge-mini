@@ -17,7 +17,7 @@ func start_cooldown(id: int, cooldown: float) -> void:
 func start_enemy_cooldown(ability: EnemyBaseAbility) -> void:
 	start_cooldown(ability.id, ability.cooldown)
 
-func start_mcharacter_cooldown(ability: MCharacterAbilityData) -> void:
+func start_character_cooldown(ability: CharacterAbilityData) -> void:
 	start_cooldown(ability.id, ability.cooldown)
 	cooldown_started.emit(ability.input, ability.cooldown)
 
@@ -27,5 +27,5 @@ func has_cooldown(id: int) -> bool:
 func has_enemy_cooldown(ability: EnemyBaseAbility) -> bool:
 	return _cooldowns.has(ability.id)
 
-func has_mcharacter_cooldown(ability: MCharacterAbilityData) -> bool:
+func has_character_cooldown(ability: CharacterAbilityData) -> bool:
 	return _cooldowns.has(ability.id)
