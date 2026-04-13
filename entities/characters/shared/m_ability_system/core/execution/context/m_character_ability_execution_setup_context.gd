@@ -21,6 +21,11 @@ func update_cast_point(data: McharacterAbilityWindupAnimation) -> void:
 func animate(data: McharacterAbilityWindupAnimation) -> void:
 	_anim_tree.set(data.anim_trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+func cancel_animation(data: McharacterAbilityWindupAnimation, fadeout: bool = true) -> void:
+	var oneshot_signal := AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT if fadeout \
+		else AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
+	_anim_tree.set(data.anim_trigger + "/request", oneshot_signal)
+
 func notify_casting_started() -> void:
 	_signals.ability_started.emit()
 

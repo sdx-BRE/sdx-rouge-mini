@@ -36,3 +36,6 @@ func _on_target_aquired(result: McharacterAbilityAimingResult) -> void:
 
 func _on_targeting_canceled() -> void:
 	_exec.abort()
+
+func _to_string() -> String:
+	return "McharacterAbilityExecutionAiming"

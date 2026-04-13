@@ -22,3 +22,6 @@ func tick(_delta: float) -> void:
 
 func handle_input(_event: InputEvent) -> bool:
 	return false
+
+func _to_string() -> String:
+	return "MCharacterAbilityExecutionBase"

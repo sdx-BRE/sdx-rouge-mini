@@ -30,3 +30,6 @@ func tick(_delta: float) -> void:
 
 func animation_trigger() -> void:
 	_windup_handler.trigger()
+
+func _to_string() -> String:
+	return "MCharacterAbilityExecutionSetup"
