@@ -22,6 +22,9 @@ func tick(_delta: float) -> void:
 func release() -> void:
 	pass
 
+func cancel() -> void:
+	_emit_canceled()
+
 func _emit_finished() -> void:
 	finished.emit()
 

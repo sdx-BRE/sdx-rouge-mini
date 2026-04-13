@@ -2,13 +2,16 @@ class_name MCharacterAbility extends RefCounted
 
 var _stats: EntityStats
 var _data: MCharacterAbilityData
+var _cooldown_manager: CooldownManager
 
 func _init(
 	stats: EntityStats,
 	data: MCharacterAbilityData,
+	cooldown_manager: CooldownManager,
 ) -> void:
 	_stats = stats
 	_data = data
+	_cooldown_manager = cooldown_manager
 
 func get_input() -> StringName:
 	return _data.input
@@ -35,3 +38,9 @@ func use_resources() -> void:
 func use_resources_delta(delta: float) -> void:
 	_stats.use_mana(_data.cost.mana * delta)
 	_stats.use_stamina(_data.cost.stamina * delta)
+
+func start_cooldown() -> void:
+	_cooldown_manager.start_mcharacter_cooldown(self._data)
+
+func has_cooldown() -> void:
+	_cooldown_manager.has_mcharacter_cooldown(self._data)

@@ -18,5 +18,7 @@ func execute(aiming_result: McharacterAbilityAimingResult) -> void:
 
 func _spawn_ability(node: Node3D) -> void:
 	_use_resources()
+	_ability.start_cooldown()
+	
 	_context.spawn_at_wand(node)
 	node.global_basis = _context.get_pivot_basis()

@@ -12,6 +12,8 @@ func execute(aiming_result: McharacterAbilityAimingResult) -> void:
 	aiming_result.set_projectile_target(node)
 	
 	_use_resources()
+	_ability.start_cooldown()
+	
 	_spawn_ability(node)
 	_launch_when_ability(node, _data)
 	

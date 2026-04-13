@@ -79,7 +79,6 @@ func next_phase() -> void:
 
 func finish() -> void:
 	_cleanup_member()
-	
 
 func abort() -> void:
 	_cleanup_member()

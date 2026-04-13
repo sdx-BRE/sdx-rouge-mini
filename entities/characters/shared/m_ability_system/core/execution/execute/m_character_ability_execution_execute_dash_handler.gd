@@ -7,5 +7,7 @@ func setup(data: MCharacterAbilityEffect) -> void:
 
 func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	_use_resources()
+	_ability.start_cooldown()
+	
 	_context.push_dash_motion(_data.dash_power)
 	_emit_finished()

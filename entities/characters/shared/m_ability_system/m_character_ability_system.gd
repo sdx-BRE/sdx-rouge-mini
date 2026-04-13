@@ -55,9 +55,16 @@ func has_ability_resources(id: int) -> bool:
 	
 	return ability.has_resources()
 
+func start_ability_cooldown(id: int) -> void:
+	var ability := _registry.get_ability(id)
+	if ability == null:
+		return
+	
+	ability.start_cooldown()
+
 func tick(delta: float) -> void:
 	_manager.tick(delta)
-	#_cooldown_manager.tick(delta)
+	_cooldown_manager.tick(delta)
 
 enum TriggerState {
 	Press,
@@ -74,7 +81,8 @@ func handle_ability_action(
 		return
 	
 	if state == TriggerState.Press:
-		if not ability.check_resources():
+		if not ability.check_resources() \
+			or _cooldown_manager.has_mcharacter_cooldown(ability._data):
 			return
 	
 	_manager.handle_ability_action(ability, state)

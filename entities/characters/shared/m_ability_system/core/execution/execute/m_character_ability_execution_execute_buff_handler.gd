@@ -10,6 +10,7 @@ func execute(_aiming_result: McharacterAbilityAimingResult) -> void:
 	
 	_setup_when_ability(node, _data)
 	_use_resources()
+	_ability.start_cooldown()
 	
 	_context.spawn_buff(node)
 	_launch_when_ability(node, _data)

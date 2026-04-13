@@ -14,8 +14,9 @@ var id: int
 
 func to_ability(
 	stats: EntityStats,
+	cooldown_manager: CooldownManager,
 ) -> MCharacterAbility:
-	return MCharacterAbility.new(stats, self)
+	return MCharacterAbility.new(stats, self, cooldown_manager)
 
 func _get_property_list() -> Array[Dictionary]:
 	var constants = MCharacaterAbilityId.new().get_script().get_script_constant_map()

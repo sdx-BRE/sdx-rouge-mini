@@ -17,6 +17,7 @@ func _init(
 func start() -> void:
 	_effect_handler = _ability._data.effect.create_handler(_ability, _context)
 	_effect_handler.finished.connect(_exec.finish)
+	_effect_handler.canceled.connect(_exec.abort)
 	
 	_effect_handler.setup(_ability._data.effect)
 	_effect_handler.execute(_exec.blackboard.aiming_result)
@@ -29,3 +30,6 @@ func release() -> void:
 
 func _to_string() -> String:
 	return "MCharacterAbilityExecutionExecute"
+
+func cancel() -> void:
+	_effect_handler.cancel()
