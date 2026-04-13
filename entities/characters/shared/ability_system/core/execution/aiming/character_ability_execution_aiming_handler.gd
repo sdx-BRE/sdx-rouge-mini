@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionAimingBase extends RefCounted
+﻿class_name CharacterAbilityExecutionAimingHandler extends RefCounted
 
 signal target_aquired(result: CharacterAbilityAimingResult)
 signal canceled()

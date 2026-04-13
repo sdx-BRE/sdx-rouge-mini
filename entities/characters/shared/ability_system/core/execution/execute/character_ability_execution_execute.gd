@@ -28,8 +28,8 @@ func tick(delta: float) -> void:
 func release() -> void:
 	_effect_handler.release()
 
-func _to_string() -> String:
-	return "CharacterAbilityExecutionExecute"
-
 func cancel() -> void:
 	_effect_handler.cancel()
+
+func _to_string() -> String:
+	return "CharacterAbilityExecutionExecute"

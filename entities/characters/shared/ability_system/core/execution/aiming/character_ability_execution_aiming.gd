@@ -1,6 +1,6 @@
 ﻿class_name CharacterAbilityExecutionAiming extends CharacterAbilityExecutionBase
 
-var _targeting: CharacterAbilityExecutionAimingBase
+var _targeting: CharacterAbilityExecutionAimingHandler
 var _data: CharacterAbilityData
 var _context: CharacterAbilityAimingContext
 
