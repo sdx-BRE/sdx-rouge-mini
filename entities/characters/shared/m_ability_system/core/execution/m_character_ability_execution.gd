@@ -79,6 +79,7 @@ func next_phase() -> void:
 
 func finish() -> void:
 	_cleanup_member()
+	
 
 func abort() -> void:
 	_cleanup_member()
@@ -87,6 +88,7 @@ func _cleanup_member() -> void:
 	_phase = null
 	_ability = null
 	_phase_idx = 0
+	blackboard.cleanup()
 
 func _is_active() -> bool:
 	return _ability != null and _phase != null
