@@ -55,7 +55,9 @@ static func _bootstrap_abilities(
 	)
 	var setup_context := CharacterAbilitySetupContext.new(
 		mage.anim_tree,
-		CharacterAbilityContextSignals.new(mage_signals.casting_started, mage_signals.casting_progressed, mage_signals.casting_end),
+		mage_signals.casting_started,
+		mage_signals.casting_progressed,
+		mage_signals.casting_end,
 	)
 	var execute_context := CharacterAbilityExecuteContext.create(
 		mage,

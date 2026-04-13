@@ -1,14 +1,20 @@
 ﻿class_name CharacterAbilitySetupContext extends RefCounted
 
 var _anim_tree: AnimationTree
-var _signals: CharacterAbilityContextSignals
+var _anim_started: Signal
+var _anim_progressed: Signal
+var _anim_end: Signal
 
 func _init(
 	anim_tree: AnimationTree,
-	signals: CharacterAbilityContextSignals,
+	anim_started: Signal,
+	anim_progressed: Signal,
+	anim_end: Signal,
 ) -> void:
 	_anim_tree = anim_tree
-	_signals = signals
+	_anim_started = anim_started
+	_anim_progressed = anim_progressed
+	_anim_end = anim_end
 
 func get_animation_position(data: CharacterAbilityWindupAnimation) -> float:
 	var value = _anim_tree.get(data.anim_trigger + "/current_position")
@@ -27,10 +33,10 @@ func cancel_animation(data: CharacterAbilityWindupAnimation, fadeout: bool = tru
 	_anim_tree.set(data.anim_trigger + "/request", oneshot_signal)
 
 func notify_casting_started() -> void:
-	_signals.ability_started.emit()
+	_anim_started.emit()
 
 func notify_casting_progressed(current: float, total: float) -> void:
-	_signals.ability_progressed.emit(current, total)
+	_anim_progressed.emit(current, total)
 
 func notify_casting_end() -> void:
-	_signals.ability_end.emit()
+	_anim_end.emit()
