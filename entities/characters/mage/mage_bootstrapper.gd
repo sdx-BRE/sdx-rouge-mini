@@ -9,8 +9,7 @@ static func bootstrap(
 	
 	MageBootstrapper._bootstrap_stats(mage, signals)
 	MageBootstrapper._bootstrap_anim(mage, signals)
-	#MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
-	MageBootstrapper._bootstrap_m_abilities(mage, movement_context, motor, signals)
+	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
 
 static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
@@ -33,58 +32,6 @@ static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 	mage._anim.register_signals(signals.died)
 
 static func _bootstrap_abilities(
-	mage: MageCharacter, 
-	movement_context: MageMovementContext, 
-	motor: MageMotor,
-	mage_signals: MageSignals,
-) -> void:
-	var registry := CharacterAbilityRegistry.new()
-	var signals := CharacterAbilitySignals.new(
-		mage_signals.casting_started, 
-		mage_signals.casting_progressed, 
-		mage_signals.casting_end
-	)
-	
-	var controller := MageController.new(movement_context)
-	var instant_context := InstantContext.new(
-		mage.pivot,
-		controller,
-		mage.anim_tree,
-	)
-	var phased_context := PhasedContext.create(
-		mage,
-		mage.pivot,
-		mage.buff_anchor,
-		mage.anim_tree,
-		signals,
-		mage.camera_node,
-		mage.wandspawn_node,
-		mage.ground_target_marker,
-		mage.enemy_target_marker,
-		mage.get_viewport(),
-		mage.get_world_3d(),
-	)
-	var channeled_context := ChanneledContext.new(controller)
-	var factory := CharacterAbilityFactory.new(mage._stats, phased_context, instant_context, channeled_context)
-	
-	for ability_data in mage.abilities:
-		registry.add(ability_data.id, factory.create_ability(ability_data))
-	
-	var cooldown_manager := CooldownManager.new()
-	cooldown_manager.cooldown_started.connect(mage_signals.skill_cooldown.emit)
-	
-	var channeled_handler := ChanneledAbilityHandler.new(cooldown_manager)
-	var instant_handler := InstantAbilityHandler.new(cooldown_manager)
-	var phased_handler := PhasedAbilityHandler.new(cooldown_manager)
-	
-	var manager := CharacterAbilityManager.new(channeled_handler, instant_handler, phased_handler)
-	
-	mage._ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
-	
-	motor.jumped.connect(func(): mage._ability_system.on_ability_triggered(CharacterAbilityId.JUMP))
-	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_resources(CharacterAbilityId.JUMP))
-
-static func _bootstrap_m_abilities(
 	mage: MageCharacter, 
 	movement_context: MageMovementContext, 
 	motor: MageMotor,
@@ -127,11 +74,11 @@ static func _bootstrap_m_abilities(
 	mage._m_ability_system = MCharacterAbilitySystem.new(registry, manager, cooldown_manager)
 	
 	var use_jump_ability := func():
-		mage._m_ability_system.use_ability_resources(CharacterAbilityId.JUMP)
-		mage._m_ability_system.start_ability_cooldown(CharacterAbilityId.JUMP)
+		mage._m_ability_system.use_ability_resources(MCharacaterAbilityId.JUMP)
+		mage._m_ability_system.start_ability_cooldown(MCharacaterAbilityId.JUMP)
 	
 	motor.jumped.connect(use_jump_ability)
-	motor.add_jump_gate(func() -> bool: return mage._m_ability_system.has_ability_resources(CharacterAbilityId.JUMP))
+	motor.add_jump_gate(func() -> bool: return mage._m_ability_system.has_ability_resources(MCharacaterAbilityId.JUMP))
 
 static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMovementContext, motor: MageMotor) -> void:
 	var processor := EntityProcessor.new(mage.get_viewport())

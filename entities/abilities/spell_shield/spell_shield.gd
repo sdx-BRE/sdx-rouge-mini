@@ -2,7 +2,6 @@ extends AbilityEntity
 
 const DEFAULT_DURATION := 5.0
 
-
 var _taget_collision_mask: int
 
 var _age := 0.0
@@ -11,10 +10,6 @@ var threshold := 0.5
 func _process(delta: float) -> void:
 	_age += delta
 
-func setup_character_ability(ability: CharacterAbilityData, context: CharacterAbilityContext) -> void:
-	super(ability, context)
-	_taget_collision_mask = Layers.COLLISION_ENEMY_DAMAGE
-
 func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	super(ability, context)
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
@@ -22,12 +17,8 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 func launch_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
-func launch_character_ability(ability: CharacterAbilityData, _context: CharacterAbilityContext) -> void:
-	if not ability is CharacterAbilityBuff:
-		push_error(DbgHelper.err("SpellShield.launch_character_ability", "ability arg MUST be CharacterAbilityBuff"))
-	
-	var duration := (ability as CharacterAbilityBuff).duration if ability is CharacterAbilityBuff else DEFAULT_DURATION
-	get_tree().create_timer(duration).timeout.connect(queue_free)
+func setup_mcharacter_ability(_data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
+	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
 func launch_mcharacter_ability(data: MCharacterAbilityEffect, _context: MCharacterAbilityExecutionExecuteContext) -> void:
 	var buff_data := data as MCharacterAbilityEffectBuff

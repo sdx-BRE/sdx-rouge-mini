@@ -17,24 +17,8 @@ signal skill_cooldown(action: StringName, cooldown: float)
 @export var look_at_weight := 10.0
 @export var spawn_container: Node3D
 
-#@export var dev_ability_projectile: NCharacterAbilityData;
-#@export var dev_ability_aoe: NCharacterAbilityData;
-#@export var dev_ability_sprint: NCharacterAbilityData;
-#@export var dev_ability_dash: NCharacterAbilityData;
-#@export var dev_ability_jump: NCharacterAbilityData;
-
-@export var dev_firepulse: MCharacterAbilityData;
-@export var dev_firebolt: MCharacterAbilityData;
-@export var dev_spellshield: MCharacterAbilityData;
-@export var dev_meteor: MCharacterAbilityData;
-@export var dev_sprint: MCharacterAbilityData;
-@export var dev_jump: MCharacterAbilityData;
-@export var dev_dash: MCharacterAbilityData;
-
-@export var dev_abilities: Array[MCharacterAbilityData]
-
 @export_group("Abilities")
-@export var abilities: Array[CharacterAbilityData]
+@export var abilities: Array[MCharacterAbilityData]
 
 @export_group("Camera")
 @export var camera_node: ThirdPersonCam
@@ -60,7 +44,6 @@ signal skill_cooldown(action: StringName, cooldown: float)
 
 var _stats: EntityStats
 var _anim: MageAnimator
-var _ability_system: CharacterAbilitySystem
 var _m_ability_system: MCharacterAbilitySystem
 var _processor: EntityProcessor
 
