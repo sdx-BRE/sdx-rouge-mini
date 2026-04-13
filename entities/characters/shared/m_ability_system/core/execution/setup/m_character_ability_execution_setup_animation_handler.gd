@@ -21,4 +21,5 @@ func trigger() -> void:
 	_emit_visual_ready()
 
 func cancel() -> void:
+	_context.cancel_animation(_data)
 	_context.notify_casting_end()

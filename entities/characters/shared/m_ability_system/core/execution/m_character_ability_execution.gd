@@ -32,11 +32,11 @@ func _init(
 func start(
 	ability: MCharacterAbility,
 ) -> void:
-	_ability = ability
-	
 	if _phase != null:
 		_phase.cancel()
 	
+	blackboard.cleanup()
+	_ability = ability
 	_phase_idx = 0
 	_phase = _factory.create(Phase.Aiming, ability._data, self)
 	
