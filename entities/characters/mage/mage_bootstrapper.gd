@@ -9,7 +9,8 @@ static func bootstrap(
 	
 	MageBootstrapper._bootstrap_stats(mage, signals)
 	MageBootstrapper._bootstrap_anim(mage, signals)
-	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
+	#MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
+	MageBootstrapper._bootstrap_m_abilities(mage, movement_context, motor, signals)
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
 
 static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
@@ -44,10 +45,10 @@ static func _bootstrap_abilities(
 		mage_signals.casting_end
 	)
 	
-	mage._controller = MageController.new(movement_context)
+	var controller := MageController.new(movement_context)
 	var instant_context := InstantContext.new(
 		mage.pivot,
-		mage._controller,
+		controller,
 		mage.anim_tree,
 	)
 	var phased_context := PhasedContext.create(
@@ -63,7 +64,7 @@ static func _bootstrap_abilities(
 		mage.get_viewport(),
 		mage.get_world_3d(),
 	)
-	var channeled_context := ChanneledContext.new(mage._controller)
+	var channeled_context := ChanneledContext.new(controller)
 	var factory := CharacterAbilityFactory.new(mage._stats, phased_context, instant_context, channeled_context)
 	
 	for ability_data in mage.abilities:
@@ -83,13 +84,53 @@ static func _bootstrap_abilities(
 	motor.jumped.connect(func(): mage._ability_system.on_ability_triggered(CharacterAbilityId.JUMP))
 	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_resources(CharacterAbilityId.JUMP))
 
+static func _bootstrap_m_abilities(
+	mage: MageCharacter, 
+	movement_context: MageMovementContext, 
+	motor: MageMotor,
+	mage_signals: MageSignals,
+) -> void:
+	var registry := MCharacterAbilityRegistry.new()
+	for ability_data in mage.dev_abilities:
+		registry.register(ability_data, mage._stats)
+	
+	var controller := MageController.new(movement_context)
+	
+	var target_context := MCharacterAbilityExecutionAimingContext.new(
+		mage.camera_node,
+		mage.ground_target_marker,
+		mage.enemy_target_marker,
+		mage.get_viewport(),
+		mage.get_world_3d(),
+	)
+	var setup_context := MCharacterAbilityExecutionSetupContext.new(
+		mage.anim_tree,
+		CharacterAbilitySignals.new(mage_signals.casting_started, mage_signals.casting_progressed, mage_signals.casting_end),
+	)
+	var execute_context := MCharacterAbilityExecutionExecuteContext.create(
+		mage,
+		mage.pivot,
+		mage.buff_anchor,
+		mage.wandspawn_node,
+		controller,
+	)
+	
+	var factory := MCharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context)
+	var blackboard := MCharacterAbilityExecutionBlackboard.new()
+	
+	var execution := MCharacterAbilityExecution.new(blackboard, factory)
+	var manager := MCharacterAbilityManager.new(execution)
+	var cooldown_manager := CooldownManager.new()
+	
+	mage._m_ability_system = MCharacterAbilitySystem.new(registry, manager, cooldown_manager)
+
 static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMovementContext, motor: MageMotor) -> void:
 	var processor := EntityProcessor.new(mage.get_viewport())
 	var kinematics := MageKinematics.new(movement_context)
 	
 	_bootstrap_process_handler(processor, mage, movement_context)
 	_bootstrap_physic_process_handler(processor, movement_context, kinematics, motor, mage._anim)
-	_bootstrap_input_handler(processor, kinematics, mage._ability_system)
+	_bootstrap_input_handler(processor, kinematics, mage._m_ability_system)
 	
 	mage._processor = processor
 
@@ -99,7 +140,7 @@ static func _bootstrap_process_handler(
 	movement_context: MageMovementContext,
 ) -> void:
 	processor.add_process_handler(MageResourceGenerator.from_data(mage._stats, mage.data))
-	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._ability_system))
+	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._m_ability_system))
 	
 	var airbourne_observer := ObserverAirbourne.new(mage)
 	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land))
@@ -122,7 +163,7 @@ static func _bootstrap_physic_process_handler(
 static func _bootstrap_input_handler(
 	processor: EntityProcessor,
 	kinematics: MageKinematics,
-	ability_system: CharacterAbilitySystem,
+	ability_system: MCharacterAbilitySystem,
 ) -> void:
 	processor.add_input_handler(MageInputHandler.new(ability_system, kinematics))
 

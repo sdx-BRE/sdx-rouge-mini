@@ -61,8 +61,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 var _stats: EntityStats
 var _anim: MageAnimator
 var _ability_system: CharacterAbilitySystem
-var _controller: MageController
-var _dev_ability_system: MCharacterAbilitySystem
+var _m_ability_system: MCharacterAbilitySystem
 var _processor: EntityProcessor
 
 func _ready() -> void:
@@ -78,49 +77,6 @@ func _ready() -> void:
 		skill_cooldown,
 	)
 	MageBootstrapper.bootstrap(self, signals)
-	
-	var registry := MCharacterAbilityRegistry.new()
-	for ability_data in dev_abilities:
-		registry.add(ability_data.id, ability_data.to_ability())
-		
-	#registry.add(dev_firepulse.id, dev_firepulse.to_ability())
-	#registry.add(dev_firebolt.id, dev_firebolt.to_ability())
-	#registry.add(dev_spellshield.id, dev_spellshield.to_ability())
-	#registry.add(dev_meteor.id, dev_meteor.to_ability())
-	#registry.add(dev_sprint.id, dev_sprint.to_ability())
-	#registry.add(dev_jump.id, dev_jump.to_ability())
-	#registry.add(dev_dash.id, dev_dash.to_ability())
-	
-	var target_context := MCharacterAbilityExecutionAimingContext.new(
-		camera_node,
-		ground_target_marker,
-		enemy_target_marker,
-		get_viewport(),
-		get_world_3d(),
-	)
-	var setup_context := MCharacterAbilityExecutionSetupContext.new(
-		anim_tree,
-		CharacterAbilitySignals.new(casting_started, casting_progressed, casting_end),
-	)
-	var execute_context := MCharacterAbilityExecutionExecuteContext.create(
-		self,
-		pivot,
-		buff_anchor,
-		wandspawn_node,
-		_controller,
-	)
-	
-	var factory := MCharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context)
-	var blackboard := MCharacterAbilityExecutionBlackboard.new()
-	
-	var execution := MCharacterAbilityExecution.new(blackboard, factory)
-	var manager := MCharacterAbilityManager.new(execution)
-	var cooldown_manager := CooldownManager.new()
-	
-	_dev_ability_system = MCharacterAbilitySystem.new(registry, manager, cooldown_manager)
-	
-	#var loadout := NCharacterAbilityLoadout.new(registry, _stats)
-	#loadout.grant_ability(dev_ability_projectile)
 
 func _on_dying() -> void:
 	dying.emit()
@@ -137,11 +93,9 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	_processor.handle_unhandled_input(event)
-	_dev_ability_system.handle_input(event)
 
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
-	_dev_ability_system.tick(delta)
 #endregion
 
 func take_dmg(value: float) -> void:
@@ -154,7 +108,7 @@ func take_dmg(value: float) -> void:
 
 func execute_cast() -> void:
 	#_ability_system.execute_buffered_ability()
-	_dev_ability_system.notify_animation_event()
+	_m_ability_system.notify_animation_event()
 
 func _enable_processing() -> void: _set_processing(true)
 func _disable_processing() -> void: _set_processing(false)
