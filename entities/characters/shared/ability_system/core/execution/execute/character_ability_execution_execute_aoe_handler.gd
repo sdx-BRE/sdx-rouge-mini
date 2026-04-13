@@ -11,7 +11,7 @@ func execute(aiming_result: CharacterAbilityAimingResult) -> void:
 	_setup_when_ability(node, _data)
 	_spawn_ability(node)
 	
-	aiming_result.set_aoe_position(node)
+	aiming_result.set_aoe_position(node, _context)
 	_launch_when_ability(node, _data)
 	
 	_emit_finished()
