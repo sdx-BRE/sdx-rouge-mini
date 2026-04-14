@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionSetupAnimationHandler extends CharacterAbilityExecutionSetupWindupHandler
+﻿class_name CharacterAbilitySetupAnimationHandler extends CharacterAbilitySetupWindupHandler
 
 var _data: CharacterAbilityWindupAnimation
 

@@ -1,9 +1,9 @@
-﻿class_name CharacterAbilityExecutionSetup extends CharacterAbilityExecutionPhase
+﻿class_name CharacterAbilitySetupPhase extends CharacterAbilityExecutionPhase
 
 var _data: CharacterAbilityData
 var _context: CharacterAbilitySetupContext
 
-var _windup_handler: CharacterAbilityExecutionSetupWindupHandler
+var _windup_handler: CharacterAbilitySetupWindupHandler
 
 func _init(
 	exec: CharacterAbilityExecution,

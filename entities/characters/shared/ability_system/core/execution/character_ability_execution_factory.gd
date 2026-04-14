@@ -22,7 +22,7 @@ func create(
 		CharacterAbilityExecution.Phase.Aiming:
 			return CharacterAbilityExecutionAiming.new(exec, ability._data, _target_context)
 		CharacterAbilityExecution.Phase.Setup:
-			return CharacterAbilityExecutionSetup.new(exec, ability._data, _setup_context)
+			return CharacterAbilitySetupPhase.new(exec, ability._data, _setup_context)
 		CharacterAbilityExecution.Phase.Execute:
 			return CharacterAbilityExecutionExecute.new(exec, ability, _execute_context)
 		CharacterAbilityExecution.Phase.Recover:

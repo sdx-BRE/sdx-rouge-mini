@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionSetupWindupHandler extends RefCounted
+﻿class_name CharacterAbilitySetupWindupHandler extends RefCounted
 
 signal visual_ready()
 
