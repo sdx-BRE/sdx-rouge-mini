@@ -49,6 +49,8 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 	_homing_fov = data.homing_fov
 	_homing_steer_speed = data.homing_steer_speed
 	_target = context.get_target()
+	
+	collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
 func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
 	var projectile_data := data as CharacterAbilityEffectProjectile
@@ -61,6 +63,8 @@ func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAb
 	_homing = projectile_data.homing
 	_homing_fov = projectile_data.homing_fov
 	_homing_steer_speed = projectile_data.homing_steer_speed
+	
+	collision_mask = Layers.COLLISION_ENEMY_DAMAGE
 
 func _on_area_entered(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
