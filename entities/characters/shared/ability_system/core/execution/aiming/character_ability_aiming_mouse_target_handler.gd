@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionAimingMouseTarget extends CharacterAbilityExecutionAimingHandler
+﻿class_name CharacterAbilityAimingMouseTargetHandler extends CharacterAbilityAimingHandler
 
 var _data: CharacterAbilityTargetingMouseTarget
 

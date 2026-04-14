@@ -1,7 +1,7 @@
 ﻿class_name CharacterAbilityTriggerCharged extends CharacterAbilityTrigger
 
 func create_handler(
-	exec: CharacterAbilityExecution,
-	effect: CharacterAbilityExecutionExecuteEffectHandler,
-) -> CharacterAbilityTriggerHandler:
-	return CharacterAbilityTriggerChargedHandler.new(exec, effect)
+	exec: CharacterAbilityExecuter,
+	effect: CharacterAbilityExecuteEffectHandler,
+) -> CharacterAbilityExecuteTriggerHandler:
+	return CharacterAbilityExecuteTriggerChargedHandler.new(exec, effect)

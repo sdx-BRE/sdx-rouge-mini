@@ -1,12 +1,12 @@
-class_name CharacterAbilityExecutionExecute extends CharacterAbilityExecuter
+class_name CharacterAbilityExecutePhase extends CharacterAbilityExecutionPhase
 
 var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext
 
-var _trigger_handler: CharacterAbilityTriggerHandler
+var _trigger_handler: CharacterAbilityExecuteTriggerHandler
 
 func _init(
-	exec: CharacterAbilityExecution,
+	exec: CharacterAbilityExecuter,
 	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
 ) -> void:

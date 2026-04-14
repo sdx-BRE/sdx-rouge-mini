@@ -1,9 +1,9 @@
 ﻿class_name CharacterAbilityManager extends RefCounted
 
-var _execution: CharacterAbilityExecution
+var _execution: CharacterAbilityExecuter
 
 func _init(
-	execution: CharacterAbilityExecution
+	execution: CharacterAbilityExecuter
 ) -> void:
 	_execution = execution
 

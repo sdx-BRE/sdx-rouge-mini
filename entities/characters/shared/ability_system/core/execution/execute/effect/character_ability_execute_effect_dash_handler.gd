@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteDashHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectDashHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectDash
 

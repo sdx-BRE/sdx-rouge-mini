@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteProjectileHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectProjectileHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectProjectile
 

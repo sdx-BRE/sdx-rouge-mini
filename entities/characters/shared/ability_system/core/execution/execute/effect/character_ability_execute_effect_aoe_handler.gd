@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteAoeHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectAoeHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectAoe
 

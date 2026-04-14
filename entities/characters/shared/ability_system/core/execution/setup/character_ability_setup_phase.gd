@@ -6,7 +6,7 @@ var _context: CharacterAbilitySetupContext
 var _windup_handler: CharacterAbilitySetupWindupHandler
 
 func _init(
-	exec: CharacterAbilityExecution,
+	exec: CharacterAbilityExecuter,
 	data: CharacterAbilityData,
 	context: CharacterAbilitySetupContext,
 ) -> void:

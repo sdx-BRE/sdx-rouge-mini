@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionAimingLocation extends CharacterAbilityExecutionAimingHandler
+﻿class_name CharacterAbilityAimingLocationHandler extends CharacterAbilityAimingHandler
 
 var _data: CharacterAbilityTargetingLocation
 var _aim_pos := Vector3.ZERO

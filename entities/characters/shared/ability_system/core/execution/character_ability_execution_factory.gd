@@ -14,17 +14,17 @@ func _init(
 	_execute_context = execute_context
 
 func create(
-	state: CharacterAbilityExecution.Phase,
+	state: CharacterAbilityExecuter.Phase,
 	ability: CharacterAbility,
-	exec: CharacterAbilityExecution,
+	exec: CharacterAbilityExecuter,
 ) -> CharacterAbilityExecutionPhase:
 	match state:
-		CharacterAbilityExecution.Phase.Aiming:
-			return CharacterAbilityExecutionAiming.new(exec, ability._data, _target_context)
-		CharacterAbilityExecution.Phase.Setup:
+		CharacterAbilityExecuter.Phase.Aiming:
+			return CharacterAbilityAimingPhase.new(exec, ability._data, _target_context)
+		CharacterAbilityExecuter.Phase.Setup:
 			return CharacterAbilitySetupPhase.new(exec, ability._data, _setup_context)
-		CharacterAbilityExecution.Phase.Execute:
-			return CharacterAbilityExecutionExecute.new(exec, ability, _execute_context)
-		CharacterAbilityExecution.Phase.Recover:
+		CharacterAbilityExecuter.Phase.Execute:
+			return CharacterAbilityExecutePhase.new(exec, ability, _execute_context)
+		CharacterAbilityExecuter.Phase.Recover:
 			push_error("[CharacterAbilityExecutionFactory.create()]: 'Recover' must be implemented!")	
 	return null

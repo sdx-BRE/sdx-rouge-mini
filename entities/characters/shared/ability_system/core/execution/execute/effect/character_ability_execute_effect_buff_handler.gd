@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteBuffHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectBuffHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectBuff
 

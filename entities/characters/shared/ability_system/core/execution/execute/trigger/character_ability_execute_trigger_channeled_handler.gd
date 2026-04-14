@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityTriggerChanneledHandler extends CharacterAbilityTriggerHandler
+﻿class_name CharacterAbilityExecuteTriggerChanneledHandler extends CharacterAbilityExecuteTriggerHandler
 
 func start() -> void:
 	_effect.execute(_exec.blackboard.aiming_result)

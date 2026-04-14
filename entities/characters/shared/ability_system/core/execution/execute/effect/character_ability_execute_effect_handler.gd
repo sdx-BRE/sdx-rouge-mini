@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteEffectHandler extends RefCounted
+﻿class_name CharacterAbilityExecuteEffectHandler extends RefCounted
 
 var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext

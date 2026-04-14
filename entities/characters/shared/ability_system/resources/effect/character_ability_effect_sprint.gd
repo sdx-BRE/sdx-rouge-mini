@@ -3,5 +3,5 @@
 func create_handler(
 	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
-) -> CharacterAbilityExecutionExecuteEffectHandler:
-	return CharacterAbilityExecutionExecuteSprintHandler.new(ability, context)
+) -> CharacterAbilityExecuteEffectHandler:
+	return CharacterAbilityExecuteEffectSprintHandler.new(ability, context)

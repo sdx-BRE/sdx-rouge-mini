@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteJumpHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectJumpHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectJump
 

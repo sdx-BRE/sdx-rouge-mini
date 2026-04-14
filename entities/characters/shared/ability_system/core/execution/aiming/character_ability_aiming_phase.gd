@@ -1,11 +1,11 @@
-﻿class_name CharacterAbilityExecutionAiming extends CharacterAbilityExecutionPhase
+﻿class_name CharacterAbilityAimingPhase extends CharacterAbilityExecutionPhase
 
-var _targeting: CharacterAbilityExecutionAimingHandler
+var _targeting: CharacterAbilityAimingHandler
 var _data: CharacterAbilityData
 var _context: CharacterAbilityAimingContext
 
 func _init(
-	exec: CharacterAbilityExecution,
+	exec: CharacterAbilityExecuter,
 	data: CharacterAbilityData,
 	context: CharacterAbilityAimingContext,
 ) -> void:

@@ -70,7 +70,7 @@ static func _bootstrap_abilities(
 	var factory := CharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context)
 	var blackboard := CharacterAbilityExecutionBlackboard.new()
 	
-	var execution := CharacterAbilityExecution.new(blackboard, factory)
+	var execution := CharacterAbilityExecuter.new(blackboard, factory)
 	var manager := CharacterAbilityManager.new(execution)
 	
 	mage._m_ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)

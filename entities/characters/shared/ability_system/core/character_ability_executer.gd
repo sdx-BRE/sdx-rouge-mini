@@ -1,4 +1,4 @@
-class_name CharacterAbilityExecution extends RefCounted
+class_name CharacterAbilityExecuter extends RefCounted
 
 const PHASES: Array[Phase] = [
 	Phase.Aiming,

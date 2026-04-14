@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionExecuteSprintHandler extends CharacterAbilityExecutionExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteEffectSprintHandler extends CharacterAbilityExecuteEffectHandler
 
 var _data: CharacterAbilityEffectSprint
 
