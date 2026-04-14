@@ -16,18 +16,18 @@ func _init(
 	_anim_progressed = anim_progressed
 	_anim_end = anim_end
 
-func get_animation_position(data: CharacterAbilityWindupAnimation) -> float:
+func get_animation_position(data: CharacterAbilityWindupOneshotAnimation) -> float:
 	var value = _anim_tree.get(data.anim_trigger + "/current_position")
 	
 	return 0.0 if value == null else value
 
-func update_cast_point(data: CharacterAbilityWindupAnimation) -> void:
+func update_cast_point(data: CharacterAbilityWindupOneshotAnimation) -> void:
 	data.update_cast_point(_anim_tree)
 
-func animate(data: CharacterAbilityWindupAnimation) -> void:
+func animate(data: CharacterAbilityWindupOneshotAnimation) -> void:
 	_anim_tree.set(data.anim_trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
-func cancel_animation(data: CharacterAbilityWindupAnimation, fadeout: bool = true) -> void:
+func cancel_animation(data: CharacterAbilityWindupOneshotAnimation, fadeout: bool = true) -> void:
 	var oneshot_signal := AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT if fadeout \
 		else AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	_anim_tree.set(data.anim_trigger + "/request", oneshot_signal)

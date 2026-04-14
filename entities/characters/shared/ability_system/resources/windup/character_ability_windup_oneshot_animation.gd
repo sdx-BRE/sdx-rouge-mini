@@ -1,13 +1,6 @@
-﻿class_name CharacterAbilityWindupAnimation extends CharacterAbilityWindup
+﻿class_name CharacterAbilityWindupOneshotAnimation extends CharacterAbilityWindup
 
-enum Type {
-	Oneshot,
-	Travel,
-}
-
-@export var type: Type = Type.Oneshot
 @export var anim_trigger: StringName = &""
-@export var anim_end: StringName = &""
 @export var anim_name: StringName = &""
 @export var call_method_track_name: StringName = &"execute_cast"
 
