@@ -7,7 +7,7 @@ func setup(data: CharacterAbilityWindup) -> void:
 
 func start() -> void:
 	_context.update_cast_point(_data)
-	_context.animate(_data)
+	_context.oneshot(_data.anim_trigger)
 	_context.notify_casting_started()
 
 func tick() -> void:
@@ -21,5 +21,5 @@ func trigger() -> void:
 	_emit_visual_ready()
 
 func cancel() -> void:
-	_context.cancel_animation(_data)
+	_context.cancel_oneshot(_data.anim_trigger)
 	_context.notify_casting_end()

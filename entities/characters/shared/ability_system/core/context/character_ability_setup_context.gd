@@ -24,13 +24,13 @@ func get_animation_position(data: CharacterAbilityWindupOneshotAnimation) -> flo
 func update_cast_point(data: CharacterAbilityWindupOneshotAnimation) -> void:
 	data.update_cast_point(_anim_tree)
 
-func animate(data: CharacterAbilityWindupOneshotAnimation) -> void:
-	_anim_tree.set(data.anim_trigger + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+func oneshot(param: StringName) -> void:
+	_anim_tree.set(param + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
-func cancel_animation(data: CharacterAbilityWindupOneshotAnimation, fadeout: bool = true) -> void:
+func cancel_oneshot(param: StringName, fadeout: bool = true) -> void:
 	var oneshot_signal := AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT if fadeout \
 		else AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
-	_anim_tree.set(data.anim_trigger + "/request", oneshot_signal)
+	_anim_tree.set(param + "/request", oneshot_signal)
 
 func notify_casting_started() -> void:
 	_anim_started.emit()

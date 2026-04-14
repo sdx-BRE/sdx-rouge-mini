@@ -15,7 +15,7 @@ func _init(
 	_context = context
 
 func start() -> void:
-	_windup_handler = _data.windup.create_handler(_context)
+	_windup_handler = _data.windup.create_setup_handler(_context)
 	_windup_handler.setup(_data.windup)
 	
 	_windup_handler.visual_ready.connect(_exec.next_phase)
