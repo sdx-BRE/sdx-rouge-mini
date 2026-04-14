@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityEffectProjectile extends CharacterAbilityEffect
+﻿class_name CharacterAbilityDeliveryProjectile extends CharacterAbilityDelivery
 
 @export var scene: PackedScene
 
@@ -15,5 +15,5 @@
 func create_handler(
 	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
-) -> CharacterAbilityExecuteEffectHandler:
-	return CharacterAbilityExecuteEffectProjectileHandler.new(ability, context)
+) -> CharacterAbilityExecuteDeliveryHandler:
+	return CharacterAbilityExecuteDeliveryProjectileHandler.new(ability, context)

@@ -1,8 +1,8 @@
-﻿class_name CharacterAbilityExecuteEffectSprintHandler extends CharacterAbilityExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteDeliverySprintHandler extends CharacterAbilityExecuteDeliveryHandler
 
-var _data: CharacterAbilityEffectSprint
+var _data: CharacterAbilityDeliverySprint
 
-func setup(data: CharacterAbilityEffect) -> void:
+func setup(data: CharacterAbilityDelivery) -> void:
 	_data = data
 
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:

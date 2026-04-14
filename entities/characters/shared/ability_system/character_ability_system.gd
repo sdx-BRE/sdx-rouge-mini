@@ -4,7 +4,7 @@
 ##		1. Targeting (None, Mouse Target, Location, Direction)
 ##		2. Trigger (Normal, Channeled, Charged)
 ##		3. Windup (Animated, Instant)
-##		4. Execution/effect (Projectile, AoE, Buff)
+##		4. Execution/delivery (Projectile, AoE, Buff)
 ## 
 class_name CharacterAbilitySystem extends RefCounted
 

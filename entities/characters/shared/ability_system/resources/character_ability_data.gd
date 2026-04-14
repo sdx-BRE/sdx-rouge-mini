@@ -6,7 +6,7 @@ class_name CharacterAbilityData extends Resource
 @export var targeting: CharacterAbilityTargeting
 @export var trigger: CharacterAbilityTrigger
 @export var windup: CharacterAbilityWindup
-@export var effect: CharacterAbilityEffect
+@export var delivery: CharacterAbilityDelivery
 
 @export_enum("attack", "dash", "jump", "sprint", "skill_1", "skill_2", "skill_3", "dbg") var input: String
 

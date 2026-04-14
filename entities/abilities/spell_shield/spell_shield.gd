@@ -17,15 +17,15 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 func launch_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
-func setup_character_ability(_data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
+func setup_character_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
-	var buff_data := data as CharacterAbilityEffectBuff
+func launch_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	var buff_data := data as CharacterAbilityDeliveryBuff
 	
 	var duration: float
 	if not buff_data:
-		push_error(DbgHelper.err("SpellShield.launch_character_ability", "data arg MUST be CharacterAbilityEffect"))
+		push_error(DbgHelper.err("SpellShield.launch_character_ability", "data arg MUST be CharacterAbilityDelivery"))
 		duration = DEFAULT_DURATION
 	else:
 		duration = buff_data.duration

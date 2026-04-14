@@ -1,8 +1,8 @@
-﻿class_name CharacterAbilityExecuteEffectBuffHandler extends CharacterAbilityExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteDeliveryBuffHandler extends CharacterAbilityExecuteDeliveryHandler
 
-var _data: CharacterAbilityEffectBuff
+var _data: CharacterAbilityDeliveryBuff
 
-func setup(data: CharacterAbilityEffect) -> void:
+func setup(data: CharacterAbilityDelivery) -> void:
 	_data = data
 
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:

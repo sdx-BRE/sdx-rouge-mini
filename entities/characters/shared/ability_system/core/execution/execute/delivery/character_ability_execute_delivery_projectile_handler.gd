@@ -1,8 +1,8 @@
-﻿class_name CharacterAbilityExecuteEffectProjectileHandler extends CharacterAbilityExecuteEffectHandler
+﻿class_name CharacterAbilityExecuteDeliveryProjectileHandler extends CharacterAbilityExecuteDeliveryHandler
 
-var _data: CharacterAbilityEffectProjectile
+var _data: CharacterAbilityDeliveryProjectile
 
-func setup(data: CharacterAbilityEffect) -> void:
+func setup(data: CharacterAbilityDelivery) -> void:
 	_data = data
 
 func execute(aiming_result: CharacterAbilityAimingResult) -> void:

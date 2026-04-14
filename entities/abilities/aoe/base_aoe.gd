@@ -28,10 +28,10 @@ func setup_enemy_ability(ability: EnemyCastAbility, _context: EnemyAbilityContex
 	_delay = data.delay
 	_radius = data.radius
 
-func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
-	var aoe_data := data as CharacterAbilityEffectAoe
+func setup_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	var aoe_data := data as CharacterAbilityDeliveryAoe
 	if not aoe_data:
-		push_error(_err("setup()", "ability arg MUST be CharacterAbilityEffect"))
+		push_error(_err("setup()", "ability arg MUST be CharacterAbilityDelivery"))
 		return
 	_damage = aoe_data.damage
 	_delay = aoe_data.delay

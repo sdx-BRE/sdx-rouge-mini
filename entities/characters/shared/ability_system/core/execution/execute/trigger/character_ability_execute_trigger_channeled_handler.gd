@@ -4,13 +4,13 @@ func start() -> void:
 	if _exec.blackboard.is_released:
 		_exec.finish()
 		return
-	_effect.execute(_exec.blackboard.aiming_result)
+	_delivery.execute(_exec.blackboard.aiming_result)
 
 func tick(_delta: float) -> void:
 	if _exec.blackboard.is_released:
 		_exec.finish()
 		return
-	_effect.execute(_exec.blackboard.aiming_result)
+	_delivery.execute(_exec.blackboard.aiming_result)
 
 func release() -> void:
 	_exec.finish()

@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityEffectAoe extends CharacterAbilityEffect
+﻿class_name CharacterAbilityDeliveryAoe extends CharacterAbilityDelivery
 
 @export var scene: PackedScene
 @export var damage: float = 0.0
@@ -8,5 +8,5 @@
 func create_handler(
 	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
-) -> CharacterAbilityExecuteEffectHandler:
-	return CharacterAbilityExecuteEffectAoeHandler.new(ability, context)
+) -> CharacterAbilityExecuteDeliveryHandler:
+	return CharacterAbilityExecuteDeliveryAoeHandler.new(ability, context)

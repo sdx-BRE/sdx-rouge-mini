@@ -1,14 +1,14 @@
 ﻿class_name CharacterAbilityExecuteTriggerHandler extends RefCounted
 
 var _exec: CharacterAbilityExecuter
-var _effect: CharacterAbilityExecuteEffectHandler
+var _delivery: CharacterAbilityExecuteDeliveryHandler
 
 func _init(
 	exec: CharacterAbilityExecuter,
-	effect: CharacterAbilityExecuteEffectHandler,
+	delivery: CharacterAbilityExecuteDeliveryHandler,
 ) -> void:
 	_exec = exec
-	_effect = effect
+	_delivery = delivery
 
 func setup(_data: CharacterAbilityTrigger) -> void:
 	pass

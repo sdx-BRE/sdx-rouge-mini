@@ -15,10 +15,10 @@ func _init(
 	_context = context
 
 func start() -> void:
-	var effect_handler := _ability._data.effect.create_handler(_ability, _context)
-	effect_handler.setup(_ability._data.effect)
+	var delivery_handler := _ability._data.delivery.create_handler(_ability, _context)
+	delivery_handler.setup(_ability._data.delivery)
 	
-	_trigger_handler = _ability._data.trigger.create_handler(_exec, effect_handler)
+	_trigger_handler = _ability._data.trigger.create_handler(_exec, delivery_handler)
 	_trigger_handler.setup(_ability._data.trigger)
 	
 	_trigger_handler.start()

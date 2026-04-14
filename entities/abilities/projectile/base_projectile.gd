@@ -52,8 +52,8 @@ func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContext
 	
 	collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func setup_character_ability(data: CharacterAbilityEffect, _context: CharacterAbilityExecuteContext) -> void:
-	var projectile_data := data as CharacterAbilityEffectProjectile
+func setup_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	var projectile_data := data as CharacterAbilityDeliveryProjectile
 	if not projectile_data:
 		return
 	

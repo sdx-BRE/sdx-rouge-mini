@@ -2,6 +2,6 @@
 
 func create_handler(
 	exec: CharacterAbilityExecuter,
-	effect: CharacterAbilityExecuteEffectHandler,
+	delivery: CharacterAbilityExecuteDeliveryHandler,
 ) -> CharacterAbilityExecuteTriggerHandler:
-	return CharacterAbilityExecuteTriggerChargedHandler.new(exec, effect)
+	return CharacterAbilityExecuteTriggerChargedHandler.new(exec, delivery)
