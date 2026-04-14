@@ -1,7 +1,6 @@
 ﻿class_name CharacterAbilityTrigger extends Resource
 
 func create_handler(
-	exec: CharacterAbilityExecuter,
-	delivery: CharacterAbilityExecuteDeliveryHandler,
+	blackboard: CharacterAbilityExecutionBlackboard,
 ) -> CharacterAbilityExecuteTriggerHandler:
-	return CharacterAbilityExecuteTriggerHandler.new(exec, delivery)
+	return CharacterAbilityExecuteTriggerHandler.new(blackboard)

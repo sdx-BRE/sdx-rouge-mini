@@ -9,8 +9,7 @@ func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	var node := _data.scene.instantiate()
 	
 	_setup_when_ability(node, _data)
-	_use_resources()
-	_ability.start_cooldown()
+	_emit_cost_required()
 	
 	_context.spawn_buff(node)
 	_launch_when_ability(node, _data)

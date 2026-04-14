@@ -13,7 +13,6 @@
 @export var homing_steer_speed := 2.0
 
 func create_handler(
-	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecuteDeliveryHandler:
-	return CharacterAbilityExecuteDeliveryProjectileHandler.new(ability, context)
+	return CharacterAbilityExecuteDeliveryProjectileHandler.new(context)

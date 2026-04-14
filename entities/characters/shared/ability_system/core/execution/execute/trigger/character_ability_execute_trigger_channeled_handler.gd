@@ -1,16 +1,16 @@
 ﻿class_name CharacterAbilityExecuteTriggerChanneledHandler extends CharacterAbilityExecuteTriggerHandler
 
 func start() -> void:
-	if _exec.blackboard.is_released:
-		_exec.finish()
+	if _blackboard.is_released:
+		_emit_finished()
 		return
-	_delivery.execute(_exec.blackboard.aiming_result)
+	_emit_triggered()
 
 func tick(_delta: float) -> void:
-	if _exec.blackboard.is_released:
-		_exec.finish()
+	if _blackboard.is_released:
+		_emit_finished()
 		return
-	_delivery.execute(_exec.blackboard.aiming_result)
+	_emit_triggered()
 
 func release() -> void:
-	_exec.finish()
+	_emit_finished()

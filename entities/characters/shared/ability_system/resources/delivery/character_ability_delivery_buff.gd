@@ -4,7 +4,6 @@
 @export var duration: float
 
 func create_handler(
-	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecuteDeliveryHandler:
-	return CharacterAbilityExecuteDeliveryBuffHandler.new(ability, context)
+	return CharacterAbilityExecuteDeliveryBuffHandler.new(context)

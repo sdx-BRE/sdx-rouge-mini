@@ -11,9 +11,7 @@ func execute(aiming_result: CharacterAbilityAimingResult) -> void:
 	_setup_when_ability(node, _data)
 	aiming_result.set_projectile_target(node, _context)
 	
-	_use_resources()
-	_ability.start_cooldown()
-	
+	_emit_cost_required()
 	_spawn_ability(node)
 	_launch_when_ability(node, _data)
 

@@ -6,7 +6,6 @@
 @export var radius: float = 2.0
 
 func create_handler(
-	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
 ) -> CharacterAbilityExecuteDeliveryHandler:
-	return CharacterAbilityExecuteDeliveryAoeHandler.new(ability, context)
+	return CharacterAbilityExecuteDeliveryAoeHandler.new(context)

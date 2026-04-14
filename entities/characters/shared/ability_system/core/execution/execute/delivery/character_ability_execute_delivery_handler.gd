@@ -1,10 +1,11 @@
 ﻿class_name CharacterAbilityExecuteDeliveryHandler extends RefCounted
 
-var _ability: CharacterAbility
+signal cost_required()
+signal continuous_cost_required(delta: float)
+
 var _context: CharacterAbilityExecuteContext
 
-func _init(ability: CharacterAbility, context: CharacterAbilityExecuteContext) -> void:
-	_ability = ability
+func _init(context: CharacterAbilityExecuteContext) -> void:
 	_context = context
 
 func setup(_data: CharacterAbilityDelivery) -> void:
@@ -35,6 +36,8 @@ func _when_ability(node: Node, data: CharacterAbilityDelivery, then: Callable) -
 	if node is AbilityEntity:
 		then.call(node, data)
 
-func _use_resources() -> void:
-	if _ability._data.cost.type == AbilityCost.Type.Instant:
-		_ability.use_resources()
+func _emit_cost_required() -> void:
+	cost_required.emit()
+
+func _emit_continuous_cost_required(delta: float) -> void:
+	continuous_cost_required.emit(delta)

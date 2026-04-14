@@ -15,8 +15,6 @@ func execute(aiming_result: CharacterAbilityAimingResult) -> void:
 	_launch_when_ability(node, _data)
 
 func _spawn_ability(node: Node3D) -> void:
-	_use_resources()
-	_ability.start_cooldown()
-	
+	_emit_cost_required()
 	_context.spawn_at_wand(node)
 	node.global_basis = _context.get_pivot_basis()

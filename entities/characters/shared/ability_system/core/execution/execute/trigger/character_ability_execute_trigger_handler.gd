@@ -1,14 +1,12 @@
 ﻿class_name CharacterAbilityExecuteTriggerHandler extends RefCounted
 
-var _exec: CharacterAbilityExecuter
-var _delivery: CharacterAbilityExecuteDeliveryHandler
+signal triggered()
+signal finished()
 
-func _init(
-	exec: CharacterAbilityExecuter,
-	delivery: CharacterAbilityExecuteDeliveryHandler,
-) -> void:
-	_exec = exec
-	_delivery = delivery
+var _blackboard: CharacterAbilityExecutionBlackboard
+
+func _init(blackboard: CharacterAbilityExecutionBlackboard) -> void:
+	_blackboard = blackboard
 
 func setup(_data: CharacterAbilityTrigger) -> void:
 	pass
@@ -24,3 +22,9 @@ func release() -> void:
 
 func cancel() -> void:
 	pass
+
+func _emit_triggered() -> void:
+	triggered.emit()
+
+func _emit_finished() -> void:
+	finished.emit()
