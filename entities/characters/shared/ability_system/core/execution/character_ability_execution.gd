@@ -17,7 +17,7 @@ enum Phase {
 var blackboard: CharacterAbilityExecutionBlackboard
 var _factory: CharacterAbilityExecutionFactory
 
-var _phase: CharacterAbilityExecutionBase
+var _phase: CharacterAbilityExecutionPhase
 var _ability: CharacterAbility
 
 var _phase_idx: int = 0

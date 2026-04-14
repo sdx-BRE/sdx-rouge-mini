@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionBase extends RefCounted
+﻿class_name CharacterAbilityExecutionPhase extends RefCounted
 
 var _exec: CharacterAbilityExecution
 

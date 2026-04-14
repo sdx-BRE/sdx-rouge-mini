@@ -17,7 +17,7 @@ func create(
 	state: CharacterAbilityExecution.Phase,
 	ability: CharacterAbility,
 	exec: CharacterAbilityExecution,
-) -> CharacterAbilityExecutionBase:
+) -> CharacterAbilityExecutionPhase:
 	match state:
 		CharacterAbilityExecution.Phase.Aiming:
 			return CharacterAbilityExecutionAiming.new(exec, ability._data, _target_context)

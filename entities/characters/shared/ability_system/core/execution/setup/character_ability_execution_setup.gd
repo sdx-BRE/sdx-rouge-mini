@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecutionSetup extends CharacterAbilityExecutionBase
+﻿class_name CharacterAbilityExecutionSetup extends CharacterAbilityExecutionPhase
 
 var _data: CharacterAbilityData
 var _context: CharacterAbilitySetupContext

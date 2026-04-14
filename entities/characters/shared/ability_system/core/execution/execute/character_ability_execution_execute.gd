@@ -1,4 +1,4 @@
-class_name CharacterAbilityExecutionExecute extends CharacterAbilityExecutionBase
+class_name CharacterAbilityExecutionExecute extends CharacterAbilityExecuter
 
 var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext
