@@ -13,8 +13,6 @@ func execute(aiming_result: CharacterAbilityAimingResult) -> void:
 	
 	aiming_result.set_aoe_position(node, _context)
 	_launch_when_ability(node, _data)
-	
-	_emit_finished()
 
 func _spawn_ability(node: Node3D) -> void:
 	_use_resources()

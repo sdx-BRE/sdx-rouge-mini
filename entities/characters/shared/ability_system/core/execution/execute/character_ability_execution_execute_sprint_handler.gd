@@ -11,12 +11,6 @@ func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 func release() -> void:
 	_context.use_normal_speed()
 	_ability.start_cooldown()
-	
-	_emit_finished()
-
-func cancel() -> void:
-	super()
-	_ability.start_cooldown()
 
 func tick(delta: float) -> void:
 	if _ability._data.cost.type == AbilityCost.Type.Tick:

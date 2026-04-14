@@ -10,4 +10,3 @@ func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	_ability.start_cooldown()
 	
 	_context.push_dash_motion(_data.dash_power)
-	_emit_finished()

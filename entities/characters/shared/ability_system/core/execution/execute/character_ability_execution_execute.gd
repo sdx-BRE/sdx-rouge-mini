@@ -3,7 +3,7 @@ class_name CharacterAbilityExecutionExecute extends CharacterAbilityExecutionBas
 var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext
 
-var _effect_handler: CharacterAbilityExecutionExecuteEffectHandler
+var _trigger_handler: CharacterAbilityTriggerHandler
 
 func _init(
 	exec: CharacterAbilityExecution,
@@ -15,21 +15,22 @@ func _init(
 	_context = context
 
 func start() -> void:
-	_effect_handler = _ability._data.effect.create_handler(_ability, _context)
-	_effect_handler.finished.connect(_exec.finish)
-	_effect_handler.canceled.connect(_exec.abort)
+	var effect_handler := _ability._data.effect.create_handler(_ability, _context)
+	effect_handler.setup(_ability._data.effect)
 	
-	_effect_handler.setup(_ability._data.effect)
-	_effect_handler.execute(_exec.blackboard.aiming_result)
+	_trigger_handler = _ability._data.trigger.create_handler(_exec, effect_handler)
+	_trigger_handler.setup(_ability._data.trigger)
+	
+	_trigger_handler.start()
 
 func tick(delta: float) -> void:
-	_effect_handler.tick(delta)
+	_trigger_handler.tick(delta)
 
 func release() -> void:
-	_effect_handler.release()
+	_trigger_handler.release()
 
 func cancel() -> void:
-	_effect_handler.cancel()
+	_trigger_handler.cancel()
 
 func _to_string() -> String:
 	return "CharacterAbilityExecutionExecute"

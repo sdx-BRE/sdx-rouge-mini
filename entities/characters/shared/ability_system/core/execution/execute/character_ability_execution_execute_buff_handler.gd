@@ -14,5 +14,3 @@ func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	
 	_context.spawn_buff(node)
 	_launch_when_ability(node, _data)
-	
-	_emit_finished()

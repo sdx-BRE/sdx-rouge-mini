@@ -1,8 +1,5 @@
 ﻿class_name CharacterAbilityExecutionExecuteEffectHandler extends RefCounted
 
-signal finished()
-signal canceled()
-
 var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext
 
@@ -16,20 +13,11 @@ func setup(_data: CharacterAbilityEffect) -> void:
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	pass
 
-func tick(_delta: float) -> void:
-	pass
-
 func release() -> void:
 	pass
 
-func cancel() -> void:
-	_emit_canceled()
-
-func _emit_finished() -> void:
-	finished.emit()
-
-func _emit_canceled() -> void:
-	canceled.emit()
+func tick(_delta: float) -> void:
+	pass
 
 func _setup_when_ability(node: Node, data: CharacterAbilityEffect) -> void:
 	_when_ability(node, data, _setup_ability)

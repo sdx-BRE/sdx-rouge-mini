@@ -7,4 +7,3 @@ func setup(data: CharacterAbilityEffect) -> void:
 
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	_context.buffer_jump()
-	_emit_finished()
