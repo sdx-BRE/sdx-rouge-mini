@@ -13,5 +13,5 @@ func update_cast_point(tree: AnimationTree) -> void:
 	if c_point != null:
 		cast_point = c_point
 
-func create_handler(context: CharacterAbilitySetupContext) -> CharacterAbilitySetupWindupHandler:
+func create_setup_handler(context: CharacterAbilitySetupContext) -> CharacterAbilitySetupWindupHandler:
 	return CharacterAbilitySetupOneshotAnimationHandler.new(context)
