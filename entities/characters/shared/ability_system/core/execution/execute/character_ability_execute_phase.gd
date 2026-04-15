@@ -21,8 +21,8 @@ func start() -> void:
 	_delivery_handler.cost_required.connect(_on_cost_required)
 	_delivery_handler.continuous_cost_required.connect(_on_continuous_cost_required)
 	
-	_trigger_handler.triggered.connect(func(): _delivery_handler.execute(_exec.blackboard.aiming_result))
-	_trigger_handler.finished.connect(_ability.start_cooldown)
+	_trigger_handler.triggered.connect(_on_triggered)
+	_trigger_handler.finished.connect(_on_finished)
 	
 	_delivery_handler.setup(_ability._data.delivery)
 	_trigger_handler.setup(_ability._data.trigger)
@@ -48,3 +48,9 @@ func _on_cost_required() -> void:
 func _on_continuous_cost_required(delta: float) -> void:
 	if _ability._data.cost.type == AbilityCost.Type.Tick:
 		_ability.use_resources_delta(delta)
+
+func _on_triggered() -> void:
+	_delivery_handler.execute(_exec.blackboard.aiming_result)
+
+func _on_finished() -> void:
+	_exec.next_phase()
