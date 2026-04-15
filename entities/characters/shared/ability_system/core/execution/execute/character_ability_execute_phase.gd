@@ -53,4 +53,5 @@ func _on_triggered() -> void:
 	_delivery_handler.execute(_exec.blackboard.aiming_result)
 
 func _on_finished() -> void:
+	_delivery_handler.release()
 	_exec.next_phase()
