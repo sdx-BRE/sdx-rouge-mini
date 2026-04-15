@@ -9,4 +9,5 @@ const COLLISION_PLAYER_DAMAGE := 		1 << 1
 const COLLISION_ENEMY_COLLISION := 		1 << 2
 const COLLISION_ENEMY_DAMAGE := 		1 << 3
 const COLLISION_WORLD := 				1 << 4
-const COLLISION_SPELL := 				1 << 5
+const COLLISION_PLAYER_SPELL := 		1 << 5
+const COLLISION_ENEMY_SPELL := 			1 << 6

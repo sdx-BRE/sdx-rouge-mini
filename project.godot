@@ -94,7 +94,8 @@ dbg={
 3d_physics/layer_3="EnemyCollision"
 3d_physics/layer_4="EnemyDamage"
 3d_physics/layer_5="World"
-3d_physics/layer_6="Spells"
+3d_physics/layer_6="SpellPlayer"
+3d_physics/layer_7="SpellEnemy"
 
 [physics]
 
