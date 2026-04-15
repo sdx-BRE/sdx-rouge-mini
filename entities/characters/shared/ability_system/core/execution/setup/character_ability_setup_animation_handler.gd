@@ -1,6 +1,6 @@
-﻿class_name CharacterAbilitySetupOneshotAnimationHandler extends CharacterAbilitySetupWindupHandler
+﻿class_name CharacterAbilitySetupAnimationHandler extends CharacterAbilitySetupWindupHandler
 
-var _data: CharacterAbilityWindupOneshotAnimation
+var _data: CharacterAbilityWindupAnimation
 
 func setup(data: CharacterAbilityWindup) -> void:
 	_data = data

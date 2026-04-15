@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityWindupOneshotAnimation extends CharacterAbilityWindup
+﻿class_name CharacterAbilityWindupAnimation extends CharacterAbilityWindup
 
 @export var anim_trigger: StringName = &""
 @export var anim_name: StringName = &""
@@ -14,4 +14,4 @@ func update_cast_point(tree: AnimationTree) -> void:
 		cast_point = c_point
 
 func create_setup_handler(context: CharacterAbilitySetupContext) -> CharacterAbilitySetupWindupHandler:
-	return CharacterAbilitySetupOneshotAnimationHandler.new(context)
+	return CharacterAbilitySetupAnimationHandler.new(context)

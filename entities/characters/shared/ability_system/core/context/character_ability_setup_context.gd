@@ -16,12 +16,12 @@ func _init(
 	_anim_progressed = anim_progressed
 	_anim_end = anim_end
 
-func get_animation_position(data: CharacterAbilityWindupOneshotAnimation) -> float:
+func get_animation_position(data: CharacterAbilityWindupAnimation) -> float:
 	var value = _anim_tree.get(data.anim_trigger + "/current_position")
 	
 	return 0.0 if value == null else value
 
-func update_cast_point(data: CharacterAbilityWindupOneshotAnimation) -> void:
+func update_cast_point(data: CharacterAbilityWindupAnimation) -> void:
 	data.update_cast_point(_anim_tree)
 
 func oneshot(param: StringName) -> void:
