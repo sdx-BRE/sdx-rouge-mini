@@ -1,25 +1,23 @@
 ﻿class_name CharacterAbilityAimingPhase extends CharacterAbilityExecutionPhase
 
 var _targeting: CharacterAbilityAimingHandler
-var _data: CharacterAbilityData
 var _context: CharacterAbilityAimingContext
 
 func _init(
 	exec: CharacterAbilityExecuter,
-	data: CharacterAbilityData,
+	ability: CharacterAbility,
 	context: CharacterAbilityAimingContext,
 ) -> void:
-	super(exec)
-	_data = data
+	super(exec, ability)
 	_context = context
 
 func start() -> void:
-	_targeting = _data.targeting.get_strategy(_context)
+	_targeting = _ability._data.targeting.get_strategy(_context)
 	
 	_targeting.target_aquired.connect(_on_target_aquired)
 	_targeting.canceled.connect(_on_targeting_canceled)
 	
-	_targeting.setup(_data.targeting)
+	_targeting.setup(_ability._data.targeting)
 
 func handle_input(event: InputEvent) -> bool:
 	return _targeting.handle_input(event)

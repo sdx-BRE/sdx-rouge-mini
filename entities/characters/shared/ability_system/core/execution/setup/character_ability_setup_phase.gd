@@ -1,22 +1,20 @@
 ﻿class_name CharacterAbilitySetupPhase extends CharacterAbilityExecutionPhase
 
-var _data: CharacterAbilityData
 var _context: CharacterAbilitySetupContext
 
 var _windup_handler: CharacterAbilitySetupWindupHandler
 
 func _init(
 	exec: CharacterAbilityExecuter,
-	data: CharacterAbilityData,
+	ability: CharacterAbility,
 	context: CharacterAbilitySetupContext,
 ) -> void:
-	super(exec)
-	_data = data
+	super(exec, ability)
 	_context = context
 
 func start() -> void:
-	_windup_handler = _data.windup.create_setup_handler(_context)
-	_windup_handler.setup(_data.windup)
+	_windup_handler = _ability._data.windup.create_setup_handler(_context)
+	_windup_handler.setup(_ability._data.windup)
 	
 	_windup_handler.visual_ready.connect(_exec.next_phase)
 	_windup_handler.start()

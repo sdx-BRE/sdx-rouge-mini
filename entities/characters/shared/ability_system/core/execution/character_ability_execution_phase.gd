@@ -1,9 +1,14 @@
 ﻿class_name CharacterAbilityExecutionPhase extends RefCounted
 
 var _exec: CharacterAbilityExecuter
+var _ability: CharacterAbility
 
-func _init(exec: CharacterAbilityExecuter) -> void:
+func _init(
+	exec: CharacterAbilityExecuter,
+	ability: CharacterAbility,
+) -> void:
 	_exec = exec
+	_ability = ability
 
 func start() -> void:
 	pass

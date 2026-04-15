@@ -20,9 +20,9 @@ func create(
 ) -> CharacterAbilityExecutionPhase:
 	match state:
 		CharacterAbilityExecuter.Phase.Aiming:
-			return CharacterAbilityAimingPhase.new(exec, ability._data, _target_context)
+			return CharacterAbilityAimingPhase.new(exec, ability, _target_context)
 		CharacterAbilityExecuter.Phase.Setup:
-			return CharacterAbilitySetupPhase.new(exec, ability._data, _setup_context)
+			return CharacterAbilitySetupPhase.new(exec, ability, _setup_context)
 		CharacterAbilityExecuter.Phase.Execute:
 			return CharacterAbilityExecutePhase.new(exec, ability, _execute_context)
 		CharacterAbilityExecuter.Phase.Recover:

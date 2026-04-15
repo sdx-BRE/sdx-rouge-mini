@@ -1,6 +1,5 @@
 class_name CharacterAbilityExecutePhase extends CharacterAbilityExecutionPhase
 
-var _ability: CharacterAbility
 var _context: CharacterAbilityExecuteContext
 
 var _delivery_handler: CharacterAbilityExecuteDeliveryHandler
@@ -11,7 +10,7 @@ func _init(
 	ability: CharacterAbility,
 	context: CharacterAbilityExecuteContext,
 ) -> void:
-	super(exec)
+	super(exec, ability)
 	_ability = ability
 	_context = context
 
