@@ -7,5 +7,11 @@ func _init(
 ) -> void:
 	_context = context
 
+func setup(_data: CharacterAbilityWindup) -> void:
+	pass
+
 func recover() -> void:
+	pass
+
+func cancel() -> void:
 	pass

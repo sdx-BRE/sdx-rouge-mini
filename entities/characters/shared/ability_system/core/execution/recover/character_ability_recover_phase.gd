@@ -14,5 +14,10 @@ func _init(
 
 func start() -> void:
 	_windup_handler = _ability._data.windup.create_recover_handler(_context)
+	_windup_handler.setup(_ability._data.windup)
+	
 	_windup_handler.recover()
 	_exec.finish()
+
+func cancel() -> void:
+	_windup_handler.cancel()

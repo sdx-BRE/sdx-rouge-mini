@@ -66,7 +66,7 @@ static func _bootstrap_abilities(
 		mage.wandspawn_node,
 		controller,
 	)
-	var recover_context := CharacterAbilityRecoverContext.new()
+	var recover_context := CharacterAbilityRecoverContext.new(mage.anim_tree)
 	
 	var factory := CharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context, recover_context)
 	var blackboard := CharacterAbilityExecutionBlackboard.new()
