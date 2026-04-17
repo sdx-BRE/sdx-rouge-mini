@@ -38,6 +38,12 @@ func handle_input(event: InputEvent) -> bool:
 	
 	return false
 
+func try_activate_ability(id: int) -> void:
+	handle_ability_action(id, TriggerState.Press)
+
+func try_release_ability(id: int) -> void:
+	handle_ability_action(id, TriggerState.Release)
+
 func notify_animation_event() -> void:
 	_manager.handle_animation_event()
 

@@ -46,13 +46,15 @@ static func _bootstrap_abilities(
 	
 	var controller := MageController.new(movement_context)
 	
-	var target_context := CharacterAbilityAimingContext.new(
+	var aiming_strategy := CharacterAbilityAimingPlayerStrategy.new(
 		mage.camera_node,
 		mage.ground_target_marker,
 		mage.enemy_target_marker,
 		mage.get_viewport(),
 		mage.get_world_3d(),
 	)
+	var target_context := CharacterAbilityAimingContext.new(aiming_strategy)
+
 	var setup_context := CharacterAbilitySetupContext.new(
 		mage.anim_tree,
 		mage_signals.casting_started,
