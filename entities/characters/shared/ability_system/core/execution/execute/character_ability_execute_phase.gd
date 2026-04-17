@@ -22,6 +22,7 @@ func start() -> void:
 	_delivery_handler.continuous_cost_required.connect(_on_continuous_cost_required)
 	
 	_trigger_handler.triggered.connect(_on_triggered)
+	_trigger_handler.triggered_tick.connect(_on_triggered_tick)
 	_trigger_handler.finished.connect(_on_finished)
 	
 	_delivery_handler.setup(_ability._data.delivery)
@@ -51,6 +52,9 @@ func _on_continuous_cost_required(delta: float) -> void:
 
 func _on_triggered() -> void:
 	_delivery_handler.execute(_exec.blackboard.aiming_result)
+
+func _on_triggered_tick(timespan: float) -> void:
+	_delivery_handler.execute_tick(timespan, _exec.blackboard.aiming_result)
 
 func _on_finished() -> void:
 	_delivery_handler.release()

@@ -14,10 +14,10 @@ func setup(_data: CharacterAbilityDelivery) -> void:
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	pass
 
-func release() -> void:
+func execute_tick(_timespan: float, _aiming_result: CharacterAbilityAimingResult) -> void:
 	pass
 
-func tick(_delta: float) -> void:
+func release() -> void:
 	pass
 
 func _setup_when_ability(node: Node, data: CharacterAbilityDelivery) -> void:

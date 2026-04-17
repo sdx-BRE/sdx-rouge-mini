@@ -6,12 +6,25 @@ var _node: Node
 func setup(data: CharacterAbilityDelivery) -> void:
 	_data = data
 	
-	_node = _data.scene.instantiate()
-	_emit_cost_required()
-	_context.spawn_node(_node)
+	_setup_scene()
 
-func tick(delta: float) -> void:
-	_emit_continuous_cost_required(delta)
+func execute_tick(timespan: float, _aiming_result: CharacterAbilityAimingResult) -> void:
+	_when_continuous_abiltiy(_node, _tick_damage)
+	_emit_continuous_cost_required(timespan)
 
 func release() -> void:
 	_node.queue_free()
+
+func _setup_scene() -> void:
+	_node = _data.scene.instantiate()
+	_setup_when_ability(_node, _data)
+	
+	_context.spawn_wand_child(_node)
+	_launch_when_ability(_node, _data)
+
+func _when_continuous_abiltiy(node: Node, then: Callable) -> void:
+	if node is ContinuousAbility:
+		then.call(node)
+
+func _tick_damage(ability: ContinuousAbility) -> void:
+	ability.tick_damage()
