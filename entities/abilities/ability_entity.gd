@@ -1,6 +1,7 @@
 class_name AbilityEntity extends Area3D
 
 @export var enable_debug := false
+@onready var hitbox := $Hitbox
 
 func launch_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
 	if enable_debug:

@@ -10,7 +10,6 @@ const SPIKE_RADIUS := 0.2
 @onready var spike := $Spikes/Spike01
 @onready var container_spikes_ground := $Ice
 @onready var anim_player := $AnimationPlayer
-@onready var hitbox := $Hitbox
 
 var _temp_animations: Array[Dictionary]
 
