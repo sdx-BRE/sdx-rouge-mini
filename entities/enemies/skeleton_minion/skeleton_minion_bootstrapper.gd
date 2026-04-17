@@ -10,5 +10,5 @@ func _create_attack_context() -> StateContextAttack:
 
 func _wire_signals() -> void:
 	super()
-	_minion.punch_hitbox.body_entered.connect(_minion._on_punch)
+	_minion.punch_hitbox.area_entered.connect(_minion._on_punch)
 
