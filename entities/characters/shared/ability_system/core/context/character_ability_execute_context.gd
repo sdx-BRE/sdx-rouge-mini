@@ -57,6 +57,12 @@ func spawn_at_wand(node: Node3D) -> void:
 func spawn_buff(node: Node3D) -> void:
 	_buff_anchor.add_child(node)
 
+func spawn_wand_child(node: Node3D) -> void:
+	_wandspawn_node.add_child(node)
+
+func get_wandspawn_node() -> Node3D:
+	return _wandspawn_node
+
 func get_pivot_basis() -> Basis:
 	return _pivot.global_basis
 
