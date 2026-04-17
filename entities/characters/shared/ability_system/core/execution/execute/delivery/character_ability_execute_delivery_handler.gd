@@ -14,8 +14,8 @@ func setup(_data: CharacterAbilityDelivery) -> void:
 func execute(_aiming_result: CharacterAbilityAimingResult) -> void:
 	pass
 
-func execute_tick(_timespan: float, _aiming_result: CharacterAbilityAimingResult) -> void:
-	pass
+func execute_tick(_timespan: float, aiming_result: CharacterAbilityAimingResult) -> void:
+	execute(aiming_result)
 
 func release() -> void:
 	pass
