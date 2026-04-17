@@ -3,6 +3,8 @@ extends CanvasLayer
 @export var label_scene: PackedScene
 @export var camera: Camera3D
 
+@onready var container := $Control
+
 var _camera: Camera3D
 
 func _ready() -> void:
@@ -28,11 +30,16 @@ func _on_tween_cb(label: Label) -> void:
 	print("tween cb")
 	label.queue_free()
 
-func _create_label() -> Label:
+func _create_label() -> DamageLabel:
 	if label_scene == null:
-		return Label.new()
+		return DamageLabel.new()
 	
-	return label_scene.instantiate()
+	var label := label_scene.instantiate()
+	if not label is DamageLabel:
+		push_error("[DamageNumbers._create_label()]: label_scene MUST be DamageLabel scene!")
+		return DamageLabel.new()
+	
+	return label
 
 func _setup_camera3d() -> bool:
 	if camera != null:
