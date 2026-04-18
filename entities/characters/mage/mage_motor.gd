@@ -1,4 +1,4 @@
-﻿class_name MageMotor extends RefCounted
+class_name MageMotor extends RefCounted
 
 signal jumped()
 

@@ -1,4 +1,4 @@
-﻿class_name EnemyAnimation extends RefCounted
+class_name EnemyAnimation extends RefCounted
 
 var _animator: EnemyAnimator
 var _params: AnimationTreeParameter

@@ -1,4 +1,4 @@
-﻿class_name EnemyMovementContext extends RefCounted
+class_name EnemyMovementContext extends RefCounted
 
 var host: CharacterBody3D
 var agent: NavigationAgent3D

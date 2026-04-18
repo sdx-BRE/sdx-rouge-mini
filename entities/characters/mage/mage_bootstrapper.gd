@@ -40,7 +40,7 @@ static func _bootstrap_abilities(
 	var cooldown_manager := CooldownManager.new()
 	cooldown_manager.cooldown_started.connect(mage_signals.skill_cooldown.emit)
 	
-	var registry := CharacterAbilityRegistry.new()
+	var registry := AbilityRegistry.new()
 	for ability_data in mage.abilities:
 		registry.register(ability_data, mage._stats, cooldown_manager)
 	
@@ -53,7 +53,7 @@ static func _bootstrap_abilities(
 		mage.get_viewport(),
 		mage.get_world_3d(),
 	)
-	var target_context := CharacterAbilityAimingContext.new(aiming_strategy)
+	var target_context := AbilityAimingContext.new(aiming_strategy)
 	
 	var setup_strategy := MageAbilitySetupStrategy.new(
 		mage.anim_tree,
@@ -61,7 +61,7 @@ static func _bootstrap_abilities(
 		mage_signals.casting_progressed,
 		mage_signals.casting_end,
 	)
-	var setup_context := CharacterAbilitySetupContext.new(setup_strategy)
+	var setup_context := AbilitySetupContext.new(setup_strategy)
 	
 	var execute_strategy := MageAbilityExecuteStrategy.create(
 		mage,
@@ -70,25 +70,25 @@ static func _bootstrap_abilities(
 		mage.wandspawn_node,
 		controller,
 	)
-	var execute_context := CharacterAbilityExecuteContext.new(execute_strategy)
+	var execute_context := AbilityExecuteContext.new(execute_strategy)
 	
 	var recover_strategy := MageAbilityRecoverStrategy.new(mage.anim_tree)
-	var recover_context := CharacterAbilityRecoverContext.new(recover_strategy)
+	var recover_context := AbilityRecoverContext.new(recover_strategy)
 	
-	var factory := CharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context, recover_context)
-	var blackboard := CharacterAbilityExecutionBlackboard.new()
+	var factory := AbilityExecutionFactory.new(target_context, setup_context, execute_context, recover_context)
+	var blackboard := AbilityExecutionBlackboard.new()
 	
-	var execution := CharacterAbilityExecuter.new(blackboard, factory)
-	var manager := CharacterAbilityManager.new(execution)
+	var execution := AbilityExecuter.new(blackboard, factory)
+	var manager := AbilityManager.new(execution)
 	
-	mage._ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
+	mage._ability_system = AbilitySystem.new(registry, manager, cooldown_manager)
 	
 	var use_jump_ability := func():
-		mage._ability_system.use_ability_resources(CharacterAbilityId.JUMP)
-		mage._ability_system.start_ability_cooldown(CharacterAbilityId.JUMP)
+		mage._ability_system.use_ability_resources(AbilityId.JUMP)
+		mage._ability_system.start_ability_cooldown(AbilityId.JUMP)
 	
 	motor.jumped.connect(use_jump_ability)
-	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_ability_resources(CharacterAbilityId.JUMP))
+	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_ability_resources(AbilityId.JUMP))
 
 static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMovementContext, motor: MageMotor) -> void:
 	var processor := EntityProcessor.new(mage.get_viewport())
@@ -129,7 +129,7 @@ static func _bootstrap_physic_process_handler(
 static func _bootstrap_input_handler(
 	processor: EntityProcessor,
 	kinematics: MageKinematics,
-	ability_system: CharacterAbilitySystem,
+	ability_system: AbilitySystem,
 ) -> void:
 	processor.add_input_handler(MageInputHandler.new(ability_system, kinematics))
 

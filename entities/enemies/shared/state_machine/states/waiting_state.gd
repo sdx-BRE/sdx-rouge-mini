@@ -1,4 +1,4 @@
-﻿class_name WaitingState extends StateBase
+class_name WaitingState extends StateBase
 
 var _wait_time: float = 0.0
 

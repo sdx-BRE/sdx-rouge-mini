@@ -1,4 +1,4 @@
-﻿class_name AnimationTreeParameter extends Resource
+class_name AnimationTreeParameter extends Resource
 
 @export_group("Oneshot")
 @export var oneshot_hit_weak := &"parameters/HitWeakOneShot"

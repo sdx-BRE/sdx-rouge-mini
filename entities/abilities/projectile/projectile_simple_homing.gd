@@ -1,4 +1,4 @@
-﻿class_name ProjectileSimpleHoming extends ProjectileHomingBase
+class_name ProjectileSimpleHoming extends ProjectileHomingBase
 
 var _target: Node3D
 

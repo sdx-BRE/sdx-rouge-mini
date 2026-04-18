@@ -1,4 +1,4 @@
-﻿class_name EntityStats extends RefCounted
+class_name EntityStats extends RefCounted
 
 signal health_changed(current: float, total: float)
 signal mana_changed(current: float, total: float)

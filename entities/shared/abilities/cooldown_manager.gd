@@ -14,12 +14,12 @@ func tick(delta: float) -> void:
 func start_cooldown(id: int, cooldown: float) -> void:
 	_cooldowns[id] = cooldown
 
-func start_character_cooldown(ability: CharacterAbilityData) -> void:
+func start_character_cooldown(ability: AbilityData) -> void:
 	start_cooldown(ability.id, ability.cooldown)
 	cooldown_started.emit(ability.input, ability.cooldown)
 
 func has_cooldown(id: int) -> bool:
 	return _cooldowns.has(id)
 
-func has_character_cooldown(ability: CharacterAbilityData) -> bool:
+func has_character_cooldown(ability: AbilityData) -> bool:
 	return _cooldowns.has(ability.id)

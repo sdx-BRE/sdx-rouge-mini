@@ -5,7 +5,6 @@ extends BaseAoe
 
 @export_tool_button("Update Radius", "callable") var update_radius_btn := _update_radius
 
-@onready var hitbox := $Hitbox
 @onready var sprite := $Sprite3D
 @onready var progess_bar := $SubViewport/TextureProgressBar
 @onready var timer := $Timer
@@ -15,7 +14,7 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	timer.timeout.connect(_trigger_aoe)
 
-func launch_enemy_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func launch_enemy_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	super(data, context)
 	_update_radius()
 

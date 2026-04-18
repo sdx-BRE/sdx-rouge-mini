@@ -1,4 +1,4 @@
-﻿extends Node
+extends Node
 
 var cursor_attack := preload("res://assets/textures/kenney/cursor/tool_sword_b.png")
 var cursor_pointer := preload("res://assets/textures/kenney/cursor/pointer_scifi_b.png")

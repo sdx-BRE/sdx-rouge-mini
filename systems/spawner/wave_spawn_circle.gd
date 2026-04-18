@@ -1,4 +1,4 @@
-﻿class_name WaveSpawnCircle extends WaveSpawnBase
+class_name WaveSpawnCircle extends WaveSpawnBase
 
 var _spawn_point: Node3D
 var _spawn_radius: float

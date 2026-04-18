@@ -1,4 +1,4 @@
-﻿class_name EntityData extends Resource
+class_name EntityData extends Resource
 
 @export_group("Base stats")
 @export var health := 100.0

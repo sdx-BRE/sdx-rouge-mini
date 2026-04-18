@@ -1,4 +1,4 @@
-﻿class_name EnemyLocomotionHandler extends PhysicsProcessHandler
+class_name EnemyLocomotionHandler extends PhysicsProcessHandler
 
 const BASE_TIMESCALE := 1.0
 const MAX_TIMESCALE := 1.8

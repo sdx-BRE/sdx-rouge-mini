@@ -1,4 +1,4 @@
-﻿class_name EntityProcessor extends RefCounted
+class_name EntityProcessor extends RefCounted
 
 var _viewport: Viewport
 var _physics_process_handlers: Array[PhysicsProcessHandler] = []

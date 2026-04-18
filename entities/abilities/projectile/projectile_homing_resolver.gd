@@ -1,4 +1,4 @@
-﻿class_name ProjectileHomingResolver extends RefCounted
+class_name ProjectileHomingResolver extends RefCounted
 
 static func resolve(
 	homing: BaseProjectile.Homing,

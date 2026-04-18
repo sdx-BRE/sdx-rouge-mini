@@ -1,4 +1,4 @@
-﻿class_name MageCollisionsHandler extends PhysicsProcessHandler
+class_name MageCollisionsHandler extends PhysicsProcessHandler
 
 var _kinematics: MageKinematics
 

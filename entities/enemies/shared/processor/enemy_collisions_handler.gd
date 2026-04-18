@@ -1,4 +1,4 @@
-﻿class_name EnemyCollisionsHandler extends PhysicsProcessHandler
+class_name EnemyCollisionsHandler extends PhysicsProcessHandler
 
 var _kinematics: EnemyKinematics
 

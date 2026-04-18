@@ -1,4 +1,4 @@
-﻿class_name ObserverAirbourne extends ProcessHandler
+class_name ObserverAirbourne extends ProcessHandler
 
 var _host: CharacterBody3D
 var _was_on_floor: bool

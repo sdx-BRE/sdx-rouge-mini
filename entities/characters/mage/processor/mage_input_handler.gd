@@ -1,10 +1,10 @@
 class_name MageInputHandler extends InputHandler
 
-var _ability_system: CharacterAbilitySystem
+var _ability_system: AbilitySystem
 var _kinematics: MageKinematics
 
 func _init(
-	ability_system: CharacterAbilitySystem,
+	ability_system: AbilitySystem,
 	kinematics: MageKinematics,
 ) -> void:
 	_ability_system = ability_system

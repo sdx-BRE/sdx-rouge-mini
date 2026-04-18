@@ -1,4 +1,4 @@
-﻿class_name AbilityCost extends Resource
+class_name AbilityCost extends Resource
 
 enum Type {
 	Instant,

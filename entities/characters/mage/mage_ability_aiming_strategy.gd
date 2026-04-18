@@ -1,4 +1,4 @@
-class_name MageAbilityAimingStrategy extends CharacterAbilityAimingStrategy
+class_name MageAbilityAimingStrategy extends AbilityAimingStrategy
 
 var _camera_node: ThirdPersonCam
 var _ground_target_marker: Decal

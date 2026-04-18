@@ -10,22 +10,22 @@ var threshold := 0.5
 func _process(delta: float) -> void:
 	_age += delta
 
-func setup_enemy_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func setup_enemy_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	super(data, context)
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_enemy_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+func launch_enemy_ability(_data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
-func setup_character_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+func setup_character_ability(_data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
-	var buff_data := data as CharacterAbilityDeliveryBuff
+func launch_character_ability(data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
+	var buff_data := data as AbilityDeliveryBuff
 	
 	var duration: float
 	if not buff_data:
-		push_error(DbgHelper.err("SpellShield.launch_character_ability", "data arg MUST be CharacterAbilityDelivery"))
+		push_error(DbgHelper.err("SpellShield.launch_character_ability", "data arg MUST be AbilityDelivery"))
 		duration = DEFAULT_DURATION
 	else:
 		duration = buff_data.duration

@@ -1,4 +1,4 @@
-﻿class_name EnemyStateMachineHandler extends ProcessHandler
+class_name EnemyStateMachineHandler extends ProcessHandler
 
 var _machine: EnemyStateMachine
 

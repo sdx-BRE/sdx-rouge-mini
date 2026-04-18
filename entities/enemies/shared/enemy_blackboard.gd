@@ -1,4 +1,4 @@
-﻿class_name EnemyBlackboard extends RefCounted
+class_name EnemyBlackboard extends RefCounted
 
 var _attack_cooldown: float
 

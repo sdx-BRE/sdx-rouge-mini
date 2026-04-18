@@ -1,4 +1,4 @@
-﻿class_name ProjectileHomingBase extends RefCounted
+class_name ProjectileHomingBase extends RefCounted
 
 var _projectile: BaseProjectile
 

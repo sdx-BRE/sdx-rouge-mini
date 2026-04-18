@@ -1,4 +1,4 @@
-﻿class_name MageMovementContext extends RefCounted
+class_name MageMovementContext extends RefCounted
 
 var host: CharacterBody3D
 var config: MageMovementConfig

@@ -1,4 +1,4 @@
-﻿class_name StateTransitionRule extends RefCounted
+class_name StateTransitionRule extends RefCounted
 
 var transition_id: int
 var condition: Callable

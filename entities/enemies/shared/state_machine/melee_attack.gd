@@ -1,1 +1,1 @@
-﻿class_name MeleeAttack extends StateContextAttack
+class_name MeleeAttack extends StateContextAttack

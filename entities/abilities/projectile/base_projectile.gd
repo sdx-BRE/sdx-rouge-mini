@@ -33,12 +33,12 @@ func _process(delta: float) -> void:
 func _move(delta: float) -> void:
 	global_position += -global_basis.z * _speed * delta
 
-func launch_enemy_ability(_data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func launch_enemy_ability(_data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	global_position = context.get_weapon_spawn_node().global_position
 	global_basis = context.get_pivot_basis()
 
-func setup_enemy_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
-	var projectile_data := data as CharacterAbilityDeliveryProjectile
+func setup_enemy_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
+	var projectile_data := data as AbilityDeliveryProjectile
 	if not projectile_data:
 		return
 	
@@ -51,8 +51,8 @@ func setup_enemy_ability(data: CharacterAbilityDelivery, context: CharacterAbili
 	
 	collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func setup_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
-	var projectile_data := data as CharacterAbilityDeliveryProjectile
+func setup_character_ability(data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
+	var projectile_data := data as AbilityDeliveryProjectile
 	if not projectile_data:
 		return
 	

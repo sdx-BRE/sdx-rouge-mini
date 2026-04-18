@@ -3,12 +3,12 @@ extends ContinuousAbility
 @export var rotation_speed: float = 2.0
 var _parent: Node3D
 
-func setup_character_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func setup_character_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	super(data, context)
 	_parent = context.get_weapon_spawn_node()
 	top_level = true
 
-func launch_character_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func launch_character_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	super(data, context)
 	_apply_sway_logic(0.01)
 	

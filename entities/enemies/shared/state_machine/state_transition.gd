@@ -1,4 +1,4 @@
-﻿class_name StateTransition
+class_name StateTransition
 
 const NONE 			:= 0
 const POP 			:= 5

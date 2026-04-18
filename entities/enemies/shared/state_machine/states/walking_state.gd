@@ -1,4 +1,4 @@
-﻿class_name WalkingState extends StateBase
+class_name WalkingState extends StateBase
 
 func process(_delta: float) -> int:
 	if _ctx.is_navigation_finished():

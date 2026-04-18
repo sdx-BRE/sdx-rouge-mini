@@ -1,4 +1,4 @@
-class_name SkeletonIceMageSetupStrategy extends CharacterAbilitySetupStrategy
+class_name SkeletonIceMageSetupStrategy extends AbilitySetupStrategy
 
 var _anim_tree: AnimationTree
 

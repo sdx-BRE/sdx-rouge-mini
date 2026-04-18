@@ -1,4 +1,4 @@
-﻿class_name Cursor extends RefCounted
+class_name Cursor extends RefCounted
 
 enum Type {
 	Attack,

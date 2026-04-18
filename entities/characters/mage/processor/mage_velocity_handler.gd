@@ -1,4 +1,4 @@
-﻿class_name MageVelocityHandler extends PhysicsProcessHandler
+class_name MageVelocityHandler extends PhysicsProcessHandler
 
 var _kinematics: MageKinematics
 var _motor: MageMotor

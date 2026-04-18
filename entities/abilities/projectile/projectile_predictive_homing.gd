@@ -1,4 +1,4 @@
-﻿class_name ProjectilePredictiveHoming extends ProjectileHomingBase
+class_name ProjectilePredictiveHoming extends ProjectileHomingBase
 
 var _target: CharacterBody3D
 var _target_point: Node3D

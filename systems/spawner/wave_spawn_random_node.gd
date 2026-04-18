@@ -1,4 +1,4 @@
-﻿class_name WaveSpawnRandomNode extends WaveSpawnBase
+class_name WaveSpawnRandomNode extends WaveSpawnBase
 
 var _random_node_container: Node3D
 

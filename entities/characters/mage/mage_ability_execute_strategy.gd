@@ -1,4 +1,4 @@
-class_name MageAbilityExecuteStrategy extends CharacterAbilityExecuteStrategy
+class_name MageAbilityExecuteStrategy extends AbilityExecuteStrategy
 
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
@@ -82,8 +82,8 @@ func use_sprinting_speed() -> void:
 func use_normal_speed() -> void:
 	_controller.use_normal_speed()
 
-func setup_ability(ability: AbilityEntity, data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func setup_ability(ability: AbilityEntity, data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	ability.setup_character_ability(data, context)
 
-func launch_ability(ability: AbilityEntity, data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+func launch_ability(ability: AbilityEntity, data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	ability.launch_character_ability(data, context)

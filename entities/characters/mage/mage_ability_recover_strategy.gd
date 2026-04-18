@@ -1,4 +1,4 @@
-class_name MageAbilityRecoverStrategy extends CharacterAbilityRecoverStrategy
+class_name MageAbilityRecoverStrategy extends AbilityRecoverStrategy
 
 var _anim_tree: AnimationTree
 

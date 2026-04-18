@@ -1,4 +1,4 @@
-﻿class_name MageBlendHandler extends PhysicsProcessHandler
+class_name MageBlendHandler extends PhysicsProcessHandler
 
 var _kinematics: MageKinematics
 var _anim: MageAnimator

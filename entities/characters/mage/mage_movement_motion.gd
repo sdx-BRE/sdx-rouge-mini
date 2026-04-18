@@ -1,4 +1,4 @@
-﻿class_name MageMovementMotion extends RefCounted
+class_name MageMovementMotion extends RefCounted
 
 var target_speed: float
 var coyote_timer: float

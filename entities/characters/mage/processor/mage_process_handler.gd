@@ -1,11 +1,11 @@
 class_name MageProcessHandler extends ProcessHandler
 
 var _anim: MageAnimator
-var _ability_system: CharacterAbilitySystem
+var _ability_system: AbilitySystem
 
 func _init(
 	anim: MageAnimator,
-	ability_system: CharacterAbilitySystem,
+	ability_system: AbilitySystem,
 ) -> void:
 	_anim = anim
 	_ability_system = ability_system

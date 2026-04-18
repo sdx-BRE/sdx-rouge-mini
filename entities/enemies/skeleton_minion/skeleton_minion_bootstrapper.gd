@@ -1,4 +1,4 @@
-﻿class_name SkeletonMinionBootstrapper extends BaseSkeletonEnemyBootstrapper
+class_name SkeletonMinionBootstrapper extends BaseSkeletonEnemyBootstrapper
 
 var _minion: SkeletonMinion
 
