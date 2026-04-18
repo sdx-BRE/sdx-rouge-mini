@@ -11,22 +11,18 @@ func _on_area_entered(body: Node3D) -> void:
 	if body.has_method("take_dmg"):
 		body.take_dmg(_damage)
 
-func launch_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
-	var data := ability as EnemyCastAbilityArea
-	if not data:
-		push_error(_err("launch_ability()", "ability arg MUST be CastAbiltiyArea"))
+func launch_enemy_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	pass
+
+func setup_enemy_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	var aoe_data := data as CharacterAbilityDeliveryAoe
+	if not aoe_data:
+		push_error(_err("setup()", "data arg MUST be CharacterAbilityDeliveryAoe"))
 		return
 	
-	global_position = context.get_target_position()
-
-func setup_enemy_ability(ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
-	var data := ability as EnemyCastAbilityArea
-	if not data:
-		push_error(_err("setup()", "ability arg MUST be CastAbiltiyArea"))
-		return
-	_damage = data.damage
-	_delay = data.delay
-	_radius = data.radius
+	_damage = aoe_data.damage
+	_delay = aoe_data.delay
+	_radius = aoe_data.radius
 
 func setup_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
 	var aoe_data := data as CharacterAbilityDeliveryAoe

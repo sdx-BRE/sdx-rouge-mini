@@ -8,19 +8,21 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 
-func setup_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
+func setup_enemy_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
 	collision_layer = Layers.COLLISION_ENEMY_SPELL
 	collision_mask = Layers.COLLISION_PLAYER_DAMAGE
+	
+	var continuous_data := data as CharacterAbilityDeliveryContinuous
+	if continuous_data:
+		_damage = continuous_data.damage
 
 func setup_character_ability(data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
 	collision_layer = Layers.COLLISION_PLAYER_SPELL
 	collision_mask = Layers.COLLISION_ENEMY_DAMAGE
 	
 	var continuous_data := data as CharacterAbilityDeliveryContinuous
-	if continuous_data == null:
-		return
-	
-	_damage = continuous_data.damage
+	if continuous_data:
+		_damage = continuous_data.damage
 
 func tick_damage() -> void:
 	for target in _targets:

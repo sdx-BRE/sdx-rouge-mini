@@ -10,11 +10,11 @@ var threshold := 0.5
 func _process(delta: float) -> void:
 	_age += delta
 
-func setup_enemy_ability(ability: EnemyCastAbility, context: EnemyAbilityContextCast) -> void:
-	super(ability, context)
+func setup_enemy_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+	super(data, context)
 	_taget_collision_mask = Layers.COLLISION_PLAYER_DAMAGE
 
-func launch_enemy_ability(_ability: EnemyCastAbility, _context: EnemyAbilityContextCast) -> void:
+func launch_enemy_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
 	get_tree().create_timer(DEFAULT_DURATION).timeout.connect(queue_free)
 
 func setup_character_ability(_data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
