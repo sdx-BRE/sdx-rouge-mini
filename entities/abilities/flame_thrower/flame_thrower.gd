@@ -5,7 +5,7 @@ var _parent: Node3D
 
 func setup_character_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
 	super(data, context)
-	_parent = context.get_wandspawn_node()
+	_parent = context.get_weapon_spawn_node()
 	top_level = true
 
 func launch_character_ability(data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:

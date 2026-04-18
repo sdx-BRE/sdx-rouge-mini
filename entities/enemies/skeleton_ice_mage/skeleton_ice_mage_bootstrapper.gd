@@ -1,4 +1,4 @@
-﻿class_name SkeletonIceMageBootstrapper extends BaseSkeletonEnemyBootstrapper
+class_name SkeletonIceMageBootstrapper extends BaseSkeletonEnemyBootstrapper
 
 var _mage: SkeletonIceMage
 
@@ -16,23 +16,31 @@ func _boot_processor_process_handler() -> void:
 	_mage._processor.add_process_handler(EnemyAbilitySystemHandler.new(_mage._ability_system))
 
 func _bootstrap_ability_system() -> void:
-	var registry := EnemyAbilityRegistry.new()
-	registry.add_ability(EnemyAbilityId.FROST_BOLT, _mage.frost_bolt)
-	registry.add_ability(EnemyAbilityId.SIMPLE_DEV_AOE, _mage.ground_aoe)
+	var registry := CharacterAbilityRegistry.new()
+	var cooldown_manager := CooldownManager.new()
 	
-	var cast_context := EnemyAbilityContextCast.create(
-		_mage._stats,
+	registry.register(_mage.dev_ability, _mage._stats, cooldown_manager)
+	
+	var aiming_strategy := SkeletonIceMageAimingStrategy.new()
+	var target_context := CharacterAbilityAimingContext.new(aiming_strategy)
+	
+	var setup_strategy := SkeletonIceMageSetupStrategy.new(_mage.anim_tree)
+	var setup_context := CharacterAbilitySetupContext.new(setup_strategy)
+	
+	var execute_strategy := SkeletonIceMageExecuteStrategy.create(
 		_mage,
 		_mage.pivot,
-		_mage._anim.get_animator(),
-		_mage._target_handler,
-		_mage.staff_spawn_point
+		_mage.staff_spawn_point,
+		null, # AI controller placeholder
 	)
+	var execute_context := CharacterAbilityExecuteContext.new(execute_strategy)
 	
-	var cooldown_manager := CooldownManager.new()
-	var resolver := EnemyAbilityResolver.new(
-		EnemyAbilityHandlerCast.new(cast_context, cooldown_manager),
-		EnemyAbilityHandlerInstant.new(),
-	)
+	var recover_strategy := SkeletonIceMageRecoverStrategy.new(_mage.anim_tree)
+	var recover_context := CharacterAbilityRecoverContext.new(recover_strategy)
 	
-	_mage._ability_system =  EnemyAbilitySystem.new(registry, resolver, cooldown_manager)
+	var factory := CharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context, recover_context)
+	var blackboard := CharacterAbilityExecutionBlackboard.new()
+	var execution := CharacterAbilityExecuter.new(blackboard, factory)
+	var manager := CharacterAbilityManager.new(execution)
+	
+	_mage._ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
