@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecuteDeliveryContinuousHandler extends CharacterAbilityExecuteDeliveryHandler
+class_name CharacterAbilityExecuteDeliveryContinuousHandler extends CharacterAbilityExecuteDeliveryHandler
 
 var _data: CharacterAbilityDeliveryContinuous
 var _node: Node
@@ -19,7 +19,7 @@ func _setup_scene() -> void:
 	_node = _data.scene.instantiate()
 	_setup_when_ability(_node, _data)
 	
-	_context.spawn_wand_child(_node)
+	_context.spawn_weapon_child(_node)
 	_launch_when_ability(_node, _data)
 
 func _when_continuous_abiltiy(node: Node, then: Callable) -> void:

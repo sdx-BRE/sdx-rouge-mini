@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecuteDeliveryProjectileHandler extends CharacterAbilityExecuteDeliveryHandler
+class_name CharacterAbilityExecuteDeliveryProjectileHandler extends CharacterAbilityExecuteDeliveryHandler
 
 var _data: CharacterAbilityDeliveryProjectile
 
@@ -16,5 +16,5 @@ func execute(aiming_result: CharacterAbilityAimingResult) -> void:
 	_launch_when_ability(node, _data)
 
 func _spawn_ability(node: Node3D) -> void:
-	_context.spawn_at_wand(node)
+	_context.spawn_at_weapon(node)
 	node.global_basis = _context.get_pivot_basis()
