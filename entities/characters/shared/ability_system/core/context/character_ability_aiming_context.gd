@@ -34,3 +34,6 @@ func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary
 
 func unproject_position(position: Vector3) -> Vector2:
 	return _strategy.unproject_position(position)
+
+func get_ai_target_handler() -> AiTargetHandler:
+	return _strategy.get_ai_target_handler()
