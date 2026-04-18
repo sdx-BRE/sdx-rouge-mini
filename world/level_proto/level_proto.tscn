@@ -1,0 +1,215 @@
+[gd_scene format=3 uid="uid://bhat55jgkcyas"]
+
+[ext_resource type="PackedScene" uid="uid://vwywsxlhycdp" path="res://entities/characters/mage/mage.tscn" id="1_7ktij"]
+[ext_resource type="Script" uid="uid://crd0xpajl58up" path="res://world/level_proto/level_proto.gd" id="1_cbn7j"]
+[ext_resource type="Shader" uid="uid://bbnp3m2fnkifs" path="res://world/level_proto/texture_blend_shader.gdshader" id="1_xuj54"]
+[ext_resource type="Texture2D" uid="uid://jkac70dacawq" path="res://assets/textures/ground/grass_02_4k/grass_02_base_4k.png" id="2_0kacx"]
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="2_6ksek"]
+[ext_resource type="Texture2D" uid="uid://b5427rhb0f28b" path="res://assets/textures/ground/grass_05_4k/grass_05_basecolor_4k.png" id="3_57ucr"]
+[ext_resource type="Texture2D" uid="uid://crponkmb23v6v" path="res://assets/textures/ground/grass_02_4k/grass_02_amibent_occlusion_4k.png" id="4_jdkri"]
+[ext_resource type="Texture2D" uid="uid://tm4vknhby7ut" path="res://assets/textures/ground/grass_02_4k/grass_02_normal_gl_4k.png" id="5_13vwc"]
+[ext_resource type="Texture2D" uid="uid://d3fk2fpken6ub" path="res://assets/textures/ground/grass_05_4k/grass_05_normal_gl_4k.png" id="6_cbn7j"]
+[ext_resource type="Texture2D" uid="uid://i7xpjg021njr" path="res://assets/textures/ground/grass_02_4k/grass_02_roughness_4k.png" id="7_ujf8g"]
+[ext_resource type="Texture2D" uid="uid://nhgurnecnvmo" path="res://assets/textures/ground/grass_05_4k/grass_05_roughness_4k.png" id="8_kjfjd"]
+[ext_resource type="Script" uid="uid://cvabyeulu2qs3" path="res://systems/camera/third_person_cam.gd" id="11_13vwc"]
+[ext_resource type="PackedScene" uid="uid://cx0uou72pcl3o" path="res://ui/hud/player_hud.tscn" id="13_ujf8g"]
+[ext_resource type="PackedScene" uid="uid://cxketaeb1qxff" path="res://entities/enemies/skeleton_minion/SkeletonMinion.tscn" id="14_kjfjd"]
+[ext_resource type="Script" uid="uid://bi8h6vbjfomjw" path="res://systems/spawner/wave_spawner_bak.gd" id="15_a7403"]
+[ext_resource type="PackedScene" uid="uid://ddy52ckqhg1ae" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage.tscn" id="16_neilm"]
+[ext_resource type="Script" uid="uid://b5wgad1i13dp0" path="res://entities/enemies/shared/enemy_data.gd" id="17_47owl"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xuj54"]
+panorama = ExtResource("2_6ksek")
+
+[sub_resource type="Sky" id="Sky_pcl7t"]
+sky_material = SubResource("PanoramaSkyMaterial_xuj54")
+
+[sub_resource type="Environment" id="Environment_0kacx"]
+background_mode = 2
+sky = SubResource("Sky_pcl7t")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_kjfjd"]
+vertices = PackedVector3Array(-49.5, 0.5, -49.5, -49.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -49.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_height = 2.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_u8tx6"]
+size = Vector3(100, 2, 100)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xe3hh"]
+noise_type = 0
+seed = 14
+frequency = 0.0051
+offset = Vector3(-410.5, -54.5, 0)
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7km73"]
+noise = SubResource("FastNoiseLite_xe3hh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcl7t"]
+render_priority = 0
+shader = ExtResource("1_xuj54")
+shader_parameter/albedo_a = ExtResource("2_0kacx")
+shader_parameter/albedo_b = ExtResource("3_57ucr")
+shader_parameter/normal_a = ExtResource("5_13vwc")
+shader_parameter/normal_b = ExtResource("6_cbn7j")
+shader_parameter/roughness_a = ExtResource("7_ujf8g")
+shader_parameter/roughness_b = ExtResource("8_kjfjd")
+shader_parameter/ambient_occlusion_a = ExtResource("4_jdkri")
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_7km73")
+shader_parameter/scale_a = 70.175
+shader_parameter/scale_b = 40.155
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ktij"]
+size = Vector3(100, 2, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ujf8g"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kjfjd"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="Resource" id="Resource_jcl0t"]
+script = ExtResource("17_47owl")
+attack_cooldown = 1.0
+metadata/_custom_type_script = "uid://b5wgad1i13dp0"
+
+[node name="LevelProto" type="Node" unique_id=476403489 node_paths=PackedStringArray("mage", "hud", "skeleton_minion_patrol_points")]
+script = ExtResource("1_cbn7j")
+mage = NodePath("Mage")
+hud = NodePath("PlayerUI")
+skeleton_minion_scene = ExtResource("14_kjfjd")
+skeleton_minion_patrol_points = [NodePath("PatrolPoints/Patrol1"), NodePath("PatrolPoints/Patrol2"), NodePath("PatrolPoints/Patrol3"), NodePath("PatrolPoints/Patrol4"), NodePath("PatrolPoints/Patrol5"), NodePath("PatrolPoints/Patrol6"), NodePath("PatrolPoints/Patrol7"), NodePath("PatrolPoints/Patrol8"), NodePath("PatrolPoints/Patrol9"), NodePath("PatrolPoints/Patrol10"), NodePath("PatrolPoints/Patrol11"), NodePath("PatrolPoints/Patrol12"), NodePath("PatrolPoints/Patrol13"), NodePath("PatrolPoints/Patrol14"), NodePath("PatrolPoints/Patrol15"), NodePath("PatrolPoints/Patrol16")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1592770966]
+environment = SubResource("Environment_0kacx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=254519677]
+transform = Transform3D(1, 0, 0, 0, -0.7071068, 0.7071068, 0, -0.7071068, -0.7071068, 0, 10, 0)
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_opacity = 0.4
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1030880473]
+navigation_mesh = SubResource("NavigationMesh_kjfjd")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D" unique_id=524443866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 16
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground" unique_id=689642041]
+mesh = SubResource("BoxMesh_u8tx6")
+surface_material_override/0 = SubResource("ShaderMaterial_pcl7t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground" unique_id=1972750219]
+shape = SubResource("BoxShape3D_7ktij")
+
+[node name="Mage" parent="." unique_id=580988873 node_paths=PackedStringArray("camera_node") instance=ExtResource("1_7ktij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 0)
+camera_node = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Mage" unique_id=167015168 node_paths=PackedStringArray("camera_node")]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.2628582, 0)
+script = ExtResource("11_13vwc")
+camera_node = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="Mage/Marker3D" unique_id=992528019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+
+[node name="PlayerUI" parent="." unique_id=986810243 instance=ExtResource("13_ujf8g")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=161557780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -12)
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1855147642]
+layers = 2
+mesh = SubResource("BoxMesh_ujf8g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=648209071]
+shape = SubResource("BoxShape3D_kjfjd")
+
+[node name="PatrolPoints" type="Node" parent="." unique_id=592290469]
+
+[node name="Patrol1" type="Marker3D" parent="PatrolPoints" unique_id=1193114232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -30)
+
+[node name="Patrol2" type="Marker3D" parent="PatrolPoints" unique_id=512553845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -30)
+
+[node name="Patrol3" type="Marker3D" parent="PatrolPoints" unique_id=445159998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -30)
+
+[node name="Patrol4" type="Marker3D" parent="PatrolPoints" unique_id=1701782845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -30)
+
+[node name="Patrol5" type="Marker3D" parent="PatrolPoints" unique_id=161704532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -10)
+
+[node name="Patrol6" type="Marker3D" parent="PatrolPoints" unique_id=1618652492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+
+[node name="Patrol7" type="Marker3D" parent="PatrolPoints" unique_id=1640003343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
+
+[node name="Patrol8" type="Marker3D" parent="PatrolPoints" unique_id=250641326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -10)
+
+[node name="Patrol9" type="Marker3D" parent="PatrolPoints" unique_id=962384625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 10)
+
+[node name="Patrol10" type="Marker3D" parent="PatrolPoints" unique_id=237170941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+
+[node name="Patrol11" type="Marker3D" parent="PatrolPoints" unique_id=706495385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+
+[node name="Patrol12" type="Marker3D" parent="PatrolPoints" unique_id=1395045951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+
+[node name="Patrol13" type="Marker3D" parent="PatrolPoints" unique_id=255791488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 30)
+
+[node name="Patrol14" type="Marker3D" parent="PatrolPoints" unique_id=1786331655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 30)
+
+[node name="Patrol15" type="Marker3D" parent="PatrolPoints" unique_id=263217567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 30)
+
+[node name="Patrol16" type="Marker3D" parent="PatrolPoints" unique_id=406129831]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 30)
+
+[node name="SkeletonMinion" parent="." unique_id=357161485 node_paths=PackedStringArray("patrol_points") instance=ExtResource("14_kjfjd")]
+process_mode = 4
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -8.091881, 0, -12.281884)
+visible = false
+wait_time = 3.0
+patrol_points = [NodePath("../PatrolPoints/Patrol3")]
+
+[node name="WaveSpawner" type="Node" parent="." unique_id=1151468914 node_paths=PackedStringArray("spawn_locations")]
+script = ExtResource("15_a7403")
+max_enemies = 0
+spawn_locations = [NodePath("SpawnLocation1"), NodePath("SpawnLocation2")]
+spawn_radius = 20.0
+skeleton_minion_scene = ExtResource("14_kjfjd")
+metadata/_custom_type_script = "uid://bi8h6vbjfomjw"
+
+[node name="SpawnLocation1" type="Marker3D" parent="WaveSpawner" unique_id=1393743190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.044525, -9.536743e-07, -32.142532)
+
+[node name="SpawnLocation2" type="Marker3D" parent="WaveSpawner" unique_id=1727645083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -15)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2032973984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(5, 1, 5)
+
+[node name="SkeletonIceMage" parent="." unique_id=1683724073 node_paths=PackedStringArray("patrol_points") instance=ExtResource("16_neilm")]
+transform = Transform3D(-0.95587, 0, 0.2937902, 0, 1, 0, -0.2937902, 0, -0.95587, 31.303686, 9.536743e-07, -36.276917)
+data = SubResource("Resource_jcl0t")
+patrol_points = [NodePath("../PatrolPoints/Patrol7"), NodePath("../PatrolPoints/Patrol3")]

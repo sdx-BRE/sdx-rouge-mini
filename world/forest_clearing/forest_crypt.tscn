@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cu8pbkk0qk60w"]
+
+[ext_resource type="PackedScene" uid="uid://7nj3nv4ay4di" path="res://assets/world/KayKits/halloween/crypt.gltf" id="1_yjfuw"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4lw0a"]
+points = PackedVector3Array(0.6189446, 7.936231, 3.9362097, 1.9838662, 0.0005856454, -4, -3, 0.022313248, -3.9790475, 1.9838662, 0.0005856454, 4, 2.939192, 5.107418, -3.9402304, -3, 0.022313248, 3.9790475, -2.9604847, 5.103519, -3.9263585, -2.960486, 5.1035194, 3.92636, -0.5, 7.631433, -3.8749058, 2.9391897, 5.107417, 3.9402273, 2.9840171, 0.0005856454, 4, 2.9840171, 0.0005856454, -4, -0.523563, 8.062696, 2.9203367, 0.47274616, 7.6647553, -3.9104612, -0.5, 7.874142, 3.8749058, 0.4918667, 8.062696, 2.9203367, 2.8716466, 5.2026825, -3.7295654, 2.8716466, 5.2026825, 3.7295654, 0.6189446, 7.936231, 2.9203367)
+
+[node name="Halloween_Crypt" unique_id=727673379 instance=ExtResource("1_yjfuw")]
+
+[node name="crypt" parent="." index="0" unique_id=1155388319]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crypt" index="0" unique_id=100671852]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crypt/StaticBody3D" index="0" unique_id=57788349]
+shape = SubResource("ConvexPolygonShape3D_4lw0a")

@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://5dlfawrp7k5"]
+
+[ext_resource type="Script" uid="uid://v8k43ic2jslg" path="res://entities/abilities/ability_entity.gd" id="1_2o7wg"]
+[ext_resource type="Texture2D" uid="uid://cs6lirkum5qsr" path="res://assets/textures/kenney_particle_pack/fire_02.png" id="2_wj3a8"]
+[ext_resource type="Curve" uid="uid://bwed1xs2eg2lr" path="res://entities/abilities/flame_thrower/resources/flame_thrower_scale_curve.tres" id="3_wj3a8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uki2d"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_wj3a8")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="Gradient" id="Gradient_cfqki"]
+offsets = PackedFloat32Array(0, 0.039711192, 0.1768953, 0.28519857, 0.8158845, 0.9314079, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0.25490198, 1, 1, 0.5019608, 0, 1, 0.6906401, 0.15153533, 0, 1, 0.5568628, 0, 0, 1, 0.5568628, 0, 0, 0.60784316, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jvjhj"]
+gradient = SubResource("Gradient_cfqki")
+
+[sub_resource type="CurveTexture" id="CurveTexture_uki2d"]
+curve = ExtResource("3_wj3a8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pcyd4"]
+lifetime_randomness = 0.06
+emission_shape = 2
+emission_sphere_radius = 0.01
+direction = Vector3(0, 0, -1)
+spread = 10.0
+flatness = 0.75
+initial_velocity_min = 12.0
+initial_velocity_max = 16.0
+radial_velocity_min = -5.0000224
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 3, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_uki2d")
+color_ramp = SubResource("GradientTexture1D_jvjhj")
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+turbulence_initial_displacement_min = -24.599998
+turbulence_initial_displacement_max = -24.599998
+
+[sub_resource type="QuadMesh" id="QuadMesh_mxb3c"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cfqki"]
+bottom_radius = 0.0
+height = 2.8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jvjhj"]
+points = PackedVector3Array(0.45548594, 1.4222223, 0.32204822, -0.52222216, 1.2443053, -0.07774294, -0.52222216, 1.2443053, 0.055381563, 0.01111114, -1.4222223, -0.033263694, 0.18871489, 1.4222223, -0.52222216, -0.21107626, 1.4222223, 0.4999652, 0.4999652, 1.2888541, -0.21107626, -0.34440958, 1.4222223, -0.43326366, -0.033263694, -1.3776734, 0.055381563, 0.18871489, 1.2443053, 0.4999652, -0.4777429, 1.4222223, 0.27767336, 0.055381563, -1.3331245, 0.055381563, -0.16659702, 1.3331245, -0.52222216, 0.54444444, 1.3776734, 0.01111114, -0.07774294, -1.155486, -0.07774294, 0.36652747, 1.1997564, -0.38888884, 0.055381563, -1.2443053, -0.07774294, -0.033263694, 1.3776734, 0.54444444, -0.4777429, 1.2888541, -0.2555555, -0.38888884, 1.1997564, 0.36652747, -0.07774294, -1.2443053, 0.055381563, 0.4999652, 1.2443053, 0.18871489, 0.32204822, 1.3776734, 0.45548594, -0.21107626, 1.2888541, 0.4999652, 0.055381563, 1.2443053, -0.52222216, -0.52222216, 1.3776734, 0.18871489, 0.45548594, 1.4222223, -0.29993033, 0.055381563, -1.3776734, -0.033263694, -0.38888884, 1.2888541, -0.38888884, -0.52222216, 1.4222223, -0.16659702, 0.27767336, 1.3331245, -0.4777429, 0.4110067, 1.155486, 0.32204822)
+
+[node name="FlameThrowerBak" type="Area3D" unique_id=1087221825]
+script = ExtResource("1_2o7wg")
+metadata/_custom_type_script = "uid://v8k43ic2jslg"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1589293828]
+material_override = SubResource("StandardMaterial3D_uki2d")
+amount = 400
+amount_ratio = 0.98
+randomness = 0.2
+process_material = SubResource("ParticleProcessMaterial_pcyd4")
+draw_pass_1 = SubResource("QuadMesh_mxb3c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1479148634]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -1.4)
+visible = false
+mesh = SubResource("CylinderMesh_cfqki")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=536290676]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -1.4)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_jvjhj")

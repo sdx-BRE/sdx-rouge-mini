@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://dfp38nnj58ceg"]
+
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="1_6nldf"]
+[ext_resource type="Script" uid="uid://bc7sr8d37s1ao" path="res://world/map_blockout/map_blockout.gd" id="1_ov3st"]
+[ext_resource type="PackedScene" uid="uid://vwywsxlhycdp" path="res://entities/characters/mage/mage.tscn" id="2_kyuun"]
+[ext_resource type="Script" uid="uid://cvabyeulu2qs3" path="res://systems/camera/third_person_cam.gd" id="3_byg1n"]
+[ext_resource type="Script" uid="uid://bit45w4kdy4al" path="res://entities/characters/mage/mage_data.gd" id="4_682kq"]
+[ext_resource type="PackedScene" uid="uid://cx0uou72pcl3o" path="res://ui/hud/player_hud.tscn" id="5_ywv2w"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_kyuun"]
+panorama = ExtResource("1_6nldf")
+
+[sub_resource type="Sky" id="Sky_p5n24"]
+sky_material = SubResource("PanoramaSkyMaterial_kyuun")
+
+[sub_resource type="Environment" id="Environment_byg1n"]
+background_mode = 2
+sky = SubResource("Sky_p5n24")
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_dvgi1"]
+script = ExtResource("4_682kq")
+mana_regeneration = 30.0
+stamina_regeneration = 30.0
+max_speed = 10.0
+dash_power = 30.0
+metadata/_custom_type_script = "uid://bit45w4kdy4al"
+
+[node name="MapBlockout" type="Node" unique_id=1892780867 node_paths=PackedStringArray("mage", "hud")]
+script = ExtResource("1_ov3st")
+mage = NodePath("Mage")
+hud = NodePath("PlayerUI")
+
+[node name="Environment" type="Node" parent="." unique_id=1866704895]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1965676570]
+environment = SubResource("Environment_byg1n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=700226279]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Mage" parent="." unique_id=580988873 node_paths=PackedStringArray("camera_node") instance=ExtResource("2_kyuun")]
+data = SubResource("Resource_dvgi1")
+camera_node = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Mage" unique_id=1399519079 node_paths=PackedStringArray("camera_node")]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.2628582, 0)
+script = ExtResource("3_byg1n")
+camera_node = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="Mage/Marker3D" unique_id=1065020344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+
+[node name="PlayerUI" parent="." unique_id=986810243 instance=ExtResource("5_ywv2w")]
+
+[node name="Platform" type="CSGBox3D" parent="." unique_id=1580689026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(200, 1, 200)
+
+[node name="Obstacles" type="Node" parent="." unique_id=888654395]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Obstacles" unique_id=1856029046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.027502, 2.5000005, -10.971203)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+radius = 1.0
+height = 5.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Obstacles" unique_id=1369250143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2393122, 2.5000005, 6.9261723)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+radius = 1.0
+height = 5.0
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Obstacles" unique_id=903416268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4085045, 2.5000005, 11.896732)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+radius = 1.0
+height = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Obstacles" unique_id=149149176]
+transform = Transform3D(0.5968272, 0, 0.8023698, 0, 1, 0, -0.8023698, 0, 0.5968272, -4.8573556, 0.5, -4.2744803)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(1.5, 1, 2)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Obstacles" unique_id=1887699201]
+transform = Transform3D(-0.76017916, 0, -0.6497135, 0, 1, 0, 0.6497135, 0, -0.76017916, 6.2855067, 0.50000095, 0.49510336)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(1.5, 1, 2)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Obstacles" unique_id=1128427220]
+transform = Transform3D(0.53114724, 0, -0.84727955, 0, 1, 0, 0.84727955, 0, 0.53114724, 2.2379432, 0.50000095, -12.651888)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(1.5, 1, 2)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1875203496]
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D" unique_id=583116475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.913064, 0)
+operation = 1
+inner_radius = 3.0
+outer_radius = 3.3
+sides = 12
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=745186648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)

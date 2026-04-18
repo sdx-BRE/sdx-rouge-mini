@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://b1btchwkwomn0"]
+
+[ext_resource type="Script" uid="uid://bgvpq84q3c76v" path="res://ui/game_menu/game_menu.gd" id="1_7seul"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aksp"]
+bg_color = Color(0.12, 0.12, 0.12, 0.2509804)
+
+[node name="GameMenu" type="CanvasLayer" unique_id=123140752]
+process_mode = 3
+layer = 5
+visible = false
+script = ExtResource("1_7seul")
+
+[node name="Panel" type="Panel" parent="." unique_id=1755454834]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8aksp")
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel" unique_id=1704525238]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer" unique_id=2138043889]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="MenuLabel" type="Label" parent="Panel/CenterContainer/VBoxContainer" unique_id=824373927]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Panel/CenterContainer/VBoxContainer" unique_id=413365380]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+text = "Neustarten"

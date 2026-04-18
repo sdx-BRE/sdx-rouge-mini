@@ -1,0 +1,99 @@
+[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://byq8fjp4lsrle"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tp1oe"]
+animation = &"Combat/Magic_Raise"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_quf77"]
+animation = &"anim_lib_global/Skeletons_Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2o786"]
+animation = &"anim_lib_global/Skeletons_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bacbq"]
+animation = &"anim_lib_global/Skeletons_Walking"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_oohyq"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2o786")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_bacbq")
+blend_point_1/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_buas5"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pw178"]
+graph_offset = Vector2(-541.9091, -16.818192)
+nodes/Movement/node = SubResource("AnimationNodeBlendSpace1D_oohyq")
+nodes/Movement/position = Vector2(-348.60104, 142.659)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_buas5")
+nodes/TimeScale/position = Vector2(-20, 120)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Movement"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k0fv8"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tp1oe"]
+xfade_time = 0.15
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ccd4k"]
+states/Death/node = SubResource("AnimationNodeAnimation_quf77")
+states/Death/position = Vector2(454, 234)
+states/Locomotion/node = SubResource("AnimationNodeBlendTree_pw178")
+states/Locomotion/position = Vector2(454, 100)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_k0fv8"), "Locomotion", "Death", SubResource("AnimationNodeStateMachineTransition_tp1oe")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oohyq"]
+animation = &"anim_lib_global/Hit_B"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_buas5"]
+filter_enabled = true
+filters = ["Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:hips", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pw178"]
+animation = &"anim_lib_global/Hit_A"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_n0wwj"]
+filter_enabled = true
+filters = ["Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:hips", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_vqhyx"]
+filter_enabled = true
+filters = ["..", "Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:handslot.l", "Rig_Medium/Skeleton3D:handslot.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rkcrx"]
+animation = &"Combat/Magic_Shoot"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_j6xr7"]
+filter_enabled = true
+filters = ["..", "Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:handslot.l", "Rig_Medium/Skeleton3D:handslot.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[resource]
+graph_offset = Vector2(-197.88708, -7.337471)
+nodes/output/position = Vector2(1240, 180)
+nodes/FullBodyState/node = SubResource("AnimationNodeStateMachine_ccd4k")
+nodes/FullBodyState/position = Vector2(-360, 160)
+nodes/HitWeakOneShot/node = SubResource("AnimationNodeOneShot_n0wwj")
+nodes/HitWeakOneShot/position = Vector2(80, 160)
+nodes/HitStrongOneShot/node = SubResource("AnimationNodeOneShot_buas5")
+nodes/HitStrongOneShot/position = Vector2(360, 160)
+nodes/HitWeakAnimation/node = SubResource("AnimationNodeAnimation_pw178")
+nodes/HitWeakAnimation/position = Vector2(80, 440)
+nodes/HitStrongAnimation/node = SubResource("AnimationNodeAnimation_oohyq")
+nodes/HitStrongAnimation/position = Vector2(360, 440)
+nodes/ShootOneShot/node = SubResource("AnimationNodeOneShot_j6xr7")
+nodes/ShootOneShot/position = Vector2(660, 160)
+nodes/ShootAnimation/node = SubResource("AnimationNodeAnimation_rkcrx")
+nodes/ShootAnimation/position = Vector2(660, 440)
+nodes/RaiseOneShot/node = SubResource("AnimationNodeOneShot_vqhyx")
+nodes/RaiseOneShot/position = Vector2(1000, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_tp1oe")
+nodes/Animation/position = Vector2(1000, 440)
+node_connections = [&"output", 0, &"RaiseOneShot", &"HitWeakOneShot", 0, &"FullBodyState", &"HitWeakOneShot", 1, &"HitWeakAnimation", &"HitStrongOneShot", 0, &"HitWeakOneShot", &"HitStrongOneShot", 1, &"HitStrongAnimation", &"ShootOneShot", 0, &"HitStrongOneShot", &"ShootOneShot", 1, &"ShootAnimation", &"RaiseOneShot", 0, &"ShootOneShot", &"RaiseOneShot", 1, &"Animation"]

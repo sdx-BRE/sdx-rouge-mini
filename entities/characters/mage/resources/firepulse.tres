@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bg1rax5gofv52"]
+
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/abilities/ability_cost.gd" id="1_kjna2"]
+[ext_resource type="PackedScene" uid="uid://cdxvvh8hfyycp" path="res://entities/characters/mage/spells/firepulse/firepuls.tscn" id="2_w7q5t"]
+[ext_resource type="Script" uid="uid://c4c4tryrgietg" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_aoe.gd" id="3_4klk3"]
+[ext_resource type="Script" uid="uid://bxlxyggy7yd8u" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_i5wyk"]
+[ext_resource type="Script" uid="uid://ta8c17t6dt50" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_none.gd" id="5_5j7v8"]
+[ext_resource type="Script" uid="uid://d35cujbm2lm57" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_h5wcw"]
+[ext_resource type="Script" path="ability_windup_animation.gd" id="7_guvur"]
+
+[sub_resource type="Resource" id="Resource_1np6a"]
+script = ExtResource("1_kjna2")
+type = 0
+mana = 3.0
+
+[sub_resource type="Resource" id="Resource_3pngl"]
+script = ExtResource("3_4klk3")
+scene = ExtResource("2_w7q5t")
+metadata/_custom_type_script = "uid://c4c4tryrgietg"
+
+[sub_resource type="Resource" id="Resource_kjna2"]
+script = ExtResource("5_5j7v8")
+metadata/_custom_type_script = "uid://ta8c17t6dt50"
+
+[sub_resource type="Resource" id="Resource_lkne7"]
+script = ExtResource("6_h5wcw")
+metadata/_custom_type_script = "uid://d35cujbm2lm57"
+
+[sub_resource type="Resource" id="Resource_brpg6"]
+script = ExtResource("7_guvur")
+anim_trigger = &"parameters/ShootOneShot"
+anim_name = &"Combat/Ranged_Magic_Shoot"
+metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
+
+[resource]
+script = ExtResource("4_i5wyk")
+cost = SubResource("Resource_1np6a")
+targeting = SubResource("Resource_kjna2")
+trigger = SubResource("Resource_lkne7")
+windup = SubResource("Resource_brpg6")
+delivery = SubResource("Resource_3pngl")
+input = "attack"
+id = 100
+metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

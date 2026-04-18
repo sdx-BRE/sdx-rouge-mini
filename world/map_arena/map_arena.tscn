@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://teg3dyd8n80u"]
+
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="1_ir8l5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_03o1v"]
+panorama = ExtResource("1_ir8l5")
+
+[sub_resource type="Sky" id="Sky_ir8l5"]
+sky_material = SubResource("PanoramaSkyMaterial_03o1v")
+
+[sub_resource type="Environment" id="Environment_83goq"]
+background_mode = 2
+sky = SubResource("Sky_ir8l5")
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_03o1v"]
+size = Vector3(20, 2, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p5n24"]
+data = PackedVector3Array(-10, 1, 10, 10, 1, 10, -10, -1, 10, 10, 1, 10, 10, -1, 10, -10, -1, 10, 10, 1, -10, -10, 1, -10, 10, -1, -10, -10, 1, -10, -10, -1, -10, 10, -1, -10, 10, 1, 10, 10, 1, -10, 10, -1, 10, 10, 1, -10, 10, -1, -10, 10, -1, 10, -10, 1, -10, -10, 1, 10, -10, -1, -10, -10, 1, 10, -10, -1, 10, -10, -1, -10, 10, 1, 10, -10, 1, 10, 10, 1, -10, -10, 1, 10, -10, 1, -10, 10, 1, -10, -10, -1, 10, 10, -1, 10, -10, -1, -10, 10, -1, 10, 10, -1, -10, -10, -1, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_83goq"]
+size = Vector3(20, 2, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fvpvi"]
+size = Vector3(28, 2, 5)
+
+[node name="MapArena" type="Node" unique_id=1817997399]
+
+[node name="Environment" type="Node" parent="." unique_id=126682173]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1229034118]
+environment = SubResource("Environment_83goq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=504976097]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 10, 0)
+shadow_enabled = true
+
+[node name="PlatformCenter" type="MeshInstance3D" parent="." unique_id=80172257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_03o1v")
+
+[node name="PlatformX" type="MeshInstance3D" parent="." unique_id=899919843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -1, 17)
+mesh = SubResource("BoxMesh_03o1v")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="PlatformX" unique_id=338419253]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlatformX/StaticBody3D" unique_id=192295618]
+shape = SubResource("ConcavePolygonShape3D_p5n24")
+
+[node name="PlatformX2" type="MeshInstance3D" parent="." unique_id=681166456]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -1, -17)
+mesh = SubResource("BoxMesh_03o1v")
+
+[node name="PlatformX3" type="MeshInstance3D" parent="." unique_id=2141021004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1, -17)
+mesh = SubResource("BoxMesh_03o1v")
+
+[node name="PlatformX4" type="MeshInstance3D" parent="." unique_id=994808662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1, 17)
+mesh = SubResource("BoxMesh_03o1v")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=724322313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
+
+[node name="PlatformX5" type="MeshInstance3D" parent="Node3D" unique_id=149895577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -1, 17)
+mesh = SubResource("BoxMesh_83goq")
+
+[node name="PlatformX6" type="MeshInstance3D" parent="Node3D" unique_id=1930118297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -1, -16)
+mesh = SubResource("BoxMesh_83goq")
+
+[node name="PlatformX7" type="MeshInstance3D" parent="Node3D" unique_id=657636026]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.5, -1, 0.5)
+mesh = SubResource("BoxMesh_fvpvi")
+
+[node name="Node3D2" type="Node3D" parent="." unique_id=1966729208]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -45, 0, 0)
+
+[node name="PlatformX5" type="MeshInstance3D" parent="Node3D2" unique_id=1678382736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -1, 17)
+mesh = SubResource("BoxMesh_83goq")
+
+[node name="PlatformX6" type="MeshInstance3D" parent="Node3D2" unique_id=1042307805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -1, -16)
+mesh = SubResource("BoxMesh_83goq")
+
+[node name="PlatformX7" type="MeshInstance3D" parent="Node3D2" unique_id=1337866916]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.5, -1, 0.5)
+mesh = SubResource("BoxMesh_fvpvi")

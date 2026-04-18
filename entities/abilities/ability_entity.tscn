@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bbs45s5aw6j5c"]
+
+[ext_resource type="Script" uid="uid://v8k43ic2jslg" path="res://entities/abilities/ability_entity.gd" id="1_05wup"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_05wup"]
+
+[node name="AbilityEntity" type="Area3D" unique_id=1312920768]
+script = ExtResource("1_05wup")
+
+[node name="Hitbox" type="CollisionShape3D" parent="." unique_id=482566949]
+shape = SubResource("SphereShape3D_05wup")

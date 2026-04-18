@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityWindupAnimation" format=3 uid="uid://c8cgkhk1btgxa"]
+
+[ext_resource type="Script" uid="uid://cbe3b0re0v8y4" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="1_63en8"]
+
+[resource]
+script = ExtResource("1_63en8")
+anim_trigger = &"parameters/RaiseOneShot"
+anim_name = &"Combat/Ranged_Magic_Raise"
+metadata/_custom_type_script = "uid://cbe3b0re0v8y4"

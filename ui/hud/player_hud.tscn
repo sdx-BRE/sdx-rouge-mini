@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://cx0uou72pcl3o"]
+
+[ext_resource type="Script" uid="uid://7lynk3ovbw2i" path="res://ui/hud/player_hud.gd" id="1_s4ogp"]
+[ext_resource type="Texture2D" uid="uid://cribnqwwkkgce" path="res://assets/textures/kenney/ui_adventure/panel_brown_damaged_dark.png" id="2_o5suo"]
+[ext_resource type="Texture2D" uid="uid://c5llfxsy54my5" path="res://assets/textures/kenney/ui_adventure/panel_border_brown_detail.png" id="3_boqfv"]
+[ext_resource type="Texture2D" uid="uid://dns1cklim0u5n" path="res://assets/textures/kenney/ui_adventure/round_damaged_brown.png" id="4_y2gd1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vu4vs"]
+bg_color = Color(0.7882353, 0.7882353, 0.7882353, 0.0627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s4ogp"]
+bg_color = Color(0.9843137, 0.45882353, 0.41568628, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2sf84"]
+bg_color = Color(0.41568628, 0.45882353, 0.9843137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vlvns"]
+bg_color = Color(0.011644754, 0.63531375, 0.19081262, 1)
+
+[node name="PlayerUI" type="CanvasLayer" unique_id=986810243]
+script = ExtResource("1_s4ogp")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1565078534]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="MarginContainer" unique_id=14300175]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="StatContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=1462460372]
+layout_mode = 1
+offset_right = 250.0
+offset_bottom = 49.0
+size_flags_vertical = 0
+theme_override_constants/separation = 9
+
+[node name="Health" type="ProgressBar" parent="MarginContainer/Control/StatContainer" unique_id=567222662]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_vu4vs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s4ogp")
+value = 100.0
+show_percentage = false
+
+[node name="Mana" type="ProgressBar" parent="MarginContainer/Control/StatContainer" unique_id=173462910]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_vu4vs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2sf84")
+value = 100.0
+show_percentage = false
+
+[node name="Stamina" type="ProgressBar" parent="MarginContainer/Control/StatContainer" unique_id=1863034146]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_vu4vs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vlvns")
+value = 100.0
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=1474129637]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -79.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Control/VBoxContainer" unique_id=2034281263]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillProgres" type="ProgressBar" parent="MarginContainer/Control/VBoxContainer/CenterContainer" unique_id=292472932]
+custom_minimum_size = Vector2(400, 10)
+layout_mode = 2
+show_percentage = false
+
+[node name="SkillsContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer" unique_id=2084662578]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Skill1" type="TextureProgressBar" parent="MarginContainer/Control/VBoxContainer/SkillsContainer" unique_id=1147133407]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+step = 0.0
+fill_mode = 3
+texture_under = ExtResource("2_o5suo")
+texture_over = ExtResource("3_boqfv")
+texture_progress = ExtResource("4_y2gd1")
+
+[node name="Skill2" type="TextureProgressBar" parent="MarginContainer/Control/VBoxContainer/SkillsContainer" unique_id=1607293645]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+step = 0.0
+fill_mode = 3
+texture_under = ExtResource("2_o5suo")
+texture_over = ExtResource("3_boqfv")
+texture_progress = ExtResource("4_y2gd1")
+
+[node name="Skill3" type="TextureProgressBar" parent="MarginContainer/Control/VBoxContainer/SkillsContainer" unique_id=1908211482]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+step = 0.0
+fill_mode = 3
+texture_under = ExtResource("2_o5suo")
+texture_over = ExtResource("3_boqfv")
+texture_progress = ExtResource("4_y2gd1")

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://derrpqrpwck7n"]
+
+[ext_resource type="PackedScene" uid="uid://csun67rp14wy1" path="res://entities/abilities/projectile/base_projectile.tscn" id="1_js8k4"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_js8k4"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q0kx3"]
+albedo_color = Color(0.50073296, 2.2248583, 2.799567, 1)
+emission_enabled = true
+emission = Color(0.26889828, 2.0058005, 2.8107064, 1)
+emission_energy_multiplier = 3.63
+
+[node name="FrostBolt" unique_id=1312920768 instance=ExtResource("1_js8k4")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2" unique_id=444210065]
+mesh = SubResource("SphereMesh_js8k4")
+surface_material_override/0 = SubResource("StandardMaterial3D_q0kx3")

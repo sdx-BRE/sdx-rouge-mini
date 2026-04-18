@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ciqfwn4f0pa4v"]
+
+[ext_resource type="PackedScene" uid="uid://801oclpcjn6w" path="res://assets/world/KayKits/halloween/fence.gltf" id="1_hn53u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ha7nu"]
+size = Vector3(4, 2, 0.6)
+
+[node name="GraveyardFence" unique_id=823835750 instance=ExtResource("1_hn53u")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=1547909210]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=407045766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009, 1, -0.021)
+shape = SubResource("BoxShape3D_ha7nu")

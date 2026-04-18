@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cdb1r18so0d6s"]
+
+[ext_resource type="PackedScene" uid="uid://bp3l8rp8tqcf5" path="res://entities/abilities/continuous/continuous_ability.tscn" id="1_sk5e6"]
+[ext_resource type="Texture2D" uid="uid://cs6lirkum5qsr" path="res://assets/textures/kenney_particle_pack/fire_02.png" id="2_jvjhj"]
+[ext_resource type="Script" uid="uid://r2arslxj4jty" path="res://entities/abilities/flame_thrower/flame_thrower.gd" id="2_uki2d"]
+[ext_resource type="Curve" uid="uid://bwed1xs2eg2lr" path="res://entities/abilities/flame_thrower/resources/flame_thrower_scale_curve.tres" id="3_uki2d"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jvjhj"]
+points = PackedVector3Array(0.59512615, 3.0470226, 0.023809493, -0.54750717, 2.3801136, -0.071372665, -0.54750717, 2.3801136, 0.11899165, 0.023809493, -3.0470226, 0.023809493, 0.21417381, 3.0470226, -0.54750717, 0.023809493, 3.0470226, 0.59512615, -0.26184884, 3.0470226, -0.54750717, 0.40464997, 2.1898236, 0.40464997, -0.357031, 3.0470226, 0.49983212, -0.071372665, -3.0470226, -0.071372665, 0.49983212, 2.7612896, -0.357031, -0.071372665, -2.7612896, 0.11899165, 0.11899165, -2.7612896, -0.071372665, -0.54750717, 3.0470226, -0.26184884, 0.11899165, -2.6658463, 0.11899165, 0.21417381, 2.5704033, -0.54750717, -0.45221314, 2.2852669, -0.357031, -0.16655482, -2.1898236, 0.11899165, 0.11899165, -2.1898236, -0.16655482, -0.16655482, 2.4755566, -0.54750717, -0.45221314, 2.6658463, 0.40464997, 0.30946782, 2.4755566, 0.49983212, -0.26184884, 2.1898236, 0.49983212, 0.49983212, 1.999534, 0.21417381, 0.49983212, 3.0470226, 0.30946782, -0.16655482, -1.8086476, -0.16655482, 0.49983212, 1.9040908, -0.16655482, -0.54750717, 3.0470226, 0.21417381, 0.40464997, 2.6658463, -0.45221314, 0.11899165, 1.8086476, 0.49983212, -0.357031, 2.2852669, -0.45221314, -0.071372665, 2.9515793, 0.59512615)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pcyd4"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_jvjhj")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="Gradient" id="Gradient_mxb3c"]
+offsets = PackedFloat32Array(0, 0.039711192, 0.1768953, 0.28519857, 0.8158845, 0.9314079, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0.25490198, 1, 1, 0.5019608, 0, 1, 0.6906401, 0.15153533, 0, 1, 0.5568628, 0, 0, 1, 0.5568628, 0, 0, 0.60784316, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jvjhj"]
+gradient = SubResource("Gradient_mxb3c")
+
+[sub_resource type="CurveTexture" id="CurveTexture_uki2d"]
+curve = ExtResource("3_uki2d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_78h6h"]
+lifetime_randomness = 0.06
+emission_shape = 2
+emission_sphere_radius = 0.01
+direction = Vector3(0, 0, -1)
+spread = 10.0
+flatness = 0.75
+initial_velocity_min = 12.0
+initial_velocity_max = 16.0
+radial_velocity_min = -5.0000224
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 3, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_uki2d")
+color_ramp = SubResource("GradientTexture1D_jvjhj")
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+turbulence_initial_displacement_min = -24.599998
+turbulence_initial_displacement_max = -24.599998
+
+[sub_resource type="QuadMesh" id="QuadMesh_77ijb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kqfx0"]
+bottom_radius = 0.0
+height = 6.0
+
+[node name="FlameThrower" unique_id=1312920768 instance=ExtResource("1_sk5e6")]
+script = ExtResource("2_uki2d")
+rotation_speed = 2.0
+
+[node name="Hitbox" parent="." index="0" unique_id=482566949]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -3)
+shape = SubResource("ConvexPolygonShape3D_jvjhj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1" unique_id=973663331]
+material_override = SubResource("StandardMaterial3D_pcyd4")
+amount = 400
+amount_ratio = 0.98
+randomness = 0.2
+process_material = SubResource("ParticleProcessMaterial_78h6h")
+draw_pass_1 = SubResource("QuadMesh_77ijb")
+
+[node name="HitboxTemplate" type="MeshInstance3D" parent="." index="2" unique_id=868814322]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -3)
+visible = false
+mesh = SubResource("CylinderMesh_kqfx0")

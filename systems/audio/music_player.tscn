@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c4cp7nxlns5n8"]
+
+[ext_resource type="AudioStream" uid="uid://crh3nvvu76ubl" path="res://assets/audio/music/mondamusic-lofi-beats-499181.mp3" id="1_dob6e"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer3D" unique_id=473121210]
+stream = ExtResource("1_dob6e")

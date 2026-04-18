@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dobu4k4gucop2"]
+
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_u54gl"]
+[ext_resource type="PackedScene" uid="uid://derrpqrpwck7n" path="res://entities/abilities/frost_bolt/frost_bolt.tscn" id="2_iwahs"]
+[ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="3_fk318"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_mnoi1"]
+[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="5_16o8r"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_u54gl"]
+[ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="7_u54gl"]
+
+[sub_resource type="Resource" id="Resource_pun3k"]
+script = ExtResource("1_u54gl")
+metadata/_custom_type_script = "uid://ctwcaqgasxtl7"
+
+[sub_resource type="Resource" id="Resource_q5cj6"]
+script = ExtResource("3_fk318")
+scene = ExtResource("2_iwahs")
+lifetime = 5.0
+homing = 2
+homing_fov = 0.0
+homing_steer_speed = 2.75
+
+[sub_resource type="Resource" id="Resource_lw3je"]
+script = ExtResource("5_16o8r")
+
+[sub_resource type="Resource" id="Resource_iwahs"]
+script = ExtResource("6_u54gl")
+metadata/_custom_type_script = "uid://1432g8lgqus5"
+
+[resource]
+script = ExtResource("4_mnoi1")
+cooldown = 2.0
+cost = SubResource("Resource_pun3k")
+targeting = SubResource("Resource_lw3je")
+trigger = SubResource("Resource_iwahs")
+windup = ExtResource("7_u54gl")
+delivery = SubResource("Resource_q5cj6")
+id = 999

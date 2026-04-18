@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://clde0l6n3p07x"]
+
+[ext_resource type="Shader" uid="uid://be2e0cpd7coau" path="res://entities/spells/frost_shield/frost_shield_shader.tres" id="1_wdhwj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x6n0m"]
+radius = 1.0
+height = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aua75"]
+render_priority = 0
+shader = ExtResource("1_wdhwj")
+shader_parameter/ColorParameter = Color(0.12039999, 0.57648665, 0.86, 0.9098039)
+shader_parameter/FresnelPower = 0.7
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_55x5p"]
+material = SubResource("ShaderMaterial_aua75")
+radius = 1.0
+height = 3.0
+
+[node name="FrostShield" type="Area3D" unique_id=94410938]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2086415453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("CapsuleShape3D_x6n0m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=642401394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CapsuleMesh_55x5p")

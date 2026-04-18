@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://curf3jmscwmkk"]
+
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="1_3e2vw"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_03o1v"]
+panorama = ExtResource("1_3e2vw")
+
+[sub_resource type="Sky" id="Sky_p5n24"]
+sky_material = SubResource("PanoramaSkyMaterial_03o1v")
+
+[sub_resource type="Environment" id="Environment_83goq"]
+background_mode = 2
+sky = SubResource("Sky_p5n24")
+glow_enabled = true
+
+[node name="MapArena" type="Node" unique_id=1817997399]
+
+[node name="Environment" type="Node" parent="." unique_id=126682173]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1229034118]
+environment = SubResource("Environment_83goq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=504976097]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 10, 0)
+shadow_enabled = true

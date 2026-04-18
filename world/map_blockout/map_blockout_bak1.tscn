@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bpxddcmexvhbd"]
+
+[ext_resource type="Script" uid="uid://bc7sr8d37s1ao" path="res://world/map_blockout/map_blockout.gd" id="1_u5u4a"]
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="2_rd20j"]
+[ext_resource type="PackedScene" uid="uid://vwywsxlhycdp" path="res://entities/characters/mage/mage.tscn" id="3_6qyjp"]
+[ext_resource type="Script" uid="uid://cvabyeulu2qs3" path="res://systems/camera/third_person_cam.gd" id="4_o1qvk"]
+[ext_resource type="PackedScene" uid="uid://cx0uou72pcl3o" path="res://ui/hud/player_hud.tscn" id="5_4djog"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_kyuun"]
+panorama = ExtResource("2_rd20j")
+
+[sub_resource type="Sky" id="Sky_p5n24"]
+sky_material = SubResource("PanoramaSkyMaterial_kyuun")
+
+[sub_resource type="Environment" id="Environment_byg1n"]
+background_mode = 2
+sky = SubResource("Sky_p5n24")
+glow_enabled = true
+
+[node name="MapBlockout" type="Node" unique_id=1892780867 node_paths=PackedStringArray("mage", "hud")]
+script = ExtResource("1_u5u4a")
+mage = NodePath("Mage")
+hud = NodePath("PlayerUI")
+
+[node name="Environment" type="Node" parent="." unique_id=1866704895]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1965676570]
+environment = SubResource("Environment_byg1n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=700226279]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Platform" type="CSGBox3D" parent="." unique_id=1580689026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(20, 1, 20)
+
+[node name="Platform5" type="CSGBox3D" parent="." unique_id=1058727887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -17)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(20, 1, 20)
+
+[node name="Platform4" type="CSGBox3D" parent="." unique_id=979523397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -17)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(20, 1, 20)
+
+[node name="Platform3" type="CSGBox3D" parent="." unique_id=1624979072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 17)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(20, 1, 20)
+
+[node name="Platform2" type="CSGBox3D" parent="." unique_id=580066693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 17)
+use_collision = true
+collision_layer = 16
+collision_mask = 0
+size = Vector3(20, 1, 20)
+
+[node name="Mage" parent="." unique_id=580988873 node_paths=PackedStringArray("camera_node") instance=ExtResource("3_6qyjp")]
+camera_node = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Mage" unique_id=1399519079 node_paths=PackedStringArray("camera_node")]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.2628582, 0)
+script = ExtResource("4_o1qvk")
+camera_node = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="Mage/Marker3D" unique_id=1065020344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+
+[node name="PlayerUI" parent="." unique_id=986810243 instance=ExtResource("5_4djog")]

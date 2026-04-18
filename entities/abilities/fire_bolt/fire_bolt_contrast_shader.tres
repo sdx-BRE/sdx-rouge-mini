@@ -1,0 +1,40 @@
+[gd_resource type="VisualShader" format=3 uid="uid://bfkeagjjtm5pp"]
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_824je"]
+default_input_values = [2, true, 3, 3.0]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_fsudd"]
+parameter_name = "FresnelPower"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_s47u2"]
+expanded_output_ports = [0]
+parameter_name = "Color"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_824je"]
+parameter_name = "Emission"
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_s47u2"]
+parameter_name = "EmissionStrength"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_nydmt"]
+operator = 2
+
+[resource]
+flags/shadows_disabled = true
+preview_params/Color = "Color(0.8254821, 0.13273138, 2.8878452e-07, 1)"
+preview_params/FresnelPower = "2.0"
+nodes/fragment/2/node = SubResource("VisualShaderNodeFresnel_824je")
+nodes/fragment/2/position = Vector2(-440, 500)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_fsudd")
+nodes/fragment/3/position = Vector2(-900, 560)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorParameter_s47u2")
+nodes/fragment/4/position = Vector2(-460, 140)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorParameter_824je")
+nodes/fragment/5/position = Vector2(-400, 780)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatParameter_s47u2")
+nodes/fragment/6/position = Vector2(-400, 1000)
+nodes/fragment/7/node = SubResource("VisualShaderNodeVectorOp_nydmt")
+nodes/fragment/7/position = Vector2(0, 760)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 3, 4, 0, 0, 0, 2, 0, 0, 1, 5, 0, 7, 0, 6, 0, 7, 1, 7, 0, 0, 5)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityWindupAnimationChanneling" format=3 uid="uid://kwqujcp8sgo0"]
+
+[ext_resource type="Script" uid="uid://dnqhd1u3yd0ag" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation_channeling.gd" id="1_54v5d"]
+
+[resource]
+script = ExtResource("1_54v5d")
+anim_trigger = &"parameters/SpellcastingOneShot"
+anim_name = &"Combat/Ranged_Magic_Spellcasting_Start"
+metadata/_custom_type_script = "uid://dnqhd1u3yd0ag"

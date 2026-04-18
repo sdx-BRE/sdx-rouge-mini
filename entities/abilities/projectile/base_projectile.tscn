@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://csun67rp14wy1"]
+
+[ext_resource type="PackedScene" uid="uid://bbs45s5aw6j5c" path="res://entities/abilities/ability_entity.tscn" id="1_m584e"]
+[ext_resource type="Script" uid="uid://bg28t6drq4jip" path="res://entities/abilities/projectile/base_projectile.gd" id="2_1yrk7"]
+
+[node name="BaseProjectile" unique_id=1312920768 instance=ExtResource("1_m584e")]
+script = ExtResource("2_1yrk7")
+
+[node name="Timer" type="Timer" parent="." index="1" unique_id=561275472]
+one_shot = true
+autostart = true

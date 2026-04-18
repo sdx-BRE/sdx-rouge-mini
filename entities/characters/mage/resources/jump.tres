@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dsfp356s40av4"]
+
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_jhtaa"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="2_5vc55"]
+[ext_resource type="Script" uid="uid://cnqjki2y5qh7h" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_jump.gd" id="2_31no1"]
+[ext_resource type="Script" uid="uid://dt5t0hihldsrk" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_self.gd" id="4_61fnq"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="5_3sqv3"]
+[ext_resource type="Script" uid="uid://6wt3iv7w822w" path="res://entities/shared/ability_system/resources/windup/ability_windup_instant.gd" id="6_gqdlb"]
+
+[sub_resource type="Resource" id="Resource_is3m1"]
+script = ExtResource("1_jhtaa")
+stamina = 15.0
+
+[sub_resource type="Resource" id="Resource_4gpx5"]
+script = ExtResource("2_31no1")
+metadata/_custom_type_script = "uid://crgfilrft4uqk"
+
+[sub_resource type="Resource" id="Resource_ci6qy"]
+script = ExtResource("4_61fnq")
+metadata/_custom_type_script = "uid://dfa2ll4arwen1"
+
+[sub_resource type="Resource" id="Resource_2bj20"]
+script = ExtResource("5_3sqv3")
+metadata/_custom_type_script = "uid://d35cujbm2lm57"
+
+[sub_resource type="Resource" id="Resource_qlyr1"]
+script = ExtResource("6_gqdlb")
+metadata/_custom_type_script = "uid://cofo1s6bmgvt4"
+
+[resource]
+script = ExtResource("2_5vc55")
+cost = SubResource("Resource_is3m1")
+targeting = SubResource("Resource_ci6qy")
+trigger = SubResource("Resource_2bj20")
+windup = SubResource("Resource_qlyr1")
+delivery = SubResource("Resource_4gpx5")
+input = "jump"
+id = 10
+metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

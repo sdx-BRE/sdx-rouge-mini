@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cwxebp15i83ob"]
+
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_qtsyr"]
+[ext_resource type="PackedScene" uid="uid://ux1pndp3kv5k" path="res://entities/characters/mage/spells/meteor/meteor.tscn" id="2_yumye"]
+[ext_resource type="Script" uid="uid://caien7hc88mn2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_aoe.gd" id="3_p4xys"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_fn068"]
+[ext_resource type="Script" uid="uid://ctus6a6dpnlxw" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="5_gccx7"]
+[ext_resource type="Script" uid="uid://b0jm1wgb13n1o" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_location.gd" id="5_p4xys"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_fn068"]
+
+[sub_resource type="Resource" id="Resource_is3m1"]
+script = ExtResource("1_qtsyr")
+type = 0
+mana = 15.0
+
+[sub_resource type="Resource" id="Resource_3pngl"]
+script = ExtResource("3_p4xys")
+scene = ExtResource("2_yumye")
+damage = 20.0
+metadata/_custom_type_script = "uid://c4c4tryrgietg"
+
+[sub_resource type="Resource" id="Resource_p4xys"]
+script = ExtResource("5_p4xys")
+cast_range = 150.0
+input_trigger = "attack"
+metadata/_custom_type_script = "uid://cbpb3owdho083"
+
+[sub_resource type="Resource" id="Resource_fn068"]
+script = ExtResource("6_fn068")
+metadata/_custom_type_script = "uid://d35cujbm2lm57"
+
+[sub_resource type="Resource" id="Resource_0torb"]
+script = ExtResource("5_gccx7")
+anim_trigger = &"parameters/RaiseOneShot"
+anim_name = &"Combat/Ranged_Magic_Raise"
+metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
+
+[resource]
+script = ExtResource("4_fn068")
+cooldown = 5.0
+cost = SubResource("Resource_is3m1")
+targeting = SubResource("Resource_p4xys")
+trigger = SubResource("Resource_fn068")
+windup = SubResource("Resource_0torb")
+delivery = SubResource("Resource_3pngl")
+input = "skill_3"
+id = 120
+metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

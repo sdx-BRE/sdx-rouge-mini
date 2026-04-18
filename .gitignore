@@ -1,7 +1,3 @@
-# Godot 4+ specific ignores
-.godot/
-/android/
-
 # ignore everything first
 *
 
@@ -20,5 +16,15 @@
 !*.gd
 !*.gdshader
 
+# allow scene and resource files
+!*.tscn
+!*.scn
+!*.tres
+!*.res
+!*.import
+!*.svg
 
-
+# folder ignores (overrides allow rules above)
+.godot/
+/android/
+assets/

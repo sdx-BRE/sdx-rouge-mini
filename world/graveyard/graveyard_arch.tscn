@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://btsg1t53wjhn1"]
+
+[ext_resource type="PackedScene" uid="uid://sl6256yrh7j6" path="res://assets/world/KayKits/halloween/arch.gltf" id="1_r2owa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2owa"]
+size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j77sg"]
+size = Vector3(0.7, 2.38, 0.7)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r2owa"]
+points = PackedVector3Array(1.9192154, 3.0478778, -0.27980715, 0.5883205, 4.238615, 0.2806881, 0.7985679, 4.1685257, 0.2806881, 1.2886173, 2.907699, 0.2806881, 0.44805956, 3.678161, -0.27980715, 0.7985679, 4.1685257, -0.27980715, 1.708968, 3.4681532, 0.2806881, 1.2886173, 2.907699, -0.27980715, 0.44805956, 3.678161, 0.2806881, 1.9192154, 2.907699, 0.21051647, 1.2186308, 3.9583879, -0.27980715, 0.44805956, 4.238615, -0.27980715, 1.708968, 3.4681532, -0.27980715, 1.2186308, 3.9583879, 0.2806881, 0.44805956, 4.238615, 0.2806881, 1.9192154, 2.907699, -0.27980715, 1.7790985, 2.907699, 0.2806881, 0.5883205, 3.5382426, 0.14045456, 1.9192154, 3.0478778, 0.07039265, 0.5883205, 4.238615, -0.27980715, 1.7790985, 3.328105, 0.2806881, 0.51833403, 3.6080716, -0.27980715, 1.9192154, 2.9777884, 0.21051647, 0.5883205, 3.5382426, 0.2806881)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j77sg"]
+points = PackedVector3Array(1.499091, 1.7166882, -0.2797797, 2.1294699, 2.4170465, 0.4208119, 1.3588643, 2.4170465, 0.4208119, 1.9893186, 2.8373356, -0.2797797, 1.9893186, 1.6464548, 0.21054389, 2.1294699, 2.0669909, -0.41993093, 1.3998114, 2.8404412, -0.25, 1.919243, 2.9074454, 0.28057837, 1.3588643, 2.0669909, -0.41993093, 1.499091, 1.7166882, 0.28057837, 1.3588643, 2.9074454, 0.28057837, 2.1294699, 2.0669909, 0.4208119, 1.9893186, 1.6464548, -0.20974523, 1.3588643, 2.0669909, 0.4208119, 2.1294699, 2.487033, -0.34981418, 1.499091, 1.6464548, 0.21054389, 1.499091, 1.6464548, -0.20974523, 1.9893186, 2.8373356, 0.28057837, 2.0593944, 1.786798, -0.2797797, 1.3588643, 1.9968809, -0.34981418, 2.1294699, 1.9968809, 0.35069513, 1.9893186, 1.7166882, -0.2797797, 1.9893186, 1.7166882, 0.28057837, 1.3588643, 1.9968809, 0.35069513, 2.1294699, 2.487033, 0.35069513, 1.4145288, 2.396807, -0.3592, 2.1294699, 1.9968809, -0.34981418, 2.0593944, 1.786798, 0.28057837)
+
+[node name="Graveyard_Arch" unique_id=1404470153 instance=ExtResource("1_r2owa")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="arch" parent_id_path=PackedInt32Array(1109468077) index="0" unique_id=231858643]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="arch/StaticBody3D" index="0" unique_id=1418886021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.017885, 0)
+shape = SubResource("BoxShape3D_r2owa")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="arch/StaticBody3D" index="1" unique_id=1884794023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 1.19, 0)
+shape = SubResource("BoxShape3D_j77sg")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="arch/StaticBody3D" index="2" unique_id=391571120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 1.19, 0)
+shape = SubResource("BoxShape3D_j77sg")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="arch/StaticBody3D" index="3" unique_id=660796045]
+shape = SubResource("ConvexPolygonShape3D_r2owa")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="arch/StaticBody3D" index="4" unique_id=476263198]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_r2owa")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="arch/StaticBody3D" index="5" unique_id=719736112]
+shape = SubResource("ConvexPolygonShape3D_j77sg")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="arch/StaticBody3D" index="6" unique_id=1849999538]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_j77sg")

@@ -1,0 +1,207 @@
+[gd_scene format=3 uid="uid://bmyuplsfogh1b"]
+
+[ext_resource type="PackedScene" uid="uid://bn086gmus6870" path="res://entities/abilities/aoe/base_aoe.tscn" id="1_oa7n0"]
+[ext_resource type="Texture2D" uid="uid://dffq802ky6l7l" path="res://assets/textures/stylized/stylized_ice_01/stylized_ice_01_diffuseOriginal.png" id="2_d52wj"]
+[ext_resource type="Shader" uid="uid://dpfspyifr0b8a" path="res://entities/abilities/glacial_spike/glacial_spike_ice_shader.gdshader" id="2_fiju1"]
+[ext_resource type="Script" uid="uid://bocppb4mhj7bx" path="res://entities/abilities/glacial_spike/glacial_spike.gd" id="2_w6jpq"]
+[ext_resource type="Texture2D" uid="uid://dtdb0fohh3hm3" path="res://assets/textures/vfx/irregular_circle_02.png" id="3_20uvi"]
+[ext_resource type="Texture2D" uid="uid://drbwagskjtlgk" path="res://assets/textures/stylized/stylized_ice_01/stylized_ice_01_normal.png" id="4_m4mwc"]
+[ext_resource type="Texture2D" uid="uid://bfgwvdebimakf" path="res://assets/textures/stylized/stylized_ice_01/stylized_ice_01_smoothness.png" id="5_w6jpq"]
+
+[sub_resource type="Animation" id="Animation_m4mwc"]
+resource_name = "Init"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 0.9804085, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.01, 0.01, 0.01), Vector3(1, 0.01, 1), Vector3(1, 1.3, 1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ice/Ground:instance_shader_parameters/FadeAmount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.85362536),
+"transitions": PackedFloat32Array(2.0000005, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spikes/Spike01:instance_shader_parameters/FadeAmount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8752652, 0.9173562),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_w6jpq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ice/Ground:instance_shader_parameters/FadeAmount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spikes/Spike01:instance_shader_parameters/FadeAmount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7d3dd"]
+_data = {
+&"Init": SubResource("Animation_m4mwc"),
+&"RESET": SubResource("Animation_w6jpq")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m4mwc"]
+height = 1.0
+radius = 0.1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m4mwc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6jpq"]
+render_priority = 0
+shader = ExtResource("2_fiju1")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/FresnelPower = 2.5
+shader_parameter/FresnelColor = Color(1, 1, 1, 1)
+shader_parameter/Ice_Texture = ExtResource("2_d52wj")
+shader_parameter/Tiling = Vector2(1, 1)
+shader_parameter/Offset = Vector2(0, 0)
+shader_parameter/FrostMask = ExtResource("3_20uvi")
+shader_parameter/RefractionAmount = 1.0
+shader_parameter/normal_depth = 1.0
+shader_parameter/Metallic = 0.134
+shader_parameter/Smoothness = 0.627
+shader_parameter/enable_normal_tex = true
+shader_parameter/Normal_Texture = ExtResource("4_m4mwc")
+shader_parameter/enable_smoothness_tex = true
+shader_parameter/Smoothness_Texture = ExtResource("5_w6jpq")
+shader_parameter/enable_height_tex = false
+shader_parameter/Height_Scale = 0.1
+shader_parameter/enable_vertex_shader = false
+shader_parameter/vertex_displacement_strength = 0.05
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_20uvi"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m4mwc"]
+render_priority = 0
+shader = ExtResource("2_fiju1")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/FresnelPower = 2.5
+shader_parameter/FresnelColor = Color(1, 1, 1, 1)
+shader_parameter/Ice_Texture = ExtResource("2_d52wj")
+shader_parameter/Tiling = Vector2(1, 1)
+shader_parameter/Offset = Vector2(0, 0)
+shader_parameter/RefractionAmount = 1.0
+shader_parameter/normal_depth = 1.0
+shader_parameter/Metallic = 0.134
+shader_parameter/Smoothness = 0.627
+shader_parameter/enable_normal_tex = true
+shader_parameter/Normal_Texture = ExtResource("4_m4mwc")
+shader_parameter/enable_smoothness_tex = true
+shader_parameter/Smoothness_Texture = ExtResource("5_w6jpq")
+shader_parameter/enable_height_tex = false
+shader_parameter/Height_Scale = 0.1
+shader_parameter/enable_vertex_shader = true
+shader_parameter/vertex_displacement_strength = 0.05
+
+[node name="GlacialSpike" unique_id=1312920768 instance=ExtResource("1_oa7n0")]
+collision_layer = 32
+collision_mask = 10
+monitoring = false
+monitorable = false
+script = ExtResource("2_w6jpq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0" unique_id=497053213]
+libraries/ = SubResource("AnimationLibrary_7d3dd")
+autoplay = &"Init"
+
+[node name="Hitbox" parent="." index="1" unique_id=482566949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_m4mwc")
+debug_color = Color(18.892157, 0, 1.1297288, 1)
+
+[node name="Ice" type="Node3D" parent="." index="3" unique_id=242503153]
+
+[node name="Ground" type="MeshInstance3D" parent="Ice" index="0" unique_id=1455671175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+instance_shader_parameters/FadeAmount = 0.0
+mesh = SubResource("PlaneMesh_m4mwc")
+surface_material_override/0 = SubResource("ShaderMaterial_w6jpq")
+
+[node name="Spikes" type="Node3D" parent="." index="4" unique_id=75884397]
+
+[node name="Spike01" type="MeshInstance3D" parent="Spikes" index="0" unique_id=871667088]
+transform = Transform3D(1, 0, 0, 0, 0.9987518, -0.049947985, 0, 0.049947985, 0.9987518, 0, 0.5, 0)
+instance_shader_parameters/FadeAmount = 0.0
+instance_shader_parameters/vertex_frequency = 10.0
+mesh = SubResource("CylinderMesh_20uvi")
+surface_material_override/0 = SubResource("ShaderMaterial_m4mwc")

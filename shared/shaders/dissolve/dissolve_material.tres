@@ -1,0 +1,43 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bw5wb8ct7fthd"]
+
+[ext_resource type="Shader" uid="uid://dd213amksr0eb" path="res://shared/shaders/dissolve/dissolve_shader.gdshader" id="1_u1tbj"]
+
+[sub_resource type="Gradient" id="Gradient_bbbsi"]
+colors = PackedColorArray(0.05490196, 0, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ju2n"]
+gradient = SubResource("Gradient_bbbsi")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u1tbj"]
+noise_type = 2
+frequency = 0.0184
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_bbbsi"]
+width = 128
+height = 128
+depth = 128
+noise = SubResource("FastNoiseLite_u1tbj")
+seamless = true
+invert = true
+seamless_blend_skirt = 0.25
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_u1tbj")
+shader_parameter/albedo = Color(0.4, 0.2, 0.2, 1)
+shader_parameter/use_albedo_texture = false
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.5
+shader_parameter/dissolve_direction = Vector3(0, 1, 0)
+shader_parameter/invert_direction = false
+shader_parameter/noise_texture = SubResource("NoiseTexture3D_bbbsi")
+shader_parameter/noise_scale = 1.0
+shader_parameter/noise_strength = 0.25
+shader_parameter/edge_color_primary = Color(0.29411766, 0.11372549, 1, 1)
+shader_parameter/edge_color_secondary = Color(0, 0.4, 0.89411765, 1)
+shader_parameter/edge_width = 0.01
+shader_parameter/emmission_intensity = 20.0
+shader_parameter/use_noise_emission = true
+shader_parameter/noise_emission_gradient = SubResource("GradientTexture1D_0ju2n")
+shader_parameter/noise_emission_scale = 1.0
+shader_parameter/noise_emission_intensity = 1.0

@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://rx1nodrbfhx2"]
+
+[ext_resource type="Script" uid="uid://chc408q0csf84" path="res://entities/enemies/base/base_skeleton_enemy.gd" id="1_gstfp"]
+[ext_resource type="Script" uid="uid://b5wgad1i13dp0" path="res://entities/enemies/shared/enemy_data.gd" id="2_ccd4k"]
+[ext_resource type="Script" uid="uid://dh4boiqg5t2o2" path="res://entities/enemies/shared/enemy_ui.gd" id="2_stjds"]
+[ext_resource type="Script" uid="uid://qaamtej1udv4" path="res://entities/enemies/shared/animation/animation_tree_parameter.gd" id="3_b8buh"]
+[ext_resource type="Script" uid="uid://bmfu2tabxgrsa" path="res://entities/enemies/shared/damage_hitbox.gd" id="3_gstfp"]
+[ext_resource type="Script" uid="uid://cj5fg8iov8l7x" path="res://entities/enemies/base/base_skeleton_enemy_bootstrapper.gd" id="4_pksop"]
+
+[sub_resource type="Resource" id="Resource_0ibvj"]
+script = ExtResource("2_ccd4k")
+metadata/_custom_type_script = "uid://b5wgad1i13dp0"
+
+[sub_resource type="Resource" id="Resource_m2idr"]
+script = ExtResource("3_b8buh")
+metadata/_custom_type_script = "uid://qaamtej1udv4"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8xa7x"]
+height = 2.1
+radius = 0.75
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4pxks"]
+viewport_path = NodePath("EnemyViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccd4k"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8buh"]
+bg_color = Color(1.4369954, 0.10763457, 0.10763457, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0ibvj"]
+radius = 20.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m2idr"]
+height = 2.1
+
+[node name="BaseSkeletonEnemy" type="CharacterBody3D" unique_id=74253162]
+collision_layer = 4
+collision_mask = 21
+safe_margin = 0.02
+script = ExtResource("1_gstfp")
+data = SubResource("Resource_0ibvj")
+anim_params = SubResource("Resource_m2idr")
+bootstrap_script = ExtResource("4_pksop")
+
+[node name="CollisionHitbox" type="CollisionShape3D" parent="." unique_id=265146987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("CylinderShape3D_8xa7x")
+
+[node name="HealthDisplay" type="Sprite3D" parent="." unique_id=599444158]
+billboard = 1
+texture = SubResource("ViewportTexture_4pxks")
+
+[node name="EnemyViewport" type="SubViewport" parent="." unique_id=1102395519 node_paths=PackedStringArray("health_bar")]
+transparent_bg = true
+script = ExtResource("2_stjds")
+health_bar = NodePath("HealthBar")
+
+[node name="HealthBar" type="ProgressBar" parent="EnemyViewport" unique_id=1027324267]
+custom_minimum_size = Vector2(175, 10)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.5
+offset_right = 87.5
+offset_bottom = 10.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ccd4k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b8buh")
+value = 100.0
+show_percentage = false
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1784259605]
+avoidance_enabled = true
+radius = 1.2
+
+[node name="Fov" type="Area3D" parent="." unique_id=1445062541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5823303, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fov" unique_id=661412340]
+shape = SubResource("SphereShape3D_0ibvj")
+debug_color = Color(0.9987193, 0, 0.14657274, 0.41960785)
+
+[node name="DamageHitbox" type="Area3D" parent="." unique_id=1127269608]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_gstfp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageHitbox" unique_id=343651945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("CapsuleShape3D_m2idr")
+
+[node name="TargetPoint" type="Marker3D" parent="." unique_id=1799619487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4043435, 0)

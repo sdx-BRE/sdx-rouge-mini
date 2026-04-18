@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://babqyiwre5dge"]
+
+[ext_resource type="Script" path="res://entities/abilities/simple_dev_aoe/simple_dev_aoe_bak.gd" id="1_4crwt"]
+[ext_resource type="Texture2D" uid="uid://baw1v370wrrxq" path="res://assets/textures/vfx/white_circle.png" id="1_q1cdm"]
+[ext_resource type="Shader" uid="uid://b5s6xsge2s154" path="res://shared/shaders/canvas_item/simple_color.tres" id="2_epuju"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4p8of"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q27oi"]
+shader = ExtResource("2_epuju")
+shader_parameter/ColorParameter = Color(5.912981, 0, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hggxy"]
+height = 1.0
+radius = 0.0
+
+[node name="SimpleDevAoeBak" type="Area3D" unique_id=1057548710]
+collision_layer = 32
+collision_mask = 10
+monitorable = false
+script = ExtResource("1_4crwt")
+metadata/_custom_type_script = "uid://dy206ekw174tq"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=157465877]
+transform = Transform3D(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0.02, 0)
+offset = Vector2(0, 0.02)
+axis = 1
+alpha_cut = 2
+render_priority = 1
+texture = SubResource("ViewportTexture_4p8of")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=659598671]
+transparent_bg = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SubViewport" unique_id=1661248270]
+material = SubResource("ShaderMaterial_q27oi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 75.0
+fill_mode = 4
+texture_progress = ExtResource("1_q1cdm")
+
+[node name="Hitbox" type="CollisionShape3D" parent="." unique_id=765507302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_hggxy")
+disabled = true

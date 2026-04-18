@@ -1,0 +1,31 @@
+[gd_resource type="VisualShader" format=3 uid="uid://bqo5oe27wwkq5"]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_yvd8y"]
+expanded_output_ports = [0]
+parameter_name = "Color"
+default_value_enabled = true
+default_value = Color(0.1602, 0.43995655, 0.89, 0.23921569)
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_qyad8"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_leacw"]
+parameter_name = "Fresnel"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_1yvpk"]
+operator = 2
+
+[resource]
+flags/unshaded = true
+flags/shadows_disabled = true
+flags/ambient_light_disabled = true
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_yvd8y")
+nodes/fragment/2/position = Vector2(-400, 100)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFresnel_qyad8")
+nodes/fragment/3/position = Vector2(-320, 540)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatParameter_leacw")
+nodes/fragment/4/position = Vector2(-760, 580)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_1yvpk")
+nodes/fragment/5/position = Vector2(60, 420)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 4, 0, 3, 3, 3, 0, 5, 1, 2, 4, 5, 0, 5, 0, 0, 1)

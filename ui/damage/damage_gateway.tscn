@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ckp7gxlu6povk"]
+
+[ext_resource type="Script" uid="uid://dy523j6a011fl" path="res://ui/damage/damage_gateway.gd" id="1_s14j2"]
+
+[node name="DamageGateway" type="CanvasLayer" unique_id=1929284062]
+script = ExtResource("1_s14j2")

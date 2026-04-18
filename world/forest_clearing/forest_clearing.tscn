@@ -1,0 +1,320 @@
+[gd_scene format=3 uid="uid://dc03yg1i0kbm1"]
+
+[ext_resource type="Script" uid="uid://cxh1v6yrgqmgt" path="res://world/forest_clearing/forest_clearing.gd" id="1_05vll"]
+[ext_resource type="Texture2D" uid="uid://bj3gd7aigsnka" path="res://assets/textures/skybox/sky_16_2k.png" id="1_8q32b"]
+[ext_resource type="PackedScene" uid="uid://cs7pn8v42hyou" path="res://entities/characters/mage/mage.tscn" id="1_e4gkc"]
+[ext_resource type="Script" uid="uid://cvabyeulu2qs3" path="res://systems/camera/third_person_cam.gd" id="2_05vll"]
+[ext_resource type="PackedScene" uid="uid://cx0uou72pcl3o" path="res://ui/hud/player_hud.tscn" id="3_f3yqc"]
+[ext_resource type="PackedScene" uid="uid://c2gk3urwefo2a" path="res://ui/damage/damage_numbers.tscn" id="4_myc1v"]
+[ext_resource type="MultiMesh" uid="uid://cmothmo8c5hq1" path="res://world/forest_clearing/resources/mm_bg_small.res" id="6_8sdvc"]
+[ext_resource type="MultiMesh" uid="uid://c8nbdln58wf0j" path="res://world/forest_clearing/resources/mm_bg_medium.res" id="7_e4gkc"]
+[ext_resource type="MultiMesh" uid="uid://cthc5h3g61e0" path="res://world/forest_clearing/resources/mm_bg_large.res" id="8_05vll"]
+[ext_resource type="MultiMesh" uid="uid://b68jyyq1onmqi" path="res://world/forest_clearing/resources/mm_ground.res" id="9_f3yqc"]
+[ext_resource type="NavigationMesh" uid="uid://bo0ecofwodcmh" path="res://world/forest_clearing/resources/navigation_mesh.res" id="12_h6amo"]
+[ext_resource type="PackedScene" uid="uid://cu8pbkk0qk60w" path="res://world/forest_clearing/forest_crypt.tscn" id="16_546pv"]
+[ext_resource type="Script" uid="uid://dxivwc6073u3b" path="res://editor/tools/floor_generator.gd" id="16_dcjav"]
+[ext_resource type="ArrayMesh" uid="uid://cbaboom5hn2ny" path="res://assets/world/KayKits/halloween/meshes/floor_dirt.res" id="17_ml21t"]
+[ext_resource type="PackedScene" uid="uid://btsg1t53wjhn1" path="res://world/graveyard/graveyard_arch.tscn" id="17_myc1v"]
+[ext_resource type="PackedScene" uid="uid://ciqfwn4f0pa4v" path="res://world/graveyard/graveyard_fence.tscn" id="18_clkjv"]
+[ext_resource type="PackedScene" uid="uid://c1c8o4cysdrgh" path="res://entities/enemies/skeleton_minion/skeleton_minion.tscn" id="18_ml21t"]
+[ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage_next.tscn" id="18_myc1v"]
+[ext_resource type="Script" uid="uid://bkmt816p5kl5m" path="res://systems/spawner/wave_spawner.gd" id="19_clkjv"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_js7wp"]
+panorama = ExtResource("1_8q32b")
+
+[sub_resource type="Sky" id="Sky_ir8l5"]
+sky_material = SubResource("PanoramaSkyMaterial_js7wp")
+
+[sub_resource type="Environment" id="Environment_xxg5s"]
+background_mode = 2
+sky = SubResource("Sky_ir8l5")
+glow_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.39918467, 0.22771716, 0.13651896, 1)
+fog_light_energy = 0.35
+fog_sun_scatter = 0.05
+fog_density = 1.0
+fog_aerial_perspective = 0.1
+fog_sky_affect = 0.885
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_myc1v"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_546pv"]
+plane = Plane(0, 0, -1, 48)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3yqc"]
+plane = Plane(0, 0, 1, 48)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_dcjav"]
+plane = Plane(-1, 0, 0, 48)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ml21t"]
+plane = Plane(1, 0, 0, 48)
+
+[node name="ForestClearing" type="Node" unique_id=1145669018 node_paths=PackedStringArray("mage", "hud")]
+script = ExtResource("1_05vll")
+mage = NodePath("Mage")
+hud = NodePath("PlayerUI")
+
+[node name="Mage" parent="." unique_id=580988873 node_paths=PackedStringArray("camera_node") instance=ExtResource("1_e4gkc")]
+camera_node = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Mage" unique_id=1107648669 node_paths=PackedStringArray("camera_node")]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.2628582, 0)
+script = ExtResource("2_05vll")
+camera_node = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="Mage/Marker3D" unique_id=39168964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+
+[node name="DamageNumbers" parent="." unique_id=1375182167 instance=ExtResource("4_myc1v")]
+zone_size = Vector2(300, 150)
+min_distance = 15.0
+
+[node name="PlayerUI" parent="." unique_id=986810243 instance=ExtResource("3_f3yqc")]
+
+[node name="Environment" type="Node" parent="." unique_id=1958538838]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=567442568]
+environment = SubResource("Environment_xxg5s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=180393730]
+transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Tools" type="Node" parent="." unique_id=829709646]
+
+[node name="FloorGenerator" type="Node" parent="Tools" unique_id=321876759 node_paths=PackedStringArray("multi_mesh_instance")]
+script = ExtResource("16_dcjav")
+multi_mesh_instance = NodePath("../../NavigationRegion3D/Boundary/GroundMultiMesh")
+mesh = ExtResource("17_ml21t")
+arena_size = 176.0
+tile_size = 4.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=471793257]
+navigation_mesh = ExtResource("12_h6amo")
+
+[node name="Boundary" type="Node3D" parent="NavigationRegion3D" unique_id=1229656713]
+
+[node name="GroundMultiMesh" type="MultiMeshInstance3D" parent="NavigationRegion3D/Boundary" unique_id=1903174859]
+multimesh = ExtResource("9_f3yqc")
+
+[node name="BgRingSmall" type="MultiMeshInstance3D" parent="NavigationRegion3D/Boundary" unique_id=586736318]
+multimesh = ExtResource("6_8sdvc")
+
+[node name="BgRingMedium" type="MultiMeshInstance3D" parent="NavigationRegion3D/Boundary" unique_id=1846863846]
+multimesh = ExtResource("7_e4gkc")
+
+[node name="BgRingLarge" type="MultiMeshInstance3D" parent="NavigationRegion3D/Boundary" unique_id=828321179]
+multimesh = ExtResource("8_05vll")
+
+[node name="Collider" type="StaticBody3D" parent="NavigationRegion3D/Boundary" unique_id=1498806754]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Ground" type="CollisionShape3D" parent="NavigationRegion3D/Boundary/Collider" unique_id=1652978696]
+shape = SubResource("WorldBoundaryShape3D_myc1v")
+
+[node name="WallFront" type="CollisionShape3D" parent="NavigationRegion3D/Boundary/Collider" unique_id=2108200355]
+shape = SubResource("WorldBoundaryShape3D_546pv")
+debug_color = Color(1, 0, 1, 1)
+
+[node name="WallBack" type="CollisionShape3D" parent="NavigationRegion3D/Boundary/Collider" unique_id=1290219783]
+shape = SubResource("WorldBoundaryShape3D_f3yqc")
+debug_color = Color(1, 0, 1, 1)
+
+[node name="WallRight" type="CollisionShape3D" parent="NavigationRegion3D/Boundary/Collider" unique_id=684531732]
+shape = SubResource("WorldBoundaryShape3D_dcjav")
+debug_color = Color(3.5629182, 0, 3.5629182, 1)
+
+[node name="WallLeft" type="CollisionShape3D" parent="NavigationRegion3D/Boundary/Collider" unique_id=1228577934]
+shape = SubResource("WorldBoundaryShape3D_ml21t")
+debug_color = Color(3.5629182, 0, 3.5629182, 1)
+
+[node name="Corners" type="Node3D" parent="NavigationRegion3D" unique_id=1451869855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CornerBottomRight" type="Node3D" parent="NavigationRegion3D/Corners" unique_id=698281261]
+
+[node name="Crypt" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=2036673041 instance=ExtResource("16_546pv")]
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, -42, -0.5, -42)
+
+[node name="Arch" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=1404470153 instance=ExtResource("17_myc1v")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -35, -0.5, -35)
+
+[node name="Fence1" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=823835750 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.75, -0.5, -33.685)
+
+[node name="Fence2" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=1210477171 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.25, -0.5, -33.685)
+
+[node name="Fence3" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=880323553 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.75, -0.5, -33.685)
+
+[node name="Fence4" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=1093584608 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -33.7072, -0.5, -45.804928)
+
+[node name="Fence5" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=1134929186 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -33.7072, -0.5, -42.304928)
+
+[node name="Fence6" parent="NavigationRegion3D/Corners/CornerBottomRight" unique_id=1834400868 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -33.7072, -0.5, -38.804928)
+
+[node name="CornerBottomLeft" type="Node3D" parent="NavigationRegion3D/Corners" unique_id=416856362]
+
+[node name="Crypt" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=727673379 instance=ExtResource("16_546pv")]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, 42, -0.5, -42)
+
+[node name="Arch" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=387140054 instance=ExtResource("17_myc1v")]
+transform = Transform3D(0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071067, 35, -0.5, -35)
+
+[node name="Fence" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=1068089524 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -5.9604645e-08, 33.685005, -0.5, -38.750004)
+
+[node name="Fence2" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=1331978514 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -5.9604645e-08, 33.685005, -0.5, -42.25)
+
+[node name="Fence3" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=443715130 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -5.9604645e-08, 33.685, -0.5, -45.75)
+
+[node name="Fence4" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=241543711 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.804928, -0.5, -33.7072)
+
+[node name="Fence5" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=1322933470 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.30493, -0.5, -33.707203)
+
+[node name="Fence6" parent="NavigationRegion3D/Corners/CornerBottomLeft" unique_id=494790330 instance=ExtResource("18_clkjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.804928, -0.5, -33.707203)
+
+[node name="CornerTopRight" type="Node3D" parent="NavigationRegion3D/Corners" unique_id=193077280]
+
+[node name="Crypt" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=1847017839 instance=ExtResource("16_546pv")]
+transform = Transform3D(0.70710665, 0, -0.7071069, 0, 1, 0, 0.7071069, 0, 0.70710665, -42, -0.5, 42)
+
+[node name="Arch" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=180276884 instance=ExtResource("17_myc1v")]
+transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, -35, -0.5, 35)
+
+[node name="Fence" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=724626818 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -5.9604645e-08, -33.684998, -0.5, 38.75)
+
+[node name="Fence2" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=1417204290 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -5.9604645e-08, -33.685, -0.5, 42.250004)
+
+[node name="Fence3" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=706733962 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-5.9604645e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -5.9604645e-08, -33.685, -0.5, 45.75)
+
+[node name="Fence4" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=576324749 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.99999994, -45.804924, -0.5, 33.7072)
+
+[node name="Fence5" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=1305709580 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.99999994, -42.304924, -0.5, 33.7072)
+
+[node name="Fence6" parent="NavigationRegion3D/Corners/CornerTopRight" unique_id=1611719730 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.99999994, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.99999994, -38.804928, -0.5, 33.7072)
+
+[node name="CornerTopLeft" type="Node3D" parent="NavigationRegion3D/Corners" unique_id=1698266720]
+
+[node name="Crypt" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=2080078353 instance=ExtResource("16_546pv")]
+transform = Transform3D(0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071068, 42, -0.5, 42)
+
+[node name="Arch" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=1351089240 instance=ExtResource("17_myc1v")]
+transform = Transform3D(-0.70710665, 0, -0.7071069, 0, 1, 0, 0.7071069, 0, -0.70710665, 35, -0.5, 35)
+
+[node name="Fence" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=593757550 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.9999999, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.9999999, 38.75, -0.5, 33.684998)
+
+[node name="Fence2" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=1156967515 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.9999999, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.9999999, 42.250004, -0.5, 33.685005)
+
+[node name="Fence3" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=1736205102 instance=ExtResource("18_clkjv")]
+transform = Transform3D(-0.9999999, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, -0.9999999, 45.75, -0.5, 33.685)
+
+[node name="Fence4" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=2126530809 instance=ExtResource("18_clkjv")]
+transform = Transform3D(5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 5.9604645e-08, 33.7072, -0.5, 45.80492)
+
+[node name="Fence5" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=610941282 instance=ExtResource("18_clkjv")]
+transform = Transform3D(5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 5.9604645e-08, 33.7072, -0.5, 42.304924)
+
+[node name="Fence6" parent="NavigationRegion3D/Corners/CornerTopLeft" unique_id=140635860 instance=ExtResource("18_clkjv")]
+transform = Transform3D(5.9604645e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 5.9604645e-08, 33.707203, -0.5, 38.804928)
+
+[node name="Node" type="Node" parent="." unique_id=1337100086]
+
+[node name="SpawnLocations" type="Node3D" parent="Node" unique_id=437607908]
+
+[node name="SpawnLocation1" type="Marker3D" parent="Node/SpawnLocations" unique_id=1741844246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, -36)
+
+[node name="SpawnLocation2" type="Marker3D" parent="Node/SpawnLocations" unique_id=1942274416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -36)
+
+[node name="SpawnLocation3" type="Marker3D" parent="Node/SpawnLocations" unique_id=194762425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -36)
+
+[node name="SpawnLocation4" type="Marker3D" parent="Node/SpawnLocations" unique_id=1609779361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -40)
+
+[node name="SpawnLocation5" type="Marker3D" parent="Node/SpawnLocations" unique_id=1741833057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, -44)
+
+[node name="SpawnLocation6" type="Marker3D" parent="Node/SpawnLocations" unique_id=695627234]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36, 0, -44)
+
+[node name="SpawnLocation7" type="Marker3D" parent="Node/SpawnLocations" unique_id=595197505]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36, 0, -40)
+
+[node name="SpawnLocation8" type="Marker3D" parent="Node/SpawnLocations" unique_id=672199000]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 36, 0, -36)
+
+[node name="SpawnLocation9" type="Marker3D" parent="Node/SpawnLocations" unique_id=1871296983]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 40, 0, -36)
+
+[node name="SpawnLocation10" type="Marker3D" parent="Node/SpawnLocations" unique_id=2014127541]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 44, 0, -36)
+
+[node name="SpawnLocation11" type="Marker3D" parent="Node/SpawnLocations" unique_id=117077705]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 44, 0, 36)
+
+[node name="SpawnLocation12" type="Marker3D" parent="Node/SpawnLocations" unique_id=105217718]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 40, 0, 36)
+
+[node name="SpawnLocation13" type="Marker3D" parent="Node/SpawnLocations" unique_id=459311981]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 36, 0, 36)
+
+[node name="SpawnLocation14" type="Marker3D" parent="Node/SpawnLocations" unique_id=1782877427]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 36, 0, 40)
+
+[node name="SpawnLocation15" type="Marker3D" parent="Node/SpawnLocations" unique_id=1235818063]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 36, 0, 44)
+
+[node name="SpawnLocation16" type="Marker3D" parent="Node/SpawnLocations" unique_id=1578458181]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -36, 0, 44)
+
+[node name="SpawnLocation17" type="Marker3D" parent="Node/SpawnLocations" unique_id=1336431637]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -36, 0, 40)
+
+[node name="SpawnLocation18" type="Marker3D" parent="Node/SpawnLocations" unique_id=1374841654]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -36, 0, 36)
+
+[node name="SpawnLocation19" type="Marker3D" parent="Node/SpawnLocations" unique_id=1026639631]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -40, 0, 36)
+
+[node name="SpawnLocation20" type="Marker3D" parent="Node/SpawnLocations" unique_id=815969268]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -44, 0, 36)
+
+[node name="WaveSpawner" type="Node3D" parent="Node" unique_id=1787685704 node_paths=PackedStringArray("spawn_container", "random_node_container")]
+script = ExtResource("19_clkjv")
+disabled = true
+mode = 2
+enemy_scene = ExtResource("18_myc1v")
+enemies_per_wave = 2
+spawn_container = NodePath(".")
+random_node_container = NodePath("../SpawnLocations")
+metadata/_custom_type_script = "uid://bkmt816p5kl5m"
+
+[node name="SkeletonMinionNext" parent="." unique_id=74253162 instance=ExtResource("18_ml21t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -22)
+
+[node name="SkeletonIceMageNext" parent="." unique_id=1372091113 instance=ExtResource("18_myc1v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.459896, 0, -37.977985)

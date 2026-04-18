@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bp3l8rp8tqcf5"]
+
+[ext_resource type="PackedScene" uid="uid://bbs45s5aw6j5c" path="res://entities/abilities/ability_entity.tscn" id="1_nwpt4"]
+[ext_resource type="Script" uid="uid://c5f2udeo2qteb" path="res://entities/abilities/continuous/continuous_ability.gd" id="2_23280"]
+
+[node name="ContinuousAbility" unique_id=1312920768 instance=ExtResource("1_nwpt4")]
+collision_layer = 32
+collision_mask = 8
+script = ExtResource("2_23280")
