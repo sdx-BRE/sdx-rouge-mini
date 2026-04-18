@@ -46,7 +46,7 @@ static func _bootstrap_abilities(
 	
 	var controller := MageController.new(movement_context)
 	
-	var aiming_strategy := CharacterAbilityAimingPlayerStrategy.new(
+	var aiming_strategy := MageAbilityAimingStrategy.new(
 		mage.camera_node,
 		mage.ground_target_marker,
 		mage.enemy_target_marker,
@@ -54,21 +54,26 @@ static func _bootstrap_abilities(
 		mage.get_world_3d(),
 	)
 	var target_context := CharacterAbilityAimingContext.new(aiming_strategy)
-
-	var setup_context := CharacterAbilitySetupContext.new(
+	
+	var setup_strategy := MageAbilitySetupStrategy.new(
 		mage.anim_tree,
 		mage_signals.casting_started,
 		mage_signals.casting_progressed,
 		mage_signals.casting_end,
 	)
-	var execute_context := CharacterAbilityExecuteContext.create(
+	var setup_context := CharacterAbilitySetupContext.new(setup_strategy)
+	
+	var execute_strategy := MageAbilityExecuteStrategy.create(
 		mage,
 		mage.pivot,
 		mage.buff_anchor,
 		mage.wandspawn_node,
 		controller,
 	)
-	var recover_context := CharacterAbilityRecoverContext.new(mage.anim_tree)
+	var execute_context := CharacterAbilityExecuteContext.new(execute_strategy)
+	
+	var recover_strategy := MageAbilityRecoverStrategy.new(mage.anim_tree)
+	var recover_context := CharacterAbilityRecoverContext.new(recover_strategy)
 	
 	var factory := CharacterAbilityExecutionFactory.new(target_context, setup_context, execute_context, recover_context)
 	var blackboard := CharacterAbilityExecutionBlackboard.new()
