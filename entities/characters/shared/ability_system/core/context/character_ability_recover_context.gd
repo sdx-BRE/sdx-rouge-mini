@@ -1,9 +1,10 @@
 class_name CharacterAbilityRecoverContext extends RefCounted
 
-var _anim_tree: AnimationTree
+var _strategy: CharacterAbilityRecoverStrategy
 
-func _init(anim_tree: AnimationTree) -> void:
-	_anim_tree = anim_tree
+func _init(strategy: CharacterAbilityRecoverStrategy) -> void:
+	_strategy = strategy
 
 func fadeout_oneshot(param: StringName) -> void:
-	_anim_tree.set(param + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
+	_strategy.fadeout_oneshot(param)
+
