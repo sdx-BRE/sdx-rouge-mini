@@ -1,4 +1,4 @@
-﻿class_name SkeletonMinionMeleeAttack extends StateContextAttack
+class_name SkeletonMinionMeleeAttack extends StateContextAttack
 
 var _animator: EnemyAnimator
 var _oneshot_punch: StringName
@@ -12,4 +12,3 @@ func try_attack(context: StateContext) -> void:
 	if context.can_attack():
 		_animator.oneshot_fire(_oneshot_punch)
 		context.start_attack_cooldown()
-
