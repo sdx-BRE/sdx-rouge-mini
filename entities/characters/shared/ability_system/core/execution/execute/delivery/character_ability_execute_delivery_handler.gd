@@ -1,4 +1,4 @@
-﻿class_name CharacterAbilityExecuteDeliveryHandler extends RefCounted
+class_name CharacterAbilityExecuteDeliveryHandler extends RefCounted
 
 signal cost_required()
 signal continuous_cost_required(delta: float)
@@ -27,10 +27,10 @@ func _launch_when_ability(node: Node, data: CharacterAbilityDelivery) -> void:
 	_when_ability(node, data, _launch_ability)
 
 func _setup_ability(ability: AbilityEntity, data: CharacterAbilityDelivery) -> void:
-	ability.setup_character_ability(data, _context)
+	_context.setup_ability(ability, data)
 
 func _launch_ability(ability: AbilityEntity, data: CharacterAbilityDelivery) -> void:
-	ability.launch_character_ability(data, _context)
+	_context.launch_ability(ability, data)
 
 func _when_ability(node: Node, data: CharacterAbilityDelivery, then: Callable) -> void:
 	if node is AbilityEntity:

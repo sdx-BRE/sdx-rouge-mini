@@ -29,3 +29,9 @@ func use_sprinting_speed() -> void:
 
 func use_normal_speed() -> void:
 	pass
+
+func setup_ability(_ability: AbilityEntity, _data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	pass
+
+func launch_ability(_ability: AbilityEntity, _data: CharacterAbilityDelivery, _context: CharacterAbilityExecuteContext) -> void:
+	pass

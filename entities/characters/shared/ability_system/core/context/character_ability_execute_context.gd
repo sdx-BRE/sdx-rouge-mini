@@ -34,3 +34,9 @@ func use_sprinting_speed() -> void:
 
 func use_normal_speed() -> void:
 	_strategy.use_normal_speed()
+
+func setup_ability(ability: AbilityEntity, data: CharacterAbilityDelivery) -> void:
+	_strategy.setup_ability(ability, data, self)
+
+func launch_ability(ability: AbilityEntity, data: CharacterAbilityDelivery) -> void:
+	_strategy.launch_ability(ability, data, self)
