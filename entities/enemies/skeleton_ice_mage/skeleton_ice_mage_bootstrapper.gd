@@ -7,7 +7,7 @@ func setup(mage: SkeletonIceMage) -> void:
 
 func _boot_processor() -> void:
 	_bootstrap_ability_system()
-	super()
+	super ()
 
 func _create_attack_context() -> StateContextAttack:
 	return SkeletonIceMageAttack.new(_mage._ability_system)
@@ -21,7 +21,7 @@ func _bootstrap_ability_system() -> void:
 	
 	registry.register(_mage.dev_ability, _mage._stats, cooldown_manager)
 	
-	var aiming_strategy := SkeletonIceMageAimingStrategy.new()
+	var aiming_strategy := SkeletonIceMageAimingStrategy.new(_mage._target_handler)
 	var target_context := CharacterAbilityAimingContext.new(aiming_strategy)
 	
 	var setup_strategy := SkeletonIceMageSetupStrategy.new(_mage.anim_tree)
