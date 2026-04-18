@@ -1,4 +1,0 @@
-class_name CharacterAbilityTargetingAI extends CharacterAbilityTargeting
-
-func get_strategy(context: CharacterAbilityAimingContext) -> CharacterAbilityAimingHandler:
-	return CharacterAbilityAimingAIHandler.new(context)

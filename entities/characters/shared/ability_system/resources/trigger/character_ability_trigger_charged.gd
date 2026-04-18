@@ -1,6 +1,0 @@
-﻿class_name CharacterAbilityTriggerCharged extends CharacterAbilityTrigger
-
-func create_handler(
-	blackboard: CharacterAbilityExecutionBlackboard,
-) -> CharacterAbilityExecuteTriggerHandler:
-	return CharacterAbilityExecuteTriggerChargedHandler.new(blackboard)

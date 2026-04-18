@@ -1,4 +1,0 @@
-﻿class_name CharacterAbilityWindupAnimationChanneling extends CharacterAbilityWindupAnimation
-
-func create_recover_handler(context: CharacterAbilityRecoverContext) -> CharacterAbilityRecoverWindupHandler:
-	return CharacterAbilityRecoverWindupAnimationChannelingHandler.new(context)

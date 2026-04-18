@@ -1,0 +1,4 @@
+class_name AbilityWindupAnimationChanneling extends AbilityWindupAnimation
+
+func create_recover_handler(context: AbilityRecoverContext) -> AbilityRecoverWindupHandler:
+	return AbilityRecoverWindupAnimationChannelingHandler.new(context)

@@ -1,0 +1,2 @@
+class_name AbilityTargetingNone extends AbilityTargeting
+
