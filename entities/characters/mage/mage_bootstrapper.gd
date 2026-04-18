@@ -81,14 +81,14 @@ static func _bootstrap_abilities(
 	var execution := CharacterAbilityExecuter.new(blackboard, factory)
 	var manager := CharacterAbilityManager.new(execution)
 	
-	mage._m_ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
+	mage._ability_system = CharacterAbilitySystem.new(registry, manager, cooldown_manager)
 	
 	var use_jump_ability := func():
-		mage._m_ability_system.use_ability_resources(CharacterAbilityId.JUMP)
-		mage._m_ability_system.start_ability_cooldown(CharacterAbilityId.JUMP)
+		mage._ability_system.use_ability_resources(CharacterAbilityId.JUMP)
+		mage._ability_system.start_ability_cooldown(CharacterAbilityId.JUMP)
 	
 	motor.jumped.connect(use_jump_ability)
-	motor.add_jump_gate(func() -> bool: return mage._m_ability_system.has_ability_resources(CharacterAbilityId.JUMP))
+	motor.add_jump_gate(func() -> bool: return mage._ability_system.has_ability_resources(CharacterAbilityId.JUMP))
 
 static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMovementContext, motor: MageMotor) -> void:
 	var processor := EntityProcessor.new(mage.get_viewport())
@@ -96,7 +96,7 @@ static func _bootstrap_processor(mage: MageCharacter, movement_context: MageMove
 	
 	_bootstrap_process_handler(processor, mage, movement_context)
 	_bootstrap_physic_process_handler(processor, movement_context, kinematics, motor, mage._anim)
-	_bootstrap_input_handler(processor, kinematics, mage._m_ability_system)
+	_bootstrap_input_handler(processor, kinematics, mage._ability_system)
 	
 	mage._processor = processor
 
@@ -106,7 +106,7 @@ static func _bootstrap_process_handler(
 	movement_context: MageMovementContext,
 ) -> void:
 	processor.add_process_handler(MageResourceGenerator.from_data(mage._stats, mage.data))
-	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._m_ability_system))
+	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._ability_system))
 	
 	var airbourne_observer := ObserverAirbourne.new(mage)
 	airbourne_observer.subscribe_ground(MageOnGroundSubscriber.new(mage._anim, movement_context, mage.animation_jump_land))

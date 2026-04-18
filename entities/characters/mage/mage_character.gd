@@ -44,7 +44,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 
 var _stats: EntityStats
 var _anim: MageAnimator
-var _m_ability_system: CharacterAbilitySystem
+var _ability_system: CharacterAbilitySystem
 var _processor: EntityProcessor
 
 func _ready() -> void:
@@ -90,8 +90,7 @@ func take_dmg(value: float) -> void:
 		_anim.hit_weak()
 
 func execute_cast() -> void:
-	#_ability_system.execute_buffered_ability()
-	_m_ability_system.notify_animation_event()
+	_ability_system.notify_animation_event()
 
 func _enable_processing() -> void: _set_processing(true)
 func _disable_processing() -> void: _set_processing(false)
