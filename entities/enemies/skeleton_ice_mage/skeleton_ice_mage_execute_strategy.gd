@@ -57,3 +57,9 @@ func get_weapon_spawn_node() -> Node3D:
 
 func get_pivot_basis() -> Basis:
 	return _pivot.global_basis
+
+func setup_ability(ability: AbilityEntity, data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+	ability.setup_enemy_ability(data, context)
+
+func launch_ability(ability: AbilityEntity, data: CharacterAbilityDelivery, context: CharacterAbilityExecuteContext) -> void:
+	ability.launch_enemy_ability(data, context)
