@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cx0uou72pcl3o" path="res://ui/hud/player_hud.tscn" id="13_ujf8g"]
 [ext_resource type="PackedScene" uid="uid://cxketaeb1qxff" path="res://entities/enemies/skeleton_minion/SkeletonMinion.tscn" id="14_kjfjd"]
 [ext_resource type="Script" uid="uid://bi8h6vbjfomjw" path="res://systems/spawner/wave_spawner_bak.gd" id="15_a7403"]
-[ext_resource type="PackedScene" uid="uid://ddy52ckqhg1ae" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage.tscn" id="16_neilm"]
+[ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage_next.tscn" id="16_neilm"]
 [ext_resource type="Script" uid="uid://b5wgad1i13dp0" path="res://entities/enemies/shared/enemy_data.gd" id="17_47owl"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xuj54"]

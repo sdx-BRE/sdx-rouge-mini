@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://btsg1t53wjhn1" path="res://world/graveyard/graveyard_arch.tscn" id="16_5o2er"]
 [ext_resource type="PackedScene" uid="uid://ciqfwn4f0pa4v" path="res://world/graveyard/graveyard_fence.tscn" id="17_vajp7"]
 [ext_resource type="Script" uid="uid://bkmt816p5kl5m" path="res://systems/spawner/wave_spawner.gd" id="19_hjeby"]
-[ext_resource type="PackedScene" uid="uid://ddy52ckqhg1ae" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage.tscn" id="20_ywct2"]
+[ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage_next.tscn" id="20_ywct2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_erbs8"]
 panorama = ExtResource("1_i758s")
