@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_mjjum"]
 [ext_resource type="PackedScene" uid="uid://c1vx8axbnj7fx" path="res://entities/abilities/fire_bolt/fire_bolt.tscn" id="2_mjjum"]
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="2_wdjpj"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="3_jl71h"]
 [ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="3_wdjpj"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_jl71h"]
 [ext_resource type="Script" uid="uid://cegey05a85mwg" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_mouse_target.gd" id="5_mjjum"]
@@ -13,10 +15,14 @@ script = ExtResource("1_mjjum")
 type = 0
 mana = 8.0
 
+[sub_resource type="Resource" id="Resource_wkqhw"]
+script = ExtResource("3_jl71h")
+metadata/_custom_type_script = "uid://c0uht871o3us3"
+
 [sub_resource type="Resource" id="Resource_0torb"]
 script = ExtResource("3_wdjpj")
 scene = ExtResource("2_mjjum")
-damage = null
+damage = SubResource("Resource_wkqhw")
 speed = 20.0
 lifetime = 6.0
 homing = 1

@@ -3,7 +3,7 @@ class_name AbilityDeliveryProjectile extends AbilityDelivery
 @export var scene: PackedScene
 
 @export_group("Projectile Stats")
-@export var damage := 10.0
+@export var damage: AbilityDamage
 @export var speed := 15.0
 @export var lifetime := 3.0
 
