@@ -11,21 +11,18 @@
 [sub_resource type="Resource" id="Resource_mrms0"]
 script = ExtResource("1_jvtgl")
 type = 1
-mana = 3.0
+mana = 15.0
 
 [sub_resource type="Resource" id="Resource_0k1ga"]
 script = ExtResource("3_bk2wm")
 scene = ExtResource("2_0k1ga")
 damage = 2.0
-metadata/_custom_type_script = "uid://beddd68ubrhsl"
 
 [sub_resource type="Resource" id="Resource_bk2wm"]
 script = ExtResource("3_5wt8b")
-metadata/_custom_type_script = "uid://ta8c17t6dt50"
 
 [sub_resource type="Resource" id="Resource_nqhhk"]
 script = ExtResource("4_bg1si")
-metadata/_custom_type_script = "uid://bq7vpq13lu36v"
 
 [resource]
 script = ExtResource("2_nwfug")
@@ -36,4 +33,3 @@ windup = ExtResource("7_0k1ga")
 delivery = SubResource("Resource_0k1ga")
 input = "attack"
 id = 100
-metadata/_custom_type_script = "uid://bxlxyggy7yd8u"
