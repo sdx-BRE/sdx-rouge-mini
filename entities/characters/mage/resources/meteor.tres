@@ -17,23 +17,19 @@ mana = 15.0
 script = ExtResource("3_p4xys")
 scene = ExtResource("2_yumye")
 damage = 20.0
-metadata/_custom_type_script = "uid://c4c4tryrgietg"
 
 [sub_resource type="Resource" id="Resource_p4xys"]
 script = ExtResource("5_p4xys")
 cast_range = 150.0
 input_trigger = "attack"
-metadata/_custom_type_script = "uid://cbpb3owdho083"
 
 [sub_resource type="Resource" id="Resource_fn068"]
 script = ExtResource("6_fn068")
-metadata/_custom_type_script = "uid://d35cujbm2lm57"
 
 [sub_resource type="Resource" id="Resource_0torb"]
 script = ExtResource("5_gccx7")
 anim_trigger = &"parameters/RaiseOneShot"
 anim_name = &"Combat/Ranged_Magic_Raise"
-metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
 
 [resource]
 script = ExtResource("4_fn068")

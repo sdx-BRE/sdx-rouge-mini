@@ -553,7 +553,7 @@ xfade_time = 0.2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oxnac"]
 xfade_time = 0.15
 advance_mode = 2
-advance_expression = "not is_on_floor() and false"
+advance_expression = "not is_on_floor()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_72bhe"]
 xfade_time = 0.2
@@ -656,6 +656,7 @@ transitions = ["Start", "Spellcasting_Start", SubResource("AnimationNodeStateMac
 graph_offset = Vector2(-107, -17)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ugltc"]
+graph_offset = Vector2(-2022, 189)
 nodes/output/position = Vector2(1680, 300)
 nodes/FullBodyState/node = SubResource("AnimationNodeStateMachine_6lhwp")
 nodes/FullBodyState/position = Vector2(-1700, 300)

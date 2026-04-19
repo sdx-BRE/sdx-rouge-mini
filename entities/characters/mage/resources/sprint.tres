@@ -14,19 +14,15 @@ stamina = 15.0
 
 [sub_resource type="Resource" id="Resource_nt5xb"]
 script = ExtResource("2_dd34e")
-metadata/_custom_type_script = "uid://k25vajmwyefo"
 
 [sub_resource type="Resource" id="Resource_t1qhr"]
 script = ExtResource("4_2pmdd")
-metadata/_custom_type_script = "uid://dfa2ll4arwen1"
 
 [sub_resource type="Resource" id="Resource_rsisw"]
 script = ExtResource("5_jsmou")
-metadata/_custom_type_script = "uid://bq7vpq13lu36v"
 
 [sub_resource type="Resource" id="Resource_o8nq3"]
 script = ExtResource("6_6ogwi")
-metadata/_custom_type_script = "uid://cofo1s6bmgvt4"
 
 [resource]
 script = ExtResource("2_6e3m7")

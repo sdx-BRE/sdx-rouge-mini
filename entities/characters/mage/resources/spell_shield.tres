@@ -17,15 +17,12 @@ mana = 8.0
 script = ExtResource("3_mf0l3")
 scene = ExtResource("2_kcuo6")
 duration = 5.0
-metadata/_custom_type_script = "uid://pfjf6l87wbbl"
 
 [sub_resource type="Resource" id="Resource_isd1h"]
 script = ExtResource("5_wpogw")
-metadata/_custom_type_script = "uid://dfa2ll4arwen1"
 
 [sub_resource type="Resource" id="Resource_ocy01"]
 script = ExtResource("6_o07wo")
-metadata/_custom_type_script = "uid://d35cujbm2lm57"
 
 [resource]
 script = ExtResource("4_i0n8l")

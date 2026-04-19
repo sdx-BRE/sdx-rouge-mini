@@ -15,19 +15,15 @@ stamina = 7.5
 [sub_resource type="Resource" id="Resource_2ci4l"]
 script = ExtResource("2_bii7w")
 dash_power = 60.0
-metadata/_custom_type_script = "uid://coabhimupolpa"
 
 [sub_resource type="Resource" id="Resource_c4i1i"]
 script = ExtResource("4_861i1")
-metadata/_custom_type_script = "uid://ta8c17t6dt50"
 
 [sub_resource type="Resource" id="Resource_gvsye"]
 script = ExtResource("5_empbf")
-metadata/_custom_type_script = "uid://d35cujbm2lm57"
 
 [sub_resource type="Resource" id="Resource_tyrr3"]
 script = ExtResource("6_m1tp0")
-metadata/_custom_type_script = "uid://cofo1s6bmgvt4"
 
 [resource]
 script = ExtResource("2_q2vdd")
