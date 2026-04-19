@@ -5,6 +5,7 @@
 !.gitignore
 !.gitattributes
 !.editorconfig
+!.vscode/settings.json
 
 # exclude godot project file and all .gd scripts
 !project.godot
@@ -12,8 +13,10 @@
 # allow directories to traverse
 !*/
 
-# allow all .gd files anywhere
+# allow all .gd files and their UIDs anywhere
 !*.gd
+!*.gd.uid
+!*.uid
 !*.gdshader
 
 # allow scene and resource files
