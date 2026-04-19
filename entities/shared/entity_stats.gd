@@ -41,9 +41,9 @@ static func from_enemy_data(data: EnemyData) -> EntityStats:
 		data.max_stamina
 	)
 
-func take_dmg(value: float) -> void:
+func take_damage(hit: DamageInstance) -> void:
 	if _health <= 0: return
-	_apply_health_modifier(-absf(value))
+	_apply_health_modifier(-absf(hit.amount))
 
 func heal(value: float) -> void:
 	if _health <= 0: return
