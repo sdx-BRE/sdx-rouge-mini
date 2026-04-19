@@ -37,4 +37,3 @@ windup = ExtResource("7_dvyda")
 delivery = SubResource("Resource_04vlu")
 input = "skill_2"
 id = 130
-metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

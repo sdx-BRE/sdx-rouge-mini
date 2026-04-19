@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="AbilityWindupAnimation" format=3 uid="uid://dasf6up5qt287"]
 
-[ext_resource type="Script" uid="uid://cbe3b0re0v8y4" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="1_b4ayl"]
+[ext_resource type="Script" uid="uid://ctus6a6dpnlxw" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="1_b4ayl"]
 
 [resource]
 script = ExtResource("1_b4ayl")
 anim_trigger = &"parameters/ShootOneShot"
 anim_name = &"Combat/Ranged_Magic_Shoot"
-metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
+metadata/_custom_type_script = "uid://ctus6a6dpnlxw"

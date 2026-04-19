@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d2ktqljcf2ruo" path="res://entities/characters/mage/mage_character.gd" id="1_248ya"]
 [ext_resource type="Script" uid="uid://bit45w4kdy4al" path="res://entities/characters/mage/mage_data.gd" id="2_40an2"]
 [ext_resource type="Script" uid="uid://donhybjp2a3rh" path="res://entities/shared/resources/anim_state_map.gd" id="3_x63pk"]
-[ext_resource type="Script" uid="uid://bxlxyggy7yd8u" path="res://entities/shared/ability_system/resources/ability_data.gd" id="3_y0gv3"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="3_y0gv3"]
 [ext_resource type="PackedScene" uid="uid://bphnqcb8yq2nb" path="res://assets/characters/Mage.glb" id="4_i4eqe"]
 [ext_resource type="Resource" uid="uid://c047f8jkjeljc" path="res://entities/characters/mage/resources/firebolt.tres" id="5_ku3r6"]
 [ext_resource type="PackedScene" uid="uid://clbpccplo5i35" path="res://assets/weapons/wand.gltf" id="5_xjk6x"]

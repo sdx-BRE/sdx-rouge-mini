@@ -45,4 +45,3 @@ windup = SubResource("Resource_0torb")
 delivery = SubResource("Resource_3pngl")
 input = "skill_3"
 id = 120
-metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

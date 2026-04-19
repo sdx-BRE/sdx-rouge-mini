@@ -36,4 +36,3 @@ windup = SubResource("Resource_qlyr1")
 delivery = SubResource("Resource_4gpx5")
 input = "jump"
 id = 10
-metadata/_custom_type_script = "uid://bxlxyggy7yd8u"
