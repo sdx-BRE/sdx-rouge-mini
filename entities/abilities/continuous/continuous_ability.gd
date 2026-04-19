@@ -1,6 +1,6 @@
 class_name ContinuousAbility extends AbilityEntity
 
-var _damage: float
+var _damage: AbilityDamage
 
 var _targets: Array[Node3D] = []
 
@@ -26,8 +26,9 @@ func setup_character_ability(data: AbilityDelivery, _context: AbilityExecuteCont
 
 func tick_damage() -> void:
 	for target in _targets:
-		if target.has_method("take_dmg"):
-			target.take_dmg(_damage)
+		if target.has_method("take_damage"):
+			var hit := DamageInstance.from_ability(_damage)
+			target.take_damage(hit)
 
 func _on_area_entered(body: Node3D) -> void:
 	_targets.append(body)

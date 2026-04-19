@@ -6,7 +6,7 @@ enum Homing {
 	Predictive,
 }
 
-var _damage: float
+var _damage: AbilityDamage
 var _speed: float
 var _lifetime: float
 var _homing: Homing = Homing.Disabled
@@ -66,6 +66,7 @@ func setup_character_ability(data: AbilityDelivery, _context: AbilityExecuteCont
 	collision_mask = Layers.COLLISION_ENEMY_DAMAGE
 
 func _on_area_entered(body: Node3D) -> void:
-	if body.has_method("take_dmg"):
-		body.take_dmg(_damage)
+	if body.has_method("take_damage"):
+		var hit := DamageInstance.from_ability(_damage)
+		body.take_damage(hit)
 		queue_free()

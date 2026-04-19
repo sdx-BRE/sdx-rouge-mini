@@ -81,10 +81,10 @@ func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
 #endregion
 
-func take_dmg(value: float) -> void:
-	_stats.take_dmg(value)
+func take_damage(hit: DamageInstance) -> void:
+	_stats.take_damage(hit)
 	
-	if value >= threshold_hit_strong:
+	if hit.amount >= threshold_hit_strong:
 		_anim.hit_strong()
 	else:
 		_anim.hit_weak()

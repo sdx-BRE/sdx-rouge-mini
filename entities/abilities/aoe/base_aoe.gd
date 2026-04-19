@@ -1,15 +1,17 @@
 class_name BaseAoe extends AbilityEntity
 
-var _damage: float
+var _damage: AbilityDamage
 var _delay: float
 var _radius: float
+
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 
 func _on_area_entered(body: Node3D) -> void:
-	if body.has_method("take_dmg"):
-		body.take_dmg(_damage)
+	if body.has_method("take_damage"):
+		var hit := DamageInstance.from_ability(_damage)
+		body.take_damage(hit)
 
 func launch_enemy_ability(_data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
 	pass

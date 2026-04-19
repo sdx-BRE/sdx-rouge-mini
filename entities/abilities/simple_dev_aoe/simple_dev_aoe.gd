@@ -29,8 +29,9 @@ func _process(_delta: float) -> void:
 	progess_bar.value = percent
 
 func _on_area_entered(body: Node3D) -> void:
-	if body.has_method("take_dmg"):
-		body.take_dmg(_damage)
+	if body.has_method("take_damage"):
+		var hit := DamageInstance.from_ability(_damage)
+		body.take_damage(hit)
 
 func _trigger_aoe():
 	hitbox.disabled = false

@@ -4,5 +4,6 @@ class_name SkeletonMinion extends BaseSkeletonEnemy
 @onready var punch_hitbox: Area3D = $Pivot/Rig_Medium/Skeleton3D/BoneHandslotR/Hitbox
 
 func _on_punch(body: Node3D) -> void:
-	if body.has_method("take_dmg"):
-		body.take_dmg(punch_damage)
+	if body.has_method("take_damage"):
+		var hit := DamageInstance.new(punch_damage)
+		body.take_damage(hit)

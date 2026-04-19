@@ -31,12 +31,12 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
 
-func take_dmg(value: float) -> void:
-	_stats.take_dmg(value)
+func take_damage(hit: DamageInstance) -> void:
+	_stats.take_damage(hit)
 	if not _stats.is_alive():
 		return
 	
-	if value >= 12: # Todo: Fix hardcoded value
+	if hit.amount >= 12: # Todo: Fix hardcoded value
 		_anim.hit_strong()
 	else:
 		_anim.hit_weak()
