@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://btsg1t53wjhn1" path="res://world/graveyard/graveyard_arch.tscn" id="17_myc1v"]
 [ext_resource type="PackedScene" uid="uid://ciqfwn4f0pa4v" path="res://world/graveyard/graveyard_fence.tscn" id="18_clkjv"]
 [ext_resource type="PackedScene" uid="uid://c1c8o4cysdrgh" path="res://entities/enemies/skeleton_minion/skeleton_minion.tscn" id="18_ml21t"]
-[ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage_next.tscn" id="18_myc1v"]
+[ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage.tscn" id="18_myc1v"]
 [ext_resource type="Script" uid="uid://bkmt816p5kl5m" path="res://systems/spawner/wave_spawner.gd" id="19_clkjv"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_js7wp"]

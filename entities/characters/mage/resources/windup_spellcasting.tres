@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_yjwhy")
-anim_end = &"Spellcasting_End"
 anim_trigger = &"parameters/SpellcastingOneShot"
 anim_name = &"Combat/Ranged_Magic_Spellcasting_Start"
 metadata/_custom_type_script = "uid://bsuejl4kfypbv"

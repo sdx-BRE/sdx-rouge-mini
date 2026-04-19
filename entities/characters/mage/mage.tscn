@@ -43,6 +43,8 @@
 
 [sub_resource type="Resource" id="Resource_gumdh"]
 script = ExtResource("2_40an2")
+mana_regeneration = 7.5
+stamina_regeneration = 5.0
 dash_power = 60.0
 dash_decay = 20.0
 jump_height = 12.0
