@@ -49,5 +49,5 @@ func take_damage(hit: DamageInstance) -> float:
 func get_stats() -> EntityStats:
 	return _stats
 
-func process(delta: float) -> void:
-	_debuffs.process(delta)
+func tick(delta: float) -> void:
+	_debuffs.tick(delta)
