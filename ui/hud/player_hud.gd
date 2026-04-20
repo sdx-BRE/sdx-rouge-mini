@@ -9,15 +9,15 @@ class_name PlayerHud extends CanvasLayer
 @onready var skill_3: TextureProgressBar = $MarginContainer/Control/VBoxContainer/SkillsContainer/Skill3
 @onready var skill_progress := $MarginContainer/Control/VBoxContainer/CenterContainer/SkillProgres
 
-func update_health(current: float, total: float) -> void:
+func update_health(current: float, total: float, _delta: float) -> void:
 	health_bar.value = current
 	health_bar.max_value = total
 
-func update_mana(current: float, total: float) -> void:
+func update_mana(current: float, total: float, _delta: float) -> void:
 	mana_bar.value = current
 	mana_bar.max_value = total
 
-func update_stamina(current: float, total: float) -> void:
+func update_stamina(current: float, total: float, _delta: float) -> void:
 	stamina_bar.value = current
 	stamina_bar.max_value = total
 

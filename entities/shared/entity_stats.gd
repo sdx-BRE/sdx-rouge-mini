@@ -1,8 +1,8 @@
 class_name EntityStats extends RefCounted
 
-signal health_changed(current: float, total: float)
-signal mana_changed(current: float, total: float)
-signal stamina_changed(current: float, total: float)
+signal health_changed(current: float, total: float, delta: float)
+signal mana_changed(current: float, total: float, delta: float)
+signal stamina_changed(current: float, total: float, delta: float)
 
 signal health_reached_zero()
 signal mana_reached_zero()
@@ -33,17 +33,17 @@ func _init(
 
 static func from_enemy_data(data: EnemyData) -> EntityStats:
 	return EntityStats.new(
-		data.max_health, 
-		data.max_mana, 
-		data.max_stamina, 
-		data.max_health, 
-		data.max_mana, 
+		data.max_health,
+		data.max_mana,
+		data.max_stamina,
+		data.max_health,
+		data.max_mana,
 		data.max_stamina
 	)
 
-func take_damage(hit: DamageInstance) -> void:
+func take_damage(amount: float) -> void:
 	if _health <= 0: return
-	_apply_health_modifier(-absf(hit.amount))
+	_apply_health_modifier(-absf(amount))
 
 func heal(value: float) -> void:
 	if _health <= 0: return
@@ -79,7 +79,8 @@ func _apply_health_modifier(delta: float) -> void:
 	_health = clamp(_health + delta, 0, _max_health)
 	
 	if old != _health:
-		health_changed.emit(_health, _max_health)
+		var change := _health - old
+		health_changed.emit(_health, _max_health, change)
 		
 		if _health <= 0:
 			health_reached_zero.emit()
@@ -89,7 +90,8 @@ func _apply_mana_modifier(delta: float) -> void:
 	_mana = clamp(_mana + delta, 0, _max_mana)
 	
 	if old != _mana:
-		mana_changed.emit(_mana, _max_mana)
+		var change := _mana - old
+		mana_changed.emit(_mana, _max_mana, change)
 		
 		if _mana <= 0:
 			mana_reached_zero.emit()
@@ -99,7 +101,8 @@ func _apply_stamina_modifier(delta: float) -> void:
 	_stamina = clamp(_stamina + delta, 0, _max_stamina)
 	
 	if old != _stamina:
-		stamina_changed.emit(_stamina, _max_stamina)
+		var change := _stamina - old
+		stamina_changed.emit(_stamina, _max_stamina, change)
 		
 		if _stamina <= 0:
 			stamina_reached_zero.emit()
