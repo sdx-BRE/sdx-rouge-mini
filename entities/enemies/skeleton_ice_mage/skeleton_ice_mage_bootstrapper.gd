@@ -7,7 +7,7 @@ func setup(mage: SkeletonIceMage) -> void:
 
 func _boot_processor() -> void:
 	_bootstrap_ability_system()
-	super ()
+	super()
 
 func _create_attack_context() -> StateContextAttack:
 	return SkeletonIceMageAttack.new(_mage._ability_system)
