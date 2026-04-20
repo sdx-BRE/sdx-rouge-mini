@@ -13,7 +13,7 @@ signal died()
 @onready var fov: Area3D = $Fov
 @onready var target_point := $TargetPoint
 
-var _stats: EntityStats
+var _status_manager: EntityStatusManager
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler
 var _anim: EnemyAnimation
@@ -32,11 +32,11 @@ func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
 
 func take_damage(hit: DamageInstance) -> void:
-	_stats.take_damage(hit)
-	if not _stats.is_alive():
+	var final_damage := _status_manager.take_damage(hit)
+	if not _status_manager.is_alive():
 		return
 	
-	if hit.amount >= 12: # Todo: Fix hardcoded value
+	if final_damage >= 12: # Todo: Fix hardcoded value
 		_anim.hit_strong()
 	else:
 		_anim.hit_weak()

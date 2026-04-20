@@ -13,12 +13,14 @@ static func bootstrap(
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
 
 static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
-	mage._stats = mage.data.to_stats()
+	var stats := mage.data.to_stats()
+	var debuffs := EntityDebuffs.new()
+	mage._status_manager = EntityStatusManager.new(stats, debuffs, mage.target_point)
 	
-	mage._stats.health_changed.connect(signals.health_changed.emit)
-	mage._stats.mana_changed.connect(signals.mana_changed.emit)
-	mage._stats.stamina_changed.connect(signals.stamina_changed.emit)
-	mage._stats.health_reached_zero.connect(mage._on_dying)
+	mage._status_manager.health_changed.connect(signals.health_changed.emit)
+	mage._status_manager.mana_changed.connect(signals.mana_changed.emit)
+	mage._status_manager.stamina_changed.connect(signals.stamina_changed.emit)
+	mage._status_manager.health_reached_zero.connect(mage._on_dying)
 
 static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 	mage._anim = MageAnimator.create(
@@ -42,7 +44,7 @@ static func _bootstrap_abilities(
 	
 	var registry := AbilityRegistry.new()
 	for ability_data in mage.abilities:
-		registry.register(ability_data, mage._stats, cooldown_manager)
+		registry.register(ability_data, mage._status_manager.get_stats(), cooldown_manager)
 	
 	var controller := MageController.new(movement_context)
 	
@@ -105,7 +107,8 @@ static func _bootstrap_process_handler(
 	mage: MageCharacter,
 	movement_context: MageMovementContext,
 ) -> void:
-	processor.add_process_handler(MageResourceGenerator.from_data(mage._stats, mage.data))
+	processor.add_process_handler(EntityStatusProcessHandler.new(mage._status_manager))
+	processor.add_process_handler(MageResourceGenerator.from_data(mage._status_manager.get_stats(), mage.data))
 	processor.add_process_handler(MageProcessHandler.new(mage._anim, mage._ability_system))
 	
 	var airbourne_observer := ObserverAirbourne.new(mage)

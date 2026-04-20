@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bymtmqhufjt7i" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_none.gd" id="3_5wt8b"]
 [ext_resource type="Script" uid="uid://b5wbxguslpyf8" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_continuous.gd" id="3_bk2wm"]
 [ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="3_kj7gd"]
+[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="3_rnmc3"]
 [ext_resource type="Script" uid="uid://ctivn3mpii0pe" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_channeled.gd" id="4_bg1si"]
 [ext_resource type="Resource" uid="uid://b8lsahtxl1htu" path="res://entities/characters/mage/resources/windup_spellcasting.tres" id="7_0k1ga"]
 
@@ -15,9 +16,13 @@ script = ExtResource("1_jvtgl")
 type = 1
 mana = 15.0
 
+[sub_resource type="Resource" id="Resource_l3fg7"]
+script = ExtResource("3_rnmc3")
+damage = 2.0
+
 [sub_resource type="Resource" id="Resource_rnmc3"]
 script = ExtResource("3_kj7gd")
-base_damage = 4.0
+modifiers = Array[ExtResource("2_nqhhk")]([SubResource("Resource_l3fg7")])
 metadata/_custom_type_script = "uid://c0uht871o3us3"
 
 [sub_resource type="Resource" id="Resource_0k1ga"]

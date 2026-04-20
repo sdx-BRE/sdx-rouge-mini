@@ -15,7 +15,9 @@ func boot() -> void:
 	_wire_signals()
 
 func _boot_stats() -> void:
-	_entity._stats = EntityStats.from_enemy_data(_entity.data)
+	var stats := EntityStats.from_enemy_data(_entity.data)
+	var debuffs := EntityDebuffs.new()
+	_entity._status_manager = EntityStatusManager.new(stats, debuffs, _entity.target_point)
 
 func _boot_anim() -> void:
 	_entity._anim = EnemyAnimation.from_tree(_entity.anim_tree, _entity.anim_params)
@@ -34,6 +36,7 @@ func _boot_processor() -> void:
 	_entity._processor = EntityProcessor.new(_entity.get_viewport())
 	
 	_entity._processor.add_process_handler(EnemyStateMachineHandler.new(state_machine))
+	_entity._processor.add_process_handler(EntityStatusProcessHandler.new(_entity._status_manager))
 	_boot_processor_process_handler()
 	
 	_entity._processor.add_physics_handler(EnemyVelocityHandler.new(kinematics))
@@ -44,8 +47,8 @@ func _boot_processor_process_handler() -> void: pass
 
 func _wire_signals() -> void:
 	if _entity.ui is EnemyUI:
-		_entity._stats.health_changed.connect(_entity.ui.update_health)
-	_entity._stats.health_reached_zero.connect(_entity.on_die)
+		_entity._status_manager.health_changed.connect(_entity.ui.update_health)
+	_entity._status_manager.health_reached_zero.connect(_entity.on_die)
 	
 	_entity.fov.area_entered.connect(_entity._on_fov_entered)
 	_entity.fov.area_exited.connect(_entity._on_fov_exited)
@@ -67,7 +70,7 @@ func create_state_machine(
 		controller, 
 		blackboard, 
 		_entity.data, 
-		_entity._stats, 
+		_entity._status_manager.get_stats(), 
 		attack_context
 	)
 	

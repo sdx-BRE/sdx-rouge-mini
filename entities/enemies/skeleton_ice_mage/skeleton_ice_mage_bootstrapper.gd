@@ -19,7 +19,7 @@ func _bootstrap_ability_system() -> void:
 	var registry := AbilityRegistry.new()
 	var cooldown_manager := CooldownManager.new()
 	
-	registry.register(_mage.dev_ability, _mage._stats, cooldown_manager)
+	registry.register(_mage.dev_ability, _mage._status_manager.get_stats(), cooldown_manager)
 	
 	var aiming_strategy := SkeletonIceMageAimingStrategy.new(_mage._target_handler)
 	var target_context := AbilityAimingContext.new(aiming_strategy)

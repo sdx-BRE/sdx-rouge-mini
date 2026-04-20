@@ -5,5 +5,5 @@ class_name SkeletonMinion extends BaseSkeletonEnemy
 
 func _on_punch(body: Node3D) -> void:
 	if body.has_method("take_damage"):
-		var hit := DamageInstance.new(punch_damage)
+		var hit := DamageInstance.new([DamagePayloadFlat.new(punch_damage)])
 		body.take_damage(hit)

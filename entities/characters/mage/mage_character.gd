@@ -42,7 +42,7 @@ signal skill_cooldown(action: StringName, cooldown: float)
 @onready var enemy_target_marker := $EnemyTargetMarker
 @onready var target_point := $TargetPoint
 
-var _stats: EntityStats
+var _status_manager: EntityStatusManager
 var _anim: MageAnimator
 var _ability_system: AbilitySystem
 var _processor: EntityProcessor
@@ -82,9 +82,9 @@ func _physics_process(delta: float) -> void:
 #endregion
 
 func take_damage(hit: DamageInstance) -> void:
-	_stats.take_damage(hit)
+	var final_damage := _status_manager.take_damage(hit)
 	
-	if hit.amount >= threshold_hit_strong:
+	if final_damage >= threshold_hit_strong:
 		_anim.hit_strong()
 	else:
 		_anim.hit_weak()
