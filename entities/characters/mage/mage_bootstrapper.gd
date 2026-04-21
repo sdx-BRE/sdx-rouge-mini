@@ -1,8 +1,6 @@
 class_name MageBootstrapper extends RefCounted
 
 static func bootstrap(mage: MageCharacter) -> void:
-	_bootstrap_signals(mage)
-
 	var movement_context := _create_movement_context(mage)
 	var motor := MageMotor.new(movement_context)
 	
@@ -10,20 +8,6 @@ static func bootstrap(mage: MageCharacter) -> void:
 	MageBootstrapper._bootstrap_anim(mage, mage._signals)
 	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor)
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
-
-static func _bootstrap_signals(mage: MageCharacter) -> void:
-	var signals := MageSignals.new(
-		mage.died,
-		mage.dying,
-		mage.health_changed,
-		mage.mana_changed,
-		mage.stamina_changed,
-		mage.casting_started,
-		mage.casting_end,
-		mage.casting_progressed,
-		mage.skill_cooldown,
-	)
-	mage._signals = signals
 
 static func _bootstrap_stats(mage: MageCharacter) -> void:
 	var stats := mage.data.to_stats()

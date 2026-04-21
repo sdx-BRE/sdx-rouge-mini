@@ -49,6 +49,17 @@ var _processor: EntityProcessor
 var _signals: MageSignals
 
 func _ready() -> void:
+	_signals = MageSignals.new(
+		died,
+		dying,
+		health_changed,
+		mana_changed,
+		stamina_changed,
+		casting_started,
+		casting_end,
+		casting_progressed,
+		skill_cooldown,
+	)
 	MageBootstrapper.bootstrap(self)
 
 func _on_dying() -> void:
