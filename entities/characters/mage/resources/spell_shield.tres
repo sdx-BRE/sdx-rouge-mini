@@ -1,12 +1,16 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bcgd40bhkrlh4"]
 
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_dvyda"]
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_kcuo6"]
 [ext_resource type="PackedScene" uid="uid://bbjjmd6rsymba" path="res://entities/abilities/spell_shield/spell_shield.tscn" id="2_kcuo6"]
 [ext_resource type="Script" uid="uid://knf1iijk4l62" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_buff.gd" id="3_mf0l3"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_i0n8l"]
 [ext_resource type="Script" uid="uid://dt5t0hihldsrk" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_self.gd" id="5_wpogw"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_o07wo"]
 [ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="7_dvyda"]
+
+[sub_resource type="Resource" id="Resource_mf0l3"]
+script = ExtResource("1_kcuo6")
 
 [sub_resource type="Resource" id="Resource_xti8d"]
 script = ExtResource("1_dvyda")
@@ -26,7 +30,7 @@ script = ExtResource("6_o07wo")
 
 [resource]
 script = ExtResource("4_i0n8l")
-cooldown = 4.0
+cooldown = SubResource("Resource_mf0l3")
 cost = SubResource("Resource_xti8d")
 targeting = SubResource("Resource_isd1h")
 trigger = SubResource("Resource_ocy01")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cwxebp15i83ob"]
 
-[ext_resource type="Script" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_cooldown"]
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_cooldown"]
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_qtsyr"]
 [ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="2_gccx7"]
 [ext_resource type="PackedScene" uid="uid://ux1pndp3kv5k" path="res://entities/characters/mage/spells/meteor/meteor.tscn" id="2_yumye"]

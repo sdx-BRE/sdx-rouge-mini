@@ -1,0 +1,3 @@
+﻿class_name SkeletonBossBootstrapper extends BaseSkeletonEnemyBootstrapper
+
+

@@ -1,0 +1,179 @@
+[gd_scene format=3 uid="uid://8ret8tl2qdjs"]
+
+[ext_resource type="PackedScene" uid="uid://rx1nodrbfhx2" path="res://entities/enemies/base/base_skeleton_enemy.tscn" id="1_oekpf"]
+[ext_resource type="Script" uid="uid://b7y5qy8276q8l" path="res://entities/enemies/skeleton_boss/skeleton_boss.gd" id="2_08uhn"]
+[ext_resource type="PackedScene" uid="uid://cemf540c86lej" path="res://assets/enemies/Skeleton_Warrior.glb" id="2_x1leo"]
+[ext_resource type="AnimationLibrary" uid="uid://do322j6l8xf82" path="res://entities/enemies/base/resources/anim_lib_global.res" id="3_3qcpc"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_x1leo"]
+viewport_path = NodePath("EnemyViewport")
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tp1oe"]
+animation = &"Combat/Magic_Raise"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_quf77"]
+animation = &"anim_lib_global/Skeletons_Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2o786"]
+animation = &"anim_lib_global/Skeletons_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bacbq"]
+animation = &"anim_lib_global/Skeletons_Walking"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_oohyq"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2o786")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_bacbq")
+blend_point_1/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_buas5"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pw178"]
+graph_offset = Vector2(-541.9091, -16.818192)
+nodes/Movement/node = SubResource("AnimationNodeBlendSpace1D_oohyq")
+nodes/Movement/position = Vector2(-348.60104, 142.659)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_buas5")
+nodes/TimeScale/position = Vector2(-20, 120)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Movement"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k0fv8"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tp1oe"]
+xfade_time = 0.15
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ccd4k"]
+states/Death/node = SubResource("AnimationNodeAnimation_quf77")
+states/Death/position = Vector2(454, 234)
+states/Locomotion/node = SubResource("AnimationNodeBlendTree_pw178")
+states/Locomotion/position = Vector2(454, 100)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_k0fv8"), "Locomotion", "Death", SubResource("AnimationNodeStateMachineTransition_tp1oe")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oohyq"]
+animation = &"anim_lib_global/Hit_B"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_buas5"]
+filter_enabled = true
+filters = ["Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:hips", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pw178"]
+animation = &"anim_lib_global/Hit_A"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_n0wwj"]
+filter_enabled = true
+filters = ["Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:hips", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_vqhyx"]
+filter_enabled = true
+filters = ["..", "Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:handslot.l", "Rig_Medium/Skeleton3D:handslot.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rkcrx"]
+animation = &"Combat/Magic_Shoot"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_j6xr7"]
+filter_enabled = true
+filters = ["..", "Rig_Medium/Skeleton3D:chest", "Rig_Medium/Skeleton3D:hand.l", "Rig_Medium/Skeleton3D:hand.r", "Rig_Medium/Skeleton3D:handslot.l", "Rig_Medium/Skeleton3D:handslot.r", "Rig_Medium/Skeleton3D:head", "Rig_Medium/Skeleton3D:lowerarm.l", "Rig_Medium/Skeleton3D:lowerarm.r", "Rig_Medium/Skeleton3D:spine", "Rig_Medium/Skeleton3D:upperarm.l", "Rig_Medium/Skeleton3D:upperarm.r", "Rig_Medium/Skeleton3D:wrist.l", "Rig_Medium/Skeleton3D:wrist.r"]
+fadein_time = 0.1
+fadeout_time = 0.15
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_08uhn"]
+graph_offset = Vector2(-137.01129, -13.553757)
+nodes/output/position = Vector2(1240, 180)
+nodes/FullBodyState/node = SubResource("AnimationNodeStateMachine_ccd4k")
+nodes/FullBodyState/position = Vector2(-820, 200)
+nodes/HitWeakOneShot/node = SubResource("AnimationNodeOneShot_n0wwj")
+nodes/HitWeakOneShot/position = Vector2(80, 160)
+nodes/HitStrongOneShot/node = SubResource("AnimationNodeOneShot_buas5")
+nodes/HitStrongOneShot/position = Vector2(360, 160)
+nodes/HitWeakAnimation/node = SubResource("AnimationNodeAnimation_pw178")
+nodes/HitWeakAnimation/position = Vector2(80, 440)
+nodes/HitStrongAnimation/node = SubResource("AnimationNodeAnimation_oohyq")
+nodes/HitStrongAnimation/position = Vector2(360, 440)
+nodes/ShootOneShot/node = SubResource("AnimationNodeOneShot_j6xr7")
+nodes/ShootOneShot/position = Vector2(660, 160)
+nodes/ShootAnimation/node = SubResource("AnimationNodeAnimation_rkcrx")
+nodes/ShootAnimation/position = Vector2(660, 440)
+nodes/RaiseOneShot/node = SubResource("AnimationNodeOneShot_vqhyx")
+nodes/RaiseOneShot/position = Vector2(1000, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_tp1oe")
+nodes/Animation/position = Vector2(1000, 440)
+node_connections = [&"output", 0, &"RaiseOneShot", &"HitWeakOneShot", 0, &"FullBodyState", &"HitWeakOneShot", 1, &"HitWeakAnimation", &"HitStrongOneShot", 0, &"HitWeakOneShot", &"HitStrongOneShot", 1, &"HitStrongAnimation", &"ShootOneShot", 0, &"HitStrongOneShot", &"ShootOneShot", 1, &"ShootAnimation", &"RaiseOneShot", 0, &"ShootOneShot", &"RaiseOneShot", 1, &"Animation"]
+
+[node name="SkeletonBoss" unique_id=74253162 instance=ExtResource("1_oekpf")]
+script = ExtResource("2_08uhn")
+
+[node name="Skeleton_Warrior" parent="." index="0" unique_id=157774628 instance=ExtResource("2_x1leo")]
+
+[node name="Rig_Medium" parent="Skeleton_Warrior" index="0" unique_id=1061285718]
+transform = Transform3D(-2, 0, 3.019916e-07, 0, 2, 0, -3.019916e-07, 0, -2, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Skeleton_Warrior/Rig_Medium" index="0" unique_id=828661082]
+bones/1/position = Vector3(7.167187e-09, 0.29969916, -0.030061364)
+bones/1/rotation = Quaternion(2.255949e-10, 0.17319314, 2.5649072e-09, 0.9848879)
+bones/2/rotation = Quaternion(0.11676573, -0.12958969, 0.025773186, 0.98433125)
+bones/2/scale = Vector3(1, 1, 1.0000001)
+bones/3/rotation = Quaternion(0.289146, -0.0078050867, 0.011749249, 0.95718116)
+bones/4/position = Vector3(-0.21200739, 0.13413239, 2.3664171e-08)
+bones/4/rotation = Quaternion(-0.7986634, 0.11622736, 0.4522847, 0.37956107)
+bones/5/rotation = Quaternion(4.21272e-08, 4.2364384e-08, 0.4455943, 0.89523506)
+bones/6/rotation = Quaternion(-7.297441e-09, 4.2303276e-09, -0.026658092, 0.99964464)
+bones/7/rotation = Quaternion(-0.34632185, 0.40148845, -0.072975, 0.84471464)
+bones/8/position = Vector3(-5.138423e-10, 0.096125096, -0.057500005)
+bones/8/rotation = Quaternion(-6.7158483e-09, -4.808679e-09, 0.7071068, 0.7071067)
+bones/9/position = Vector3(0.21200736, 0.13413227, 8.487841e-08)
+bones/9/rotation = Quaternion(-0.76510674, -0.17652737, -0.49753404, 0.36865926)
+bones/10/rotation = Quaternion(-3.1770412e-08, -4.2365446e-08, -0.61782587, 0.786315)
+bones/11/rotation = Quaternion(7.797047e-09, -1.1281024e-08, 0.026658095, 0.99964464)
+bones/12/rotation = Quaternion(-0.12585388, -0.6090766, 0.014837523, 0.7829217)
+bones/13/position = Vector3(5.1384585e-10, 0.09612511, -0.057500005)
+bones/13/rotation = Quaternion(-0.025259204, -0.00061355764, -0.5007622, 0.86521614)
+bones/14/rotation = Quaternion(-0.27904162, 0.010212707, 0.088627554, 0.9561259)
+bones/14/scale = Vector3(1, 1, 0.9999999)
+bones/15/position = Vector3(0.17094505, 0.11358723, 1.12356435e-08)
+bones/15/rotation = Quaternion(0.9218123, 0.13808739, 0.21975972, 0.28792316)
+bones/16/rotation = Quaternion(0.6519174, 5.4654823e-08, -4.5589186e-07, 0.7582901)
+bones/17/rotation = Quaternion(-0.61552984, -0.36538866, 0.20161003, 0.66855633)
+bones/18/rotation = Quaternion(-0.00023576771, 0.9200985, -0.391687, 5.0715622e-05)
+bones/19/position = Vector3(-0.1776051, 0.1135872, 0.07694323)
+bones/19/rotation = Quaternion(0.9182878, -0.23589617, 0.28438488, 0.14221714)
+bones/19/scale = Vector3(0.9999998, 0.9999999, 1.0000013)
+bones/20/rotation = Quaternion(0.65828156, -5.1962978e-08, 4.7111786e-07, 0.7527718)
+bones/21/rotation = Quaternion(-0.73890877, 0.10796021, -0.19128993, 0.6369981)
+bones/22/rotation = Quaternion(0.00029589876, 0.9201205, -0.39163563, -6.2588464e-05)
+
+[node name="head" parent="Skeleton_Warrior/Rig_Medium/Skeleton3D" index="0" unique_id=791252511]
+transform = Transform3D(0.980885, -0.19140819, 0.035035297, 0.19389771, 0.94627744, -0.2587715, 0.016377866, 0.2606184, 0.965303, 0.0055943765, 1.0379856, 0.25666147)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Skeleton_Warrior" index="1" unique_id=539752362]
+libraries/anim_lib_global = ExtResource("3_3qcpc")
+
+[node name="HealthDisplay" parent="." index="2" unique_id=599444158]
+texture = SubResource("ViewportTexture_x1leo")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="8" unique_id=1843860088]
+root_node = NodePath("../Skeleton_Warrior")
+tree_root = SubResource("AnimationNodeBlendTree_08uhn")
+anim_player = NodePath("../Skeleton_Warrior/AnimationPlayer")
+parameters/FullBodyState/Locomotion/Movement/blend_position = 0.0
+parameters/FullBodyState/Locomotion/TimeScale/scale = 1.0
+parameters/HitWeakOneShot/active = false
+parameters/HitWeakOneShot/internal_active = false
+parameters/HitWeakOneShot/request = 0
+parameters/HitStrongOneShot/active = false
+parameters/HitStrongOneShot/internal_active = false
+parameters/HitStrongOneShot/request = 0
+parameters/ShootOneShot/active = false
+parameters/ShootOneShot/internal_active = false
+parameters/ShootOneShot/request = 0
+parameters/RaiseOneShot/active = false
+parameters/RaiseOneShot/internal_active = false
+parameters/RaiseOneShot/request = 0
+
+[editable path="Skeleton_Warrior"]

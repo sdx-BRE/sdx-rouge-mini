@@ -1,11 +1,15 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://c1t5kyixn17vm"]
 
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_861i1"]
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_n5ml7"]
 [ext_resource type="Script" uid="uid://b7svvrwrxfiff" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_dash.gd" id="2_bii7w"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="2_q2vdd"]
 [ext_resource type="Script" uid="uid://bymtmqhufjt7i" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_none.gd" id="4_861i1"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="5_empbf"]
 [ext_resource type="Script" uid="uid://6wt3iv7w822w" path="res://entities/shared/ability_system/resources/windup/ability_windup_instant.gd" id="6_m1tp0"]
+
+[sub_resource type="Resource" id="Resource_empbf"]
+script = ExtResource("1_861i1")
 
 [sub_resource type="Resource" id="Resource_is3m1"]
 script = ExtResource("1_n5ml7")
@@ -27,6 +31,7 @@ script = ExtResource("6_m1tp0")
 
 [resource]
 script = ExtResource("2_q2vdd")
+cooldown = SubResource("Resource_empbf")
 cost = SubResource("Resource_is3m1")
 targeting = SubResource("Resource_c4i1i")
 trigger = SubResource("Resource_gvsye")
