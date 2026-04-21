@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://c1c8o4cysdrgh" path="res://entities/enemies/skeleton_minion/skeleton_minion.tscn" id="18_ml21t"]
 [ext_resource type="PackedScene" uid="uid://ce1fxvowu3n67" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage.tscn" id="18_myc1v"]
 [ext_resource type="Script" uid="uid://bkmt816p5kl5m" path="res://systems/spawner/wave_spawner.gd" id="19_clkjv"]
+[ext_resource type="PackedScene" uid="uid://8ret8tl2qdjs" path="res://entities/enemies/skeleton_boss/skeleton_boss.tscn" id="20_clkjv"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_js7wp"]
 panorama = ExtResource("1_8q32b")
@@ -314,7 +315,10 @@ random_node_container = NodePath("../SpawnLocations")
 metadata/_custom_type_script = "uid://bkmt816p5kl5m"
 
 [node name="SkeletonMinionNext" parent="." unique_id=74253162 instance=ExtResource("18_ml21t")]
-transform = Transform3D(-0.89939, 0, -0.43714714, 0, 1, 0, 0.43714714, 0, -0.89939, -18, 0, -22)
+transform = Transform3D(-0.89939, 0, -0.43714714, 0, 1, 0, 0.43714714, 0, -0.89939, -34.125927, 0, -34.155037)
 
 [node name="SkeletonIceMageNext" parent="." unique_id=1372091113 instance=ExtResource("18_myc1v")]
-transform = Transform3D(-0.79411775, 0, 0.60776395, 0, 1, 0, -0.60776395, 0, -0.79411775, 22.459896, 0, -37.977985)
+transform = Transform3D(-0.79411775, 0, 0.60776395, 0, 1, 0, -0.60776395, 0, -0.79411775, 34.149544, 0, -33.883305)
+
+[node name="SkeletonBoss" parent="." unique_id=1183321173 instance=ExtResource("20_clkjv")]
+transform = Transform3D(-0.9997547, 0, 0.022146473, 0, 1, 0, -0.022146473, 0, -0.9997547, 0, 0, -34.645317)
