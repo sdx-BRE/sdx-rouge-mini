@@ -13,10 +13,14 @@ signal died()
 @onready var fov: Area3D = $Fov
 @onready var target_point := $TargetPoint
 
+@export_group("Abilities")
+@export var abilities: Array[AbilityData]
+
 var _status_manager: EntityStatusManager
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler
 var _anim: EnemyAnimation
+var _ability_system: AbilitySystem
 
 func _ready() -> void:
 	var bootstrapper: BaseSkeletonEnemyBootstrapper = bootstrap_script.new(self)
@@ -30,6 +34,9 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	_processor.physics_process(delta)
+
+func execute_cast() -> void:
+	_ability_system.notify_animation_event()
 
 func take_damage(hit: DamageInstance) -> void:
 	var final_damage := _status_manager.take_damage(hit)
