@@ -40,7 +40,7 @@ func use_resources_delta(delta: float) -> void:
 	_stats.use_stamina(_data.cost.stamina * delta)
 
 func start_cooldown() -> void:
-	_cooldown_manager.start_character_cooldown(self._data)
+	_cooldown_manager.start_cooldown(_data.id, _data.cooldown)
 
-func has_cooldown() -> void:
-	_cooldown_manager.has_character_cooldown(self._data)
+func has_cooldown() -> bool:
+	return _cooldown_manager.has_cooldown(_data.id)

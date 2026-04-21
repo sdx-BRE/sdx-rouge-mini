@@ -38,30 +38,30 @@ func handle_input(event: InputEvent) -> bool:
 	
 	return false
 
-func try_activate_ability(id: int) -> void:
+func try_activate_ability(id: StringName) -> void:
 	handle_ability_action(id, TriggerState.Press)
 
-func try_release_ability(id: int) -> void:
+func try_release_ability(id: StringName) -> void:
 	handle_ability_action(id, TriggerState.Release)
 
 func notify_animation_event() -> void:
 	_manager.handle_animation_event()
 
-func use_ability_resources(id: int) -> void:
+func use_ability_resources(id: StringName) -> void:
 	var ability := _registry.get_ability(id)
 	if ability == null:
 		return
 	
 	ability.use_resources()
 
-func has_ability_resources(id: int) -> bool:
+func has_ability_resources(id: StringName) -> bool:
 	var ability := _registry.get_ability(id)
 	if ability == null:
 		return false
 	
 	return ability.has_resources()
 
-func start_ability_cooldown(id: int) -> void:
+func start_ability_cooldown(id: StringName) -> void:
 	var ability := _registry.get_ability(id)
 	if ability == null:
 		return
@@ -78,7 +78,7 @@ enum TriggerState {
 }
 
 func handle_ability_action(
-	id: int,
+	id: StringName,
 	state: TriggerState,
 ) -> void:
 	var ability := _registry.get_ability(id)
@@ -88,7 +88,7 @@ func handle_ability_action(
 	
 	if state == TriggerState.Press:
 		if not ability.check_resources() \
-			or _cooldown_manager.has_character_cooldown(ability._data):
+			or _cooldown_manager.has_cooldown(ability._data.id):
 			return
 	
 	_manager.handle_ability_action(ability, state)
