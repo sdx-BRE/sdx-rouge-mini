@@ -314,7 +314,7 @@ random_node_container = NodePath("../SpawnLocations")
 metadata/_custom_type_script = "uid://bkmt816p5kl5m"
 
 [node name="SkeletonMinionNext" parent="." unique_id=74253162 instance=ExtResource("18_ml21t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -22)
+transform = Transform3D(-0.89939, 0, -0.43714714, 0, 1, 0, 0.43714714, 0, -0.89939, -18, 0, -22)
 
 [node name="SkeletonIceMageNext" parent="." unique_id=1372091113 instance=ExtResource("18_myc1v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.459896, 0, -37.977985)
+transform = Transform3D(-0.79411775, 0, 0.60776395, 0, 1, 0, -0.60776395, 0, -0.79411775, 22.459896, 0, -37.977985)
