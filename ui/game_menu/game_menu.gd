@@ -20,8 +20,8 @@ func change_label(label: StringName) -> void:
 	menu_label.text = label
 
 func _on_visibility_changed() -> void:
-	if visible: Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else: Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if visible: CursorManager.set_visible_mode()
+	else: CursorManager.set_captured_mode()
 
 func _on_restart_btn_pressed() -> void:
 	var tree = get_tree()
