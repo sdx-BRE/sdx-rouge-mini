@@ -1,25 +1,38 @@
 class_name MageBootstrapper extends RefCounted
 
-static func bootstrap(
-	mage: MageCharacter,
-	signals: MageSignals,
-) -> void:
+static func bootstrap(mage: MageCharacter) -> void:
+	_bootstrap_signals(mage)
+
 	var movement_context := _create_movement_context(mage)
 	var motor := MageMotor.new(movement_context)
 	
-	MageBootstrapper._bootstrap_stats(mage, signals)
-	MageBootstrapper._bootstrap_anim(mage, signals)
-	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor, signals)
+	MageBootstrapper._bootstrap_stats(mage)
+	MageBootstrapper._bootstrap_anim(mage, mage._signals)
+	MageBootstrapper._bootstrap_abilities(mage, movement_context, motor)
 	MageBootstrapper._bootstrap_processor(mage, movement_context, motor)
 
-static func _bootstrap_stats(mage: MageCharacter, signals: MageSignals) -> void:
+static func _bootstrap_signals(mage: MageCharacter) -> void:
+	var signals := MageSignals.new(
+		mage.died,
+		mage.dying,
+		mage.health_changed,
+		mage.mana_changed,
+		mage.stamina_changed,
+		mage.casting_started,
+		mage.casting_end,
+		mage.casting_progressed,
+		mage.skill_cooldown,
+	)
+	mage._signals = signals
+
+static func _bootstrap_stats(mage: MageCharacter) -> void:
 	var stats := mage.data.to_stats()
 	var debuffs := EntityDebuffs.new()
 	mage._status_manager = EntityStatusManager.new(stats, debuffs, mage.target_point)
 	
-	mage._status_manager.health_changed.connect(signals.health_changed.emit)
-	mage._status_manager.mana_changed.connect(signals.mana_changed.emit)
-	mage._status_manager.stamina_changed.connect(signals.stamina_changed.emit)
+	mage._status_manager.health_changed.connect(mage._signals.health_changed.emit)
+	mage._status_manager.mana_changed.connect(mage._signals.mana_changed.emit)
+	mage._status_manager.stamina_changed.connect(mage._signals.stamina_changed.emit)
 	mage._status_manager.health_reached_zero.connect(mage._on_dying)
 
 static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
@@ -34,17 +47,18 @@ static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 	mage._anim.register_signals(signals.died)
 
 static func _bootstrap_abilities(
-	mage: MageCharacter, 
+	mage: MageCharacter,
 	movement_context: MageMovementContext, 
 	motor: MageMotor,
-	mage_signals: MageSignals,
 ) -> void:
 	var cooldown_manager := CooldownManager.new()
-	cooldown_manager.cooldown_started.connect(mage_signals.skill_cooldown.emit)
+	cooldown_manager.cooldown_started.connect(mage._signals.on_cooldown_started)
 	
 	var registry := AbilityRegistry.new()
 	for ability_data in mage.abilities:
 		registry.register(ability_data, mage._status_manager.get_stats(), cooldown_manager)
+	
+	mage._signals.setup_ability_mapping(registry)
 	
 	var controller := MageController.new(movement_context)
 	
@@ -59,9 +73,9 @@ static func _bootstrap_abilities(
 	
 	var setup_strategy := MageAbilitySetupStrategy.new(
 		mage.anim_tree,
-		mage_signals.casting_started,
-		mage_signals.casting_progressed,
-		mage_signals.casting_end,
+		mage._signals.casting_started,
+		mage._signals.casting_progressed,
+		mage._signals.casting_end,
 	)
 	var setup_context := AbilitySetupContext.new(setup_strategy)
 	
