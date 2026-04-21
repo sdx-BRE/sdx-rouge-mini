@@ -65,7 +65,7 @@ func start_ability_cooldown(id: StringName) -> void:
 	var ability := _registry.get_ability(id)
 	if ability == null:
 		return
-	ability.start_cooldown()
+	ability.start_cooldown_external()
 
 func tick(delta: float) -> void:
 	_manager.tick(delta)

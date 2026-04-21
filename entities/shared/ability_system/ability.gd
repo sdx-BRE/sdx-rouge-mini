@@ -40,7 +40,12 @@ func use_resources_delta(delta: float) -> void:
 	_stats.use_stamina(_data.cost.stamina * delta)
 
 func start_cooldown() -> void:
-	_cooldown_manager.start_cooldown(_data.id, _data.cooldown)
+	if _data.cooldown.type == AbilityCooldown.Type.Internal:
+		_cooldown_manager.start_cooldown(_data.id, _data.cooldown.duration)
+
+func start_cooldown_external() -> void:
+	if _data.cooldown.type == AbilityCooldown.Type.External:
+		_cooldown_manager.start_cooldown(_data.id, _data.cooldown.duration)
 
 func has_cooldown() -> bool:
 	return _cooldown_manager.has_cooldown(_data.id)
