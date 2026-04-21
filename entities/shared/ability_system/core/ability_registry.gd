@@ -15,3 +15,11 @@ func get_ability(id: StringName) -> Ability:
 
 func get_actions() -> Dictionary[StringName, StringName]:
 	return _actions
+
+func get_ability_input_map() -> Dictionary[StringName, StringName]:
+	var mapping: Dictionary[StringName, StringName] = {}
+	for input_action in _actions:
+		var id = _actions[input_action]
+		mapping[id] = input_action
+	
+	return mapping
