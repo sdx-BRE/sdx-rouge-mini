@@ -1,4 +1,4 @@
-class_name SkeletonIceMageRecoverStrategy extends AbilityRecoverStrategy
+class_name EnemyRecoverStrategy extends AbilityRecoverStrategy
 
 var _anim_tree: AnimationTree
 

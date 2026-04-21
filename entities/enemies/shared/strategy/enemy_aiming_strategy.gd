@@ -1,4 +1,4 @@
-class_name SkeletonIceMageAimingStrategy extends AbilityAimingStrategy
+class_name EnemyAimingStrategy extends AbilityAimingStrategy
 
 var _handler: AiTargetHandler
 

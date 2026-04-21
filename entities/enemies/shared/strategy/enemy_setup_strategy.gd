@@ -1,4 +1,4 @@
-class_name SkeletonIceMageSetupStrategy extends AbilitySetupStrategy
+class_name EnemySetupStrategy extends AbilitySetupStrategy
 
 var _anim_tree: AnimationTree
 
@@ -9,7 +9,6 @@ func oneshot(param: StringName) -> void:
 	_anim_tree.set(param + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func cancel_oneshot(param: StringName, fadeout: bool = true) -> void:
-	var oneshot_signal := AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT if fadeout \
+	var req := AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT if fadeout \
 		else AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
-	
-	_anim_tree.set(param + "/request", oneshot_signal)
+	_anim_tree.set(param + "/request", req)
