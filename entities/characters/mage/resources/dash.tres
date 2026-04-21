@@ -32,5 +32,5 @@ targeting = SubResource("Resource_c4i1i")
 trigger = SubResource("Resource_gvsye")
 windup = SubResource("Resource_tyrr3")
 delivery = SubResource("Resource_2ci4l")
-input = "dash"
-id = 30
+id = &"dash"
+input = &"dash"

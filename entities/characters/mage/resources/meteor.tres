@@ -51,5 +51,5 @@ targeting = SubResource("Resource_p4xys")
 trigger = SubResource("Resource_fn068")
 windup = SubResource("Resource_0torb")
 delivery = SubResource("Resource_3pngl")
-input = "skill_3"
-id = 120
+id = &"meteor"
+input = &"skill_3"

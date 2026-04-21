@@ -40,5 +40,5 @@ trigger = SubResource("Resource_lkne7")
 windup = SubResource("Resource_brpg6")
 delivery = SubResource("Resource_3pngl")
 input = "attack"
-id = 100
+id = &"firepulse"
 metadata/_custom_type_script = "uid://bxlxyggy7yd8u"

@@ -32,5 +32,5 @@ targeting = SubResource("Resource_isd1h")
 trigger = SubResource("Resource_ocy01")
 windup = ExtResource("7_dvyda")
 delivery = SubResource("Resource_04vlu")
-input = "skill_2"
-id = 130
+id = &"spell_shield"
+input = &"skill_2"

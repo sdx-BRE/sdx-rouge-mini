@@ -43,5 +43,5 @@ targeting = SubResource("Resource_bk2wm")
 trigger = SubResource("Resource_nqhhk")
 windup = ExtResource("7_0k1ga")
 delivery = SubResource("Resource_0k1ga")
-input = "attack"
-id = 100
+id = &"firepulse"
+input = &"attack"
