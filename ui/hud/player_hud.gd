@@ -32,6 +32,9 @@ func hide_skill_progress() -> void:
 	skill_progress.visible = false
 
 func start_cooldown(action: StringName, cooldown: float) -> void:
+	if cooldown <= 0.0:
+		return
+	
 	var progress
 	match action:
 		&"skill_1": progress = skill_1
