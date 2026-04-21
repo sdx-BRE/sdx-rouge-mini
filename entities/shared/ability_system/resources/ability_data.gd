@@ -8,9 +8,8 @@ class_name AbilityData extends Resource
 @export var windup: AbilityWindup
 @export var delivery: AbilityDelivery
 
-@export_enum("attack", "dash", "jump", "sprint", "skill_1", "skill_2", "skill_3", "dbg") var input: String
-
-var id: int
+@export var id: StringName = &""
+var input: StringName = &""
 
 func to_ability(
 	stats: EntityStats,
@@ -19,16 +18,17 @@ func to_ability(
 	return Ability.new(stats, self, cooldown_manager)
 
 func _get_property_list() -> Array[Dictionary]:
-	var constants = AbilityId.new().get_script().get_script_constant_map()
-	var hint_strings := []
-	for key in constants.keys():
-		hint_strings.append(str(key, ":", constants[key]))
+	var actions: Array[String] = [""]
+	for property in ProjectSettings.get_property_list():
+		if property.name.begins_with("input/"):
+			var action_name = property.name.trim_prefix("input/")
+			actions.append(action_name)
 	
-	var enum_string := ",".join(hint_strings)
+	var enum_string := ",".join(actions)
 	
 	return [{
-		"name": "id",
-		"type": TYPE_INT,
+		"name": "input",
+		"type": TYPE_STRING,
 		"usage": PROPERTY_USAGE_DEFAULT,
 		"hint": PROPERTY_HINT_ENUM,
 		"hint_string": enum_string
