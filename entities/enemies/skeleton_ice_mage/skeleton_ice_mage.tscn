@@ -6,11 +6,21 @@
 [ext_resource type="Script" uid="uid://cq06dcsqynap7" path="res://entities/enemies/skeleton_ice_mage/skeleton_ice_mage_bootstrapper.gd" id="3_tn744"]
 [ext_resource type="Animation" uid="uid://d3h8poxoanptp" path="res://assets/animations/combat_range/Ranged_Magic_Raise.res" id="3_uj05e"]
 [ext_resource type="Animation" uid="uid://v8mirnurewlr" path="res://assets/animations/combat_range/Ranged_Magic_Shoot.res" id="4_dhuwg"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="5_omqg4"]
 [ext_resource type="AnimationLibrary" uid="uid://do322j6l8xf82" path="res://entities/enemies/base/resources/anim_lib_global.res" id="5_twyys"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://byq8fjp4lsrle" path="res://entities/enemies/base/resources/anim_tree_blend_tree.tres" id="6_dhuwg"]
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="6_eyy3c"]
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="7_dygk6"]
 [ext_resource type="Script" uid="uid://b5wgad1i13dp0" path="res://entities/enemies/shared/enemy_data.gd" id="8_75f88"]
-[ext_resource type="Resource" uid="uid://dobu4k4gucop2" path="res://entities/enemies/skeleton_ice_mage/resources/ability_frost_bolt.tres" id="8_aywjm"]
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="8_vygfe"]
+[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="9_m8npo"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="10_3m1cf"]
+[ext_resource type="PackedScene" uid="uid://derrpqrpwck7n" path="res://entities/abilities/frost_bolt/frost_bolt.tscn" id="11_d7hkw"]
 [ext_resource type="PackedScene" uid="uid://5myaiiar3ius" path="res://assets/weapons/staff.gltf" id="11_i1f0s"]
+[ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="12_xg73n"]
+[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="13_mxfe5"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="14_a8241"]
+[ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="15_x4yp7"]
 
 [sub_resource type="Resource" id="Resource_i1f0s"]
 script = ExtResource("8_75f88")
@@ -18,20 +28,63 @@ attack_range = 15.0
 fov_angle = 135.0
 metadata/_custom_type_script = "uid://b5wgad1i13dp0"
 
+[sub_resource type="Resource" id="Resource_b6nir"]
+script = ExtResource("6_eyy3c")
+duration = 3.0
+
+[sub_resource type="Resource" id="Resource_53du0"]
+script = ExtResource("7_dygk6")
+
+[sub_resource type="Resource" id="Resource_208ig"]
+script = ExtResource("9_m8npo")
+damage = 8.0
+metadata/_custom_type_script = "uid://d3tha66a1k8m3"
+
+[sub_resource type="Resource" id="Resource_2ckne"]
+script = ExtResource("10_3m1cf")
+modifiers = Array[ExtResource("8_vygfe")]([SubResource("Resource_208ig")])
+metadata/_custom_type_script = "uid://c0uht871o3us3"
+
+[sub_resource type="Resource" id="Resource_b8ka5"]
+script = ExtResource("12_xg73n")
+scene = ExtResource("11_d7hkw")
+damage = SubResource("Resource_2ckne")
+metadata/_custom_type_script = "uid://c3e4doafuvjyk"
+
+[sub_resource type="Resource" id="Resource_scx1q"]
+script = ExtResource("13_mxfe5")
+metadata/_custom_type_script = "uid://4resk6xsshmp"
+
+[sub_resource type="Resource" id="Resource_5v5ik"]
+script = ExtResource("14_a8241")
+metadata/_custom_type_script = "uid://1432g8lgqus5"
+
+[sub_resource type="Resource" id="Resource_xxiub"]
+script = ExtResource("5_omqg4")
+cooldown = SubResource("Resource_b6nir")
+cost = SubResource("Resource_53du0")
+targeting = SubResource("Resource_scx1q")
+trigger = SubResource("Resource_5v5ik")
+windup = ExtResource("15_x4yp7")
+delivery = SubResource("Resource_b8ka5")
+id = &"dbg"
+input = &""
+metadata/_custom_type_script = "uid://kmpv5ybfiv5h"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tn744"]
 _data = {
 &"Magic_Raise": ExtResource("3_uj05e"),
 &"Magic_Shoot": ExtResource("4_dhuwg")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_f74u0"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_bxxwu"]
 viewport_path = NodePath("EnemyViewport")
 
 [node name="SkeletonIceMage" unique_id=74253162 instance=ExtResource("1_ncufe")]
 script = ExtResource("2_twyys")
-dev_ability = ExtResource("8_aywjm")
 data = SubResource("Resource_i1f0s")
 bootstrap_script = ExtResource("3_tn744")
+abilities = Array[ExtResource("5_omqg4")]([SubResource("Resource_xxiub")])
 
 [node name="Pivot" parent="." index="0" unique_id=1610757007 instance=ExtResource("2_a4txf")]
 
@@ -39,44 +92,44 @@ bootstrap_script = ExtResource("3_tn744")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Pivot/Rig_Medium" index="0" unique_id=1590112324]
-bones/1/position = Vector3(7.167187e-09, 0.2519552, -0.030061364)
+bones/1/position = Vector3(7.167187e-09, 0.26784286, -0.030061364)
 bones/1/rotation = Quaternion(2.255949e-10, 0.17319314, 2.5649072e-09, 0.9848879)
 bones/2/position = Vector3(-0.1776051, 0.1135872, 0.07694323)
-bones/2/rotation = Quaternion(0.9043591, -0.2821364, 0.2725995, 0.16799758)
+bones/2/rotation = Quaternion(0.90909314, -0.26619267, 0.2763237, 0.16228464)
 bones/2/scale = Vector3(0.9999998, 0.9999999, 1.0000013)
-bones/3/rotation = Quaternion(0.7779383, -5.1209323e-08, 5.635833e-07, 0.6283407)
-bones/4/rotation = Quaternion(-0.8076434, 0.06274767, -0.2347347, 0.53728443)
+bones/3/rotation = Quaternion(0.74272895, -2.9648021e-08, 5.3211585e-07, 0.6695922)
+bones/4/rotation = Quaternion(-0.78699315, 0.07945078, -0.22001366, 0.5708969)
 bones/5/rotation = Quaternion(0.00029589876, 0.9201205, -0.39163563, -6.2588464e-05)
 bones/6/rotation = Quaternion(0.11676573, -0.12958969, 0.025773186, 0.98433125)
 bones/6/scale = Vector3(1, 1, 1.0000001)
-bones/7/rotation = Quaternion(0.28993627, -0.013695375, 0.0017966807, 0.95694625)
-bones/8/rotation = Quaternion(-0.2782296, -0.034211777, 0.015742177, 0.95977604)
+bones/7/rotation = Quaternion(0.28874895, -0.004949587, 0.016572865, 0.9572487)
+bones/8/rotation = Quaternion(-0.27896366, -0.0073830667, 0.059821717, 0.9584082)
 bones/8/scale = Vector3(1, 1, 0.9999999)
 bones/9/position = Vector3(0.21200736, 0.13413227, 8.487841e-08)
-bones/9/rotation = Quaternion(-0.77611613, -0.11617073, -0.43475467, 0.44174266)
-bones/10/rotation = Quaternion(4.5048605e-08, -5.4623516e-08, -0.65335673, 0.7570502)
+bones/9/rotation = Quaternion(-0.768153, -0.13953061, -0.47431087, 0.40681866)
+bones/10/rotation = Quaternion(5.0509417e-08, -2.2611305e-08, -0.63305664, 0.7741055)
 bones/11/rotation = Quaternion(7.797047e-09, -1.1281024e-08, 0.026658095, 0.99964464)
-bones/12/rotation = Quaternion(-0.16849771, -0.5870895, 0.03429193, 0.79104906)
+bones/12/rotation = Quaternion(-0.1526813, -0.5936105, 0.026596002, 0.7896882)
 bones/13/position = Vector3(5.1384585e-10, 0.09612511, -0.057500005)
 bones/13/rotation = Quaternion(-0.025259204, -0.00061355764, -0.5007622, 0.86521614)
 bones/14/position = Vector3(-0.21200739, 0.13413239, 2.3664171e-08)
-bones/14/rotation = Quaternion(-0.79397404, 0.08451224, 0.43661612, 0.4145232)
-bones/15/rotation = Quaternion(5.3153222e-08, 3.403432e-08, 0.4388245, 0.8985729)
+bones/14/rotation = Quaternion(-0.79939, 0.087984934, 0.42506558, 0.41539574)
+bones/15/rotation = Quaternion(2.92592e-08, 3.4933638e-08, 0.45106614, 0.8924905)
 bones/16/rotation = Quaternion(-7.297441e-09, 4.2303276e-09, -0.026658092, 0.99964464)
-bones/17/rotation = Quaternion(-0.36923587, 0.35662538, -0.07640868, 0.85477775)
+bones/17/rotation = Quaternion(-0.3632278, 0.37323216, -0.07695968, 0.8502003)
 bones/18/position = Vector3(-5.138423e-10, 0.096125096, -0.057500005)
 bones/18/rotation = Quaternion(-6.7158483e-09, -4.808679e-09, 0.7071068, 0.7071067)
 bones/19/position = Vector3(0.17094505, 0.11358723, 1.12356435e-08)
-bones/19/rotation = Quaternion(0.89735407, 0.16317686, 0.2281256, 0.34071648)
-bones/20/rotation = Quaternion(0.7725567, 1.8520927e-08, -5.448608e-07, 0.6349458)
-bones/21/rotation = Quaternion(-0.6796161, -0.3216468, 0.2743913, 0.5994788)
+bones/19/rotation = Quaternion(0.90557635, 0.15307482, 0.22533228, 0.32515377)
+bones/20/rotation = Quaternion(0.7370946, 4.1397502e-08, -5.2610596e-07, 0.67578965)
+bones/21/rotation = Quaternion(-0.6603378, -0.33793166, 0.25028354, 0.62218523)
 bones/22/rotation = Quaternion(-0.00023576771, 0.9200985, -0.391687, 5.0715622e-05)
 
 [node name="head" parent="Pivot/Rig_Medium/Skeleton3D" index="0" unique_id=1569224322]
-transform = Transform3D(0.99986535, -0.005274644, -0.015540149, 0.0010415763, 0.9654275, -0.26066968, 0.016377829, 0.2606184, 0.96530294, 0.009813886, 0.99006295, 0.25666144)
+transform = Transform3D(0.9902592, -0.1377359, 0.020385552, 0.13826974, 0.95556617, -0.2603357, 0.016377851, 0.2606185, 0.96530306, 0.0035479167, 1.0061805, 0.25666147)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Rig_Medium/Skeleton3D" index="9" unique_id=808778473]
-transform = Transform3D(-0.14587653, -0.62388486, -0.76778, -0.93053067, -0.17697784, 0.3206086, -0.33590308, 0.76121306, -0.5547275, -0.57268053, 0.59672546, -0.107629806)
+transform = Transform3D(-0.14482296, -0.6315631, -0.76167756, -0.9427612, -0.1456139, 0.29999354, -0.30037582, 0.76152706, -0.5743254, -0.57237655, 0.5950495, -0.09420181)
 bone_name = "handslot.r"
 bone_idx = 18
 
@@ -90,7 +143,7 @@ libraries/Combat = SubResource("AnimationLibrary_tn744")
 libraries/anim_lib_global = ExtResource("5_twyys")
 
 [node name="HealthDisplay" parent="." index="2" unique_id=599444158]
-texture = SubResource("ViewportTexture_f74u0")
+texture = SubResource("ViewportTexture_bxxwu")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="8" unique_id=1658606978]
 root_node = NodePath("../Pivot")
