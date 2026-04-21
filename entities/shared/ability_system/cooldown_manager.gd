@@ -1,6 +1,6 @@
 class_name CooldownManager extends RefCounted
 
-signal cooldown_started(action: StringName, cooldown: float)
+signal cooldown_started(id: StringName, cooldown: float)
 
 # StringName = AbilityId, float = remaining cooldown
 var _cooldowns: Dictionary[StringName, float] = {}
@@ -14,6 +14,7 @@ func tick(delta: float) -> void:
 func start_cooldown(id: StringName, cooldown: float) -> void:
 	_cooldowns[id] = cooldown
 	cooldown_started.emit(id, cooldown)
+	
 
 func has_cooldown(id: StringName) -> bool:
 	return _cooldowns.has(id)
