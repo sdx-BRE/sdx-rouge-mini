@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bg1rax5gofv52"]
 
+[ext_resource type="Script" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_cooldown"]
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/abilities/ability_cost.gd" id="1_kjna2"]
 [ext_resource type="PackedScene" uid="uid://cdxvvh8hfyycp" path="res://entities/characters/mage/spells/firepulse/firepuls.tscn" id="2_w7q5t"]
 [ext_resource type="Script" uid="uid://c4c4tryrgietg" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_aoe.gd" id="3_4klk3"]
@@ -7,6 +8,11 @@
 [ext_resource type="Script" uid="uid://ta8c17t6dt50" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_none.gd" id="5_5j7v8"]
 [ext_resource type="Script" uid="uid://d35cujbm2lm57" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_h5wcw"]
 [ext_resource type="Script" path="ability_windup_animation.gd" id="7_guvur"]
+
+[sub_resource type="Resource" id="Resource_cooldown"]
+script = ExtResource("1_cooldown")
+type = 0
+duration = 0.0
 
 [sub_resource type="Resource" id="Resource_1np6a"]
 script = ExtResource("1_kjna2")
@@ -34,6 +40,7 @@ metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
 
 [resource]
 script = ExtResource("4_i5wyk")
+cooldown = SubResource("Resource_cooldown")
 cost = SubResource("Resource_1np6a")
 targeting = SubResource("Resource_kjna2")
 trigger = SubResource("Resource_lkne7")
