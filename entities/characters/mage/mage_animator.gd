@@ -6,17 +6,24 @@ var _tree: AnimationTree
 var _playback_fullbody: AnimationUtil.Playback
 var _params: Params
 var _conditional_queue: ConditionalQueue
+var _hit_cooldown: float = 0.0
+var _hit_weak_cooldown: float
+var _hit_strong_cooldown: float
 
 func _init(
 	tree: AnimationTree,
 	playback_fullbody: AnimationUtil.Playback,
 	params: Params, 
-	conditional_queue: ConditionalQueue
+	conditional_queue: ConditionalQueue,
+	hit_weak_cooldown: float,
+	hit_strong_cooldown: float,
 ) -> void:
 	_tree = tree
 	_playback_fullbody = playback_fullbody
 	_params = params
 	_conditional_queue = conditional_queue
+	_hit_weak_cooldown = hit_weak_cooldown
+	_hit_strong_cooldown = hit_strong_cooldown
 
 func register_signals(died: Signal) -> void:
 	_tree.animation_finished.connect(_on_animation_finished)
@@ -38,12 +45,20 @@ func die() -> void:
 	_playback_fullbody.play(_params.state_death.state_name)
 
 func hit_weak() -> void:
+	if _hit_cooldown > 0.0:
+		return
 	request_oneshot_fire(_params.oneshot_hit_weak)
+	_hit_cooldown = _hit_weak_cooldown
 
 func hit_strong() -> void:
+	if _hit_cooldown > 0.0:
+		return
 	request_oneshot_fire(_params.oneshot_hit_strong)
+	_hit_cooldown = _hit_strong_cooldown
 
-func process(delta: float) -> void: _conditional_queue.process(delta)
+func process(delta: float) -> void: 
+	_hit_cooldown -= delta
+	_conditional_queue.process(delta)
 
 static func create(
 	tree: AnimationTree,
@@ -52,12 +67,14 @@ static func create(
 	param_state_death: AnimStateMap,
 	param_oneshot_hit_weak,
 	param_oneshot_hit_strong,
+	hit_weak_cooldown: float,
+	hit_strong_cooldown: float,
 ) -> MageAnimator:
 	var params := Params.new(param_blend_loco, param_state_death, param_oneshot_hit_weak, param_oneshot_hit_strong)
 	var conditional_queue := ConditionalQueue.new()
 	var playback_full_body := AnimationUtil.Playback.from_param(tree, param_playback_full_body)
 	
-	return MageAnimator.new(tree, playback_full_body, params, conditional_queue)
+	return MageAnimator.new(tree, playback_full_body, params, conditional_queue, hit_weak_cooldown, hit_strong_cooldown)
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	match anim_name:

@@ -35,6 +35,9 @@ signal skill_cooldown(action: StringName, cooldown: float)
 @export_group("Animation - Thresholds")
 @export var threshold_hit_strong: float = 12.5
 
+const HIT_WEAK_COOLDOWN := 0.2
+const HIT_STRONG_COOLDOWN := 0.4
+
 @onready var pivot := $Pivot
 @onready var buff_anchor := $BuffAnchor
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn

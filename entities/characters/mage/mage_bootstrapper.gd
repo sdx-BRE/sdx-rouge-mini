@@ -27,6 +27,8 @@ static func _bootstrap_anim(mage: MageCharacter, signals: MageSignals) -> void:
 		mage.param_state_death,
 		mage.oneshot_hit_weak,
 		mage.oneshot_hit_strong,
+		mage.HIT_WEAK_COOLDOWN,
+		mage.HIT_STRONG_COOLDOWN,
 	)
 	mage._anim.register_signals(signals.died)
 
