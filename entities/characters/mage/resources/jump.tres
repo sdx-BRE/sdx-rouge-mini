@@ -25,6 +25,7 @@ script = ExtResource("6_gqdlb")
 
 [resource]
 script = ExtResource("2_5vc55")
+cooldown = 2.0
 cost = SubResource("Resource_is3m1")
 targeting = SubResource("Resource_ci6qy")
 trigger = SubResource("Resource_2bj20")
