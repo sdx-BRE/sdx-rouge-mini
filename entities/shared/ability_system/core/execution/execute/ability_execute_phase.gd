@@ -58,4 +58,5 @@ func _on_triggered_tick(timespan: float) -> void:
 
 func _on_finished() -> void:
 	_delivery_handler.release()
+	_ability.start_cooldown()
 	_exec.next_phase()
