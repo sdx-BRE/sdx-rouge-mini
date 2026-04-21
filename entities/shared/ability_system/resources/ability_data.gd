@@ -1,7 +1,7 @@
 @tool
 class_name AbilityData extends Resource
 
-@export var cooldown: float = 0.0
+@export var cooldown: AbilityCooldown = AbilityCooldown.new()
 @export var cost: AbilityCost = AbilityCost.new()
 @export var targeting: AbilityTargeting
 @export var trigger: AbilityTrigger
