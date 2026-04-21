@@ -37,7 +37,6 @@ func setup_ability_mapping(registry: AbilityRegistry) -> void:
 	_ability_input_map = registry.get_ability_input_map()
 
 func on_cooldown_started(id: StringName, cooldown: float) -> void:
-	print("test ", id)
 	if _ability_input_map.has(id):
 		var input_action := _ability_input_map[id]
 		skill_cooldown.emit(input_action, cooldown)
