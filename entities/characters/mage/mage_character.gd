@@ -46,20 +46,10 @@ var _status_manager: EntityStatusManager
 var _anim: MageAnimator
 var _ability_system: AbilitySystem
 var _processor: EntityProcessor
+var _signals: MageSignals
 
 func _ready() -> void:
-	var signals := MageSignals.new(
-		died,
-		dying,
-		health_changed,
-		mana_changed,
-		stamina_changed,
-		casting_started,
-		casting_end,
-		casting_progressed,
-		skill_cooldown,
-	)
-	MageBootstrapper.bootstrap(self, signals)
+	MageBootstrapper.bootstrap(self)
 
 func _on_dying() -> void:
 	dying.emit()
