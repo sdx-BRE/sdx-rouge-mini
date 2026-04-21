@@ -16,6 +16,9 @@ signal died()
 @export_group("Abilities")
 @export var abilities: Array[AbilityData]
 
+const HIT_WEAK_COOLDOWN := 0.2
+const HIT_STRONG_COOLDOWN := 0.4
+
 var _status_manager: EntityStatusManager
 var _processor: EntityProcessor
 var _target_handler: AiTargetHandler

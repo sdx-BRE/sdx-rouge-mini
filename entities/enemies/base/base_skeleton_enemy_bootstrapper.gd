@@ -21,7 +21,12 @@ func _boot_stats() -> void:
 	_entity._status_manager = EntityStatusManager.new(stats, debuffs, _entity.target_point)
 
 func _boot_anim() -> void:
-	_entity._anim = EnemyAnimation.from_tree(_entity.anim_tree, _entity.anim_params)
+	_entity._anim = EnemyAnimation.from_tree(
+		_entity.anim_tree, 
+		_entity.anim_params,
+		_entity.HIT_WEAK_COOLDOWN,
+		_entity.HIT_STRONG_COOLDOWN
+	)
 
 func _boot_target_handler() -> void:
 	_entity._target_handler = AiTargetHandler.from_enemy_data(_entity, _entity.data)
@@ -59,6 +64,7 @@ func _boot_processor() -> void:
 	_entity._processor.add_process_handler(EnemyStateMachineHandler.new(state_machine))
 	_entity._processor.add_process_handler(EntityStatusProcessHandler.new(_entity._status_manager))
 	_entity._processor.add_process_handler(EnemyAbilitySystemHandler.new(_entity._ability_system))
+	_entity._processor.add_process_handler(EnemyAnimationHandler.new(_entity._anim))
 	_boot_processor_process_handler()
 
 	_entity._processor.add_physics_handler(EnemyVelocityHandler.new(kinematics))
