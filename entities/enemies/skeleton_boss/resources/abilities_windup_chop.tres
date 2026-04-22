@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityWindupMelee" format=3 uid="uid://cwqy2fhlik12u"]
+
+[ext_resource type="Script" uid="uid://df0di8dqb1jnh" path="res://entities/shared/ability_system/resources/windup/ability_windup_melee.gd" id="1_v56yq"]
+
+[resource]
+script = ExtResource("1_v56yq")
+anim_trigger = &"parameters/ChopOneShot"
+anim_name = &"Melee_2H_Attack_Chop"
+metadata/_custom_type_script = "uid://df0di8dqb1jnh"

@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://ck8bbc5ct4ou8"]
+
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_2moow"]
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="2_lg4bg"]
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="3_5i0bk"]
+[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="4_gjo2j"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="5_slh3c"]
+[ext_resource type="Script" uid="uid://cmw8o876rh4i2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_melee.gd" id="6_iomun"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="7_3jv25"]
+[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="8_pxw04"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="9_8wkl3"]
+[ext_resource type="Resource" uid="uid://c1ievfityihtk" path="res://entities/enemies/skeleton_boss/resources/abilities_windup_stab.tres" id="10_2moow"]
+
+[sub_resource type="Resource" id="Resource_j2v7h"]
+script = ExtResource("1_2moow")
+
+[sub_resource type="Resource" id="Resource_5m5q3"]
+script = ExtResource("2_lg4bg")
+
+[sub_resource type="Resource" id="Resource_nj112"]
+script = ExtResource("4_gjo2j")
+damage = 12.0
+metadata/_custom_type_script = "uid://d3tha66a1k8m3"
+
+[sub_resource type="Resource" id="Resource_bojaj"]
+script = ExtResource("5_slh3c")
+modifiers = Array[ExtResource("3_5i0bk")]([SubResource("Resource_nj112")])
+metadata/_custom_type_script = "uid://c0uht871o3us3"
+
+[sub_resource type="Resource" id="Resource_78mbu"]
+script = ExtResource("6_iomun")
+damage = SubResource("Resource_bojaj")
+metadata/_custom_type_script = "uid://cmw8o876rh4i2"
+
+[sub_resource type="Resource" id="Resource_8mj7k"]
+script = ExtResource("8_pxw04")
+metadata/_custom_type_script = "uid://4resk6xsshmp"
+
+[sub_resource type="Resource" id="Resource_t6pda"]
+script = ExtResource("9_8wkl3")
+metadata/_custom_type_script = "uid://1432g8lgqus5"
+
+[resource]
+script = ExtResource("7_3jv25")
+cooldown = SubResource("Resource_j2v7h")
+cost = SubResource("Resource_5m5q3")
+targeting = SubResource("Resource_8mj7k")
+trigger = SubResource("Resource_t6pda")
+windup = ExtResource("10_2moow")
+delivery = SubResource("Resource_78mbu")
+id = &"stab"
+input = &""
+metadata/_custom_type_script = "uid://kmpv5ybfiv5h"

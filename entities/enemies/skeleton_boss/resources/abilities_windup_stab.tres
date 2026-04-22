@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityWindupMelee" format=3 uid="uid://c1ievfityihtk"]
+
+[ext_resource type="Script" uid="uid://df0di8dqb1jnh" path="res://entities/shared/ability_system/resources/windup/ability_windup_melee.gd" id="1_fv6wl"]
+
+[resource]
+script = ExtResource("1_fv6wl")
+anim_trigger = &"parameters/StabOneShot"
+anim_name = &"Melee_2H_Attack_Stab"
+metadata/_custom_type_script = "uid://df0di8dqb1jnh"

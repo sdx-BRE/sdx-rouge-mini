@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AbilityWindupMelee" format=3 uid="uid://ca4oamh0q4jj7"]
+
+[ext_resource type="Script" uid="uid://df0di8dqb1jnh" path="res://entities/shared/ability_system/resources/windup/ability_windup_melee.gd" id="1_vo62k"]
+
+[resource]
+script = ExtResource("1_vo62k")
+anim_trigger = &"parameters/SliceOneShot"
+anim_name = &"Melee_2H_Attack_Slice"
+metadata/_custom_type_script = "uid://df0di8dqb1jnh"
