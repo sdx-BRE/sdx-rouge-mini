@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="4_f5e5u"]
 [ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="5_lkmui"]
 [ext_resource type="Script" uid="uid://cmw8o876rh4i2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_melee.gd" id="6_qbj58"]
+[ext_resource type="PackedScene" uid="uid://dep723a1cby2b" path="res://entities/enemies/skeleton_boss/skeleton_boss_explosion.tscn" id="6_sb3jy"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="7_flbyp"]
 [ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="8_458rr"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="9_itw53"]
@@ -30,6 +31,7 @@ metadata/_custom_type_script = "uid://c0uht871o3us3"
 [sub_resource type="Resource" id="Resource_cb4te"]
 script = ExtResource("6_qbj58")
 damage = SubResource("Resource_bojaj")
+hit_effects = Array[PackedScene]([ExtResource("6_sb3jy")])
 metadata/_custom_type_script = "uid://cmw8o876rh4i2"
 
 [sub_resource type="Resource" id="Resource_c0pko"]

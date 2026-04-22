@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://dep723a1cby2b"]
+
+[ext_resource type="PackedScene" uid="uid://bbs45s5aw6j5c" path="res://entities/abilities/ability_entity.tscn" id="1_mhx0k"]
+[ext_resource type="Script" uid="uid://bbsmw2axe5ocp" path="res://skeleton_boss_explosion.gd" id="2_n824j"]
+[ext_resource type="Texture2D" uid="uid://320qvy1ojd52" path="res://assets/textures/kenney_particle_pack/scorch_01.png" id="3_ylydd"]
+[ext_resource type="Texture2D" uid="uid://jc0ru0lnxotq" path="res://assets/textures/kenney_particle_pack/scorch_02.png" id="4_2rowu"]
+[ext_resource type="Texture2D" uid="uid://dbac3rps8jyp2" path="res://assets/textures/kenney_particle_pack/scorch_03.png" id="5_qm8ox"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1cts"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_ylydd")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_mhx0k"]
+offsets = PackedFloat32Array(0.0033557047, 0.1375839, 0.30872482, 0.75838923, 0.9966443)
+colors = PackedColorArray(1, 1, 0.92156863, 1, 1, 0.76862746, 0, 1, 0.8392157, 0.3019608, 0, 1, 0.36862746, 0.09803922, 0, 1, 0.23921569, 0.23921569, 0.23921569, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n824j"]
+gradient = SubResource("Gradient_mhx0k")
+
+[sub_resource type="Curve" id="Curve_bom1c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.9861187, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cg853"]
+curve = SubResource("Curve_bom1c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dpbyr"]
+direction = Vector3(0, 1, 0)
+spread = 93.468
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_cg853")
+color_ramp = SubResource("GradientTexture1D_n824j")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2ee6v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p7gn"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("4_2rowu")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7igy"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("5_qm8ox")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[node name="SkeletonBossExplosion" unique_id=1312920768 instance=ExtResource("1_mhx0k")]
+script = ExtResource("2_n824j")
+
+[node name="Effect1" type="GPUParticles3D" parent="." index="1" unique_id=594876398]
+material_override = SubResource("StandardMaterial3D_t1cts")
+emitting = false
+amount = 50
+amount_ratio = 0.825
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.85
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_dpbyr")
+draw_pass_1 = SubResource("QuadMesh_2ee6v")
+
+[node name="Effect2" type="GPUParticles3D" parent="." index="2" unique_id=1181910926]
+material_override = SubResource("StandardMaterial3D_8p7gn")
+emitting = false
+amount = 50
+amount_ratio = 0.825
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.85
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_dpbyr")
+draw_pass_1 = SubResource("QuadMesh_2ee6v")
+
+[node name="Effect3" type="GPUParticles3D" parent="." index="3" unique_id=1948702540]
+material_override = SubResource("StandardMaterial3D_u7igy")
+emitting = false
+amount = 50
+amount_ratio = 0.825
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.85
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_dpbyr")
+draw_pass_1 = SubResource("QuadMesh_2ee6v")
