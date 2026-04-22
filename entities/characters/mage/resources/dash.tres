@@ -38,4 +38,5 @@ trigger = SubResource("Resource_gvsye")
 windup = SubResource("Resource_tyrr3")
 delivery = SubResource("Resource_2ci4l")
 id = &"dash"
+debug = null
 input = &"dash"

@@ -7,12 +7,22 @@
 [ext_resource type="Script" uid="uid://fjpxi6rhcbj6" path="res://entities/enemies/skeleton_minion/skeleton_minion_bootstrapper.gd" id="4_47l27"]
 [ext_resource type="Animation" uid="uid://r1vtjdkoslmh" path="res://assets/animations/general/Hit_A.res" id="4_fmi7f"]
 [ext_resource type="Animation" uid="uid://7inqnmufqm6s" path="res://assets/animations/general/Hit_B.res" id="5_mnhrc"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="5_spybq"]
 [ext_resource type="Animation" uid="uid://b6xgvf47105n7" path="res://assets/animations/special/Skeletons_Awaken_Floor.res" id="6_c2rd5"]
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="6_qtjq8"]
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="7_6jajo"]
 [ext_resource type="Animation" uid="uid://ci6l5xwm7311u" path="res://assets/animations/special/Skeletons_Awaken_Floor_Long.res" id="7_7jq4x"]
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="8_4crum"]
 [ext_resource type="Animation" uid="uid://b8e35in883xhx" path="res://assets/animations/special/Skeletons_Awaken_Standing.res" id="8_hlmap"]
+[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="8_t688b"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="9_4crum"]
+[ext_resource type="Script" uid="uid://d3w5qoofxc37e" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_dot.gd" id="9_8amvc"]
 [ext_resource type="Animation" uid="uid://3doe53fopg8j" path="res://assets/animations/special/Skeletons_Death.res" id="9_47l27"]
 [ext_resource type="Animation" uid="uid://cy6keptch11kj" path="res://assets/animations/special/Skeletons_Death_Pose.res" id="10_tj18c"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="10_xk8gj"]
+[ext_resource type="Script" uid="uid://cmw8o876rh4i2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_melee.gd" id="11_3jfxo"]
 [ext_resource type="Animation" uid="uid://c1f7f72s3du7m" path="res://assets/animations/special/Skeletons_Death_Resurrect.res" id="11_5l8q3"]
+[ext_resource type="Script" uid="uid://df0di8dqb1jnh" path="res://entities/shared/ability_system/resources/windup/ability_windup_melee.gd" id="11_qtjq8"]
 [ext_resource type="Animation" uid="uid://iekxvxfvflop" path="res://assets/animations/special/Skeletons_Idle.res" id="12_vl83g"]
 [ext_resource type="Animation" uid="uid://wbqkcjm0h0pu" path="res://assets/animations/special/Skeletons_Inactive_Floor_Pose.res" id="13_xbq38"]
 [ext_resource type="Animation" uid="uid://dteyga7i4bm6s" path="res://assets/animations/special/Skeletons_Inactive_Standing_Pose.res" id="14_rvrrl"]
@@ -26,9 +36,56 @@
 
 [sub_resource type="Resource" id="Resource_47l27"]
 script = ExtResource("3_hlmap")
-attack_range = 1.55
+attack_range = 1.6
 fov_angle = 120.0
 metadata/_custom_type_script = "uid://b5wgad1i13dp0"
+
+[sub_resource type="Resource" id="Resource_xk8gj"]
+script = ExtResource("6_qtjq8")
+duration = 1.0
+
+[sub_resource type="Resource" id="Resource_3jfxo"]
+script = ExtResource("7_6jajo")
+
+[sub_resource type="Resource" id="Resource_t2lec"]
+script = ExtResource("9_8amvc")
+metadata/_custom_type_script = "uid://d3w5qoofxc37e"
+
+[sub_resource type="Resource" id="Resource_gor0b"]
+script = ExtResource("10_xk8gj")
+modifiers = Array[ExtResource("8_4crum")]([SubResource("Resource_t2lec")])
+metadata/_custom_type_script = "uid://c0uht871o3us3"
+
+[sub_resource type="Resource" id="Resource_ys8yn"]
+script = ExtResource("11_3jfxo")
+damage = SubResource("Resource_gor0b")
+metadata/_custom_type_script = "uid://cmw8o876rh4i2"
+
+[sub_resource type="Resource" id="Resource_qsn7a"]
+script = ExtResource("8_t688b")
+metadata/_custom_type_script = "uid://4resk6xsshmp"
+
+[sub_resource type="Resource" id="Resource_nmk5n"]
+script = ExtResource("9_4crum")
+metadata/_custom_type_script = "uid://1432g8lgqus5"
+
+[sub_resource type="Resource" id="Resource_t688b"]
+script = ExtResource("11_qtjq8")
+anim_trigger = &"parameters/PunchOneShot"
+anim_name = &"Combat/Unarmed_Punch"
+metadata/_custom_type_script = "uid://df0di8dqb1jnh"
+
+[sub_resource type="Resource" id="Resource_fps5p"]
+script = ExtResource("5_spybq")
+cooldown = SubResource("Resource_xk8gj")
+cost = SubResource("Resource_3jfxo")
+targeting = SubResource("Resource_qsn7a")
+trigger = SubResource("Resource_nmk5n")
+windup = SubResource("Resource_t688b")
+delivery = SubResource("Resource_ys8yn")
+id = &"punch"
+input = &""
+metadata/_custom_type_script = "uid://kmpv5ybfiv5h"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7jq4x"]
 radius = 0.15
@@ -59,7 +116,7 @@ _data = {
 &"Unarmed_Punch": ExtResource("21_47l27")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_3ios7"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4crum"]
 viewport_path = NodePath("EnemyViewport")
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n0wwj"]
@@ -138,7 +195,6 @@ fadein_time = 0.1
 fadeout_time = 0.15
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_b8buh"]
-graph_offset = Vector2(-159.8671, -47.136887)
 nodes/output/position = Vector2(1340, 200)
 nodes/FullBodyState/node = SubResource("AnimationNodeStateMachine_ccd4k")
 nodes/FullBodyState/position = Vector2(-440, 140)
@@ -165,6 +221,7 @@ script = ExtResource("2_i6ndr")
 punch_damage = 5.0
 data = SubResource("Resource_47l27")
 bootstrap_script = ExtResource("4_47l27")
+abilities = Array[ExtResource("5_spybq")]([SubResource("Resource_fps5p")])
 
 [node name="Pivot" parent="." index="0" unique_id=389804840 instance=ExtResource("3_5c45x")]
 
@@ -172,41 +229,41 @@ bootstrap_script = ExtResource("4_47l27")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Pivot/Rig_Medium" index="0" unique_id=312771431]
-bones/1/position = Vector3(7.167187e-09, 0.3045783, -0.030061364)
+bones/1/position = Vector3(7.167187e-09, 0.29374972, -0.030061364)
 bones/1/rotation = Quaternion(2.255949e-10, 0.17319314, 2.5649072e-09, 0.9848879)
 bones/2/position = Vector3(-0.1776051, 0.1135872, 0.07694323)
-bones/2/rotation = Quaternion(0.9196697, -0.23135275, 0.28569153, 0.13807237)
+bones/2/rotation = Quaternion(0.9165925, -0.24145895, 0.28281587, 0.14687115)
 bones/2/scale = Vector3(0.9999998, 0.9999999, 1.0000013)
-bones/3/rotation = Quaternion(0.64336, -4.7223e-08, 4.5746503e-07, 0.7655638)
-bones/4/rotation = Quaternion(-0.7305759, 0.11185987, -0.18692024, 0.647153)
+bones/3/rotation = Quaternion(0.67571175, -6.0795e-08, 4.876406e-07, 0.737166)
+bones/4/rotation = Quaternion(-0.74869823, 0.10304481, -0.1966215, 0.62463814)
 bones/5/rotation = Quaternion(0.00029589876, 0.9201205, -0.39163563, -6.2588464e-05)
 bones/6/position = Vector3(0.17094505, 0.11358723, 1.12356435e-08)
-bones/6/rotation = Quaternion(0.9242857, 0.13636684, 0.21889439, 0.28139886)
-bones/7/rotation = Quaternion(0.6368477, 5.137997e-08, -4.459556e-07, 0.77098966)
-bones/8/rotation = Quaternion(-0.60775954, -0.36906433, 0.1940077, 0.67585576)
+bones/6/rotation = Quaternion(0.918791, 0.14039056, 0.22080974, 0.29556182)
+bones/7/rotation = Quaternion(0.66950977, 4.2841737e-08, -4.8441143e-07, 0.7428033)
+bones/8/rotation = Quaternion(-0.62465376, -0.3607171, 0.21081792, 0.6597323)
 bones/9/rotation = Quaternion(-0.00023576771, 0.9200985, -0.391687, 5.0715622e-05)
 bones/10/rotation = Quaternion(0.11676573, -0.12958969, 0.025773186, 0.98433125)
 bones/10/scale = Vector3(1, 1, 1.0000001)
-bones/11/rotation = Quaternion(0.28929165, -0.00886959, 0.0099508455, 0.9571482)
-bones/12/rotation = Quaternion(-0.2789986, 0.015874231, 0.09787842, 0.9551584)
+bones/11/rotation = Quaternion(0.28807774, -0.0002634782, 0.024487082, 0.95729387)
+bones/12/rotation = Quaternion(-0.27779612, -0.043606702, 0.00026085917, 0.9596498)
 bones/12/scale = Vector3(1, 1, 0.9999999)
 bones/13/position = Vector3(0.21200736, 0.13413227, 8.487841e-08)
-bones/13/rotation = Quaternion(-0.7648467, -0.18230322, -0.49962285, 0.36352727)
-bones/14/rotation = Quaternion(1.6438353e-08, -4.844053e-08, -0.6161116, 0.787659)
+bones/13/rotation = Quaternion(-0.76002175, -0.17349766, -0.51091474, 0.36225894)
+bones/14/rotation = Quaternion(5.9998335e-08, -8.797333e-08, -0.60753536, 0.79429275)
 bones/15/rotation = Quaternion(7.797047e-09, -1.1281024e-08, 0.026658095, 0.99964464)
-bones/16/rotation = Quaternion(-0.121998824, -0.6112986, 0.012801321, 0.78183526)
+bones/16/rotation = Quaternion(-0.13170236, -0.6044061, 0.012665034, 0.78561264)
 bones/17/position = Vector3(5.1384585e-10, 0.09612511, -0.057500005)
 bones/17/rotation = Quaternion(-0.025259204, -0.00061355764, -0.5007622, 0.86521614)
 bones/18/position = Vector3(-0.21200739, 0.13413239, 2.3664171e-08)
-bones/18/rotation = Quaternion(-0.7990395, 0.12230408, 0.4547289, 0.37389746)
-bones/19/rotation = Quaternion(2.1387951e-08, 7.2332e-08, 0.45660135, 0.8896715)
+bones/18/rotation = Quaternion(-0.8049199, 0.105147034, 0.4230051, 0.4026347)
+bones/19/rotation = Quaternion(2.9874506e-08, 5.7952214e-08, 0.48395362, 0.87509376)
 bones/20/rotation = Quaternion(-7.297441e-09, 4.2303276e-09, -0.026658092, 0.99964464)
-bones/21/rotation = Quaternion(-0.34212124, 0.40699458, -0.07839033, 0.843305)
+bones/21/rotation = Quaternion(-0.34826952, 0.40105423, -0.08881757, 0.84260035)
 bones/22/position = Vector3(-5.138423e-10, 0.096125096, -0.057500005)
 bones/22/rotation = Quaternion(-6.7158483e-09, -4.808679e-09, 0.7071068, 0.7071067)
 
 [node name="BoneHandslotR" type="BoneAttachment3D" parent="Pivot/Rig_Medium/Skeleton3D" index="9" unique_id=116435214]
-transform = Transform3D(-0.14585793, -0.62641937, -0.76571697, -0.9713746, -0.05600724, 0.23085178, -0.1874957, 0.7774707, -0.6003193, -0.57037437, 0.5914762, -0.0387067)
+transform = Transform3D(-0.14627999, -0.6218702, -0.76933587, -0.9658744, -0.07825292, 0.2469034, -0.21374491, 0.77919996, -0.5892022, -0.571098, 0.5922937, -0.046966486)
 bone_name = "handslot.r"
 bone_idx = 22
 
@@ -225,7 +282,7 @@ libraries/ = SubResource("AnimationLibrary_f08vq")
 libraries/Combat = SubResource("AnimationLibrary_tj18c")
 
 [node name="HealthDisplay" parent="." index="2" unique_id=599444158]
-texture = SubResource("ViewportTexture_3ios7")
+texture = SubResource("ViewportTexture_4crum")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="8" unique_id=1500073116]
 root_node = NodePath("../Pivot")

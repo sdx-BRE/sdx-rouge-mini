@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="AbilityWindupAnimation" format=3 uid="uid://dasf6up5qt287"]
+[gd_resource type="Resource" script_class="AbilityWindupCasterAnimation" format=3 uid="uid://dasf6up5qt287"]
 
-[ext_resource type="Script" uid="uid://ctus6a6dpnlxw" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="1_b4ayl"]
+[ext_resource type="Script" uid="uid://cnsioa0xloexh" path="res://entities/shared/ability_system/resources/windup/ability_windup_caster_animation.gd" id="1_b4ayl"]
 
 [resource]
 script = ExtResource("1_b4ayl")

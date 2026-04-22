@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="3_okq0s"]
 [ext_resource type="Script" uid="uid://caien7hc88mn2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_aoe.gd" id="3_p4xys"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_fn068"]
-[ext_resource type="Script" uid="uid://ctus6a6dpnlxw" path="res://entities/shared/ability_system/resources/windup/ability_windup_animation.gd" id="5_gccx7"]
+[ext_resource type="Script" uid="uid://cnsioa0xloexh" path="res://entities/shared/ability_system/resources/windup/ability_windup_caster_animation.gd" id="5_gccx7"]
 [ext_resource type="Script" uid="uid://b0jm1wgb13n1o" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_location.gd" id="5_p4xys"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_fn068"]
 
@@ -57,4 +57,5 @@ trigger = SubResource("Resource_fn068")
 windup = SubResource("Resource_0torb")
 delivery = SubResource("Resource_3pngl")
 id = &"meteor"
+debug = null
 input = &"skill_3"

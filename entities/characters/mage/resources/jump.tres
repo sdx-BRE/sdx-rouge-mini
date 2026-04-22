@@ -38,4 +38,5 @@ trigger = SubResource("Resource_2bj20")
 windup = SubResource("Resource_qlyr1")
 delivery = SubResource("Resource_4gpx5")
 id = &"jump"
+debug = null
 input = &"jump"

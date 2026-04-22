@@ -37,4 +37,5 @@ trigger = SubResource("Resource_ocy01")
 windup = ExtResource("7_dvyda")
 delivery = SubResource("Resource_04vlu")
 id = &"spell_shield"
+debug = null
 input = &"skill_2"

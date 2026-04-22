@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bxlxyggy7yd8u" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_i5wyk"]
 [ext_resource type="Script" uid="uid://ta8c17t6dt50" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_none.gd" id="5_5j7v8"]
 [ext_resource type="Script" uid="uid://d35cujbm2lm57" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_h5wcw"]
-[ext_resource type="Script" path="ability_windup_animation.gd" id="7_guvur"]
+[ext_resource type="Script" path="res://entities/shared/ability_system/resources/windup/ability_windup_caster_animation.gd" id="7_guvur"]
 
 [sub_resource type="Resource" id="Resource_cooldown"]
 script = ExtResource("1_cooldown")
@@ -36,7 +36,7 @@ metadata/_custom_type_script = "uid://d35cujbm2lm57"
 script = ExtResource("7_guvur")
 anim_trigger = &"parameters/ShootOneShot"
 anim_name = &"Combat/Ranged_Magic_Shoot"
-metadata/_custom_type_script = "uid://cbe3b0re0v8y4"
+
 
 [resource]
 script = ExtResource("4_i5wyk")

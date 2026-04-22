@@ -49,4 +49,5 @@ trigger = SubResource("Resource_nqhhk")
 windup = ExtResource("7_0k1ga")
 delivery = SubResource("Resource_0k1ga")
 id = &"firepulse"
+debug = null
 input = &"attack"
