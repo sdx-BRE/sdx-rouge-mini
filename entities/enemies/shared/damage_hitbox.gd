@@ -9,3 +9,8 @@ func take_damage(hit: DamageInstance) -> void:
 		get_parent().take_damage(hit)
 	else:
 		push_error("[ERROR][DamageHitbox.take_damage()] - could not delegate damage to entity!")
+
+func get_target_point() -> Node3D:
+	if entity != null and entity.has_method("get_target_point"):
+		return entity.get_target_point()
+	return self

@@ -38,6 +38,7 @@ func release() -> void:
 
 func cancel() -> void:
 	_trigger_handler.cancel()
+	_delivery_handler.cancel()
 
 func _to_string() -> String:
 	return "AbilityExecutionExecute"

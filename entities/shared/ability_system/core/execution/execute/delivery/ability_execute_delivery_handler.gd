@@ -25,6 +25,9 @@ func execute_tick(_timespan: float, aiming_result: AbilityAimingResult) -> void:
 func release() -> void:
 	pass
 
+func cancel() -> void:
+	pass
+
 func _setup_when_ability(node: Node, data: AbilityDelivery) -> void:
 	_when_ability(node, data, _setup_ability)
 

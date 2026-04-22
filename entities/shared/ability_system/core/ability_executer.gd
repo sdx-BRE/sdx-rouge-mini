@@ -114,7 +114,7 @@ func _dbg_next_phase() -> void:
 	
 	_dbg_info("Next phase")
 
-var _dbg_tick_timer := 2.0
+var _dbg_tick_timer := 0.75
 func _dbg_tick(delta: float) -> void:
 	if not _ability._data.debug:
 		return

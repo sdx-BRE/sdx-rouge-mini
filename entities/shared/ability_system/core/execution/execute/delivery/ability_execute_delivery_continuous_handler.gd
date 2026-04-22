@@ -15,6 +15,10 @@ func execute_tick(timespan: float, _aiming_result: AbilityAimingResult) -> void:
 func release() -> void:
 	_node.queue_free()
 
+func cancel() -> void:
+	print("cancel")
+	_node.queue_free()
+
 func _setup_scene() -> void:
 	_node = _data.scene.instantiate()
 	_setup_when_ability(_node, _data)
