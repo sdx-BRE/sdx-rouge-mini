@@ -5,5 +5,6 @@ class_name AbilityDeliveryContinuous extends AbilityDelivery
 
 func create_handler(
 	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
 ) -> AbilityExecuteDeliveryHandler:
-	return AbilityExecuteDeliveryContinuousHandler.new(context)
+	return AbilityExecuteDeliveryContinuousHandler.new(context, blackboard)

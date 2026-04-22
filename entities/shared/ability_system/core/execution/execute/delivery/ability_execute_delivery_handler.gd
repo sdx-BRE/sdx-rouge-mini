@@ -4,9 +4,14 @@ signal cost_required()
 signal continuous_cost_required(delta: float)
 
 var _context: AbilityExecuteContext
+var _blackboard: AbilityExecutionBlackboard
 
-func _init(context: AbilityExecuteContext) -> void:
+func _init(
+	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
+) -> void:
 	_context = context
+	_blackboard = blackboard
 
 func setup(_data: AbilityDelivery) -> void:
 	pass

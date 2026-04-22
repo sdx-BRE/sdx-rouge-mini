@@ -14,5 +14,6 @@ class_name AbilityDeliveryProjectile extends AbilityDelivery
 
 func create_handler(
 	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
 ) -> AbilityExecuteDeliveryHandler:
-	return AbilityExecuteDeliveryProjectileHandler.new(context)
+	return AbilityExecuteDeliveryProjectileHandler.new(context, blackboard)

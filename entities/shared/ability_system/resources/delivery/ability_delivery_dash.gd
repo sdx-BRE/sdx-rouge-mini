@@ -4,5 +4,6 @@ class_name AbilityDeliveryDash extends AbilityDelivery
 
 func create_handler(
 	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
 ) -> AbilityExecuteDeliveryHandler:
-	return AbilityExecuteDeliveryDashHandler.new(context)
+	return AbilityExecuteDeliveryDashHandler.new(context, blackboard)

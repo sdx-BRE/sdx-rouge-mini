@@ -7,5 +7,6 @@ class_name AbilityDeliveryAoe extends AbilityDelivery
 
 func create_handler(
 	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
 ) -> AbilityExecuteDeliveryHandler:
-	return AbilityExecuteDeliveryAoeHandler.new(context)
+	return AbilityExecuteDeliveryAoeHandler.new(context, blackboard)

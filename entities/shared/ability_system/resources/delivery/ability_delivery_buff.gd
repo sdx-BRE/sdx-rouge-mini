@@ -5,5 +5,6 @@ class_name AbilityDeliveryBuff extends AbilityDelivery
 
 func create_handler(
 	context: AbilityExecuteContext,
+	blackboard: AbilityExecutionBlackboard,
 ) -> AbilityExecuteDeliveryHandler:
-	return AbilityExecuteDeliveryBuffHandler.new(context)
+	return AbilityExecuteDeliveryBuffHandler.new(context, blackboard)

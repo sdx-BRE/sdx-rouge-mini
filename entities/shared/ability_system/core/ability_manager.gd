@@ -25,3 +25,6 @@ func tick(delta: float) -> void:
 
 func handle_animation_event() -> void:
 	_execution.handle_animation_event()
+
+func handle_hit_event(target: Node3D) -> void:
+	_execution.notify_hit_event(target)

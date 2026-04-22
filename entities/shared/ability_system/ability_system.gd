@@ -47,6 +47,9 @@ func try_release_ability(id: StringName) -> void:
 func notify_animation_event() -> void:
 	_manager.handle_animation_event()
 
+func notify_hit_event(target: Node3D) -> void:
+	_manager.handle_hit_event(target)
+
 func use_ability_resources(id: StringName) -> void:
 	var ability := _registry.get_ability(id)
 	if ability == null:

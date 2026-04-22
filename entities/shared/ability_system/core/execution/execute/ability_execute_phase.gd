@@ -15,7 +15,7 @@ func _init(
 	_context = context
 
 func start() -> void:
-	_delivery_handler = _ability._data.delivery.create_handler(_context)
+	_delivery_handler = _ability._data.delivery.create_handler(_context, _exec.blackboard)
 	_trigger_handler = _ability._data.trigger.create_handler(_exec.blackboard)
 	
 	_delivery_handler.cost_required.connect(_on_cost_required)

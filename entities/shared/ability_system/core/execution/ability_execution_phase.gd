@@ -22,6 +22,9 @@ func cancel() -> void:
 func animation_trigger() -> void:
 	pass
 
+func hit_event(_target: Node3D) -> void:
+	pass
+
 func tick(_delta: float) -> void:
 	pass
 
