@@ -36,7 +36,7 @@ func take_damage(hit: DamageInstance) -> float:
 		return 0.0
 	
 	var damage := 0.0
-	for payload in hit.payloads:
+	for payload in hit.get_payloads():
 		damage += payload.get_immediate_damage()
 		
 		var debuff := payload.get_debuff(_stats)

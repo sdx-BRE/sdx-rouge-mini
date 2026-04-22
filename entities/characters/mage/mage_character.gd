@@ -88,6 +88,9 @@ func _physics_process(delta: float) -> void:
 func take_damage(hit: DamageInstance) -> void:
 	var final_damage := _status_manager.take_damage(hit)
 	
+	if not hit.should_trigger_hit_animation():
+		return
+	
 	if final_damage >= threshold_hit_strong:
 		_anim.hit_strong()
 	else:

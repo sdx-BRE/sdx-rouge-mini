@@ -46,6 +46,9 @@ func take_damage(hit: DamageInstance) -> void:
 	if not _status_manager.is_alive():
 		return
 	
+	if not hit.should_trigger_hit_animation():
+		return
+	
 	if final_damage >= 12: # Todo: Fix hardcoded value
 		_anim.hit_strong()
 	else:
