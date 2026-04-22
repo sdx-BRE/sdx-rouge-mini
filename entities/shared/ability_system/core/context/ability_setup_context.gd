@@ -1,14 +1,20 @@
 class_name AbilitySetupContext extends RefCounted
 
+signal animation_finished(anim_name: StringName)
+
 var _strategy: AbilitySetupStrategy
 
 func _init(strategy: AbilitySetupStrategy) -> void:
 	_strategy = strategy
+	_strategy.animation_finished.connect(_on_animation_finished)
 
-func get_animation_position(data: AbilityWindupAnimation) -> float:
+func _on_animation_finished(anim_name: StringName) -> void:
+	animation_finished.emit(anim_name)
+
+func get_animation_position(data: AbilityWindupCasterAnimation) -> float:
 	return _strategy.get_animation_position(data)
 
-func update_cast_point(data: AbilityWindupAnimation) -> void:
+func update_cast_point(data: AbilityWindupCasterAnimation) -> void:
 	_strategy.update_cast_point(data)
 
 func oneshot(param: StringName) -> void:

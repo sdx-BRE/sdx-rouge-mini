@@ -4,6 +4,7 @@ var _anim_tree: AnimationTree
 
 func _init(anim_tree: AnimationTree) -> void:
 	_anim_tree = anim_tree
+	_anim_tree.animation_finished.connect(_emit_animation_finished)
 
 func oneshot(param: StringName) -> void:
 	_anim_tree.set(param + "/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
