@@ -320,5 +320,5 @@ transform = Transform3D(-0.89939, 0, -0.43714714, 0, 1, 0, 0.43714714, 0, -0.899
 [node name="SkeletonIceMageNext" parent="." unique_id=1372091113 instance=ExtResource("18_myc1v")]
 transform = Transform3D(-0.79411775, 0, 0.60776395, 0, 1, 0, -0.60776395, 0, -0.79411775, 34.149544, 0, -33.883305)
 
-[node name="SkeletonBoss" parent="." unique_id=1183321173 instance=ExtResource("20_clkjv")]
-transform = Transform3D(-0.9997547, 0, 0.022146473, 0, 1, 0, -0.022146473, 0, -0.9997547, 0, 0, -34.645317)
+[node name="SkeletonBoss" parent="." unique_id=1505053545 instance=ExtResource("20_clkjv")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -26.80223)

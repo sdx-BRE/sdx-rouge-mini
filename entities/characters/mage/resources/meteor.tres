@@ -57,5 +57,4 @@ trigger = SubResource("Resource_fn068")
 windup = SubResource("Resource_0torb")
 delivery = SubResource("Resource_3pngl")
 id = &"meteor"
-debug = null
 input = &"skill_3"

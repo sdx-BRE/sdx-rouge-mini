@@ -64,5 +64,4 @@ trigger = SubResource("Resource_jl71h")
 windup = ExtResource("7_mjjum")
 delivery = SubResource("Resource_0torb")
 id = &"firebolt"
-debug = null
 input = &"skill_1"

@@ -37,5 +37,4 @@ trigger = SubResource("Resource_rsisw")
 windup = SubResource("Resource_o8nq3")
 delivery = SubResource("Resource_nt5xb")
 id = &"sprint"
-debug = null
 input = &"sprint"
