@@ -11,6 +11,8 @@ class_name AbilityData extends Resource
 @export var id: StringName = &""
 var input: StringName = &""
 
+@export var debug := false
+
 func to_ability(
 	stats: EntityStats,
 	cooldown_manager: CooldownManager,
