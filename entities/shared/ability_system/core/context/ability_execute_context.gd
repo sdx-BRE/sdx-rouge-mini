@@ -40,3 +40,6 @@ func setup_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
 
 func launch_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
 	_strategy.launch_ability(ability, data, self)
+
+func stop_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
+	_strategy.stop_ability(ability, data, self)

@@ -30,3 +30,8 @@ func _apply_sway_logic(delta: float) -> void:
 	
 	var smooth_quat := current_quat.slerp(target_quat, rotation_speed * delta)
 	global_transform.basis = Basis(smooth_quat)
+
+func stop_character_ability(_data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "scale", Vector3(0.1, 0.1, 0.1), 0.3).set_trans(Tween.TRANS_SINE)
+	tween.finished.connect(queue_free)

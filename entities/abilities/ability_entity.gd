@@ -22,3 +22,13 @@ func launch_character_ability(data: AbilityDelivery, context: AbilityExecuteCont
 	if enable_debug:
 		var err := DbgHelper.err("AbilityEntity.setup_character_ability", "must be overwritten by child implementations")
 		push_error(err, " - data: ", data, ", context: ", context)
+
+func stop_enemy_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
+	if enable_debug:
+		var err := DbgHelper.err("AbilityEntity.stop_enemy_ability", "must be overwritten by child implementations")
+		push_error(err, " - data: ", data, ", context: ", context)
+
+func stop_character_ability(data: AbilityDelivery, context: AbilityExecuteContext) -> void:
+	if enable_debug:
+		var err := DbgHelper.err("AbilityEntity.stop_character_ability", "must be overwritten by child implementations")
+		push_error(err, " - data: ", data, ", context: ", context)

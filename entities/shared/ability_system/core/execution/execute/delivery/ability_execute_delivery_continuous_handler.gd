@@ -16,8 +16,7 @@ func release() -> void:
 	_node.queue_free()
 
 func cancel() -> void:
-	print("cancel")
-	_node.queue_free()
+	_stop_when_ability(_node, _data)
 
 func _setup_scene() -> void:
 	_node = _data.scene.instantiate()

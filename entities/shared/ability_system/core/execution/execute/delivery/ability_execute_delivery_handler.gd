@@ -40,6 +40,12 @@ func _setup_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
 func _launch_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
 	_context.launch_ability(ability, data)
 
+func _stop_when_ability(node: Node, data: AbilityDelivery) -> void:
+	_when_ability(node, data, _stop_ability)
+
+func _stop_ability(ability: AbilityEntity, data: AbilityDelivery) -> void:
+	_context.stop_ability(ability, data)
+
 func _when_ability(node: Node, data: AbilityDelivery, then: Callable) -> void:
 	if node is AbilityEntity:
 		then.call(node, data)
