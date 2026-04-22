@@ -1,4 +1,4 @@
-class_name SkeletonIceMageExecuteStrategy extends AbilityExecuteStrategy
+class_name SkeletonIceMageExecuteStrategy extends BaseEnemyExecuteStrategy
 
 const SPAWN_CONTAINER_NAME := &"PhasedAbilitiesSpawnContainer"
 
@@ -6,7 +6,6 @@ var _host: Node3D
 var _pivot: Node3D
 var _staff_spawn_point: Node3D
 var _controller: EnemyController
-var _spawn_container: Node3D
 
 func _init(
 	host: Node3D,
@@ -15,11 +14,11 @@ func _init(
 	controller: EnemyController,
 	spawn_container: Node3D,
 ) -> void:
+	super(spawn_container)
 	_host = host
 	_pivot = pivot
 	_staff_spawn_point = staff_spawn_point
 	_controller = controller
-	_spawn_container = spawn_container
 
 static func create(
 	host: Node3D,
@@ -27,12 +26,7 @@ static func create(
 	staff_spawn_point: Node3D,
 	controller: EnemyController,
 ) -> SkeletonIceMageExecuteStrategy:
-	var spawn_container := Node3D.new()
-	host.add_child(spawn_container)
-	
-	spawn_container.top_level = true
-	spawn_container.name = SPAWN_CONTAINER_NAME
-	spawn_container.owner = host.get_tree().current_scene
+	var spawn_container := _create_spawn_container(host, SPAWN_CONTAINER_NAME)
 	
 	return SkeletonIceMageExecuteStrategy.new(
 		host,
@@ -41,9 +35,6 @@ static func create(
 		controller,
 		spawn_container,
 	)
-
-func spawn_node(node: Node3D) -> void:
-	_spawn_container.add_child(node)
 
 func spawn_at_weapon(node: Node3D) -> void:
 	spawn_node(node)
@@ -57,9 +48,3 @@ func get_weapon_spawn_node() -> Node3D:
 
 func get_pivot_basis() -> Basis:
 	return _pivot.global_basis
-
-func setup_ability(ability: AbilityEntity, data: AbilityDelivery, context: AbilityExecuteContext) -> void:
-	ability.setup_enemy_ability(data, context)
-
-func launch_ability(ability: AbilityEntity, data: AbilityDelivery, context: AbilityExecuteContext) -> void:
-	ability.launch_enemy_ability(data, context)

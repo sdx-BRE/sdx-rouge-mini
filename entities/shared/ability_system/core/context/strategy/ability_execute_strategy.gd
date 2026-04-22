@@ -35,3 +35,6 @@ func setup_ability(_ability: AbilityEntity, _data: AbilityDelivery, _context: Ab
 
 func launch_ability(_ability: AbilityEntity, _data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
 	pass
+
+func stop_ability(_ability: AbilityEntity, _data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
+	pass

@@ -1,9 +1,10 @@
-class_name SkeletonMinionExecuteStrategy extends AbilityExecuteStrategy
+class_name SkeletonMinionExecuteStrategy extends BaseEnemyExecuteStrategy
 
 var _animator: EnemyAnimator
 var _punch_oneshot_param: StringName
 
 func _init(animator: EnemyAnimator, punch_param: StringName) -> void:
+	super(null)
 	_animator = animator
 	_punch_oneshot_param = punch_param
 
