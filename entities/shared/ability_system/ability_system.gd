@@ -10,7 +10,6 @@ class_name AbilitySystem extends RefCounted
 
 signal ability_started(ability: Ability)
 signal ability_finished(ability: Ability)
-signal ability_aborted(ability: Ability)
 
 var _registry: AbilityRegistry
 var _manager: AbilityManager
@@ -27,7 +26,6 @@ func _init(
 	
 	_manager._execution.started.connect(ability_started.emit)
 	_manager._execution.finished.connect(ability_finished.emit)
-	_manager._execution.aborted.connect(ability_aborted.emit)
 
 func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():
