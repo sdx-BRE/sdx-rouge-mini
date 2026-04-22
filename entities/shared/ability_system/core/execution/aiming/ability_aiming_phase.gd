@@ -26,14 +26,17 @@ func tick(delta: float) -> void:
 	_targeting.tick(delta)
 
 func cancel() -> void:
+	_exec.blackboard.is_cancelled = true
 	_targeting.cancel()
+	_exec.next_phase()
 
 func _on_target_aquired(result: AbilityAimingResult) -> void:
 	_exec.blackboard.aiming_result = result
 	_exec.next_phase()
 
 func _on_targeting_canceled() -> void:
-	_exec.abort()
+	_exec.blackboard.is_cancelled = true
+	_exec.next_phase()
 
 func _to_string() -> String:
 	return "AbilityExecutionAiming"

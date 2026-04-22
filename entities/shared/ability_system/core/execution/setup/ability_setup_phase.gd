@@ -25,8 +25,9 @@ func _on_visual_ready() -> void:
 	_exec.next_phase()
 
 func cancel() -> void:
+	_exec.blackboard.is_cancelled = true
 	_windup_handler.cancel()
-	_exec.abort()
+	_exec.next_phase()
 
 func tick(delta: float) -> void:
 	_windup_handler.tick(delta)

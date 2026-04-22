@@ -24,7 +24,6 @@ var _phase_idx: int = 0
 
 signal started(ability: Ability)
 signal finished(ability: Ability)
-signal aborted(ability: Ability)
 
 func _init(
 	p_blackboard: AbilityExecutionBlackboard,
@@ -83,6 +82,9 @@ func next_phase() -> void:
 	
 	var next_idx := _phase_idx + 1
 	
+	if blackboard.is_cancelled and PHASES[next_idx] != Phase.Recover:
+		next_idx = PHASES.find(Phase.Recover)
+	
 	if next_idx >= PHASES.size():
 		finish()
 	else:
@@ -93,10 +95,6 @@ func next_phase() -> void:
 
 func finish() -> void:
 	finished.emit(_ability)
-	_cleanup_member()
-
-func abort() -> void:
-	aborted.emit(_ability)
 	_cleanup_member()
 
 func _cleanup_member() -> void:

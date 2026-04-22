@@ -37,8 +37,10 @@ func release() -> void:
 	_trigger_handler.release()
 
 func cancel() -> void:
+	_exec.blackboard.is_cancelled = true
 	_trigger_handler.cancel()
 	_delivery_handler.cancel()
+	_exec.next_phase()
 
 func _to_string() -> String:
 	return "AbilityExecutionExecute"
