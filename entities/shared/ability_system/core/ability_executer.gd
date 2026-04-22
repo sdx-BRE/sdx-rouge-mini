@@ -22,6 +22,10 @@ var _ability: Ability
 
 var _phase_idx: int = 0
 
+signal started(ability: Ability)
+signal finished(ability: Ability)
+signal aborted(ability: Ability)
+
 func _init(
 	p_blackboard: AbilityExecutionBlackboard,
 	factory: AbilityExecutionFactory,
@@ -41,6 +45,7 @@ func start(
 	_phase = _factory.create(Phase.Aiming, ability, self)
 	
 	_phase.start()
+	started.emit(_ability)
 
 func release() -> void:
 	if _is_active():
@@ -87,9 +92,11 @@ func next_phase() -> void:
 		_phase.start()
 
 func finish() -> void:
+	finished.emit(_ability)
 	_cleanup_member()
 
 func abort() -> void:
+	aborted.emit(_ability)
 	_cleanup_member()
 
 func _cleanup_member() -> void:
