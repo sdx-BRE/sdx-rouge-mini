@@ -21,6 +21,8 @@ func _init(
 	_data = data
 	_stats = stats
 	_attack = attack
+	
+	_attack.attacked.connect(start_attack_cooldown)
 
 func tick(delta: float) -> void:
 	_blackboard.tick(delta)
