@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bfdvldty8ivie"]
+
+[ext_resource type="Shader" uid="uid://bwpdpt44cote6" path="res://entities/characters/shared/directional_target_marker.gdshader" id="1_xiomm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04rus"]
+render_priority = 0
+shader = ExtResource("1_xiomm")
+shader_parameter/base_color = Color(0.3, 0.3, 0.3, 0.6)
+shader_parameter/charge_color = Color(1, 0.4, 0, 1)
+shader_parameter/charge_amount = 0.0
+shader_parameter/stem_width = 0.10000000475
+shader_parameter/head_width = 0.2750000130625
+shader_parameter/head_size = 0.3330000158175
+shader_parameter/use_pulse = true
+shader_parameter/pulse_speed = 4.0
+shader_parameter/pulse_intensity = 0.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_cel1h"]
+size = Vector2(3, 3)
+
+[node name="DirectionalTargetMarker" type="Node3D" unique_id=1582244022]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=829075559]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_04rus")
+mesh = SubResource("QuadMesh_cel1h")
