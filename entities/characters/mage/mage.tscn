@@ -40,6 +40,7 @@
 [ext_resource type="Shader" uid="uid://b5s6xsge2s154" path="res://shared/shaders/canvas_item/simple_color.tres" id="29_63imk"]
 [ext_resource type="Texture2D" uid="uid://bkcxr4nkn45cd" path="res://assets/textures/kenney/crosshair/crosshair074.png" id="30_4dsmk"]
 [ext_resource type="Script" uid="uid://bmfu2tabxgrsa" path="res://entities/enemies/shared/damage_hitbox.gd" id="31_1kqru"]
+[ext_resource type="PackedScene" uid="uid://bfdvldty8ivie" path="res://entities/characters/shared/directional_target_marker.tscn" id="41_ku3r6"]
 
 [sub_resource type="Resource" id="Resource_gumdh"]
 script = ExtResource("2_40an2")
@@ -852,5 +853,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
 [node name="TargetPoint" type="Marker3D" parent="." unique_id=1152503445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3309908, 0)
+
+[node name="DirectionalTargetMarker" parent="." unique_id=1582244022 instance=ExtResource("41_ku3r6")]
+transform = Transform3D(3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0)
+visible = false
 
 [editable path="Pivot"]

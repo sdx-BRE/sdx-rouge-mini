@@ -4,9 +4,10 @@
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="2_sb3jy"]
 [ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="3_gcbjm"]
 [ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="4_f5e5u"]
+[ext_resource type="Script" uid="uid://d3w5qoofxc37e" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_dot.gd" id="5_gcbjm"]
 [ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="5_lkmui"]
 [ext_resource type="Script" uid="uid://cmw8o876rh4i2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_melee.gd" id="6_qbj58"]
-[ext_resource type="PackedScene" uid="uid://dep723a1cby2b" path="res://entities/enemies/skeleton_boss/skeleton_boss_explosion.tscn" id="6_sb3jy"]
+[ext_resource type="PackedScene" uid="uid://doa5spu4wdboq" path="res://entities/effects/explosion/simple_explosion.tscn" id="6_sb3jy"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="7_flbyp"]
 [ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="8_458rr"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="9_itw53"]
@@ -20,12 +21,18 @@ script = ExtResource("2_sb3jy")
 
 [sub_resource type="Resource" id="Resource_nj112"]
 script = ExtResource("4_f5e5u")
-damage = 12.0
+damage = 2.0
 metadata/_custom_type_script = "uid://d3tha66a1k8m3"
+
+[sub_resource type="Resource" id="Resource_f5e5u"]
+script = ExtResource("5_gcbjm")
+tick_interval = 0.1
+tick_damage = 1.0
+metadata/_custom_type_script = "uid://d3w5qoofxc37e"
 
 [sub_resource type="Resource" id="Resource_bojaj"]
 script = ExtResource("5_lkmui")
-modifiers = Array[ExtResource("3_gcbjm")]([SubResource("Resource_nj112")])
+modifiers = Array[ExtResource("3_gcbjm")]([SubResource("Resource_nj112"), SubResource("Resource_f5e5u")])
 metadata/_custom_type_script = "uid://c0uht871o3us3"
 
 [sub_resource type="Resource" id="Resource_cb4te"]
