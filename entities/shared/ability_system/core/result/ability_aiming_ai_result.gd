@@ -12,5 +12,5 @@ func set_projectile_target(projectile: BaseProjectile, _context: AbilityExecuteC
 	else:
 		projectile._target = target
 
-func set_aoe_position(aoe: BaseAoe, _context: AbilityExecuteContext) -> void:
+func launch_aoe(aoe: BaseAoe, _context: AbilityExecuteContext) -> void:
 	aoe.global_position = _handler.get_target_position()
