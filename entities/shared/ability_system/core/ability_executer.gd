@@ -47,38 +47,38 @@ func start(
 	started.emit(_ability)
 
 func release() -> void:
-	if _is_active():
+	if is_active():
 		if _phase_idx != Phase.Aiming:
 			blackboard.is_released = true
 		_phase.release()
 
 func handle_input(event: InputEvent) -> AbilityHandleInputResult:
-	if not _is_active():
+	if not is_active():
 		return AbilityHandleInputResult.unhandled()
 	
 	return _phase.handle_input(event)
 
 func tick(delta: float) -> void:
-	if not _is_active():
+	if not is_active():
 		return
 	
 	_dbg_tick(delta)
 	_phase.tick(delta)
 
 func handle_animation_event() -> void:
-	if not _is_active():
+	if not is_active():
 		return
 	
 	_phase.animation_trigger()
 
 func notify_hit_event(target: Node3D) -> void:
-	if not _is_active():
+	if not is_active():
 		return
 	
 	_phase.hit_event(target)
 
 func next_phase() -> void:
-	if not _is_active():
+	if not is_active():
 		return
 	
 	var next_idx := _phase_idx + 1
@@ -104,7 +104,7 @@ func _cleanup_member() -> void:
 	_phase_idx = 0
 	blackboard.cleanup()
 
-func _is_active() -> bool:
+func is_active() -> bool:
 	return _ability != null and _phase != null
 
 func _dbg_next_phase() -> void:

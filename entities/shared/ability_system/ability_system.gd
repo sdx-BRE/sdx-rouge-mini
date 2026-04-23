@@ -47,8 +47,8 @@ func handle_input(event: InputEvent) -> bool:
 	
 	return false
 
-func try_activate_ability(id: StringName) -> void:
-	handle_ability_action(id, TriggerState.Press)
+func try_activate_ability(id: StringName) -> bool:
+	return handle_ability_action(id, TriggerState.Press)
 
 func try_release_ability(id: StringName) -> void:
 	handle_ability_action(id, TriggerState.Release)
@@ -79,6 +79,15 @@ func start_ability_cooldown(id: StringName) -> void:
 		return
 	ability.start_cooldown_external()
 
+func is_on_cooldown(id: StringName) -> bool:
+	return _cooldown_manager.has_cooldown(id)
+
+func is_any_ability_active() -> bool:
+	return _manager.is_any_ability_active()
+
+func can_activate_ability(id: StringName) -> bool:
+	return has_ability_resources(id) and not is_on_cooldown(id)
+
 func tick(delta: float) -> void:
 	_manager.tick(delta)
 	_cooldown_manager.tick(delta)
@@ -91,15 +100,16 @@ enum TriggerState {
 func handle_ability_action(
 	id: StringName,
 	state: TriggerState,
-) -> void:
+) -> bool:
 	var ability := _registry.get_ability(id)
 	
 	if ability == null:
-		return
+		return false
 	
 	if state == TriggerState.Press:
 		if not ability.check_resources() \
 			or _cooldown_manager.has_cooldown(ability._data.id):
-			return
+			return false
 	
 	_manager.handle_ability_action(ability, state)
+	return true

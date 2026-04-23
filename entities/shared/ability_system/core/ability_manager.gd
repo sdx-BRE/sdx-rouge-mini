@@ -19,6 +19,9 @@ func handle_ability_action(
 		AbilitySystem.TriggerState.Release:
 			_execution.release()
 
+func is_any_ability_active() -> bool:
+	return _execution.is_active()
+
 func try_handle_tracked_release(event: InputEvent) -> bool:
 	if _tracked_action != &"" and event.is_action_released(_tracked_action):
 		_execution.release()
