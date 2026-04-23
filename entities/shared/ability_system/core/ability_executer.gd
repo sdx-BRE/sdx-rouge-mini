@@ -140,6 +140,14 @@ func _dbg_info(message: String, include_phase: bool = true, include_previous_pha
 	if include_previous_phase and _arr_key_exists(_phase_idx - 1, phase_keys):
 		info.append("Previous phase: '%s'" % phase_keys[_phase_idx - 1])
 	
+	info.append("Blackboard: [Cancelled: %s, Released: %s, Hits: %d]" % [
+		blackboard.is_cancelled, 
+		blackboard.is_released, 
+		blackboard.hit_targets.size()
+	])
+	if blackboard.aiming_result:
+		info.append("Aiming Result: %s" % blackboard.aiming_result.get_class())
+	
 	var msg := "[AbilityExecuter]: %s%s%s" % [message, separator, separator.join(info)]
 	DbgHelper.tprint(msg)
 
