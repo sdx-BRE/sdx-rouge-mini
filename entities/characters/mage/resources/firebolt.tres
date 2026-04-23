@@ -9,9 +9,9 @@
 [ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="3_wkqhw"]
 [ext_resource type="Script" uid="uid://d3w5qoofxc37e" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_dot.gd" id="4_0gvwa"]
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_jl71h"]
-[ext_resource type="Script" uid="uid://cegey05a85mwg" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_mouse_target.gd" id="5_mjjum"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_4easm"]
 [ext_resource type="Resource" uid="uid://kwqujcp8sgo0" path="res://entities/shared/resources/spell_windup_channel.tres" id="7_mjjum"]
+[ext_resource type="Script" uid="uid://c2r27168p4bn5" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_directional.gd" id="10_0gvwa"]
 
 [sub_resource type="Resource" id="Resource_cooldown"]
 script = ExtResource("1_cooldown")
@@ -47,10 +47,11 @@ homing = 1
 homing_fov = -0.25
 homing_steer_speed = 3.0
 
-[sub_resource type="Resource" id="Resource_wdjpj"]
-script = ExtResource("5_mjjum")
+[sub_resource type="Resource" id="Resource_m47jr"]
+script = ExtResource("10_0gvwa")
 cast_range = 150.0
 input_trigger = "attack"
+metadata/_custom_type_script = "uid://c2r27168p4bn5"
 
 [sub_resource type="Resource" id="Resource_jl71h"]
 script = ExtResource("6_4easm")
@@ -59,7 +60,7 @@ script = ExtResource("6_4easm")
 script = ExtResource("4_jl71h")
 cooldown = SubResource("Resource_cooldown")
 cost = SubResource("Resource_3pngl")
-targeting = SubResource("Resource_wdjpj")
+targeting = SubResource("Resource_m47jr")
 trigger = SubResource("Resource_jl71h")
 windup = ExtResource("7_mjjum")
 delivery = SubResource("Resource_0torb")
