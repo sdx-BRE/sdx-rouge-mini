@@ -9,17 +9,14 @@
 [ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="5_omqg4"]
 [ext_resource type="AnimationLibrary" uid="uid://do322j6l8xf82" path="res://entities/enemies/base/resources/anim_lib_global.res" id="5_twyys"]
 [ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="6_eyy3c"]
+[ext_resource type="Resource" uid="uid://dobu4k4gucop2" path="res://entities/enemies/skeleton_ice_mage/resources/ability_frost_bolt.tres" id="6_omqg4"]
 [ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="7_dygk6"]
 [ext_resource type="Script" uid="uid://b5wgad1i13dp0" path="res://entities/enemies/shared/enemy_data.gd" id="8_75f88"]
-[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="8_vygfe"]
-[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="9_m8npo"]
-[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="10_3m1cf"]
-[ext_resource type="PackedScene" uid="uid://derrpqrpwck7n" path="res://entities/abilities/frost_bolt/frost_bolt.tscn" id="11_d7hkw"]
+[ext_resource type="Resource" path="res://entities/enemies/skeleton_ice_mage/resources/ability_glacial_spike.tres" id="9_ycyt4"]
 [ext_resource type="PackedScene" uid="uid://5myaiiar3ius" path="res://assets/weapons/staff.gltf" id="11_i1f0s"]
-[ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="12_xg73n"]
 [ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="13_mxfe5"]
 [ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="14_a8241"]
-[ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="15_x4yp7"]
+[ext_resource type="Resource" uid="uid://c8cgkhk1btgxa" path="res://entities/shared/resources/spell_windup_raise.tres" id="18_m8npo"]
 
 [sub_resource type="Resource" id="Resource_i1f0s"]
 script = ExtResource("8_75f88")
@@ -27,47 +24,30 @@ attack_range = 15.0
 fov_angle = 135.0
 metadata/_custom_type_script = "uid://b5wgad1i13dp0"
 
-[sub_resource type="Resource" id="Resource_b6nir"]
+[sub_resource type="Resource" id="Resource_3m1cf"]
 script = ExtResource("6_eyy3c")
-duration = 3.0
+duration = 8.0
 
-[sub_resource type="Resource" id="Resource_53du0"]
+[sub_resource type="Resource" id="Resource_d7hkw"]
 script = ExtResource("7_dygk6")
 
-[sub_resource type="Resource" id="Resource_208ig"]
-script = ExtResource("9_m8npo")
-damage = 8.0
-metadata/_custom_type_script = "uid://d3tha66a1k8m3"
-
-[sub_resource type="Resource" id="Resource_2ckne"]
-script = ExtResource("10_3m1cf")
-modifiers = Array[ExtResource("8_vygfe")]([SubResource("Resource_208ig")])
-metadata/_custom_type_script = "uid://c0uht871o3us3"
-
-[sub_resource type="Resource" id="Resource_b8ka5"]
-script = ExtResource("12_xg73n")
-scene = ExtResource("11_d7hkw")
-damage = SubResource("Resource_2ckne")
-metadata/_custom_type_script = "uid://c3e4doafuvjyk"
-
-[sub_resource type="Resource" id="Resource_scx1q"]
+[sub_resource type="Resource" id="Resource_x4yp7"]
 script = ExtResource("13_mxfe5")
 metadata/_custom_type_script = "uid://4resk6xsshmp"
 
-[sub_resource type="Resource" id="Resource_5v5ik"]
+[sub_resource type="Resource" id="Resource_bxxwu"]
 script = ExtResource("14_a8241")
 metadata/_custom_type_script = "uid://1432g8lgqus5"
 
-[sub_resource type="Resource" id="Resource_xxiub"]
+[sub_resource type="Resource" id="Resource_4m1r6"]
 script = ExtResource("5_omqg4")
-cooldown = SubResource("Resource_b6nir")
-cost = SubResource("Resource_53du0")
-targeting = SubResource("Resource_scx1q")
-trigger = SubResource("Resource_5v5ik")
-windup = ExtResource("15_x4yp7")
-delivery = SubResource("Resource_b8ka5")
-id = &"dbg"
-debug = null
+cooldown = SubResource("Resource_3m1cf")
+cost = SubResource("Resource_d7hkw")
+targeting = SubResource("Resource_x4yp7")
+trigger = SubResource("Resource_bxxwu")
+windup = ExtResource("18_m8npo")
+delivery = ExtResource("9_ycyt4")
+id = &"glacial_spike"
 input = &""
 metadata/_custom_type_script = "uid://kmpv5ybfiv5h"
 
@@ -77,7 +57,7 @@ _data = {
 &"Magic_Shoot": ExtResource("4_dhuwg")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_wfobs"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_dygk6"]
 viewport_path = NodePath("EnemyViewport")
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tp1oe"]
@@ -156,7 +136,6 @@ fadein_time = 0.1
 fadeout_time = 0.15
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_omqg4"]
-graph_offset = Vector2(-197.88708, -7.337471)
 nodes/output/position = Vector2(1240, 180)
 nodes/FullBodyState/node = SubResource("AnimationNodeStateMachine_ccd4k")
 nodes/FullBodyState/position = Vector2(-360, 160)
@@ -182,7 +161,7 @@ node_connections = [&"output", 0, &"RaiseOneShot", &"HitWeakOneShot", 0, &"FullB
 script = ExtResource("2_twyys")
 data = SubResource("Resource_i1f0s")
 bootstrap_script = ExtResource("3_tn744")
-abilities = Array[ExtResource("5_omqg4")]([SubResource("Resource_xxiub")])
+abilities = Array[ExtResource("5_omqg4")]([ExtResource("6_omqg4"), SubResource("Resource_4m1r6")])
 
 [node name="Pivot" parent="." index="0" unique_id=1610757007 instance=ExtResource("2_a4txf")]
 
@@ -190,41 +169,44 @@ abilities = Array[ExtResource("5_omqg4")]([SubResource("Resource_xxiub")])
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Pivot/Rig_Medium" index="0" unique_id=1590112324]
-bones/1/position = Vector3(0, 0.39206383, 0)
-bones/1/rotation = Quaternion(-1.11122625e-10, 0.043157753, 2.5724098e-09, 0.9990683)
-bones/2/position = Vector3(-0.17094508, 0.11358732, 1.557549e-08)
-bones/2/rotation = Quaternion(0.9973222, -0.029457364, 0.03152927, 0.05904832)
-bones/3/rotation = Quaternion(0.2740081, -6.3812955e-08, 1.927607e-07, 0.9617275)
-bones/4/rotation = Quaternion(-0.5590394, 0.11451276, -0.008627633, 0.82115)
-bones/5/rotation = Quaternion(-8.934892e-05, 0.9202217, -0.3913977, 2.0290998e-05)
-bones/6/rotation = Quaternion(-6.938893e-18, 7.1054274e-15, 4.93038e-32, 1)
-bones/7/rotation = Quaternion(8.271806e-25, 3.7252903e-09, -2.75506e-40, 1)
-bones/8/rotation = Quaternion(-5.8060785e-11, -0.031341746, -1.880125e-09, 0.99950874)
-bones/9/position = Vector3(0.21200736, 0.13413203, 7.9299625e-08)
-bones/9/rotation = Quaternion(-0.5599063, -0.060880348, -0.6439745, 0.5177794)
-bones/10/rotation = Quaternion(3.7650654e-08, -5.1384802e-08, -0.4947193, 0.8690529)
+bones/1/position = Vector3(7.1671886e-09, 0.30371797, -0.030061372)
+bones/1/rotation = Quaternion(2.255949e-10, 0.17319314, 2.5649072e-09, 0.9848879)
+bones/2/position = Vector3(-0.1776051, 0.1135872, 0.07694323)
+bones/2/rotation = Quaternion(0.91942704, -0.2321536, 0.28546005, 0.13882095)
+bones/2/scale = Vector3(0.9999998, 0.9999999, 1.0000013)
+bones/3/rotation = Quaternion(0.6460304, -6.2238655e-08, 4.601686e-07, 0.7633117)
+bones/4/rotation = Quaternion(-0.73206466, 0.111178875, -0.1876914, 0.64536226)
+bones/5/rotation = Quaternion(0.00029589876, 0.9201205, -0.39163563, -6.2588464e-05)
+bones/6/rotation = Quaternion(0.11676573, -0.12958969, 0.025773186, 0.98433125)
+bones/6/scale = Vector3(1, 1, 1.0000001)
+bones/7/rotation = Quaternion(0.28808558, -0.00031804846, 0.024394942, 0.95729387)
+bones/8/rotation = Quaternion(-0.27769288, -0.045590404, -0.0030109773, 0.9595828)
+bones/8/scale = Vector3(1, 1, 0.9999999)
+bones/9/position = Vector3(0.21200736, 0.13413227, 8.487841e-08)
+bones/9/rotation = Quaternion(-0.75762814, -0.1860785, -0.52029866, 0.34736693)
+bones/10/rotation = Quaternion(1.3822271e-08, -4.593664e-08, -0.5986272, 0.8010277)
 bones/11/rotation = Quaternion(7.797047e-09, -1.1281024e-08, 0.026658095, 0.99964464)
-bones/12/rotation = Quaternion(-0.32106528, -0.32531866, 0.1457259, 0.8774103)
-bones/13/position = Vector3(-6.936717e-09, 0.096125185, -0.057500005)
-bones/13/rotation = Quaternion(6.9489685e-09, -3.587743e-09, -0.7071068, 0.7071067)
-bones/14/position = Vector3(-0.21200737, 0.13413203, 8.6813984e-08)
-bones/14/rotation = Quaternion(-0.76825595, 0.09418771, 0.5034594, 0.38397926)
-bones/15/rotation = Quaternion(1.33771865e-08, 5.966341e-08, 0.5179392, 0.85541755)
+bones/12/rotation = Quaternion(-0.12451181, -0.6083411, 0.006717292, 0.78381944)
+bones/13/position = Vector3(5.1384585e-10, 0.09612511, -0.057500005)
+bones/13/rotation = Quaternion(-0.025259204, -0.00061355764, -0.5007622, 0.86521614)
+bones/14/position = Vector3(-0.21200739, 0.13413239, 2.3664171e-08)
+bones/14/rotation = Quaternion(-0.8051208, 0.11436186, 0.42936793, 0.3928678)
+bones/15/rotation = Quaternion(1.781493e-08, 7.1429696e-08, 0.48360243, 0.87528783)
 bones/16/rotation = Quaternion(-7.297441e-09, 4.2303276e-09, -0.026658092, 0.99964464)
-bones/17/rotation = Quaternion(-0.35222146, 0.108901575, -0.3108084, 0.87605864)
-bones/18/position = Vector3(1.4387312e-08, 0.096125126, -0.057500035)
-bones/18/rotation = Quaternion(1.6805907e-09, -1.6805889e-09, 0.7071068, 0.7071067)
-bones/19/position = Vector3(0.17094508, 0.1135872, 1.5994095e-08)
-bones/19/rotation = Quaternion(0.99371517, 0.08371457, 0.07350378, 0.0109185325)
-bones/20/rotation = Quaternion(0.19560215, 6.2622235e-08, -1.3223872e-07, 0.9806833)
-bones/21/rotation = Quaternion(-0.517564, -0.2094967, 0.043654874, 0.82845217)
-bones/22/rotation = Quaternion(0.00011178441, 0.92025787, -0.39131266, -2.5241658e-05)
+bones/17/rotation = Quaternion(-0.3425871, 0.40976956, -0.08784826, 0.8408364)
+bones/18/position = Vector3(-5.138423e-10, 0.096125096, -0.057500005)
+bones/18/rotation = Quaternion(-6.7158483e-09, -4.808679e-09, 0.7071068, 0.7071067)
+bones/19/position = Vector3(0.17094505, 0.11358723, 1.12356435e-08)
+bones/19/rotation = Quaternion(0.92385036, 0.13666172, 0.21904755, 0.28256378)
+bones/20/rotation = Quaternion(0.63954484, 4.5062425e-08, -4.4725437e-07, 0.76875377)
+bones/21/rotation = Quaternion(-0.6091477, -0.36842468, 0.19535242, 0.67456627)
+bones/22/rotation = Quaternion(-0.00023576771, 0.9200985, -0.391687, 5.0715622e-05)
 
 [node name="head" parent="Pivot/Rig_Medium/Skeleton3D" index="0" unique_id=1569224322]
-transform = Transform3D(0.9997204, -1.4014349e-09, 0.023646597, 1.3934147e-09, 0.99999994, 3.5568634e-10, -0.023646597, -3.226374e-10, 0.9997204, -4.3038546e-09, 1.2278259, 1.5739471e-15)
+transform = Transform3D(0.99981767, -0.013743054, -0.013252988, 0.009812236, 0.965344, -0.26079604, 0.01637784, 0.26061833, 0.965303, 0.00022799254, 1.0420902, 0.25666142)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Rig_Medium/Skeleton3D" index="9" unique_id=808778473]
-transform = Transform3D(5.1387326e-07, -0.14989425, -0.9887013, -0.99999917, -4.6193603e-07, -1.740605e-07, -7.396668e-07, 0.9887014, -0.14989449, -0.50098795, 0.6509273, 0.10763028)
+transform = Transform3D(-0.1470139, -0.62219846, -0.7689306, -0.971679, -0.05454934, 0.22991847, -0.18499959, 0.780956, -0.5965583, -0.5707333, 0.59211075, -0.03377979)
 bone_name = "handslot.r"
 bone_idx = 18
 
@@ -238,7 +220,7 @@ libraries/Combat = SubResource("AnimationLibrary_tn744")
 libraries/anim_lib_global = ExtResource("5_twyys")
 
 [node name="HealthDisplay" parent="." index="2" unique_id=599444158]
-texture = SubResource("ViewportTexture_wfobs")
+texture = SubResource("ViewportTexture_dygk6")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="8" unique_id=1658606978]
 root_node = NodePath("../Pivot")

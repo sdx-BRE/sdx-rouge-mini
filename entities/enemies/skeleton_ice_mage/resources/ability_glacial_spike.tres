@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AbilityDeliveryAoe" format=3 uid="uid://b143dcuvwtca1"]
+
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="1_y5r5p"]
+[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="2_3g8t8"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="3_h0lh2"]
+[ext_resource type="PackedScene" uid="uid://bmyuplsfogh1b" path="res://entities/abilities/glacial_spike/glacial_spike.tscn" id="4_llbim"]
+[ext_resource type="Script" uid="uid://caien7hc88mn2" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_aoe.gd" id="5_5aq6w"]
+
+[sub_resource type="Resource" id="Resource_xg73n"]
+script = ExtResource("2_3g8t8")
+damage = 20.0
+metadata/_custom_type_script = "uid://d3tha66a1k8m3"
+
+[sub_resource type="Resource" id="Resource_mxfe5"]
+script = ExtResource("3_h0lh2")
+modifiers = Array[ExtResource("1_y5r5p")]([SubResource("Resource_xg73n")])
+metadata/_custom_type_script = "uid://c0uht871o3us3"
+
+[resource]
+script = ExtResource("5_5aq6w")
+scene = ExtResource("4_llbim")
+damage = SubResource("Resource_mxfe5")
+radius = 5.0
+metadata/_custom_type_script = "uid://caien7hc88mn2"

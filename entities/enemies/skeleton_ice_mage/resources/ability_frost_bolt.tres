@@ -1,58 +1,56 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dobu4k4gucop2"]
 
-[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_cooldown"]
-[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="1_u54gl"]
-[ext_resource type="PackedScene" uid="uid://derrpqrpwck7n" path="res://entities/abilities/frost_bolt/frost_bolt.tscn" id="2_iwahs"]
-[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="2_mnoi1"]
-[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="3_16o8r"]
-[ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="3_fk318"]
-[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="4_5dkps"]
-[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="4_mnoi1"]
-[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="5_16o8r"]
-[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="6_u54gl"]
-[ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="7_u54gl"]
+[ext_resource type="Script" uid="uid://citxb3ekvs1wk" path="res://entities/shared/ability_system/resources/ability_cooldown.gd" id="1_16o8r"]
+[ext_resource type="Script" uid="uid://ctwcaqgasxtl7" path="res://entities/shared/ability_system/resources/ability_cost.gd" id="2_5dkps"]
+[ext_resource type="Script" uid="uid://cx5xgsdsyry1h" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage_modifier.gd" id="3_pguj8"]
+[ext_resource type="Script" uid="uid://d3tha66a1k8m3" path="res://entities/shared/ability_system/resources/delivery/damage/modifiers/ability_damage_modifier_flat.gd" id="4_x2fqe"]
+[ext_resource type="Script" uid="uid://c0uht871o3us3" path="res://entities/shared/ability_system/resources/delivery/damage/ability_damage.gd" id="5_81mh5"]
+[ext_resource type="PackedScene" uid="uid://derrpqrpwck7n" path="res://entities/abilities/frost_bolt/frost_bolt.tscn" id="6_rmo3m"]
+[ext_resource type="Script" uid="uid://c3e4doafuvjyk" path="res://entities/shared/ability_system/resources/delivery/ability_delivery_projectile.gd" id="7_rcn4d"]
+[ext_resource type="Script" uid="uid://kmpv5ybfiv5h" path="res://entities/shared/ability_system/resources/ability_data.gd" id="8_fxah8"]
+[ext_resource type="Script" uid="uid://4resk6xsshmp" path="res://entities/shared/ability_system/resources/targeting/ability_targeting_ai.gd" id="9_85w57"]
+[ext_resource type="Script" uid="uid://1432g8lgqus5" path="res://entities/shared/ability_system/resources/trigger/ability_trigger_normal.gd" id="10_fa4h2"]
+[ext_resource type="Resource" uid="uid://dasf6up5qt287" path="res://entities/shared/resources/spell_windup_shoot.tres" id="11_euh42"]
 
-[sub_resource type="Resource" id="Resource_cooldown"]
-script = ExtResource("1_cooldown")
-duration = 2.0
+[sub_resource type="Resource" id="Resource_b6nir"]
+script = ExtResource("1_16o8r")
+duration = 3.0
 
-[sub_resource type="Resource" id="Resource_pun3k"]
-script = ExtResource("1_u54gl")
-metadata/_custom_type_script = "uid://ctwcaqgasxtl7"
+[sub_resource type="Resource" id="Resource_53du0"]
+script = ExtResource("2_5dkps")
 
-[sub_resource type="Resource" id="Resource_pguj8"]
-script = ExtResource("3_16o8r")
+[sub_resource type="Resource" id="Resource_208ig"]
+script = ExtResource("4_x2fqe")
 damage = 8.0
 metadata/_custom_type_script = "uid://d3tha66a1k8m3"
 
-[sub_resource type="Resource" id="Resource_x2fqe"]
-script = ExtResource("4_5dkps")
-modifiers = Array[ExtResource("2_mnoi1")]([SubResource("Resource_pguj8")])
+[sub_resource type="Resource" id="Resource_2ckne"]
+script = ExtResource("5_81mh5")
+modifiers = Array[ExtResource("3_pguj8")]([SubResource("Resource_208ig")])
 metadata/_custom_type_script = "uid://c0uht871o3us3"
 
-[sub_resource type="Resource" id="Resource_q5cj6"]
-script = ExtResource("3_fk318")
-scene = ExtResource("2_iwahs")
-damage = SubResource("Resource_x2fqe")
-lifetime = 5.0
-homing = 2
-homing_fov = 0.0
-homing_steer_speed = 2.75
+[sub_resource type="Resource" id="Resource_b8ka5"]
+script = ExtResource("7_rcn4d")
+scene = ExtResource("6_rmo3m")
+damage = SubResource("Resource_2ckne")
+metadata/_custom_type_script = "uid://c3e4doafuvjyk"
 
-[sub_resource type="Resource" id="Resource_lw3je"]
-script = ExtResource("5_16o8r")
+[sub_resource type="Resource" id="Resource_scx1q"]
+script = ExtResource("9_85w57")
+metadata/_custom_type_script = "uid://4resk6xsshmp"
 
-[sub_resource type="Resource" id="Resource_iwahs"]
-script = ExtResource("6_u54gl")
+[sub_resource type="Resource" id="Resource_5v5ik"]
+script = ExtResource("10_fa4h2")
 metadata/_custom_type_script = "uid://1432g8lgqus5"
 
 [resource]
-script = ExtResource("4_mnoi1")
-cooldown = SubResource("Resource_cooldown")
-cost = SubResource("Resource_pun3k")
-targeting = SubResource("Resource_lw3je")
-trigger = SubResource("Resource_iwahs")
-windup = ExtResource("7_u54gl")
-delivery = SubResource("Resource_q5cj6")
-id = &"dbg"
+script = ExtResource("8_fxah8")
+cooldown = SubResource("Resource_b6nir")
+cost = SubResource("Resource_53du0")
+targeting = SubResource("Resource_scx1q")
+trigger = SubResource("Resource_5v5ik")
+windup = ExtResource("11_euh42")
+delivery = SubResource("Resource_b8ka5")
+id = &"ice_bolt"
 input = &""
+metadata/_custom_type_script = "uid://kmpv5ybfiv5h"

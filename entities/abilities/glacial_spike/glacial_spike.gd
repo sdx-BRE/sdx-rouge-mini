@@ -15,7 +15,7 @@ var _temp_animations: Array[Dictionary]
 
 func _ready() -> void:
 	super()
-	get_tree().create_timer(_delay + 30.0).timeout.connect(queue_free)
+	get_tree().create_timer(_delay + 2.0).timeout.connect(queue_free)
 	anim_player.animation_finished.connect(_cleanup_temp_animations)
 	
 	_generate_spike_field()
