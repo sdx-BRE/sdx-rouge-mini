@@ -30,5 +30,20 @@ func raycast_from_mouse(_ray_range: float, _collision_mask: int = 0) -> Dictiona
 func unproject_position(_position: Vector3) -> Vector2:
 	return Vector2.ZERO
 
+func show_directional_marker() -> void:
+	pass
+
+func hide_directional_marker() -> void:
+	pass
+
+func set_aim_yaw(_angle: float) -> void:
+	pass
+
+func set_aim_pitch(_angle: float) -> void:
+	pass
+
+func get_origin_position() -> Vector3:
+	return Vector3.ZERO
+
 func get_ai_target_handler() -> AiTargetHandler:
 	return null

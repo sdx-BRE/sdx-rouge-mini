@@ -3,7 +3,7 @@ class_name AbilityExecuteDeliveryProjectileHandler extends AbilityExecuteDeliver
 var _data: AbilityDeliveryProjectile
 
 func setup(data: AbilityDelivery) -> void:
-	_data = data
+	_data = data as AbilityDeliveryProjectile
 
 func execute(aiming_result: AbilityAimingResult) -> void:
 	var node := _data.scene.instantiate()
@@ -13,6 +13,8 @@ func execute(aiming_result: AbilityAimingResult) -> void:
 	
 	_emit_cost_required()
 	_spawn_ability(node)
+	
+	aiming_result.launch_projectile(node, _context)
 	_launch_when_ability(node, _data)
 
 func _spawn_ability(node: Node3D) -> void:

@@ -37,3 +37,18 @@ func unproject_position(position: Vector3) -> Vector2:
 
 func get_ai_target_handler() -> AiTargetHandler:
 	return _strategy.get_ai_target_handler()
+
+func show_directional_marker() -> void:
+	_strategy.show_directional_marker()
+
+func hide_directional_marker() -> void:
+	_strategy.hide_directional_marker()
+
+func set_aim_yaw(angle: float) -> void:
+	_strategy.set_aim_yaw(angle)
+
+func set_aim_pitch(angle: float) -> void:
+	_strategy.set_aim_pitch(angle)
+
+func get_origin_position() -> Vector3:
+	return _strategy.get_origin_position()
