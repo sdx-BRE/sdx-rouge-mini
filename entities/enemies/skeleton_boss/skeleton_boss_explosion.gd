@@ -9,7 +9,6 @@ extends AbilityEntity
 var _finished_count: int = 0
 
 func _ready() -> void:
-	print("log ready ")
 	for effect in effects:
 		effect.emitting = true
 		effect.finished.connect(_on_particle_finished)
