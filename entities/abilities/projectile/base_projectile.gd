@@ -35,7 +35,6 @@ func _move(delta: float) -> void:
 
 func launch_enemy_ability(_data: AbilityDelivery, context: AbilityExecuteContext) -> void:
 	global_position = context.get_weapon_spawn_node().global_position
-	global_basis = context.get_pivot_basis()
 
 func setup_enemy_ability(data: AbilityDelivery, _context: AbilityExecuteContext) -> void:
 	var projectile_data := data as AbilityDeliveryProjectile
