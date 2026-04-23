@@ -43,6 +43,7 @@ const HIT_STRONG_COOLDOWN := 0.4
 @onready var wandspawn_node := $Pivot/Rig_Medium/Skeleton3D/Mage_HandslotRight/Mage_WeaponContainerRight/Mage_Wand/Mage_WandSpawn
 @onready var ground_target_marker := $GroundTargetMarker
 @onready var enemy_target_marker := $EnemyTargetMarker
+@onready var directional_target_marker := $DirectionalTargetMarker
 @onready var target_point := $TargetPoint
 
 var _status_manager: EntityStatusManager

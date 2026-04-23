@@ -855,7 +855,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3309908, 0)
 
 [node name="DirectionalTargetMarker" parent="." unique_id=1582244022 instance=ExtResource("41_ku3r6")]
-transform = Transform3D(3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0)
+transform = Transform3D(3.0000002, 0, 0, 0, 3.0000002, 0, 0, 0, 3.0000002, 0, 0.7880311, 0)
 visible = false
 
 [editable path="Pivot"]

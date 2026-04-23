@@ -52,8 +52,10 @@ static func _bootstrap_abilities(
 		mage.camera_node,
 		mage.ground_target_marker,
 		mage.enemy_target_marker,
+		mage.directional_target_marker,
 		mage.get_viewport(),
 		mage.get_world_3d(),
+		mage,
 	)
 	var target_context := AbilityAimingContext.new(aiming_strategy)
 	

@@ -3,21 +3,27 @@ class_name MageAbilityAimingStrategy extends AbilityAimingStrategy
 var _camera_node: ThirdPersonCam
 var _ground_target_marker: Decal
 var _enemy_target_marker: Sprite2D
+var _directional_target_marker: Node3D
 var _viewport: Viewport
 var _world_3d: World3D
+var _host: Node3D
 
 func _init(
 	camera_node: ThirdPersonCam,
 	ground_target_marker: Decal,
 	enemy_target_marker: Sprite2D,
+	directional_target_marker: Node3D,
 	viewport: Viewport,
 	world_3d: World3D,
+	host: Node3D,
 ) -> void:
 	_camera_node = camera_node
 	_ground_target_marker = ground_target_marker
 	_enemy_target_marker = enemy_target_marker
+	_directional_target_marker = directional_target_marker
 	_viewport = viewport
 	_world_3d = world_3d
+	_host = host
 
 func use_visible_mouse(cursor_type: Cursor.Type = Cursor.Type.Pointer) -> void:
 	_camera_node.use_visible_mouse(cursor_type)
@@ -42,6 +48,21 @@ func hide_enemy_target_marker() -> void:
 
 func set_enemy_target_marker_position(position: Vector2) -> void:
 	_enemy_target_marker.global_position = position
+
+func show_directional_marker() -> void:
+	_directional_target_marker.visible = true
+
+func hide_directional_marker() -> void:
+	_directional_target_marker.visible = false
+
+func set_aim_yaw(angle: float) -> void:
+	_directional_target_marker.rotation.y = angle
+
+func set_aim_pitch(angle: float) -> void:
+	_directional_target_marker.rotation.x = angle
+
+func get_origin_position() -> Vector3:
+	return _host.global_position
 
 func raycast_from_mouse(ray_range: float, collision_mask: int = 0) -> Dictionary:
 	var mouse_pos := _viewport.get_mouse_position()
