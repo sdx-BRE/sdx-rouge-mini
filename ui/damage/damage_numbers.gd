@@ -68,6 +68,7 @@ func _spawn_label_from_buffer(amount: float, base_pos: Vector3) -> void:
 	var offset_2d := chosen_screen_pos - base_screen_pos
 			
 	var label := _create_label()
+	label.visible = false
 	
 	container.add_child(label)
 	label.setup(amount, base_pos, offset_2d, _camera)

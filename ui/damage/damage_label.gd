@@ -14,6 +14,8 @@ func setup(amount: float, pos: Vector3, offset: Vector2, camera: Camera3D) -> vo
 	scale = Vector2(0.1, 0.1)
 	pivot_offset = size / 2.0
 	
+	_update_position()
+	
 	var tween := create_tween()
 	
 	tween.tween_property(self , "scale", Vector2(1.3, 1.3), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -23,6 +25,12 @@ func setup(amount: float, pos: Vector3, offset: Vector2, camera: Camera3D) -> vo
 	tween.chain().tween_callback(queue_free)
 
 func _process(_delta: float) -> void:
+	_update_position()
+
+func _update_position() -> void:
+	if not _camera:
+		return
+		
 	if _camera.is_position_behind(_world_pos):
 		visible = false
 		return
