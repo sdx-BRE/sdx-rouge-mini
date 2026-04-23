@@ -13,8 +13,8 @@ func _init(
 func setup(_data: AbilityTargeting) -> void:
 	_emit_target_aquired(AbilityAimingResult.new())
 
-func handle_input(_event: InputEvent) -> bool:
-	return false
+func handle_input(_event: InputEvent) -> AbilityHandleInputResult:
+	return AbilityHandleInputResult.unhandled()
 
 func tick(_delta: float) -> void:
 	pass

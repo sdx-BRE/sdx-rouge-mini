@@ -28,18 +28,18 @@ func tick(_delta: float) -> void:
 	_context.set_aim_yaw(_yaw)
 	_context.set_aim_pitch(_pitch)
 
-func handle_input(event: InputEvent) -> bool:
+func handle_input(event: InputEvent) -> AbilityHandleInputResult:
 	if event.is_action_pressed("ui_cancel"):
 		_cleanup_ui_state()
 		_emit_cancel()
-		return true
+		return AbilityHandleInputResult.handled(&"ui_cancel")
 		
 	if event.is_action_pressed(_data.input_trigger):
 		_cleanup_ui_state()
 		_emit_target_aquired(AbilityAimingResultDirectional.new(_yaw, _pitch))
-		return true
+		return AbilityHandleInputResult.handled(_data.input_trigger)
 	
-	return false
+	return AbilityHandleInputResult.unhandled()
 
 func cancel() -> void:
 	_cleanup_ui_state()

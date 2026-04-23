@@ -8,17 +8,17 @@ func setup(data: AbilityTargeting) -> void:
 	_data = data
 	_context.use_visible_mouse(Cursor.Type.Attack)
 
-func handle_input(event: InputEvent) -> bool:
+func handle_input(event: InputEvent) -> AbilityHandleInputResult:
 	if event.is_action_pressed("ui_cancel"):
 		_emit_cancel()
-		return true
+		return AbilityHandleInputResult.handled(&"ui_cancel")
 	
 	if event.is_action_pressed(_data.input_trigger):
 		_cleanup_ui_state()
 		_emit_target_aquired(AbilityAimingResultMouseTarget.new(_target))
-		return true
+		return AbilityHandleInputResult.handled(_data.input_trigger)
 	
-	return false
+	return AbilityHandleInputResult.unhandled()
 
 func tick(_delta: float) -> void:
 	var result := _context.raycast_from_mouse(_data.cast_range, Layers.COLLISION_ENEMY_COLLISION)

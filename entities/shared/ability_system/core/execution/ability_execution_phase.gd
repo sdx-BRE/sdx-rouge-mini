@@ -28,8 +28,8 @@ func hit_event(_target: Node3D) -> void:
 func tick(_delta: float) -> void:
 	pass
 
-func handle_input(_event: InputEvent) -> bool:
-	return false
+func handle_input(_event: InputEvent) -> AbilityHandleInputResult:
+	return AbilityHandleInputResult.unhandled()
 
 func _to_string() -> String:
 	return "AbilityExecutionBase"

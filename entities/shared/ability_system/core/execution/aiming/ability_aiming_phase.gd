@@ -19,7 +19,7 @@ func start() -> void:
 	
 	_targeting.setup(_ability._data.targeting)
 
-func handle_input(event: InputEvent) -> bool:
+func handle_input(event: InputEvent) -> AbilityHandleInputResult:
 	return _targeting.handle_input(event)
 
 func tick(delta: float) -> void:
