@@ -6,6 +6,7 @@
 !.gitattributes
 !.editorconfig
 !.vscode/settings.json
+!.ai_rules.md
 
 # exclude godot project file and all .gd scripts
 !project.godot
