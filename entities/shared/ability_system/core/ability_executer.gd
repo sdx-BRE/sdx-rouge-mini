@@ -48,12 +48,13 @@ func start(
 
 func release() -> void:
 	if _is_active():
-		blackboard.is_released = true
+		if _phase_idx != Phase.Aiming:
+			blackboard.is_released = true
 		_phase.release()
 
-func handle_input(event: InputEvent) -> bool:
+func handle_input(event: InputEvent) -> AbilityHandleInputResult:
 	if not _is_active():
-		return false
+		return AbilityHandleInputResult.unhandled()
 	
 	return _phase.handle_input(event)
 

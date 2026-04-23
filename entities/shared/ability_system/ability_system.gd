@@ -31,6 +31,9 @@ func handle_input(event: InputEvent) -> bool:
 	if event.is_echo():
 		return false
 	
+	if _manager.try_handle_tracked_release(event):
+		return true
+	
 	if _manager.is_handling_active_ability(event):
 		return true
 	

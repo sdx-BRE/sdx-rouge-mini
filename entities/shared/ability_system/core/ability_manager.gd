@@ -1,11 +1,13 @@
 class_name AbilityManager extends RefCounted
 
 var _execution: AbilityExecuter
+var _tracked_action: StringName = &""
 
 func _init(
 	execution: AbilityExecuter
 ) -> void:
 	_execution = execution
+	_execution.finished.connect(_on_execution_finished)
 
 func handle_ability_action(
 	ability: Ability,
@@ -17,8 +19,23 @@ func handle_ability_action(
 		AbilitySystem.TriggerState.Release:
 			_execution.release()
 
+func try_handle_tracked_release(event: InputEvent) -> bool:
+	if _tracked_action != &"" and event.is_action_released(_tracked_action):
+		_execution.release()
+		_tracked_action = &""
+		return true
+	return false
+
 func is_handling_active_ability(event: InputEvent) -> bool:
-	return _execution.handle_input(event)
+	var result := _execution.handle_input(event)
+
+	if result.is_handled:
+		_tracked_action = result.action
+
+	return result.is_handled
+
+func _on_execution_finished(_ability: Ability) -> void:
+	_tracked_action = &""
 
 func tick(delta: float) -> void:
 	_execution.tick(delta)
